@@ -3,7 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ride Sharing API", "Ride Sharing API\Ride Sharing API.csproj", "{CAAA49BC-3C58-445A-8C70-9927D2938F0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Entity", "RideSharing.Entity\RideSharing.Entity.csproj", "{49991AB7-8438-4F66-9F20-0FD931967510}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.API", "RideSharing.API\RideSharing.API.csproj", "{B2C466B1-40DC-4195-B1BB-CD761875E10D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Service", "RideSharing.Service\RideSharing.Service.csproj", "{2C26C24A-FB77-4CD2-8019-1EF4B7B3EA11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Infrastructure", "RideSharing.Infrastructure\RideSharing.Infrastructure.csproj", "{A1031FB1-AB1C-4490-8642-607D08312D05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Repository", "RideSharing.Repository\RideSharing.Repository.csproj", "{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{248A29EB-B997-4B67-9D1F-3CCD5FBB927E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +25,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CAAA49BC-3C58-445A-8C70-9927D2938F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAAA49BC-3C58-445A-8C70-9927D2938F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAAA49BC-3C58-445A-8C70-9927D2938F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAAA49BC-3C58-445A-8C70-9927D2938F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49991AB7-8438-4F66-9F20-0FD931967510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49991AB7-8438-4F66-9F20-0FD931967510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49991AB7-8438-4F66-9F20-0FD931967510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49991AB7-8438-4F66-9F20-0FD931967510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C466B1-40DC-4195-B1BB-CD761875E10D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C466B1-40DC-4195-B1BB-CD761875E10D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C466B1-40DC-4195-B1BB-CD761875E10D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C466B1-40DC-4195-B1BB-CD761875E10D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C26C24A-FB77-4CD2-8019-1EF4B7B3EA11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C26C24A-FB77-4CD2-8019-1EF4B7B3EA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C26C24A-FB77-4CD2-8019-1EF4B7B3EA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C26C24A-FB77-4CD2-8019-1EF4B7B3EA11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1031FB1-AB1C-4490-8642-607D08312D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1031FB1-AB1C-4490-8642-607D08312D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1031FB1-AB1C-4490-8642-607D08312D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1031FB1-AB1C-4490-8642-607D08312D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
