@@ -11,6 +11,7 @@ namespace RideSharing.Entity
     {
         public string RegNo { get; set; }
         public long DriverId { get; set; }
+        public virtual Driver Driver { get; set; }
         public CabType Type { get; set; }
     }
 }

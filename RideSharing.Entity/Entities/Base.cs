@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RideSharing.Entity
 {
-    public class Base
+    public abstract class Base
     {
         public long Id { get; set; }
         public long CreatedBy { get; set; } 

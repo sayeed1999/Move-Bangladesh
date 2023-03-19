@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RideSharing.Repository\RideSharing.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

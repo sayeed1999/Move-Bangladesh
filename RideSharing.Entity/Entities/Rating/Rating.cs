@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,11 @@ namespace RideSharing.Entity
     public class Rating : Base
     {
         public long CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
         public long DriverId { get; set; }
+        public virtual Driver Driver { get; set; }
         public long TripId { get; set; }
+        public virtual Trip Trip { get; set; }
         public short RatingValue { get; set; }
         public string Feedback { get; set; }
     }
