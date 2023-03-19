@@ -10,7 +10,6 @@ namespace RideSharing.Infrastructure
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
         }
 
         #region Rating
@@ -27,11 +26,7 @@ namespace RideSharing.Infrastructure
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Trip> Trips { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=sayeed_1999; Database=ride_sharing; trusted_connection=SSPI; TrustServerCertificate=True; MultipleActiveResultSets=True");
-        }
+        // Connection String is initialized from RideSharing.API -> Startup.cs...
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
