@@ -83,7 +83,7 @@ namespace RideSharing.Repository
             // SaveChangesAsync will be called from UnitOfWork!
         }
 
-        public virtual async void DeleteById(long id)
+        public virtual void DeleteById(long id)
         {
             var itemToBeDeleted = await _dbSet.FindAsync(id);
 
