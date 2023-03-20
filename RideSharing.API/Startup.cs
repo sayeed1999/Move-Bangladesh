@@ -55,7 +55,7 @@ namespace RideSharing.API
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["AppSettings:ConnectionString"].ToString()));
             #endregion
 
-            //services.AddScoped<ApplicationDbContext>();
+            services.AddScoped<ApplicationDbContext>();
 
             #region repositories
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));

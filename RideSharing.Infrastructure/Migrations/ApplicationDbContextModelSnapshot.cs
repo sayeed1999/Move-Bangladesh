@@ -195,7 +195,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Cabs");
+                    b.ToTable("Cabs", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Customer", b =>
@@ -254,7 +254,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.CustomerRating", b =>
@@ -307,7 +307,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("CustomerRatings");
+                    b.ToTable("CustomerRatings", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Driver", b =>
@@ -366,7 +366,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Drivers");
+                    b.ToTable("Drivers", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.DriverRating", b =>
@@ -419,7 +419,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("DriverRatings");
+                    b.ToTable("DriverRatings", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Payment", b =>
@@ -459,7 +459,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Trip", b =>
@@ -516,7 +516,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("Trips");
+                    b.ToTable("Trips", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.User", b =>
