@@ -17,7 +17,7 @@ namespace RideSharing.Service
         public void Update(T item);
         public void UpdateById(long id, T item);
         public void Delete(T item);
-        public void DeleteById(long id);
+        public Task DeleteByIdAsync(long id);
         #endregion
 
     }

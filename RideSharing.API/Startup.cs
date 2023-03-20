@@ -10,6 +10,8 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using RideSharing.Entity;
 using RideSharing.Infrastructure;
+using RideSharing.Repository;
+using RideSharing.Service;
 using System.Text;
 
 namespace RideSharing.API
@@ -49,9 +51,35 @@ namespace RideSharing.API
 
             // Configure additional services here, such as database context, authentication, authorization, etc.
 
+            #region database init
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["AppSettings:ConnectionString"].ToString()));
+            #endregion
 
+            //services.AddScoped<ApplicationDbContext>();
 
+            #region repositories
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IDriverRepository, DriverRepository>();
+            services.AddScoped<ICustomerRatingRepository, CustomerRatingRepository>();
+            services.AddScoped<IDriverRatingRepository, DriverRatingRepository>();
+            services.AddScoped<ICabRepository, CabRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<ITripRepository, TripRepository>();
+            #endregion
+
+            #region services
+            services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IDriverService, DriverService>();
+            services.AddScoped<ICustomerRatingService, CustomerRatingService>();
+            services.AddScoped<IDriverRatingService, DriverRatingService>();
+            services.AddScoped<ICabService, CabService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<ITripService, TripService>();
+            #endregion
 
             // Disable automatic 400 response
 

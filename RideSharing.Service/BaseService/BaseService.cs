@@ -60,9 +60,9 @@ namespace RideSharing.Service
             _repository.Delete(item);
         }
 
-        public virtual void DeleteById(long id)
+        public virtual async Task DeleteByIdAsync(long id)
         {
-            _repository.DeleteById(id);
+            await _repository.DeleteByIdAsync(id);
         }
 
         #endregion
