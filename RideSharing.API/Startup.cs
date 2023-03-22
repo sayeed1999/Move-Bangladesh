@@ -51,11 +51,12 @@ namespace RideSharing.API
 
             // Configure additional services here, such as database context, authentication, authorization, etc.
 
+            // This registers a DbContext subclass called ApplicationDbContext as a scoped service in the ASP.NET Core application service provider
+            // (a.k.a. the dependency injection container). The context is configured to use the SQL Server database provider and will read the
+            // connection string from ASP.NET Core configuration. Ref: https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/
             #region database init
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["AppSettings:ConnectionString"].ToString()));
             #endregion
-
-            services.AddScoped<ApplicationDbContext>();
 
             #region repositories
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -82,7 +83,6 @@ namespace RideSharing.API
             #endregion
 
             // Disable automatic 400 response
-
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
