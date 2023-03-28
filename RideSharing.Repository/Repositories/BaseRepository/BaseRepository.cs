@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace RideSharing.Repository
 {
+    // TODO: I want to make it abstract, but failing to do it!
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
 
