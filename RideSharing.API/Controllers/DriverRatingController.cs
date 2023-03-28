@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RideSharing.API
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
-    public class DriverRatingController : ControllerBase
+    public class DriverRatingController : BaseController
     {
     }
 }

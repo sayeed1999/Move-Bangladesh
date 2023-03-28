@@ -5,7 +5,7 @@ namespace RideSharing.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
     }
 }
