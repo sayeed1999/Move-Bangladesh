@@ -4,6 +4,7 @@
 
 namespace RideSharing.API
 {
+    // TODO: I don't want endpoints for this generic controller, can't do it!
     [Route("api/v1/[controller]")]
     [ApiController]
     public class BaseController : ControllerBase

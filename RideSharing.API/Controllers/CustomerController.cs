@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RideSharing.API
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/customers")]
     [ApiController]
     public class CustomerController : BaseController
     {

@@ -155,6 +155,8 @@ namespace RideSharing.API
 
             app.UseHttpsRedirection();
 
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
+
             app.UseRouting();
 
             app.UseCors(builder => builder.WithOrigins(Configuration["AppSettings:ClientUrl"].ToString())
