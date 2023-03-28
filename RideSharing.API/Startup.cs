@@ -82,16 +82,14 @@ namespace RideSharing.API
             services.AddScoped<ITripService, TripService>();
             #endregion
 
-            // Disable automatic 400 response
+            #region disable automatic 400 response
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+            #endregion
 
-
-
-            // Identity Core
-
+            #region identity server
             services.AddIdentity<User, IdentityRole>()
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -116,10 +114,9 @@ namespace RideSharing.API
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
             });
+            #endregion
 
-
-            // Jwt Authentication
-
+            #region jwt authentication
             var key = Encoding.UTF8.GetBytes(Configuration["AppSettings:JwtSecretKey"].ToString());
 
             services.AddAuthentication(x =>
@@ -141,7 +138,8 @@ namespace RideSharing.API
                     ClockSkew = TimeSpan.Zero
                 };
             });
-
+            #endregion
+        
         }
 
 
