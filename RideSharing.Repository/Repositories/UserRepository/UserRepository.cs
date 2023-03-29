@@ -1,4 +1,5 @@
-﻿using RideSharing.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using RideSharing.Entity;
 using RideSharing.Infrastructure;
 using System;
 using System.Collections.Generic;

@@ -10,7 +10,7 @@ namespace RideSharing.Service
 {
     public class CustomerRatingService : BaseService<CustomerRating>, ICustomerRatingService
     {
-        public CustomerRatingService(IBaseRepository<CustomerRating> baseRepository) : base(baseRepository)
+        public CustomerRatingService(ICustomerRatingRepository repository) : base(repository)
         {
         }
     }

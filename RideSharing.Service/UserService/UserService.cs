@@ -10,7 +10,7 @@ namespace RideSharing.Repository
 {
     public class UserService : BaseService<User>, IUserService
     {
-        public UserService(IBaseRepository<User> baseRepository) : base(baseRepository)
+        public UserService(IUserRepository repository) : base(repository)
         {
         }
     }
