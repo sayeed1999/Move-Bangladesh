@@ -153,9 +153,9 @@ namespace RideSharing.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API_Layer v1"));
             }
 
-            app.UseHttpsRedirection();
-
             app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
