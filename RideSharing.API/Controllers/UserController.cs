@@ -17,7 +17,7 @@ namespace RideSharing.API
     [AllowAnonymous]
     [Route("api/v1/users")]
     [ApiController]
-    public class UserController : BaseController
+    public class UserController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -121,48 +121,6 @@ namespace RideSharing.API
 
             serviceResponse.Data = token;
             serviceResponse.Message = "Token generated successfully!";
-            return Ok(serviceResponse);
-        }
-
-        [HttpGet("roles")]
-        public async Task<ActionResult<Response<IEnumerable<string>>>> GetAllRoles()
-        {
-            Response<IEnumerable<string>> serviceResponse = new Response<IEnumerable<string>>();
-            var temp = new List<string>();
-            try
-            {
-                foreach (var role in _roleManager.Roles)
-                {
-                    temp.Add(role.Name);
-                }
-                if (temp.Count == 0) serviceResponse.Message = "No roles found. Try inserting roles.";
-            }
-            catch (Exception ex)
-            {
-                serviceResponse.Status = 400;
-                serviceResponse.Message = ex.Message;
-            }
-            serviceResponse.Data = temp;
-            if (serviceResponse.Status < 300) return Ok(serviceResponse);
-            return BadRequest(serviceResponse);
-        }
-
-        [HttpPost("roles")]
-        public async Task<ActionResult<Response<RoleDto>>> CreateRole([FromBody] RoleDto newRole)
-        {
-            if (String.IsNullOrEmpty(newRole.Name))
-                throw new CustomException("Model is invalid!", 400);
-
-            var serviceResponse = new Response<RoleDto>();
-            serviceResponse.Data = newRole;
-
-            var roleInDB = await _roleManager.FindByNameAsync(newRole.Name.Trim().ToLower());
-            if (roleInDB is not null)
-                throw new CustomException("Role already exists!", 405);
-
-            await _roleManager.CreateAsync(new IdentityRole() { Name = newRole.Name.Trim().ToLower() });
-            serviceResponse.Message = "New role created!";
-
             return Ok(serviceResponse);
         }
 
