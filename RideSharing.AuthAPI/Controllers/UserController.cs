@@ -124,7 +124,7 @@ namespace RideSharing.AuthAPI
             return Ok(serviceResponse);
         }
 
-        [HttpGet("get-all")]
+        [HttpGet]
         public async Task<ActionResult<Response<IEnumerable<RegisterDto>>>> GetAllUsers()
         {
             var serviceResponse = new Response<IEnumerable<RegisterDto>>();

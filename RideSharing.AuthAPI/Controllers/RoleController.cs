@@ -8,15 +8,15 @@ namespace RideSharing.AuthAPI
 {
     // TODO: remove allow anonymous, and make all admin access endpoints only!
     [AllowAnonymous]
-    [Route("api/v1/user-roles")]
+    [Route("api/v1/roles")]
     [ApiController]
-    public class UserRoleController : ControllerBase
+    public class RoleController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AppSettings _appSettings;
 
-        public UserRoleController(
+        public RoleController(
             UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
             IOptions<AppSettings> appSettings
