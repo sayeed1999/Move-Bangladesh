@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Entity", "RideSharing.Entity\RideSharing.Entity.csproj", "{49991AB7-8438-4F66-9F20-0FD931967510}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Entity", "RideSharing.Entity\RideSharing.Entity.csproj", "{49991AB7-8438-4F66-9F20-0FD931967510}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.API", "RideSharing.API\RideSharing.API.csproj", "{B2C466B1-40DC-4195-B1BB-CD761875E10D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.API", "RideSharing.API\RideSharing.API.csproj", "{B2C466B1-40DC-4195-B1BB-CD761875E10D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Service", "RideSharing.Service\RideSharing.Service.csproj", "{2C26C24A-FB77-4CD2-8019-1EF4B7B3EA11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Service", "RideSharing.Service\RideSharing.Service.csproj", "{2C26C24A-FB77-4CD2-8019-1EF4B7B3EA11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Infrastructure", "RideSharing.Infrastructure\RideSharing.Infrastructure.csproj", "{A1031FB1-AB1C-4490-8642-607D08312D05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Infrastructure", "RideSharing.Infrastructure\RideSharing.Infrastructure.csproj", "{A1031FB1-AB1C-4490-8642-607D08312D05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Repository", "RideSharing.Repository\RideSharing.Repository.csproj", "{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Repository", "RideSharing.Repository\RideSharing.Repository.csproj", "{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{248A29EB-B997-4B67-9D1F-3CCD5FBB927E}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.AuthAPI", "RideSharing.AuthAPI\RideSharing.AuthAPI.csproj", "{A5B9E5FC-08A6-49A9-9E08-A673BE90642A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C924CBE-9AD0-4699-B0EE-4316782D1AEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B9E5FC-08A6-49A9-9E08-A673BE90642A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B9E5FC-08A6-49A9-9E08-A673BE90642A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B9E5FC-08A6-49A9-9E08-A673BE90642A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B9E5FC-08A6-49A9-9E08-A673BE90642A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
