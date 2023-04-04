@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RideSharing.Entity;
 
-namespace RideSharing.API.Controllers
+namespace RideSharing.AuthAPI
 {
     // TODO: remove allow anonymous, and make all admin access endpoints only!
     [AllowAnonymous]

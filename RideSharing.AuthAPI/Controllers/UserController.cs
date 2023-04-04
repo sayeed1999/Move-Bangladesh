@@ -11,7 +11,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
 
-namespace RideSharing.API
+namespace RideSharing.AuthAPI
 {
     // TODO: remove allow anonymous, and make all admin access endpoints only!
     [AllowAnonymous]
