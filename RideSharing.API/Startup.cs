@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -86,33 +85,6 @@ namespace RideSharing.API
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
-            });
-            #endregion
-
-            #region identity server
-            services.AddIdentity<User, IdentityRole>()
-                    .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 2;
-
-                // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;
             });
             #endregion
 
