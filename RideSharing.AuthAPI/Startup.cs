@@ -45,11 +45,14 @@ namespace RideSharing.AuthAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RideSharing.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RideSharing.AuthAPI", Version = "v1" });
             });
 
 
             // Configure additional services here, such as database context, authentication, authorization, etc.
+            #region database init
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["AppSettings:ConnectionString"].ToString()));
+            #endregion
 
             #region disable automatic 400 response
             services.Configure<ApiBehaviorOptions>(options =>
