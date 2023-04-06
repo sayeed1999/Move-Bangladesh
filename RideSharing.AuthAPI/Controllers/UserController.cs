@@ -13,8 +13,6 @@ using System.Text;
 
 namespace RideSharing.AuthAPI
 {
-    // TODO: remove allow anonymous, and make all admin access endpoints only!
-    [AllowAnonymous]
     [Route("api/v1/users")]
     [ApiController]
     public class UserController : ControllerBase
@@ -33,7 +31,6 @@ namespace RideSharing.AuthAPI
             _appSettings = appSettings.Value;
         }
 
-        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<Response<User>>> Register(RegisterDto model)
         {
@@ -111,7 +108,7 @@ namespace RideSharing.AuthAPI
                 {
                     new Claim("UserID", user.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(1), //DateTime.UtcNow.AddMinutes(3),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JwtSecretKey)), SecurityAlgorithms.HmacSha256)
             };
 
