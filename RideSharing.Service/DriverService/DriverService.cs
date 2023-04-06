@@ -10,7 +10,7 @@ namespace RideSharing.Service
 {
     public class DriverService : BaseService<Driver>, IDriverService
     {
-        public DriverService(IDriverRepository baseRepository) : base(baseRepository)
+        public DriverService(IBaseRepository<Driver> baseRepository) : base(baseRepository)
         {
         }
     }

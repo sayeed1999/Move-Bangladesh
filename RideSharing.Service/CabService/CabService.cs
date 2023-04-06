@@ -10,7 +10,7 @@ namespace RideSharing.Service
 {
     public class CabService : BaseService<Cab>, ICabService
     {
-        public CabService(ICabRepository repository) : base(repository)
+        public CabService(IBaseRepository<Cab> repository) : base(repository)
         {
         }
     }

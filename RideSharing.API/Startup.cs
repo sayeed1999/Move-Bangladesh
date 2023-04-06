@@ -59,14 +59,6 @@ namespace RideSharing.API
 
             #region repositories
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IDriverRepository, DriverRepository>();
-            services.AddScoped<ICustomerRatingRepository, CustomerRatingRepository>();
-            services.AddScoped<IDriverRatingRepository, DriverRatingRepository>();
-            services.AddScoped<ICabRepository, CabRepository>();
-            services.AddScoped<IPaymentRepository, PaymentRepository>();
-            services.AddScoped<ITripRepository, TripRepository>();
             #endregion
 
             #region services

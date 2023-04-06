@@ -10,8 +10,4 @@
     <ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

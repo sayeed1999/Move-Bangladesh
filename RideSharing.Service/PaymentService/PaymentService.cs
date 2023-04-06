@@ -10,7 +10,7 @@ namespace RideSharing.Service
 {
     public class PaymentService : BaseService<Payment>, IPaymentService
     {
-        public PaymentService(IPaymentRepository baseRepository) : base(baseRepository)
+        public PaymentService(IBaseRepository<Payment> baseRepository) : base(baseRepository)
         {
         }
     }

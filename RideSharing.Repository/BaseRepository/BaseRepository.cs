@@ -164,7 +164,7 @@ namespace RideSharing.Repository
             T? ret = null;
             IQueryable<T> queryable = _dbSet.AsQueryable();
             for (int i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
-            
+
             ret = await queryable.Skip(_dbSet.Count() - 1).FirstOrDefaultAsync();
 
             return ret;

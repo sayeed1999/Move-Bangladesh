@@ -10,7 +10,7 @@ namespace RideSharing.Repository
 {
     public class TripService : BaseService<Trip>, ITripService
     {
-        public TripService(ITripRepository baseRepository) : base(baseRepository)
+        public TripService(IBaseRepository<Trip> baseRepository) : base(baseRepository)
         {
         }
     }
