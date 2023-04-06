@@ -93,6 +93,30 @@ namespace RideSharing.AuthAPI
             });
             #endregion
 
+            #region jwt authentication
+            var key = Encoding.UTF8.GetBytes(Configuration["AppSettings:JwtSecretKey"].ToString());
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+            #endregion
+
             #region identity server
             services.AddIdentity<User, IdentityRole>()
                     .AddRoles<IdentityRole>()
@@ -120,30 +144,14 @@ namespace RideSharing.AuthAPI
             });
             #endregion
 
-            #region jwt authentication
-            var key = Encoding.UTF8.GetBytes(Configuration["AppSettings:JwtSecretKey"].ToString());
-
-            services.AddAuthentication(x =>
+            #region authorization
+            services.AddAuthorization(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
-                };
+                options.AddPolicy("RequireAdminRole",
+                     policy => policy.RequireRole("admin"));
             });
             #endregion
-        
+
         }
 
 
@@ -168,7 +176,6 @@ namespace RideSharing.AuthAPI
                               .AllowAnyHeader());
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
