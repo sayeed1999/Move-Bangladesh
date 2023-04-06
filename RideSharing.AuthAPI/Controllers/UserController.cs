@@ -13,7 +13,6 @@ using System.Text;
 
 namespace RideSharing.AuthAPI
 {
-    [Authorize(Policy = "RequireAdminRole")]
     [Route("api/v1/users")]
     [ApiController]
     public class UserController : ControllerBase
@@ -103,22 +102,19 @@ namespace RideSharing.AuthAPI
             if (user == null || !isValidPassword)
                 throw new CustomException("Email or password is invalid!", 400);
 
-            var tokenDescription = new SecurityTokenDescriptor
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var authClaims = new List<Claim> {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+            foreach (var userRole in userRoles)
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim("UserID", user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JwtSecretKey)), SecurityAlgorithms.HmacSha256)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.CreateToken(tokenDescription);
-            var token = tokenHandler.WriteToken(securityToken);
-
-            serviceResponse.Data = token;
-            serviceResponse.Message = "Token generated successfully!";
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.IssuerSigningKey));
+            var token = new JwtSecurityToken(expires: DateTime.Now.AddHours(3), claims: authClaims, signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
+            serviceResponse.Data = new JwtSecurityTokenHandler().WriteToken(token);
             return Ok(serviceResponse);
         }
 

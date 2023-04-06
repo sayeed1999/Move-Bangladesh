@@ -13,6 +13,7 @@ using RideSharing.Infrastructure;
 using RideSharing.Repository;
 using RideSharing.Service;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 
 namespace RideSharing.AuthAPI
@@ -34,7 +35,7 @@ namespace RideSharing.AuthAPI
             // Inject AppSettings
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            services.AddMvc(options =>
+            services.AddMvcCore(options =>
             {
                 options.Filters.Add(new AuthorizeFilter());
             });
@@ -43,7 +44,6 @@ namespace RideSharing.AuthAPI
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
-            services.AddControllers();
 
             #region open api
             services.AddSwaggerGen(c =>
@@ -94,7 +94,7 @@ namespace RideSharing.AuthAPI
             #endregion
 
             #region jwt authentication
-            var key = Encoding.UTF8.GetBytes(Configuration["AppSettings:JwtSecretKey"].ToString());
+            var key = Encoding.UTF8.GetBytes(Configuration["AppSettings:IssuerSigningKey"].ToString());
 
             services.AddAuthentication(x =>
             {
@@ -145,11 +145,7 @@ namespace RideSharing.AuthAPI
             #endregion
 
             #region authorization
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("RequireAdminRole",
-                     policy => policy.RequireRole("admin"));
-            });
+            services.AddAuthorization();
             #endregion
 
         }
