@@ -13,6 +13,7 @@ using System.Text;
 
 namespace RideSharing.AuthAPI
 {
+    [Authorize]
     [Route("api/v1/users")]
     [ApiController]
     public class UserController : ControllerBase
@@ -104,16 +105,16 @@ namespace RideSharing.AuthAPI
 
             var userRoles = await _userManager.GetRolesAsync(user);
             var authClaims = new List<Claim> {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Name, user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),  
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
             foreach (var userRole in userRoles)
             {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                authClaims.Add(new Claim("role", userRole));
             }
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.IssuerSigningKey));
-            var token = new JwtSecurityToken(expires: DateTime.Now.AddHours(3), claims: authClaims, signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JwtSecretKey.ToString()));
+            var token = new JwtSecurityToken(expires: DateTime.Now.AddDays(1), claims: authClaims, signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
             serviceResponse.Data = new JwtSecurityTokenHandler().WriteToken(token);
             return Ok(serviceResponse);
         }

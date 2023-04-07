@@ -9,7 +9,6 @@ namespace RideSharing.AuthAPI
     {
         public string ConnectionString { get; set; }
         public string JwtSecretKey { get; set; }
-        public string IssuerSigningKey { get; set; }
         public string ClientUrl { get; set; }
     }
 }
