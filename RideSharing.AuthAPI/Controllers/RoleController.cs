@@ -6,6 +6,7 @@ using RideSharing.Entity;
 
 namespace RideSharing.AuthAPI
 {
+    [Authorize(Policy = "AdminOnly")]
     [Route("api/v1/roles")]
     [ApiController]
     public class RoleController : ControllerBase
