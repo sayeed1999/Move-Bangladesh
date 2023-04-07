@@ -113,8 +113,16 @@ namespace RideSharing.AuthAPI
             {
                 authClaims.Add(new Claim("role", userRole));
             }
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JwtSecretKey.ToString()));
-            var token = new JwtSecurityToken(expires: DateTime.Now.AddDays(1), claims: authClaims, signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
+
+            // preraring return token
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT.Secret.ToString()));
+            var token = new JwtSecurityToken(
+                audience: _appSettings.JWT.ValidAudience,
+                issuer: _appSettings.JWT.ValidIssuer,
+                expires: DateTime.Now.AddDays(1), 
+                claims: authClaims, 
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
+
             serviceResponse.Data = new JwtSecurityTokenHandler().WriteToken(token);
             return Ok(serviceResponse);
         }
