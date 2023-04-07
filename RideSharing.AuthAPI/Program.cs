@@ -3,13 +3,13 @@ using RideSharing.AuthAPI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
 using RideSharing.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using RideSharing.Entity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -45,6 +45,11 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = configuration["AppSettings:JWT:ValidIssuer"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AppSettings:JWT:Secret"]))
     };
+});
+
+builder.Services.AddMvcCore(options =>
+{
+    options.Filters.Add(new AuthorizeFilter());
 });
 
 builder.Services.AddControllers().AddNewtonsoftJson(options => {

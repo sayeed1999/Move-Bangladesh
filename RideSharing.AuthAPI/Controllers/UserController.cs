@@ -13,7 +13,6 @@ using System.Text;
 
 namespace RideSharing.AuthAPI
 {
-    [Authorize]
     [Route("api/v1/users")]
     [ApiController]
     public class UserController : ControllerBase
