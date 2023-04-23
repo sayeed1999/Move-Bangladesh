@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +19,18 @@ namespace RideSharing.AuthAPI
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AppSettings _appSettings;
 
         public UserController(
+            IMapper mapper,
             UserManager<User> userManager, 
             RoleManager<IdentityRole> roleManager, 
             IOptions<AppSettings> appSettings
         ) {
+            _mapper = mapper;
             _userManager = userManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
@@ -46,7 +50,7 @@ namespace RideSharing.AuthAPI
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                UserName = String.IsNullOrEmpty(model.UserName) ? model.Email : model.UserName,
+                UserName = string.IsNullOrEmpty(model.UserName) ? model.Email : model.UserName,
             };
 
             if (model.Password != model.ConfirmPassword) 
@@ -145,16 +149,8 @@ namespace RideSharing.AuthAPI
                     }
                 }
 
-                users.Add(
-                    new RegisterDto()
-                    {
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Email = user.Email,
-                        Roles = roles,
-                        UserName = user.UserName
-                    }
-                );
+                users.Add(_mapper.Map<RegisterDto>(user));
+                users[users.Count - 1].Roles = roles;
             }
             serviceResponse.Data = users;
             return Ok(serviceResponse);
@@ -181,14 +177,8 @@ namespace RideSharing.AuthAPI
                 }
             }
 
-            RegisterDto ret = new RegisterDto()
-            {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                Roles = roles,
-                UserName = user.UserName
-            };
+            RegisterDto ret = _mapper.Map<RegisterDto>(user);
+            ret.Roles = roles;
 
             serviceResponse.Data = ret;
             return Ok(serviceResponse);
