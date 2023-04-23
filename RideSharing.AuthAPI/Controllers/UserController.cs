@@ -14,7 +14,7 @@ using System.Text;
 
 namespace RideSharing.AuthAPI
 {
-    [Authorize(Policy = "AdminOnly")]
+    [Authorize(Policy = Entity.Constants.AuthorizationPolicy.AdminOnly)]
     [Route("api/v1/users")]
     [ApiController]
     public class UserController : ControllerBase
@@ -63,21 +63,8 @@ namespace RideSharing.AuthAPI
                 response.Message = "User registered successfully!";
                 User registeredUser = await _userManager.FindByEmailAsync(user.Email);
 
-                int addedRoleCount = 0;
-                foreach (string roleName in model.Roles)
-                {
-                    string temp = roleName.Trim().ToLower();
-                    if (string.IsNullOrEmpty(temp)) continue;
-                    if (!(await _roleManager.RoleExistsAsync(roleName))) continue;
-
-                    if (!(await _userManager.IsInRoleAsync(registeredUser, roleName)))
-                    {
-                        await _userManager.AddToRoleAsync(registeredUser, temp);
-                        addedRoleCount++;
-                    }
-                }
+                int addedRoleCount = await AddRolesToUser(registeredUser, model.Roles);
                 response.Message += " User is added to " + addedRoleCount + " respective roles.";
-
             }
             else
             {
@@ -198,34 +185,53 @@ namespace RideSharing.AuthAPI
                 throw new CustomException("User not found!", 404);
 
             // updating specific properties
+
             if (model.FirstName is not null && user.FirstName != model.FirstName) user.FirstName = model.FirstName;
             if (model.LastName is not null && user.LastName != model.LastName) user.LastName = model.LastName;
 
             await _userManager.UpdateAsync(user);
-            // updating roles
-            foreach (string roleName in model.Roles)
-            {
-                string temp = roleName.Trim().ToLower();
-                if (string.IsNullOrEmpty(temp)) continue;
-                if (!(await _roleManager.RoleExistsAsync(roleName))) continue;
-                if (!(await _userManager.IsInRoleAsync(user, roleName)))
-                {
-                    await _userManager.AddToRoleAsync(user, temp);
-                }
-            }
-
-            var roles2 = await _userManager.GetRolesAsync(user);
-            foreach (var role in roles2)
-            {
-                if (model.Roles.Count(x => x == role) == 0)
-                {
-                    await _userManager.RemoveFromRoleAsync(user, role);
-                }
-            }
+            await UpdateUserRoles(user, model.Roles);
 
             return Ok(serviceResponse);
         }
 
+        private async Task UpdateUserRoles(User user, IEnumerable<string> roles)
+        {
+            await AddRolesToUser(user, roles);
+            await RemoveRolesFromUser(user, roles);
+        }
+
+        private async Task<int> AddRolesToUser(User user, IEnumerable<string> roles)
+        {
+            int addedRoleCount = 0;
+            foreach (string role in roles)
+            {
+                if (string.IsNullOrWhiteSpace(role)) continue;
+                if (!(await _roleManager.RoleExistsAsync(role))) continue;
+                if (!(await _userManager.IsInRoleAsync(user, role.ToLower().Trim())))
+                {
+                    await _userManager.AddToRoleAsync(user, role.ToLower().Trim());
+                    addedRoleCount++;
+                }
+            }
+            return addedRoleCount;
+        }
+
+        private async Task<int> RemoveRolesFromUser(User user, IEnumerable<string> currentRoles)
+        {
+            int removedRoleCount = 0;
+            var rolesInDB = await _userManager.GetRolesAsync(user);
+
+            foreach (var role in rolesInDB)
+            {
+                if (currentRoles.Count(x => x == role) == 0)
+                {
+                    await _userManager.RemoveFromRoleAsync(user, role);
+                    ++removedRoleCount;
+                }
+            }
+            return removedRoleCount;
+        }
     }
 
 }

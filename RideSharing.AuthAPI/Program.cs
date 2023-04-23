@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using RideSharing.Entity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using RideSharing.AuthAPI.Helpers;
+using RideSharing.Entity.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -50,7 +51,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOnly", policy => policy.RequireRole("admin", "moderator"));
+    options.AddPolicy(AuthorizationPolicy.AdminOnly, policy => policy.RequireRole(Role.Admin, Role.Moderator));
 });
 
 builder.Services.AddMvcCore(options =>
