@@ -8,9 +8,10 @@ using RideSharing.Entity.Enums;
 
 namespace RideSharing.Entity
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<long>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Gender Gender { get; set; }
     }
 }

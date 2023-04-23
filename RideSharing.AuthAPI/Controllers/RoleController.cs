@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RideSharing.Entity;
 
-namespace RideSharing.AuthAPI
+namespace AuthService.API
 {
     [Authorize(Policy = "AdminOnly")]
     [Route("api/v1/roles")]

@@ -10,7 +10,7 @@ namespace RideSharing.Entity
 {
     public abstract class Human : Base
     {
-        public string UserId { get; set; }
+        public long UserId { get; set; }
         public virtual User User { get; set; }
 
         public Gender Gender { get; set; } = Gender.Unknown;

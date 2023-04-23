@@ -12,9 +12,9 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
 
-namespace RideSharing.AuthAPI
+namespace AuthService.API
 {
-    [Authorize(Policy = Entity.Constants.AuthorizationPolicy.AdminOnly)]
+    [Authorize(Policy = RideSharing.Entity.Constants.AuthorizationPolicy.AdminOnly)]
     [Route("api/v1/users")]
     [ApiController]
     public class UserController : ControllerBase
@@ -139,6 +139,7 @@ namespace RideSharing.AuthAPI
                 users.Add(_mapper.Map<RegisterDto>(user));
                 users[users.Count - 1].Roles = roles;
             }
+
             serviceResponse.Data = users;
             return Ok(serviceResponse);
         }

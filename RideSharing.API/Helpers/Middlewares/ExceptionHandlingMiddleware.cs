@@ -3,13 +3,13 @@ using Newtonsoft.Json;
 using RideSharing.Entity;
 using System.Text;
 
-namespace RideSharing.API
+namespace RideSharing.API.Helpers
 {
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        
-        public ExceptionHandlingMiddleware(RequestDelegate next) 
+
+        public ExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
         }

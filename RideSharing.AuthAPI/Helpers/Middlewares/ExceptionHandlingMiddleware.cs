@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using RideSharing.Entity;
 using System.Text;
 
-namespace RideSharing.AuthAPI.Helpers
+namespace AuthService.API.Helpers
 {
     public class ExceptionHandlingMiddleware
     {

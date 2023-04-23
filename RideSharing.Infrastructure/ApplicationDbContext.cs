@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RideSharing.Entity;
@@ -6,7 +7,7 @@ using System.Reflection.Emit;
 
 namespace RideSharing.Infrastructure
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
