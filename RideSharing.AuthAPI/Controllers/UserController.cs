@@ -33,7 +33,7 @@ namespace RideSharing.AuthAPI
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<Response<User>>> Register(RegisterDto model)
+        public async Task<ActionResult<Response<RegisterDto>>> Register(RegisterDto model)
         {
             var response = new Response<RegisterDto>();
             response.Data = model;
@@ -88,7 +88,7 @@ namespace RideSharing.AuthAPI
             if (response.Status >= 400)
                 throw new CustomException(response.Message, response.Status);
 
-            return BadRequest(response);
+            return Ok(response);
         }
 
         [AllowAnonymous]
