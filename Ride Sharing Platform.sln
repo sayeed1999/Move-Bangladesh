@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.API", "RideShar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogService.API", "RideSharing.BlogAPI\BlogService.API.csproj", "{A8F6C5BB-DCE0-4928-AF02-ABA201623FA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Infrastructure", "AuthService.Infrastructure\AuthService.Infrastructure.csproj", "{E4ABF9B2-3177-4576-8E79-3E386B380D10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Infrastructure", "AuthService.Infrastructure\AuthService.Infrastructure.csproj", "{E4ABF9B2-3177-4576-8E79-3E386B380D10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogService.Infrastructure", "BlogService.Infrastructure\BlogService.Infrastructure.csproj", "{0464FFBD-7C3A-4B28-82FE-1FF1B2FD184B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{E4ABF9B2-3177-4576-8E79-3E386B380D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4ABF9B2-3177-4576-8E79-3E386B380D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4ABF9B2-3177-4576-8E79-3E386B380D10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0464FFBD-7C3A-4B28-82FE-1FF1B2FD184B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0464FFBD-7C3A-4B28-82FE-1FF1B2FD184B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0464FFBD-7C3A-4B28-82FE-1FF1B2FD184B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0464FFBD-7C3A-4B28-82FE-1FF1B2FD184B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

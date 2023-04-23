@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlogService.Infrastructure\BlogService.Infrastructure.csproj" />
     <ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
   </ItemGroup>
 
