@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using RideSharing.Entity.Constants;
 using RideSharing.API;
 using RideSharing.Common.Middlewares;
+using MassTransit;
+using RideSharing.API.MessageBroker.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -104,6 +106,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
@@ -116,6 +119,32 @@ if (app.Environment.IsDevelopment())
 // Custom middlewares..
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<CustomExceptionHandlingMiddleware>();
+
+
+
+#region Configure message bus consumers
+
+var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+{
+    cfg.ReceiveEndpoint("user-registered-event", e =>
+    {
+        e.Consumer<UserRegisteredConsumer>();
+    });
+});
+
+app.Lifetime.ApplicationStarted.Register(async () =>
+{
+    await busControl.StartAsync();
+});
+
+app.Lifetime.ApplicationStopped.Register(async () =>
+{
+    await busControl.StopAsync();
+});
+
+#endregion
+
+
 
 app.UseHttpsRedirection();
 
