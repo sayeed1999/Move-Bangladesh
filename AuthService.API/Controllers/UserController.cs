@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RideSharing.Entity;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Text;
 
@@ -21,13 +19,13 @@ namespace AuthService.API
     {
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly AppSettings _appSettings;
 
         public UserController(
             IMapper mapper,
             UserManager<User> userManager, 
-            RoleManager<IdentityRole> roleManager, 
+            RoleManager<Role> roleManager, 
             IOptions<AppSettings> appSettings
         ) {
             _mapper = mapper;
@@ -40,7 +38,6 @@ namespace AuthService.API
         public async Task<ActionResult<Response<RegisterDto>>> Register(RegisterDto model)
         {
             var response = new Response<RegisterDto>();
-            response.Data = model;
 
             if (!ModelState.IsValid) // this one line with check "are all required fields of registerDto provided or not"
                 throw new CustomException("Model is not valid!", 400);
@@ -79,6 +76,7 @@ namespace AuthService.API
             if (response.Status >= 400)
                 throw new CustomException(response.Message, response.Status);
 
+            response.Data = _mapper.Map<RegisterDto>(user);
             return Ok(response);
         }
 
@@ -123,7 +121,7 @@ namespace AuthService.API
         {
             var serviceResponse = new Response<IEnumerable<RegisterDto>>();
             var users = new List<RegisterDto>();
-            List<IdentityRole> dbRoles = await _roleManager.Roles.ToListAsync();
+            List<Role> dbRoles = await _roleManager.Roles.ToListAsync();
 
             foreach (var user in _userManager.Users)
             {
@@ -149,7 +147,7 @@ namespace AuthService.API
         {
             var serviceResponse = new Response<RegisterDto>();
 
-            List<IdentityRole> dbRoles = await _roleManager.Roles.ToListAsync();
+            List<Role> dbRoles = await _roleManager.Roles.ToListAsync();
 
             User user = await _userManager.FindByEmailAsync(email);
 

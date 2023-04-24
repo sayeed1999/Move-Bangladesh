@@ -6,18 +6,18 @@ using RideSharing.Entity;
 
 namespace AuthService.API
 {
-    [Authorize(Policy = "AdminOnly")]
+    [Authorize(Policy = RideSharing.Entity.Constants.AuthorizationPolicy.AdminOnly)]
     [Route("api/v1/roles")]
     [ApiController]
     public class RoleController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly AppSettings _appSettings;
 
         public RoleController(
             UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<Role> roleManager,
             IOptions<AppSettings> appSettings
         )
         {
@@ -62,7 +62,7 @@ namespace AuthService.API
             if (roleInDB is not null)
                 throw new CustomException("Role already exists!", 405);
 
-            await _roleManager.CreateAsync(new IdentityRole() { Name = newRole.Name.Trim().ToLower() });
+            await _roleManager.CreateAsync(new Role() { Name = newRole.Name.Trim().ToLower() });
             serviceResponse.Message = "New role created!";
 
             return Created("example.com", serviceResponse);
