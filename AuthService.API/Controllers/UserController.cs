@@ -35,8 +35,8 @@ namespace AuthService.API
             _appSettings = appSettings.Value;
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult<Response<RegisterDto>>> Register(RegisterDto model)
+        [HttpPost("register/internal")]
+        public async Task<ActionResult<Response<RegisterDto>>> RegisterInternal(RegisterDto model)
         {
             var response = new Response<RegisterDto>();
 
@@ -82,10 +82,63 @@ namespace AuthService.API
         }
 
         [AllowAnonymous]
+        [HttpPost("register/external")]
+        public async Task<ActionResult<Response<RegisterDto>>> RegisterExternal(RegisterDto model)
+        {
+            var response = new Response<RegisterDto>();
+
+            if (!ModelState.IsValid) // this one line with check "are all required fields of registerDto provided or not"
+                throw new CustomException("Model is not valid!", 400);
+
+            if (model.Roles.Contains(RideSharing.Entity.Constants.Role.Admin)
+                || model.Roles.Contains(RideSharing.Entity.Constants.Role.Moderator))
+            {
+                throw new CustomException("Cannot register with internal access or admininstrator roles", 401);
+            }
+
+            var user = new User
+            {
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                UserName = string.IsNullOrEmpty(model.UserName) ? model.Email : model.UserName,
+            };
+
+            if (model.Password != model.ConfirmPassword)
+                throw new CustomException("Password & confirm password don't match", 400);
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                response.Message = "User registered successfully!";
+                User registeredUser = await _userManager.FindByEmailAsync(user.Email);
+
+                int addedRoleCount = await AddRolesToUser(registeredUser, model.Roles);
+                response.Message += " User is added to " + addedRoleCount + " respective roles.";
+            }
+            else
+            {
+                response.Message = "Errors occured:-\n";
+                foreach (var error in result.Errors)
+                {
+                    response.Message += error.Description + "\n";
+                }
+                response.Status = 400;
+            }
+
+            if (response.Status >= 400)
+                throw new CustomException(response.Message, response.Status);
+
+            response.Data = _mapper.Map<RegisterDto>(user);
+            return Ok(response);
+        }
+
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto model)
         {
-            var serviceResponse = new Response<String>(); // for the token!
+            var serviceResponse = new Response<string>(); // for the token!
 
             User user = await _userManager.FindByEmailAsync(model.Email);
             bool isValidPassword = await _userManager.CheckPasswordAsync(user, model.Password);
@@ -116,6 +169,10 @@ namespace AuthService.API
             serviceResponse.Data = new JwtSecurityTokenHandler().WriteToken(token);
             return Ok(serviceResponse);
         }
+
+        // TODO:- implement forgot password endpoint
+
+        // TODO:- implement change password endpoint
 
         [HttpGet]
         public async Task<ActionResult<Response<IEnumerable<RegisterDto>>>> GetAllUsers()
@@ -190,7 +247,15 @@ namespace AuthService.API
             if (model.LastName is not null && user.LastName != model.LastName) user.LastName = model.LastName;
 
             await _userManager.UpdateAsync(user);
-            await UpdateUserRoles(user, model.Roles);
+
+            // only internal users can change roles...
+            if (model.Roles.Contains(RideSharing.Entity.Constants.Role.Admin)
+                || model.Roles.Contains(RideSharing.Entity.Constants.Role.Moderator))
+            {
+                // TODO:- check if there is only one admin, and he made him non-admin, then restrict it!
+
+                await UpdateUserRoles(user, model.Roles);
+            }
 
             return Ok(serviceResponse);
         }
