@@ -5,11 +5,11 @@ using System.Text;
 
 namespace AuthService.API.Helpers
 {
-    public class ExceptionHandlingMiddleware
+    public class CustomExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next)
+        public CustomExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
@@ -20,11 +20,11 @@ namespace AuthService.API.Helpers
             {
                 await _next(context);
             }
-            catch (Exception ex)
+            catch (CustomException ex)
             {
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = ex.Status;
                 context.Response.ContentType = "application/json";
-                var responseObj = new { message = ex.Message, status = 500 };
+                var responseObj = new { message = ex.Message, status = ex.Status };
                 var responseBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(responseObj));
                 await context.Response.Body.WriteAsync(responseBytes, 0, responseBytes.Length);
 

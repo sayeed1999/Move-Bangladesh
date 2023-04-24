@@ -122,6 +122,7 @@ if (app.Environment.IsDevelopment())
 
 // Custom middlewares..
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
