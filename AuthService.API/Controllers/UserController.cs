@@ -102,10 +102,13 @@ namespace AuthService.API
             if (response.Status >= 400)
                 throw new CustomException(response.Message, response.Status);
 
-            // send to message broker
-            await _publishEndpoint.Publish<UserRegistered>(user);
-
+            // form response
             response.Data = _mapper.Map<RegisterDto>(user);
+            response.Data.Roles = (List<string>)await _userManager.GetRolesAsync(user);
+
+            // send to message broker
+            await _publishEndpoint.Publish<UserRegistered>(response.Data);
+
             return Ok(response);
         }
 
