@@ -1,4 +1,4 @@
-﻿namespace AuthService.API
+﻿namespace RideSharing.Common.Entities
 {
     public class CustomException : Exception
     {

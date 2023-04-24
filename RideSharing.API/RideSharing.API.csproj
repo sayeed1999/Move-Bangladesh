@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RideSharing.Common\RideSharing.Common.csproj" />
     <ProjectReference Include="..\RideSharing.Service\RideSharing.Service.csproj" />
   </ItemGroup>
 

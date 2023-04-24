@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using RideSharing.Entity;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using AuthService.API.Helpers;
 using RideSharing.Entity.Constants;
 using AuthService.API;
+using RideSharing.Common.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;

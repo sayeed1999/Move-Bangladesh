@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using RideSharing.Entity;
 using System.Text;
 
-namespace AuthService.API.Helpers
+namespace RideSharing.Common.Middlewares
 {
     public class ExceptionHandlingMiddleware
     {

@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using RideSharing.Entity;
+using RideSharing.Common.Entities;
 using System.Text;
 
-namespace RideSharing.API.Helpers
+namespace RideSharing.Common.Middlewares
 {
-    public class ExceptionHandlingMiddleware
+    public class CustomExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next)
+        public CustomExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
         }

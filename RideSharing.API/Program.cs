@@ -7,9 +7,9 @@ using Microsoft.OpenApi.Models;
 using RideSharing.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using RideSharing.API.Helpers;
 using RideSharing.Entity.Constants;
 using RideSharing.API;
+using RideSharing.Common.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -115,6 +115,7 @@ if (app.Environment.IsDevelopment())
 
 // Custom middlewares..
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

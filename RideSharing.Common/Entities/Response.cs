@@ -1,4 +1,4 @@
-﻿namespace RideSharing.API
+﻿namespace RideSharing.Common.Entities
 {
     public class Response<T> where T : class
     {

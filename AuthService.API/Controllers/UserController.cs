@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using RideSharing.Common.Entities;
 using RideSharing.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
