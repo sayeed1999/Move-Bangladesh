@@ -194,6 +194,35 @@ namespace AuthService.API
             return Ok(serviceResponse);
         }
 
+        [HttpDelete("email/{email}")]
+        public async Task<ActionResult<Response<RegisterDto>>> Delete([FromRoute]string email)
+        {
+            var response = new Response<RegisterDto>();
+
+            User user = await _userManager.FindByEmailAsync(email);
+
+            if (user is null)
+            {
+                response.Status = 404;
+                response.Message = "User not found by this email!";
+            }
+            else
+            {
+                int removedRolesCount = await RemoveRolesFromUser(user, new List<string>());
+                var deleted = await _userManager.DeleteAsync(user);
+                if (deleted.Succeeded == false)
+                {
+                    response.Message = "Deleting user failed.";
+                    response.Status = 400;
+                }
+            }
+
+            if (response.Status >= 400)
+                throw new CustomException(response.Message, response.Status);
+
+            return Ok(response);
+        }
+
         private async Task UpdateUserRoles(User user, IEnumerable<string> roles)
         {
             await AddRolesToUser(user, roles);
