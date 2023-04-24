@@ -38,55 +38,16 @@ namespace AuthService.API
         [HttpPost("register/internal")]
         public async Task<ActionResult<Response<RegisterDto>>> RegisterInternal(RegisterDto model)
         {
-            var response = new Response<RegisterDto>();
-
             if (!ModelState.IsValid) // this one line with check "are all required fields of registerDto provided or not"
                 throw new CustomException("Model is not valid!", 400);
-            
-            var user = new User
-            {                    
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                UserName = string.IsNullOrEmpty(model.UserName) ? model.Email : model.UserName,
-            };
 
-            if (model.Password != model.ConfirmPassword) 
-                throw new CustomException("Password & confirm password don't match", 400);
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                response.Message = "User registered successfully!";
-                User registeredUser = await _userManager.FindByEmailAsync(user.Email);
-
-                int addedRoleCount = await AddRolesToUser(registeredUser, model.Roles);
-                response.Message += " User is added to " + addedRoleCount + " respective roles.";
-            }
-            else
-            {
-                response.Message = "Errors occured:-\n";
-                foreach (var error in result.Errors)
-                {
-                    response.Message += error.Description + "\n";
-                }
-                response.Status = 400;
-            }
-            
-            if (response.Status >= 400)
-                throw new CustomException(response.Message, response.Status);
-
-            response.Data = _mapper.Map<RegisterDto>(user);
-            return Ok(response);
+            return await RegisterUser(model);
         }
 
         [AllowAnonymous]
         [HttpPost("register/external")]
         public async Task<ActionResult<Response<RegisterDto>>> RegisterExternal(RegisterDto model)
         {
-            var response = new Response<RegisterDto>();
-
             if (!ModelState.IsValid) // this one line with check "are all required fields of registerDto provided or not"
                 throw new CustomException("Model is not valid!", 400);
 
@@ -95,6 +56,13 @@ namespace AuthService.API
             {
                 throw new CustomException("Cannot register with internal access or admininstrator roles", 401);
             }
+
+            return await RegisterUser(model);
+        }
+
+        private async Task<ActionResult<Response<RegisterDto>>> RegisterUser(RegisterDto model)
+        {
+            var response = new Response<RegisterDto>();
 
             var user = new User
             {
@@ -234,10 +202,7 @@ namespace AuthService.API
             var serviceResponse = new Response<RegisterDto>();
             serviceResponse.Data = model;
 
-            if (email != model.Email)
-                throw new CustomException("Email in the route and email in the form body don't match!", 400);
-
-            User user = await _userManager.FindByEmailAsync(model.Email);
+            User user = await _userManager.FindByEmailAsync(email);
             if (user is null)
                 throw new CustomException("User not found!", 404);
 
@@ -247,15 +212,7 @@ namespace AuthService.API
             if (model.LastName is not null && user.LastName != model.LastName) user.LastName = model.LastName;
 
             await _userManager.UpdateAsync(user);
-
-            // only internal users can change roles...
-            if (model.Roles.Contains(RideSharing.Entity.Constants.Role.Admin)
-                || model.Roles.Contains(RideSharing.Entity.Constants.Role.Moderator))
-            {
-                // TODO:- check if there is only one admin, and he made him non-admin, then restrict it!
-
-                await UpdateUserRoles(user, model.Roles);
-            }
+            await UpdateUserRoles(user, model.Roles);
 
             return Ok(serviceResponse);
         }
@@ -298,9 +255,21 @@ namespace AuthService.API
         private async Task<int> AddRolesToUser(User user, IEnumerable<string> roles)
         {
             int addedRoleCount = 0;
+            var rolesInDB = await _userManager.GetRolesAsync(user);
+
             foreach (string role in roles)
             {
-                if (string.IsNullOrWhiteSpace(role)) continue;
+                // A non-admin user can not add an admin role to his account
+                if (
+                    !rolesInDB.Contains(RideSharing.Entity.Constants.Role.Admin)
+                    && !rolesInDB.Contains(RideSharing.Entity.Constants.Role.Moderator)
+                    && (
+                        role == RideSharing.Entity.Constants.Role.Admin
+                        || role == RideSharing.Entity.Constants.Role.Moderator
+                    )
+                ) continue;
+
+                    if (string.IsNullOrWhiteSpace(role)) continue;
                 if (!(await _roleManager.RoleExistsAsync(role))) continue;
                 if (!(await _userManager.IsInRoleAsync(user, role.ToLower().Trim())))
                 {
@@ -311,14 +280,20 @@ namespace AuthService.API
             return addedRoleCount;
         }
 
-        private async Task<int> RemoveRolesFromUser(User user, IEnumerable<string> currentRoles)
+        private async Task<int> RemoveRolesFromUser(User user, IEnumerable<string> newRoles)
         {
             int removedRoleCount = 0;
-            var rolesInDB = await _userManager.GetRolesAsync(user);
+            var oldRoles = await _userManager.GetRolesAsync(user);
 
-            foreach (var role in rolesInDB)
+            // Only internal users can remove role
+            if (
+                !oldRoles.Contains(RideSharing.Entity.Constants.Role.Admin)
+                && !oldRoles.Contains(RideSharing.Entity.Constants.Role.Moderator)
+            ) return removedRoleCount;
+
+            foreach (var role in oldRoles)
             {
-                if (currentRoles.Count(x => x == role) == 0)
+                if (newRoles.Count(x => x == role) == 0)
                 {
                     await _userManager.RemoveFromRoleAsync(user, role);
                     ++removedRoleCount;
