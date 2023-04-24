@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RideSharing.Common.Entities;
+using RideSharing.Common.MessageBroker.Messages;
 using RideSharing.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -19,17 +20,20 @@ namespace AuthService.API
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private MassTransit.IPublishEndpoint _publishEndpoint;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly AppSettings _appSettings;
 
         public UserController(
             IMapper mapper,
+            MassTransit.IPublishEndpoint publishEndpoint,
             UserManager<User> userManager, 
             RoleManager<Role> roleManager, 
             IOptions<AppSettings> appSettings
         ) {
             _mapper = mapper;
+            _publishEndpoint = publishEndpoint;
             _userManager = userManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
@@ -97,6 +101,9 @@ namespace AuthService.API
 
             if (response.Status >= 400)
                 throw new CustomException(response.Message, response.Status);
+
+            // send to message broker
+            await _publishEndpoint.Publish<UserRegistered>(user);
 
             response.Data = _mapper.Map<RegisterDto>(user);
             return Ok(response);
