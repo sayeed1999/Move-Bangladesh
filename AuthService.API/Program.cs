@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using RideSharing.Entity.Constants;
 using AuthService.API;
 using RideSharing.Common.Middlewares;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -57,6 +58,12 @@ builder.Services.AddAuthorization(options =>
             RideSharing.Entity.Constants.Role.Admin, 
             RideSharing.Entity.Constants.Role.Moderator)
         );
+});
+
+// Configuring message bus...
+builder.Services.AddMassTransit(options =>
+{
+    options.UsingRabbitMq();
 });
 
 builder.Services.AddMvcCore(options =>
