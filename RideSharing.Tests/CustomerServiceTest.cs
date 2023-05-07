@@ -9,43 +9,51 @@ using System.Threading.Tasks;
 using Moq;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using RideSharing.Tests.MockRepositories;
 
 namespace RideSharing.Tests
 {
     public class CustomerServiceTest
     {
-        private readonly Mock<IBaseRepository<Customer>> _mockRepository;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly Mock<IBaseRepository<Customer>> _customerRepository;
+        private readonly IServiceProvider _serviceProvider; // how to use it ??
 
         public CustomerServiceTest()
         {
-            _mockRepository = new Mock<IBaseRepository<Customer>>();
-
-            var services = new ServiceCollection();
-            services.AddTransient<IBaseRepository<Customer>>(sp => _mockRepository.Object);
-
-            _serviceProvider = services.BuildServiceProvider();
+            _customerRepository = new MockCustomerRepository().SetupAllMethodsUsingBuilderPattern();
         }
 
-        private IBaseRepository<Customer> GetCustomerService()
+        private ICustomerService GetCustomerService()
         {
-            var service = _serviceProvider.GetRequiredService<IBaseRepository<Customer>>();
+            var service = new CustomerService(_customerRepository.Object);
             return service;
         }
 
         [Fact]
-        public async Task GetCustomers()
+        public async Task GetCustomers_Return_Array_Of_Customers()
         {
             // Arrange
             var customerService = GetCustomerService();
-            // Add any necessary setup for your mock repository
 
             // Act
             var customers = await customerService.GetAllAsync();
         
             // Assert
-            Assert.Equal(0, customers.Count());
+            Assert.Equal(2, customers.Count());
         }
 
+        [Fact]
+        public async Task GetCustomerById_Return_Single_Customer()
+        {
+            // Arrange
+            var customerService = GetCustomerService();
+
+            // Act
+            var customer = await customerService.FindByIdAsync(1);
+
+            // Assert
+            Assert.IsType<Customer>(customer);
+            Assert.Equal(1, customer.Id);
+        }
     }
 }
