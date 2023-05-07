@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using RideSharing.Tests.MockRepositories;
 
-namespace RideSharing.Tests
+namespace RideSharing.Tests.Tests
 {
     public class CustomerServiceTest
     {
@@ -37,7 +37,7 @@ namespace RideSharing.Tests
 
             // Act
             var customers = await customerService.GetAllAsync();
-        
+
             // Assert
             Assert.Equal(2, customers.Count());
         }
