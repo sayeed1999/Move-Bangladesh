@@ -35,9 +35,9 @@ namespace RideSharing.Service
             return await _repository.GetAllAsync();
         }
 
-        public virtual async Task<T> FindAsync(long id)
+        public virtual async Task<T> FindByIdAsync(long id)
         {
-            return await _repository.FindAsync(id);
+            return await _repository.FindByIdAsync(id);
         }
 
         public virtual async Task AddAsync(T item)
