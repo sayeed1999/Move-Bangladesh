@@ -4,10 +4,10 @@
 
 namespace RideSharing.API
 {
-    // TODO: I don't want endpoints for this generic controller, can't do it!
+    // abstract class won't create endpoints in swagger
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class BaseController : ControllerBase
+    public abstract class BaseController : ControllerBase
     {
         // GET: api/<BaseController>
         [HttpGet]
