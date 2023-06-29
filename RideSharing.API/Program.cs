@@ -7,11 +7,11 @@ using Microsoft.OpenApi.Models;
 using RideSharing.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using RideSharing.Entity.Constants;
 using RideSharing.API;
 using RideSharing.Common.Middlewares;
 using MassTransit;
 using RideSharing.API.MessageBroker.Consumers;
+using AuthService.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -47,10 +47,10 @@ builder.Services
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy(AuthorizationPolicy.AdminOnly,
+    options.AddPolicy(AuthorizationPolicies.AdminOnly,
         policy => policy.RequireRole(
-            RideSharing.Entity.Constants.Role.Admin,
-            RideSharing.Entity.Constants.Role.Moderator)
+            Roles.Admin,
+            Roles.Moderator)
         );
 });
 
