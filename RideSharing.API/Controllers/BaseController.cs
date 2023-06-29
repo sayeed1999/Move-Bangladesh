@@ -1,44 +1,57 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RideSharing.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RideSharing.API
 {
-    // TODO: I don't want endpoints for this generic controller, can't do it!
+    // abstract class won't create endpoints in swagger
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class BaseController : ControllerBase
+    public abstract class BaseController<T> : ControllerBase where T : class
     {
+        private IBaseService<T> baseService;
+        public BaseController(IBaseService<T> baseService)
+        {
+            this.baseService = baseService;
+        }
+
         // GET: api/<BaseController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<T>> GetAsync()
         {
-            return new string[] { "value1", "value2" };
+            return await baseService.GetAllAsync();
         }
 
         // GET api/<BaseController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<T> GetById(int id)
         {
-            return "value";
+            return await baseService.FindByIdAsync(id);
         }
 
         // POST api/<BaseController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Add([FromBody] T body)
         {
+            await baseService.AddAsync(body);
+            await baseService.SaveChangesAsync();
         }
 
         // PUT api/<BaseController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task UpdateById(int id, [FromBody] T body)
         {
+            baseService.UpdateById(id, body);
+            await baseService.SaveChangesAsync();
         }
 
         // DELETE api/<BaseController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
+            await baseService.DeleteByIdAsync(id);
+            await baseService.SaveChangesAsync();
         }
     }
 }
