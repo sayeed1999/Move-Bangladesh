@@ -6,20 +6,6 @@ using System.Threading.Tasks;
 
 namespace RideSharing.Entity.Enums
 {
-    public enum AccountStatus
-    {
-        Unknown,
-        Active,
-        Inactive,
-    }
-
-    public enum Gender
-    {
-        Unknown,
-        Male,
-        Female,
-    }
-
     public enum CabType
     {
         Unknown,
