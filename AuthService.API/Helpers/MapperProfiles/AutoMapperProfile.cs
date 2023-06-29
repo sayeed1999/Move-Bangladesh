@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using RideSharing.Entity;
+﻿using AuthService.Entity;
+using AutoMapper;
 
 namespace AuthService.API.Helpers
 {

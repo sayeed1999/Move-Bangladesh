@@ -7,12 +7,11 @@ using Microsoft.OpenApi.Models;
 using AuthService.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using RideSharing.Entity;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using RideSharing.Entity.Constants;
 using AuthService.API;
 using RideSharing.Common.Middlewares;
 using MassTransit;
+using AuthService.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -24,7 +23,7 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
 
 // For Identity
-builder.Services.AddIdentity<User, RideSharing.Entity.Role>()
+builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -53,10 +52,10 @@ builder.Services
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy(AuthorizationPolicy.AdminOnly, 
+    options.AddPolicy(AuthorizationPolicies.AdminOnly, 
         policy => policy.RequireRole(
-            RideSharing.Entity.Constants.Role.Admin, 
-            RideSharing.Entity.Constants.Role.Moderator)
+            Roles.Admin, 
+            Roles.Moderator)
         );
 });
 

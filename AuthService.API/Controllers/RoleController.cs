@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RideSharing.Common.Entities;
-using RideSharing.Entity;
+using AuthService.Entity;
 
 namespace AuthService.API
 {
-    [Authorize(Policy = RideSharing.Entity.Constants.AuthorizationPolicy.AdminOnly)]
+    [Authorize(Policy = AuthorizationPolicies.AdminOnly)]
     [Route("api/v1/roles")]
     [ApiController]
     public class RoleController : ControllerBase

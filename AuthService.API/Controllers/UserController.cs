@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AuthService.Entity;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,14 +8,13 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RideSharing.Common.Entities;
 using RideSharing.Common.MessageBroker.Messages;
-using RideSharing.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace AuthService.API
 {
-    [Authorize(Policy = RideSharing.Entity.Constants.AuthorizationPolicy.AdminOnly)]
+    [Authorize(Policy = AuthorizationPolicies.AdminOnly)]
     [Route("api/v1/users")]
     [ApiController]
     public class UserController : ControllerBase
@@ -55,8 +55,8 @@ namespace AuthService.API
             if (!ModelState.IsValid) // this one line with check "are all required fields of registerDto provided or not"
                 throw new CustomException("Model is not valid!", 400);
 
-            if (model.Roles.Contains(RideSharing.Entity.Constants.Role.Admin)
-                || model.Roles.Contains(RideSharing.Entity.Constants.Role.Moderator))
+            if (model.Roles.Contains(Roles.Admin)
+                || model.Roles.Contains(Roles.Moderator))
             {
                 throw new CustomException("Cannot register with internal access or admininstrator roles", 401);
             }
@@ -271,11 +271,11 @@ namespace AuthService.API
             {
                 // A non-admin user can not add an admin role to his account
                 if (
-                    !rolesInDB.Contains(RideSharing.Entity.Constants.Role.Admin)
-                    && !rolesInDB.Contains(RideSharing.Entity.Constants.Role.Moderator)
+                    !rolesInDB.Contains(Roles.Admin)
+                    && !rolesInDB.Contains(Roles.Moderator)
                     && (
-                        role == RideSharing.Entity.Constants.Role.Admin
-                        || role == RideSharing.Entity.Constants.Role.Moderator
+                        role == Roles.Admin
+                        || role == Roles.Moderator
                     )
                 ) continue;
 
@@ -297,8 +297,8 @@ namespace AuthService.API
 
             // Only internal users can remove role
             if (
-                !oldRoles.Contains(RideSharing.Entity.Constants.Role.Admin)
-                && !oldRoles.Contains(RideSharing.Entity.Constants.Role.Moderator)
+                !oldRoles.Contains(Roles.Admin)
+                && !oldRoles.Contains(Roles.Moderator)
             ) return removedRoleCount;
 
             foreach (var role in oldRoles)
