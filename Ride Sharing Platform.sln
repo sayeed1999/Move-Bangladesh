@@ -35,7 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ride Sharing Service", "Rid
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog Service", "Blog Service", "{03925DF6-290D-448A-873A-59529A5AAC91}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{E6F40B46-EECD-43CE-B322-34D7BAD03D82}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common Projects", "Common Projects", "{E6F40B46-EECD-43CE-B322-34D7BAD03D82}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogService.API", "BlogService.API\BlogService.API.csproj", "{B64FF202-7406-4E93-81D3-A9DE760F9D54}"
 EndProject
