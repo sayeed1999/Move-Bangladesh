@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace BlogService.Entity
 {
-    public class Edge
+    public class Edge : Audit
     {
         public long Id { get; set; }
         public EdgeType EdgeType { get; set; }
-        public User User { get; set; }
-        public long UserId { get; set; }
-
+        public Node FromDestination { get; set; }
+        public long FromDestinationId { get; set; }
+        public Node ToDestination { get; set; }
+        public long ToDestinationId { get; set; }
     }
 }
