@@ -27,6 +27,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\BlogService.Service\BlogService.Service.csproj" />
+	  <ProjectReference Include="..\RideSharing.Repository\RideSharing.Repository.csproj" />
 	</ItemGroup>
 
 </Project>
