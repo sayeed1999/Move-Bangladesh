@@ -17,8 +17,7 @@ namespace BlogService.Entity
         public string Email { get; set; }
         [Required]
         public string Phone { get; set; }
-        [Required]
         public Gender Gender { get; set; }
-        public DateOnly? DOB { get; set; }
+        public DateTime DOB { get; set; }
     }
 }
