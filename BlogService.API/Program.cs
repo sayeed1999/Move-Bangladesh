@@ -3,7 +3,7 @@ using BlogService.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.Middlewares;
-using RideSharing.Repository;
+using Sayeed.NTier.Generic.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
