@@ -1,4 +1,5 @@
 ﻿using RideSharing.Entity;
+using Sayeed.NTier.Generic.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

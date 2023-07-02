@@ -1,5 +1,4 @@
 ﻿using RideSharing.Service;
-using RideSharing.Repository;
 using RideSharing.Entity;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using Moq;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using RideSharing.Tests.MockRepositories;
+using Sayeed.NTier.Generic.Repository;
 
 namespace RideSharing.Tests.Tests
 {

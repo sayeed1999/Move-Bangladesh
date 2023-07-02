@@ -1,7 +1,7 @@
 ﻿using Moq;
 using RideSharing.Entity;
-using RideSharing.Repository;
 using RideSharing.Common.Enums;
+using Sayeed.NTier.Generic.Repository;
 
 namespace RideSharing.Tests.MockRepositories
 {
