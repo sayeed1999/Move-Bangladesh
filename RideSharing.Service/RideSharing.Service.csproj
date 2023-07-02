@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RideSharing.Repository\RideSharing.Repository.csproj" />
+    <ProjectReference Include="..\RideSharing.Entity\RideSharing.Entity.csproj" />
+    <ProjectReference Include="..\Sayeed.NTier.Generic\Sayeed.NTier.Generic.csproj" />
   </ItemGroup>
 
 </Project>

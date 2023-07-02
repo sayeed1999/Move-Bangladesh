@@ -1,10 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
-using RideSharing.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using RideSharing.API;
@@ -13,7 +11,9 @@ using MassTransit;
 using RideSharing.API.MessageBroker.Consumers;
 using AuthService.Entity;
 using RideSharing.Service;
-using RideSharing.Repository;
+using Sayeed.NTier.Generic.Repository;
+using RideSharing.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
