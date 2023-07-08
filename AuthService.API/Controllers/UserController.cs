@@ -83,24 +83,24 @@ namespace AuthService.API
 
             if (result.Succeeded)
             {
-                response.Message = "User registered successfully!";
+                response.Message.Append( "User registered successfully!");
                 User registeredUser = await _userManager.FindByEmailAsync(user.Email);
 
                 int addedRoleCount = await AddRolesToUser(registeredUser, model.Roles);
-                response.Message += " User is added to " + addedRoleCount + " respective roles.";
+                response.Message.Append( " User is added to " + addedRoleCount + " respective roles.");
             }
             else
             {
-                response.Message = "Errors occured:-\n";
+                response.Message.Append("Errors occured:-\n");
                 foreach (var error in result.Errors)
                 {
-                    response.Message += error.Description + "\n";
+                    response.Message.Append(error.Description + "\n");
                 }
                 response.Status = 400;
             }
 
             if (response.Status >= 400)
-                throw new CustomException(response.Message, response.Status);
+                throw new CustomException(response.Message.ToString(), response.Status);
 
             // form response
             response.Data = _mapper.Map<RegisterDto>(user);
@@ -237,7 +237,7 @@ namespace AuthService.API
             if (user is null)
             {
                 response.Status = 404;
-                response.Message = "User not found by this email!";
+                response.Message.Append("User not found by this email!");
             }
             else
             {
@@ -245,13 +245,13 @@ namespace AuthService.API
                 var deleted = await _userManager.DeleteAsync(user);
                 if (deleted.Succeeded == false)
                 {
-                    response.Message = "Deleting user failed.";
+                    response.Message.Append("Deleting user failed.");
                     response.Status = 400;
                 }
             }
 
             if (response.Status >= 400)
-                throw new CustomException(response.Message, response.Status);
+                throw new CustomException(response.Message.ToString(), response.Status);
 
             return Ok(response);
         }
