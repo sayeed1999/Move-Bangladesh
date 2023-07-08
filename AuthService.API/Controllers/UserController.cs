@@ -107,7 +107,7 @@ namespace AuthService.API
             response.Data.Roles = (List<string>)await _userManager.GetRolesAsync(user);
 
             // send to message broker
-            await _publishEndpoint.Publish<UserRegistered>(response.Data);
+            await _publishEndpoint.Publish<IUserRegistered>(response.Data);
 
             return Ok(response);
         }
@@ -171,7 +171,7 @@ namespace AuthService.API
                 }
 
                 users.Add(_mapper.Map<RegisterDto>(user));
-                users[users.Count - 1].Roles = roles;
+                users[^1].Roles = roles;
             }
 
             serviceResponse.Data = users;

@@ -37,7 +37,7 @@ namespace AuthService.API
             {
                 foreach (var role in _roleManager.Roles)
                 {
-                    temp.Add(role.Name);
+                    if (role.Name != null) temp.Add(role.Name);
                 }
                 if (temp.Count == 0) serviceResponse.Message.Append(  "No roles found. Try inserting roles.");
             }
