@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -36,14 +37,14 @@ namespace AuthService.API
             {
                 foreach (var role in _roleManager.Roles)
                 {
-                    temp.Add(role.Name);
+                    if (role.Name != null) temp.Add(role.Name);
                 }
-                if (temp.Count == 0) serviceResponse.Message = "No roles found. Try inserting roles.";
+                if (temp.Count == 0) serviceResponse.Message.Append(  "No roles found. Try inserting roles.");
             }
             catch (Exception ex)
             {
                 serviceResponse.Status = 400;
-                serviceResponse.Message = ex.Message;
+                serviceResponse.Message = new StringBuilder(ex.Message);
             }
             serviceResponse.Data = temp;
             if (serviceResponse.Status < 300) return Ok(serviceResponse);
@@ -64,7 +65,7 @@ namespace AuthService.API
                 throw new CustomException("Role already exists!", 405);
 
             await _roleManager.CreateAsync(new Role() { Name = newRole.Name.Trim().ToLower() });
-            serviceResponse.Message = "New role created!";
+            serviceResponse.Message.Append("New role created!");
 
             return Created("example.com", serviceResponse);
         }

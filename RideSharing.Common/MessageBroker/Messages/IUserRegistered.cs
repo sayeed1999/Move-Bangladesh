@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RideSharing.Common.MessageBroker.Messages
 {
-    public interface UserModified
+    public interface IUserRegistered
     {
         long Id { get; set; }
         string FirstName { get; set; }
