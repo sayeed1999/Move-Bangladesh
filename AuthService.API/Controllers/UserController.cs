@@ -20,20 +20,17 @@ namespace AuthService.API
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private MassTransit.IPublishEndpoint _publishEndpoint;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly AppSettings _appSettings;
 
         public UserController(
             IMapper mapper,
-            MassTransit.IPublishEndpoint publishEndpoint,
             UserManager<User> userManager, 
             RoleManager<Role> roleManager, 
             IOptions<AppSettings> appSettings
         ) {
             _mapper = mapper;
-            _publishEndpoint = publishEndpoint;
             _userManager = userManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
@@ -107,7 +104,6 @@ namespace AuthService.API
             response.Data.Roles = (List<string>)await _userManager.GetRolesAsync(user);
 
             // send to message broker
-            await _publishEndpoint.Publish<IUserRegistered>(response.Data);
 
             return Ok(response);
         }
