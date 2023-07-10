@@ -6,6 +6,8 @@ namespace RideSharing.Common.MessageQueues.Receiver
 {
     public class RabbitMQReceiver : RabbitMQBase
     {
+        private readonly ManualResetEventSlim _eventSlim = new();
+
         public RabbitMQReceiver(string exchange) : this(exchange, null) { }
 
         public RabbitMQReceiver(string exchange, string? routingKey) : base(exchange, routingKey) { }
@@ -38,9 +40,17 @@ namespace RideSharing.Common.MessageQueues.Receiver
                         channel.BasicConsume(queue: queueName,
                                              autoAck: true,
                                              consumer: consumer);
+
+                        _eventSlim.Wait();
                     }
                 }
             });
+        }
+
+        public void Stop()
+        {
+            _eventSlim.Set();
+            _eventSlim.Dispose();
         }
     }
 }
