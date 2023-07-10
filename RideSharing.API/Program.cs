@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using RideSharing.API;
 using RideSharing.Common.Middlewares;
-using RideSharing.API.MessageBroker.Consumers;
 using AuthService.Entity;
 using RideSharing.Service;
 using Sayeed.NTier.Generic.Repository;
