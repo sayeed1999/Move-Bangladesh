@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RideSharing.Common.MessageBroker.Messages
+namespace RideSharing.Common.MessageQueues.Messages
 {
     public interface IUserModified
     {
