@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 
 namespace RideSharing.Common.MessageQueues.Emitter
 {
-    public class RabbitMQEmitter<T> : RabbitMQBase
+    public abstract class RabbitMQEmitter<T> : RabbitMQBase
     {
         private BlockingCollection<T> messages = new();
 
