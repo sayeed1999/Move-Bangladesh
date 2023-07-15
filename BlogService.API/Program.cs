@@ -1,7 +1,10 @@
 using BlogService.API.Entities;
+using BlogService.API.MessageQueues.Receiver;
 using BlogService.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
+using RideSharing.Common.MessageQueues.Receiver;
 using RideSharing.Common.Middlewares;
 using Sayeed.NTier.Generic.Repository;
 
@@ -14,7 +17,28 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 // For Entity Framework
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options => {
+    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// rabbitmq emitter configs
+
+builder.Services.AddSingleton<UserRegisteredConsumer>(provider =>
+{
+    var emitter = new UserRegisteredConsumer();
+    emitter.Start();
+    return emitter;
+});
+
+builder.Services.AddSingleton<UserModifiedConsumer>(provider =>
+{
+    var emitter = new UserModifiedConsumer();
+    emitter.Start();
+    return emitter;
+});
 
 // registering services
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -30,6 +54,19 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 var app = builder.Build();
+
+// stopping rabbitmq instances
+
+var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+lifetime.ApplicationStopping.Register(() =>
+{
+    var emitter = app.Services.GetRequiredService<UserRegisteredConsumer>();
+    emitter.Stop();
+
+    var emitter2 = app.Services.GetRequiredService<UserModifiedConsumer>();
+    emitter2.Stop();
+});
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
