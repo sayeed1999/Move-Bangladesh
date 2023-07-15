@@ -1,11 +1,7 @@
 ﻿using RideSharing.Common.MessageQueues.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RideSharing.Common.MessageQueues.Receiver;
 
-namespace RideSharing.Common.MessageQueues.Receiver
+namespace BlogService.API.MessageQueues.Receiver
 {
     public class UserRegisteredConsumer : RabbitMQReceiver<UserRegistered>
     {

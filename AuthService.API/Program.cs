@@ -11,6 +11,10 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using AuthService.API;
 using RideSharing.Common.Middlewares;
 using AuthService.Entity;
+using RideSharing.Common.MessageQueues.Emitter;
+using Microsoft.Extensions.Hosting;
+using RideSharing.Common.MessageQueues.Receiver;
+using AuthService.API.MessageQueues.Emitter;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -70,6 +74,22 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => {
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+// rabbitmq emitter configs
+
+builder.Services.AddSingleton<UserRegisteredEmitter>(provider =>
+{
+    var emitter = new UserRegisteredEmitter();
+    emitter.Start();
+    return emitter;
+});
+
+builder.Services.AddSingleton<UserModifiedEmitter>(provider =>
+{
+    var emitter = new UserModifiedEmitter();
+    emitter.Start();
+    return emitter;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -111,6 +131,19 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 
 var app = builder.Build();
+
+// stopping rabbitmq instances
+
+var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+lifetime.ApplicationStopping.Register(() =>
+{
+    var emitter = app.Services.GetRequiredService<UserRegisteredEmitter>();
+    emitter.Stop();
+    
+    var emitter2 = app.Services.GetRequiredService<UserModifiedEmitter>();
+    emitter2.Stop();
+});
+
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())

@@ -1,5 +1,6 @@
 ﻿using AuthService.Entity;
 using AutoMapper;
+using RideSharing.Common.MessageQueues.Messages;
 
 namespace AuthService.API.Helpers
 {
@@ -9,6 +10,8 @@ namespace AuthService.API.Helpers
         {
             CreateMap<User, RegisterDto>();
             CreateMap<User, LoginDto>();
+            CreateMap<User, UserRegistered>();
+            CreateMap<User, UserModified>();
         }
     }
 }

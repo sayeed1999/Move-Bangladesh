@@ -1,4 +1,5 @@
-﻿using AuthService.Entity;
+﻿using AuthService.API.MessageQueues.Emitter;
+using AuthService.Entity;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RideSharing.Common.Entities;
-using RideSharing.Common.MessageBroker.Messages;
+using RideSharing.Common.MessageQueues.Messages;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -20,22 +21,26 @@ namespace AuthService.API
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly UserRegisteredEmitter _userRegisteredEmitter;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly AppSettings _appSettings;
 
         public UserController(
             IMapper mapper,
+            UserRegisteredEmitter userRegisteredEmitter,
             UserManager<User> userManager, 
             RoleManager<Role> roleManager, 
             IOptions<AppSettings> appSettings
         ) {
             _mapper = mapper;
+            _userRegisteredEmitter = userRegisteredEmitter;
             _userManager = userManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
         }
 
+        [AllowAnonymous]
         [HttpPost("register/internal")]
         public async Task<ActionResult<Response<RegisterDto>>> RegisterInternal(RegisterDto model)
         {
@@ -103,7 +108,11 @@ namespace AuthService.API
             response.Data = _mapper.Map<RegisterDto>(user);
             response.Data.Roles = (List<string>)await _userManager.GetRolesAsync(user);
 
-            // send to message broker
+            // send to message queue
+            UserRegistered userMessage = _mapper.Map<UserRegistered>(user);
+            userMessage.Roles = response.Data.Roles;
+            _userRegisteredEmitter.EnqueueMessage(userMessage);
+            //_userRegisterEmitter.EnqueueMessage("asd");
 
             return Ok(response);
         }

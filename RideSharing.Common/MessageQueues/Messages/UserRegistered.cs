@@ -8,13 +8,13 @@ namespace RideSharing.Common.MessageQueues.Messages
 {
     public class UserRegistered
     {
-        long Id { get; set; }
-        string FirstName { get; set; }
-        string LastName { get; set; }
-        short Gender { get; set; }
-        string Email { get; set; }
-        string UserName { get; set; }
-        string PhoneNumber { get; set; }
-        IEnumerable<string> Roles { get; set; }
+        public long Id { get; set; }
+        public long FirstName { get; set; }
+        public long LastName { get; set; }
+        public long Gender { get; set; }
+        public long Email { get; set; }
+        public long UserName { get; set; }
+        public long PhoneNumber { get; set; }
+        public IEnumerable<string> Roles { get; set; }
     }
 }
