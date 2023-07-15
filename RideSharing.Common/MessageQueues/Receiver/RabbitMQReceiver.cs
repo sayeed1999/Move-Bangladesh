@@ -1,11 +1,15 @@
 ﻿using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using System.Text;
+using Newtonsoft.Json;
+using System.Collections.Concurrent;
+using System.Threading.Channels;
 
 namespace RideSharing.Common.MessageQueues.Receiver
 {
-    public class RabbitMQReceiver : RabbitMQBase
+    public abstract class RabbitMQReceiver<T> : RabbitMQBase where T : class
     {
+        protected BlockingCollection<T> messages = new();
         private readonly ManualResetEventSlim _eventSlim = new();
 
         public RabbitMQReceiver(string exchange) : this(exchange, null) { }
@@ -30,11 +34,16 @@ namespace RideSharing.Common.MessageQueues.Receiver
                                           exchange: exchange,
                                           routingKey: routingKey);
 
+                        // start processor..
+                        this.ProcessMessage();
+
                         var consumer = new EventingBasicConsumer(channel);
                         consumer.Received += (model, ea) =>
                         {
                             byte[] body = ea.Body.ToArray();
                             var message = Encoding.UTF8.GetString(body);
+                            T obj = JsonConvert.DeserializeObject<T>(message);
+                            messages.Add(obj);
                         };
 
                         channel.BasicConsume(queue: queueName,
@@ -47,10 +56,16 @@ namespace RideSharing.Common.MessageQueues.Receiver
             });
         }
 
+        /// <summary>
+        /// Implement consuming thread for messages blocking collection receiver
+        /// </summary>
+        protected abstract void ProcessMessage();
+
         public void Stop()
         {
             _eventSlim.Set();
             _eventSlim.Dispose();
+            messages.CompleteAdding();
         }
     }
 }
