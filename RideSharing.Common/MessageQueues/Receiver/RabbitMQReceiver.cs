@@ -10,7 +10,7 @@ namespace RideSharing.Common.MessageQueues.Receiver
     public abstract class RabbitMQReceiver<T> : RabbitMQBase where T : class
     {
         protected BlockingCollection<T> messages = new();
-        private readonly ManualResetEventSlim _eventSlim = new();
+        //private readonly ManualResetEventSlim _eventSlim = new();
 
         public RabbitMQReceiver(string exchange) : this(exchange, null) { }
 
@@ -26,16 +26,17 @@ namespace RideSharing.Common.MessageQueues.Receiver
                 {
                     using (var channel = connection.CreateModel())
                     {
-                        channel.ExchangeDeclare(exchange: exchange, type: exchangeType);
+                        channel.ExchangeDeclare(
+                            exchange: exchange, 
+                            type: exchangeType,
+                            durable: true,
+                            autoDelete: false);
 
                         // declare a server-named queue
                         var queueName = channel.QueueDeclare().QueueName;
                         channel.QueueBind(queue: queueName,
                                           exchange: exchange,
                                           routingKey: routingKey);
-
-                        // start processor..
-                        this.ProcessMessage();
 
                         var consumer = new EventingBasicConsumer(channel);
                         consumer.Received += (model, ea) =>
@@ -50,7 +51,10 @@ namespace RideSharing.Common.MessageQueues.Receiver
                                              autoAck: true,
                                              consumer: consumer);
 
-                        _eventSlim.Wait();
+                        // start processor..
+                        this.ProcessMessage();
+
+                        //_eventSlim.Wait();
                     }
                 }
             });
@@ -63,8 +67,8 @@ namespace RideSharing.Common.MessageQueues.Receiver
 
         public void Stop()
         {
-            _eventSlim.Set();
-            _eventSlim.Dispose();
+            //_eventSlim.Set();
+            //_eventSlim.Dispose();
             messages.CompleteAdding();
         }
     }

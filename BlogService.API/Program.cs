@@ -26,19 +26,15 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // rabbitmq emitter configs
 
-builder.Services.AddSingleton<UserRegisteredConsumer>(provider =>
-{
-    var emitter = new UserRegisteredConsumer();
-    emitter.Start();
-    return emitter;
-});
+//builder.Services.AddSingleton<UserModifiedConsumer>(provider =>
+//{
+//    var emitter = new UserModifiedConsumer();
+//    emitter.Start();
+//    return emitter;
+//});
 
-builder.Services.AddSingleton<UserModifiedConsumer>(provider =>
-{
-    var emitter = new UserModifiedConsumer();
-    emitter.Start();
-    return emitter;
-});
+var userRegisteredConsumer = new UserRegisteredConsumer();
+userRegisteredConsumer.Start();
 
 // registering services
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -60,11 +56,7 @@ var app = builder.Build();
 var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
 lifetime.ApplicationStopping.Register(() =>
 {
-    var emitter = app.Services.GetRequiredService<UserRegisteredConsumer>();
-    emitter.Stop();
-
-    var emitter2 = app.Services.GetRequiredService<UserModifiedConsumer>();
-    emitter2.Stop();
+    userRegisteredConsumer.Stop();
 });
 
 
