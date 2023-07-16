@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace BlogService.Entity
 {
-    // TODO:- fix Audit issue in OnModelCreating()..
-    public class User// : Audit
+    public class User : Audit
     {
-        public long Id {  get; set; }
         public long AuthUserId { get; set; }
         [Required]
         public string Name { get; set; } = "";

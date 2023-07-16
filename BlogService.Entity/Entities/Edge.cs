@@ -8,7 +8,6 @@ namespace BlogService.Entity
 {
     public class Edge : Audit
     {
-        public long Id { get; set; }
         public EdgeType EdgeType { get; set; }
         public Node FromDestination { get; set; }
         public long FromDestinationId { get; set; }
