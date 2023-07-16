@@ -43,9 +43,12 @@ namespace Sayeed.NTier.Generic.Repository
 
         #region basic crud operations
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync(int page = 1, int pageSize = 10)
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet
+                        .Skip((page - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToListAsync();
         }
 
         public virtual async Task<T> FindByIdAsync(long id)

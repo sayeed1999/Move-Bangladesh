@@ -30,9 +30,9 @@ namespace Sayeed.NTier.Generic.Logic
 
         #region basic crud operations
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync(int page = 1, int pageSize = 10)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(page, pageSize);
         }
 
         public virtual async Task<T> FindByIdAsync(long id)

@@ -1,16 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sayeed.NTier.Generic.Logic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sayeed.NTier.Generic.Controller
 {
     public interface IBaseController<T> where T : class
     {
-        Task<IEnumerable<T>> GetAsync();
+        Task<IEnumerable<T>> GetAllAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10);
         Task<T> GetById(int id);
         Task Add([FromBody] T body);
         Task UpdateById(int id, [FromBody] T body);        
