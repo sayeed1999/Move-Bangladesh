@@ -1,4 +1,5 @@
 using BlogService.API.Entities;
+using BlogService.API.MessageQueues.Actions;
 using BlogService.API.MessageQueues.Receiver;
 using BlogService.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -25,16 +26,14 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => {
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // rabbitmq emitter configs
-
-//builder.Services.AddSingleton<UserModifiedConsumer>(provider =>
-//{
-//    var emitter = new UserModifiedConsumer();
-//    emitter.Start();
-//    return emitter;
-//});
+var actions = new Actions();
 
 var userRegisteredConsumer = new UserRegisteredConsumer();
-userRegisteredConsumer.Start();
+userRegisteredConsumer.Start(user => actions.OnUserRegistered(user));
+
+var userModifierConsumer = new UserModifiedConsumer();
+userModifierConsumer.Start(user => actions.OnUserModified(user));
+
 
 // registering services
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
