@@ -13,13 +13,5 @@ namespace RideSharing.Common.MessageQueues.Receiver
         {
             
         }
-
-        protected override void ProcessMessage()
-        {
-            foreach (UserModified message in messages.GetConsumingEnumerable())
-            {
-                // TODO:- do something..
-            }
-        }
     }
 }

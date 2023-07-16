@@ -4,6 +4,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Threading.Channels;
+using RideSharing.Common.MessageQueues.Messages;
 
 namespace RideSharing.Common.MessageQueues.Receiver
 {
@@ -16,11 +17,11 @@ namespace RideSharing.Common.MessageQueues.Receiver
 
         public RabbitMQReceiver(string exchange, string? routingKey) : base(exchange, routingKey) { }
 
-        public void Start()
+        public void Start(Func<T, Task> action)
         {
             var factory = new ConnectionFactory { HostName = hostName };
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 using (var connection = factory.CreateConnection())
                 {
@@ -52,7 +53,7 @@ namespace RideSharing.Common.MessageQueues.Receiver
                                              consumer: consumer);
 
                         // start processor..
-                        this.ProcessMessage();
+                        await this.ProcessMessageAsync(action);
 
                         //_eventSlim.Wait();
                     }
@@ -60,10 +61,13 @@ namespace RideSharing.Common.MessageQueues.Receiver
             });
         }
 
-        /// <summary>
-        /// Implement consuming thread for messages blocking collection receiver
-        /// </summary>
-        protected abstract void ProcessMessage();
+        private async Task ProcessMessageAsync(Func<T, Task> action)
+        {
+            foreach (T message in messages.GetConsumingEnumerable())
+            {
+                await action(message);
+            }
+        }
 
         public void Stop()
         {
