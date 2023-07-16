@@ -25,15 +25,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => {
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// rabbitmq emitter configs
-var actions = new Actions();
-
-var userRegisteredConsumer = new UserRegisteredConsumer();
-userRegisteredConsumer.Start(user => actions.OnUserRegistered(user));
-
-var userModifierConsumer = new UserModifiedConsumer();
-userModifierConsumer.Start(user => actions.OnUserModified(user));
-
+builder.Services.AddScoped<Actions>();
 
 // registering services
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -50,12 +42,25 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 var app = builder.Build();
 
-// stopping rabbitmq instances
 
+// rabbitmq emitter configs
+var userRegisteredConsumer = new UserRegisteredConsumer();
+var userModifierConsumer = new UserModifiedConsumer();
+
+var scope = app.Services.CreateScope();
+
+var actions = scope.ServiceProvider.GetRequiredService<Actions>();
+userRegisteredConsumer.Start(user => actions.OnUserRegistered(user));
+userModifierConsumer.Start(user => actions.OnUserModified(user));
+
+
+// stopping rabbitmq instances
 var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
 lifetime.ApplicationStopping.Register(() =>
 {
     userRegisteredConsumer.Stop();
+    userModifierConsumer.Stop();
+    scope.Dispose();
 });
 
 

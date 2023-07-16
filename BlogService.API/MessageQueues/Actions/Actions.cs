@@ -10,34 +10,33 @@ namespace BlogService.API.MessageQueues.Actions
     public class Actions
     {
         private readonly IMapper _mapper;
-        private readonly DbContextOptions<AppDbContext> _dbContextOptions;
+        private readonly AppDbContext _dbContext;
 
-        public Actions()
+        public Actions(IMapper mapper, AppDbContext dbContext)
         {
-            _mapper = new AutoMapperProfile().GetMapperInstance();
-            _dbContextOptions = new DbContextOptions<AppDbContext>();
-            
+            _mapper = mapper;
+            _dbContext = dbContext;
         }
 
         public async Task OnUserRegistered(UserRegistered message)
         {
             User user = _mapper.Map<User>(message);
-            // create an instance of AppDbContext
-            using (var dbContext = new AppDbContext(_dbContextOptions))
+
+            try
             {
-                await dbContext.Users.AddAsync(user);
-                await dbContext.SaveChangesAsync();
+                await _dbContext.Users.AddAsync(user);
+                await _dbContext.SaveChangesAsync();
+            } catch (Exception ex)
+            {
+                    
             }
         }
 
         public async Task OnUserModified(UserModified message)
         {
             User user = _mapper.Map<User>(message);
-            // create an instance of AppDbContext
-            using (var dbContext = new AppDbContext(_dbContextOptions))
-            {
-                // TODO:- update user
-            }
+
+            // TODO:- update user
         }
     }
 }
