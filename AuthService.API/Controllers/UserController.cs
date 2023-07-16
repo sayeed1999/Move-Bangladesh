@@ -40,7 +40,7 @@ namespace AuthService.API
             _appSettings = appSettings.Value;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous] //use this to create admin users (if not any)
         [HttpPost("register/internal")]
         public async Task<ActionResult<Response<RegisterDto>>> RegisterInternal(RegisterDto model)
         {
