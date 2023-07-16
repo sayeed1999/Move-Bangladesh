@@ -16,6 +16,7 @@ namespace BlogService.Infrastructure
         }
 
         #region dbsets
+        public DbSet<User> Users { get; set; }
         public DbSet<Node> Nodes { get; set; }
         public DbSet<Edge> Edges { get; set; }
         #endregion
