@@ -144,7 +144,7 @@ namespace BlogService.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BlogService.Entity.Edge", b =>
