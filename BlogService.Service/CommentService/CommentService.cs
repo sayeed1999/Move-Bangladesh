@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogService.Service.CommentService
 {
-    public class CommentService : BaseService<Node>
+    public class CommentService : BaseService<Node>, ICommentService
     {
         private readonly IBaseRepository<User> userRepository;
         private readonly IBaseRepository<Node> nodeRepository;

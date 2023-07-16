@@ -1,7 +1,11 @@
 using BlogService.API.Entities;
 using BlogService.API.MessageQueues.Actions;
 using BlogService.API.MessageQueues.Receiver;
+using BlogService.Entity;
 using BlogService.Infrastructure;
+using BlogService.Service.CommentService;
+using BlogService.Service.PostService;
+using BlogService.Service.UserService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
@@ -17,6 +21,13 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 
 // For Entity Framework
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
+// registering repository
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+// registering services
+builder.Services.AddScoped<DbContext, AppDbContext>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options => {
     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -26,9 +37,6 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => {
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<Actions>();
-
-// registering services
-builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

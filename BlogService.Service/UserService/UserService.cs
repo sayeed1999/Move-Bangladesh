@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogService.Service.UserService
 {
-    public class UserService : BaseService<User>
+    public class UserService : BaseService<User>, IUserService
     {
         private readonly IBaseRepository<User> userRepository;
         private readonly IBaseRepository<Node> nodeRepository;

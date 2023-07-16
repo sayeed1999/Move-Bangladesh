@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogService.Service.PostService
 {
-    public class PostService : BaseService<Node>
+    public class PostService : BaseService<Node>, IPostService
     {
         private readonly IBaseRepository<User> userRepository;
         private readonly IBaseRepository<Node> nodeRepository;
