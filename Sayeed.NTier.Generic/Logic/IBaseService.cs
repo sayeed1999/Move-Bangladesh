@@ -14,9 +14,9 @@ namespace Sayeed.NTier.Generic.Logic
         public Task<IEnumerable<T>> GetAllAsync();
         public Task<T> FindByIdAsync(long id); // FindAsync() is only for PK's!
         public Task AddAsync(T item);
-        public void Update(T item);
-        public void UpdateById(long id, T item);
-        public void Delete(T item);
+        public Task Update(T item);
+        public Task UpdateById(long id, T item);
+        public Task Delete(T item);
         public Task DeleteByIdAsync(long id);
         #endregion
 
