@@ -32,6 +32,12 @@ namespace BlogService.Infrastructure
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            // overriding key behaviors..
+            builder.Entity<User>()
+                .HasIndex(e => e.AuthUserId)
+                .IsUnique();
+
         }
     }
 }
