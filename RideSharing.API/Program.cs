@@ -41,7 +41,7 @@ builder.Services
             ValidateAudience = true,
             ValidAudience = configuration["AppSettings:JWT:ValidAudience"],
             ValidIssuer = configuration["AppSettings:JWT:ValidIssuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AppSettings:JWT:Secret"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AppSettings:JWT:Secret"] ?? string.Empty))
         };
     });
 

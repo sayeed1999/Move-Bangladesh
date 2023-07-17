@@ -43,7 +43,7 @@ namespace Sayeed.NTier.Generic.Repository
 
         public virtual async Task<T> FindByIdAsync(long id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id) ?? throw new InvalidOperationException();
         }
 
         public virtual async Task AddAsync(T item)
@@ -92,12 +92,11 @@ namespace Sayeed.NTier.Generic.Repository
 
         public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
         {
-            T? ret = null;
-            IQueryable<T> queryable = _dbSet.AsQueryable();
+            var queryable = _dbSet.AsQueryable();
             // foreach (Expression<Func<T, object>> i in includes) // another way of iterating over..
             for (var i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
-            ret = await queryable.SingleOrDefaultAsync(filter);
-            return ret;
+            var ret = await queryable.SingleOrDefaultAsync(filter);
+            return ret ?? throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -108,8 +107,8 @@ namespace Sayeed.NTier.Generic.Repository
         /// <returns></returns>
         public IQueryable<T> Where(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
         {
-            IQueryable<T> ret = _dbSet.Where(filter);
-            foreach (Expression<Func<T, object>> i in includes)
+            var ret = _dbSet.Where(filter);
+            foreach (var i in includes)
                 ret = ret.Include(i);
             return ret;
         }
@@ -132,7 +131,7 @@ namespace Sayeed.NTier.Generic.Repository
         /// <returns></returns>
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
         {
-            T? ret = null;
+            T? ret;
             if (includes.Length > 0)
             {
                 IQueryable<T> queryable = _dbSet.Include(includes[0]);
@@ -146,19 +145,18 @@ namespace Sayeed.NTier.Generic.Repository
             {
                 ret = await _dbSet.FirstOrDefaultAsync(filter);
             }
-            return ret;
+            return ret ?? throw new InvalidOperationException();
         }
 
         // Since LastOrDefault doesn't support anymore, we customized it!
         public async Task<T> LastOrDefaultAsync(params Expression<Func<T, object>>[] includes)
         {
-            T? ret = null;
-            IQueryable<T> queryable = _dbSet.AsQueryable();
+            var queryable = _dbSet.AsQueryable();
             for (var i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
 
-            ret = await queryable.Skip(_dbSet.Count() - 1).FirstOrDefaultAsync();
+            var ret = await queryable.Skip(_dbSet.Count() - 1).FirstOrDefaultAsync();
 
-            return ret;
+            return ret ?? throw new InvalidOperationException();
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter)
@@ -182,7 +180,7 @@ namespace Sayeed.NTier.Generic.Repository
             params Func<IQueryable<T>, IIncludableQueryable<T, object>>[] includes
         )
         {
-            IQueryable<T> queryable = _dbSet.Where(filter);
+            var queryable = _dbSet.Where(filter);
 
             foreach (var include in includes)
             {
@@ -203,14 +201,14 @@ namespace Sayeed.NTier.Generic.Repository
             params Func<IQueryable<T>, IIncludableQueryable<T, object>>[] includes
         )
         {
-            IQueryable<T> queryable = _dbSet.AsQueryable();
+            var queryable = _dbSet.AsQueryable();
 
             foreach (var include in includes)
             {
                 queryable = include(queryable);
             }
 
-            return await queryable.SingleOrDefaultAsync(filter);
+            return await queryable.SingleOrDefaultAsync(filter) ?? throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -224,7 +222,7 @@ namespace Sayeed.NTier.Generic.Repository
             params Func<IQueryable<T>, IIncludableQueryable<T, object>>[] includes
         )
         {
-            IQueryable<T> queryable = _dbSet.AsQueryable();
+            var queryable = _dbSet.AsQueryable();
 
             //use aggregate
             foreach (var include in includes)
@@ -232,7 +230,7 @@ namespace Sayeed.NTier.Generic.Repository
                 queryable = include(queryable);
             }
 
-            return await queryable.FirstOrDefaultAsync(filter);
+            return await queryable.FirstOrDefaultAsync(filter) ?? throw new InvalidOperationException();
         }
 
         public IQueryable<T> FromSql(string rawsql, params SqlParameter[] parameters)
