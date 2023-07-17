@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using BlogService.API.Helpers.MapperProfiles;
 using BlogService.Entity;
 using BlogService.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.MessageQueues.Messages;
 
 namespace BlogService.API.MessageQueues.Actions
@@ -20,21 +18,21 @@ namespace BlogService.API.MessageQueues.Actions
 
         public async Task OnUserRegistered(UserRegistered message)
         {
-            User user = _mapper.Map<User>(message);
+            var user = _mapper.Map<User>(message);
 
             try
             {
                 await _dbContext.Users.AddAsync(user);
                 await _dbContext.SaveChangesAsync();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                    
             }
         }
 
         public async Task OnUserModified(UserModified message)
         {
-            User user = _mapper.Map<User>(message);
+            var user = _mapper.Map<User>(message);
 
             // TODO:- update user
         }

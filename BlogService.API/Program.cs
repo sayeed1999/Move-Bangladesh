@@ -1,7 +1,6 @@
 using BlogService.API.Entities;
 using BlogService.API.MessageQueues.Actions;
 using BlogService.API.MessageQueues.Receiver;
-using BlogService.Entity;
 using BlogService.Infrastructure;
 using BlogService.Service.CommentService;
 using BlogService.Service.PostService;
@@ -14,7 +13,7 @@ using RideSharing.Common.Middlewares;
 using Sayeed.NTier.Generic.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigurationManager configuration = builder.Configuration;
+var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
@@ -29,7 +28,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 
-builder.Services.AddControllers().AddNewtonsoftJson(options => {
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
@@ -50,7 +50,6 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 var app = builder.Build();
 
-
 // rabbitmq emitter configs
 var userRegisteredConsumer = new UserRegisteredConsumer();
 var userModifierConsumer = new UserModifiedConsumer();
@@ -61,7 +60,6 @@ var actions = scope.ServiceProvider.GetRequiredService<Actions>();
 userRegisteredConsumer.Start(user => actions.OnUserRegistered(user));
 userModifierConsumer.Start(user => actions.OnUserModified(user));
 
-
 // stopping rabbitmq instances
 var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
 lifetime.ApplicationStopping.Register(() =>
@@ -70,7 +68,6 @@ lifetime.ApplicationStopping.Register(() =>
     userModifierConsumer.Stop();
     scope.Dispose();
 });
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

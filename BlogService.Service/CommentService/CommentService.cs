@@ -1,11 +1,6 @@
 ﻿using BlogService.Entity;
 using Sayeed.NTier.Generic.Logic;
 using Sayeed.NTier.Generic.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogService.Service.CommentService
 {
@@ -25,6 +20,5 @@ namespace BlogService.Service.CommentService
             this.nodeRepository = nodeRepository;
             this.edgeRepository = edgeRepository;
         }
-
     }
 }

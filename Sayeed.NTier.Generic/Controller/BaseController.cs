@@ -17,7 +17,7 @@ namespace Sayeed.NTier.Generic.Controller
 
         // GET: api/<BaseController>
         [HttpGet]
-        public async Task<IEnumerable<T>> GetAllAsync([FromQuery]int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<IEnumerable<T>> GetAllAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             return await baseService.GetAllAsync(page, pageSize);
         }

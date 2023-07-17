@@ -1,9 +1,5 @@
-﻿
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RideSharing.Entity;
-using System.Reflection.Emit;
 
 namespace RideSharing.Infrastructure
 {
@@ -14,14 +10,18 @@ namespace RideSharing.Infrastructure
         }
 
         #region Rating
+
         public DbSet<CustomerRating> CustomerRatings { get; set; }
         public DbSet<DriverRating> DriverRatings { get; set; }
-        #endregion
+
+        #endregion Rating
 
         #region User
+
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Driver> Drivers { get; set; }
-        #endregion
+
+        #endregion User
 
         public DbSet<Cab> Cabs { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -40,7 +40,6 @@ namespace RideSharing.Infrastructure
             }
 
             // Separate configuration files...
-
         }
     }
 }

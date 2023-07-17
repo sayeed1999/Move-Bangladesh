@@ -22,7 +22,6 @@ namespace RideSharing.Common.MessageQueues
                 this.routingKey == string.Empty
                 ? ExchangeType.Fanout
                 : ExchangeType.Direct;
-
         }
     }
 }

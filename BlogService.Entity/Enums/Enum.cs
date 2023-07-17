@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlogService.Entity
+﻿namespace BlogService.Entity
 {
     public enum NodeType
     {
         User = 1,
-        
+
         Post = 5,
         Comment = 6,
         Reply = 7,
@@ -30,7 +24,7 @@ namespace BlogService.Entity
         SharedBy = 10,
         Tagged = 11,
         TaggedAt = 12,
-        
+
         ReactedLove = 50,
         ReactedLoveBy = 51,
         ReactedHaha = 52,
@@ -39,7 +33,7 @@ namespace BlogService.Entity
         ReactedAngryBy = 55,
         ReactedCrying = 56,
         ReactedCryingBy = 57,
-        
+
         Reported = 100,
         ReportedBy = 101,
     }

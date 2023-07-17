@@ -2,7 +2,6 @@
 using BlogService.Service.UserService;
 using Microsoft.AspNetCore.Mvc;
 using Sayeed.NTier.Generic.Controller;
-using Sayeed.NTier.Generic.Logic;
 
 namespace BlogService.API.Controllers
 {
@@ -12,7 +11,6 @@ namespace BlogService.API.Controllers
     {
         public UserController(IUserService baseService) : base(baseService)
         {
-
         }
     }
 }

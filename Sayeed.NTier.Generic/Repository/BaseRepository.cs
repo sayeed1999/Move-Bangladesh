@@ -1,21 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
 
 namespace Sayeed.NTier.Generic.Repository
 {
     // TODO: I want to make it abstract, but failing to do it!
-    public class BaseRepository<T> : IBaseRepository<T> 
+    public class BaseRepository<T> : IBaseRepository<T>
         where T : class
     {
-
         #region initializations & declarations
 
         private readonly DbContext _dbContext;
@@ -27,8 +20,7 @@ namespace Sayeed.NTier.Generic.Repository
             _dbSet = dbContext.Set<T>();
         }
 
-        #endregion
-
+        #endregion initializations & declarations
 
         /// <summary>
         /// Need to be called after certain operations on db: add update delete, otherwise changes will not be saved..
@@ -38,8 +30,6 @@ namespace Sayeed.NTier.Generic.Repository
         {
             return await _dbContext.SaveChangesAsync();
         }
-
-
 
         #region basic crud operations
 
@@ -66,9 +56,9 @@ namespace Sayeed.NTier.Generic.Repository
         public virtual void UpdateById(long id, T item)
         {
             // trick from StackOverFlow
-            Type t = item.GetType();
-            PropertyInfo prop = t.GetProperty("Id");
-            long itemId = (long)prop.GetValue(item);
+            var t = item.GetType();
+            var prop = t.GetProperty("Id");
+            var itemId = (long)prop.GetValue(item);
 
             if (id != itemId) throw new Exception("Access restricted!");
 
@@ -96,9 +86,7 @@ namespace Sayeed.NTier.Generic.Repository
             Delete(itemToBeDeleted);
         }
 
-        #endregion
-
-
+        #endregion basic crud operations
 
         #region advanced crud operations
 
@@ -107,7 +95,7 @@ namespace Sayeed.NTier.Generic.Repository
             T? ret = null;
             IQueryable<T> queryable = _dbSet.AsQueryable();
             // foreach (Expression<Func<T, object>> i in includes) // another way of iterating over..
-            for (int i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
+            for (var i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
             ret = await queryable.SingleOrDefaultAsync(filter);
             return ret;
         }
@@ -148,7 +136,7 @@ namespace Sayeed.NTier.Generic.Repository
             if (includes.Length > 0)
             {
                 IQueryable<T> queryable = _dbSet.Include(includes[0]);
-                for (int i = 1; i < includes.Length; i++)
+                for (var i = 1; i < includes.Length; i++)
                 {
                     queryable.Include(includes[i]);
                 }
@@ -166,7 +154,7 @@ namespace Sayeed.NTier.Generic.Repository
         {
             T? ret = null;
             IQueryable<T> queryable = _dbSet.AsQueryable();
-            for (int i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
+            for (var i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
 
             ret = await queryable.Skip(_dbSet.Count() - 1).FirstOrDefaultAsync();
 
@@ -253,7 +241,6 @@ namespace Sayeed.NTier.Generic.Repository
             //return _dbSet.FromSqlRaw(rawsql, parameters);
         }
 
-        #endregion
-
+        #endregion advanced crud operations
     }
 }

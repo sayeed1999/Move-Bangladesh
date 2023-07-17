@@ -11,6 +11,7 @@ namespace RideSharing.API
     public abstract class BaseController<T> : ControllerBase where T : class
     {
         private IBaseService<T> baseService;
+
         public BaseController(IBaseService<T> baseService)
         {
             this.baseService = baseService;

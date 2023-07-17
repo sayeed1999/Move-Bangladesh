@@ -1,7 +1,7 @@
-﻿using System.Collections.Concurrent;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RabbitMQ.Client;
+using System.Collections.Concurrent;
+using System.Text;
 
 namespace RideSharing.Common.MessageQueues.Emitter
 {
@@ -9,9 +9,13 @@ namespace RideSharing.Common.MessageQueues.Emitter
     {
         private BlockingCollection<T> messages = new();
 
-        public RabbitMQEmitter(string exchange) : this(exchange, null) { }
+        public RabbitMQEmitter(string exchange) : this(exchange, null)
+        {
+        }
 
-        public RabbitMQEmitter(string exchange, string? routingKey) : base(exchange, routingKey) { }
+        public RabbitMQEmitter(string exchange, string? routingKey) : base(exchange, routingKey)
+        {
+        }
 
         public void Start()
         {
@@ -24,12 +28,12 @@ namespace RideSharing.Common.MessageQueues.Emitter
                     using (var channel = connection.CreateModel())
                     {
                         channel.ExchangeDeclare(
-                            exchange: exchange, 
+                            exchange: exchange,
                             type: exchangeType,
-                            durable: true, 
+                            durable: true,
                             autoDelete: false);
 
-                        foreach (T message in messages.GetConsumingEnumerable())
+                        foreach (var message in messages.GetConsumingEnumerable())
                         {
                             var serialized = JsonConvert.SerializeObject(message);
                             var body = Encoding.UTF8.GetBytes(serialized);

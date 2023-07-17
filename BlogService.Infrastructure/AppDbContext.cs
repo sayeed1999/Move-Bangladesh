@@ -1,10 +1,5 @@
 ﻿using BlogService.Entity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogService.Infrastructure
 {
@@ -12,14 +7,15 @@ namespace BlogService.Infrastructure
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
         }
 
         #region dbsets
+
         public DbSet<User> Users { get; set; }
         public DbSet<Node> Nodes { get; set; }
         public DbSet<Edge> Edges { get; set; }
-        #endregion
+
+        #endregion dbsets
 
         // Connection String is initialized from BlogService.API -> Startup.cs...
 
@@ -51,7 +47,6 @@ namespace BlogService.Infrastructure
                 .HasOne(e => e.DeletedBy)
                 .WithMany()
                 .HasForeignKey(e => e.DeletedById);
-
         }
     }
 }

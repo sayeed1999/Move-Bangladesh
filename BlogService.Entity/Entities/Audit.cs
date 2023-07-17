@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlogService.Entity
+﻿namespace BlogService.Entity
 {
     public abstract class Audit
     {
@@ -12,7 +6,7 @@ namespace BlogService.Entity
         public User CreatedBy { get; set; }
         public long CreatedById { get; set; }
         public DateTime CreatedDateUtc { get; set; } = DateTime.UtcNow;
-        
+
         public User? UpdatedBy { get; set; }
         public long? UpdatedById { get; set; }
         public DateTime? UpdatedDateUtc { get; set; }

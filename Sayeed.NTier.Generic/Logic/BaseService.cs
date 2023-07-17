@@ -1,22 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Sayeed.NTier.Generic.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Sayeed.NTier.Generic.Repository;
 
 namespace Sayeed.NTier.Generic.Logic
 {
-    public class BaseService<T> : IBaseService<T> 
+    public class BaseService<T> : IBaseService<T>
         where T : class
     {
         protected IBaseRepository<T> _repository;
+
         public BaseService(IBaseRepository<T> baseRepository)
         {
             _repository = baseRepository;
-
         }
 
         /// <summary>
@@ -70,7 +63,6 @@ namespace Sayeed.NTier.Generic.Logic
             await this.SaveChangesAsync();
         }
 
-        #endregion
-
+        #endregion basic crud operations
     }
 }
