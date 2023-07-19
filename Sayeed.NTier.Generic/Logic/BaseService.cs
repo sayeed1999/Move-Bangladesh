@@ -30,9 +30,9 @@ namespace Sayeed.NTier.Generic.Logic
 
         #region basic crud operations
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync(int page = 1, int pageSize = 10)
         {
-            return await _repository.GetAllAsync();
+            return await _repository.GetAllAsync(page, pageSize);
         }
 
         public virtual async Task<T> FindByIdAsync(long id)
@@ -43,26 +43,31 @@ namespace Sayeed.NTier.Generic.Logic
         public virtual async Task AddAsync(T item)
         {
             await _repository.AddAsync(item);
+            await this.SaveChangesAsync();
         }
 
-        public virtual void UpdateById(long id, T item)
+        public virtual async Task UpdateById(long id, T item)
         {
             _repository.UpdateById(id, item);
+            await this.SaveChangesAsync();
         }
 
-        public virtual void Update(T item)
+        public virtual async Task Update(T item)
         {
             _repository.Update(item);
+            await this.SaveChangesAsync();
         }
 
-        public virtual void Delete(T item)
+        public virtual async Task Delete(T item)
         {
             _repository.Delete(item);
+            await this.SaveChangesAsync();
         }
 
         public virtual async Task DeleteByIdAsync(long id)
         {
             await _repository.DeleteByIdAsync(id);
+            await this.SaveChangesAsync();
         }
 
         #endregion

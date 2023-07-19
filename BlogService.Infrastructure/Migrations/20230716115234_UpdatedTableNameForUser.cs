@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BlogService.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDB : Migration
+    public partial class UpdatedTableNameForUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -25,7 +25,7 @@ namespace BlogService.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,21 +47,21 @@ namespace BlogService.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Nodes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Nodes_User_CreatedById",
+                        name: "FK_Nodes_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Nodes_User_DeletedById",
+                        name: "FK_Nodes_Users_DeletedById",
                         column: x => x.DeletedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Nodes_User_UpdatedById",
+                        name: "FK_Nodes_Users_UpdatedById",
                         column: x => x.UpdatedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -98,21 +98,21 @@ namespace BlogService.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Edges_User_CreatedById",
+                        name: "FK_Edges_Users_CreatedById",
                         column: x => x.CreatedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Edges_User_DeletedById",
+                        name: "FK_Edges_Users_DeletedById",
                         column: x => x.DeletedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Edges_User_UpdatedById",
+                        name: "FK_Edges_Users_UpdatedById",
                         column: x => x.UpdatedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -168,7 +168,7 @@ namespace BlogService.Infrastructure.Migrations
                 name: "Nodes");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }

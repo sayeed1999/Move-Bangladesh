@@ -4,6 +4,7 @@ using BlogService.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogService.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230716130900_AddUniqueIdentityKeyToUserTable")]
+    partial class AddUniqueIdentityKeyToUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,16 +130,7 @@ namespace BlogService.Infrastructure.Migrations
                     b.Property<long>("AuthUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreatedDateUtc")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("DOB")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("DeletedById")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletedDateUtc")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -154,20 +148,10 @@ namespace BlogService.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("UpdatedById")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("UpdatedDateUtc")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthUserId")
                         .IsUnique();
-
-                    b.HasIndex("DeletedById");
-
-                    b.HasIndex("UpdatedById");
 
                     b.ToTable("Users");
                 });
@@ -232,21 +216,6 @@ namespace BlogService.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("DeletedBy");
-
-                    b.Navigation("UpdatedBy");
-                });
-
-            modelBuilder.Entity("BlogService.Entity.User", b =>
-                {
-                    b.HasOne("BlogService.Entity.User", "DeletedBy")
-                        .WithMany()
-                        .HasForeignKey("DeletedById");
-
-                    b.HasOne("BlogService.Entity.User", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdatedById");
 
                     b.Navigation("DeletedBy");
 

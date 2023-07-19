@@ -8,6 +8,7 @@ namespace BlogService.Entity
 {
     public abstract class Audit
     {
+        public long Id { get; set; }
         public User CreatedBy { get; set; }
         public long CreatedById { get; set; }
         public DateTime CreatedDateUtc { get; set; } = DateTime.UtcNow;

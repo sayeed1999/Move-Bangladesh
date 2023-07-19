@@ -1,4 +1,5 @@
-﻿using AuthService.Entity;
+﻿using AuthService.API.MessageQueues.Emitter;
+using AuthService.Entity;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RideSharing.Common.Entities;
-using RideSharing.Common.MessageBroker.Messages;
+using RideSharing.Common.MessageQueues.Messages;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -20,25 +21,26 @@ namespace AuthService.API
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private MassTransit.IPublishEndpoint _publishEndpoint;
+        private readonly UserRegisteredEmitter _userRegisteredEmitter;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly AppSettings _appSettings;
 
         public UserController(
             IMapper mapper,
-            MassTransit.IPublishEndpoint publishEndpoint,
+            UserRegisteredEmitter userRegisteredEmitter,
             UserManager<User> userManager, 
             RoleManager<Role> roleManager, 
             IOptions<AppSettings> appSettings
         ) {
             _mapper = mapper;
-            _publishEndpoint = publishEndpoint;
+            _userRegisteredEmitter = userRegisteredEmitter;
             _userManager = userManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
         }
 
+        //[AllowAnonymous] //use this to create admin users (if not any)
         [HttpPost("register/internal")]
         public async Task<ActionResult<Response<RegisterDto>>> RegisterInternal(RegisterDto model)
         {
@@ -83,31 +85,34 @@ namespace AuthService.API
 
             if (result.Succeeded)
             {
-                response.Message = "User registered successfully!";
+                response.Message.Append( "User registered successfully!");
                 User registeredUser = await _userManager.FindByEmailAsync(user.Email);
 
                 int addedRoleCount = await AddRolesToUser(registeredUser, model.Roles);
-                response.Message += " User is added to " + addedRoleCount + " respective roles.";
+                response.Message.Append( " User is added to " + addedRoleCount + " respective roles.");
             }
             else
             {
-                response.Message = "Errors occured:-\n";
+                response.Message.Append("Errors occured:-\n");
                 foreach (var error in result.Errors)
                 {
-                    response.Message += error.Description + "\n";
+                    response.Message.Append(error.Description + "\n");
                 }
                 response.Status = 400;
             }
 
             if (response.Status >= 400)
-                throw new CustomException(response.Message, response.Status);
+                throw new CustomException(response.Message.ToString(), response.Status);
 
             // form response
             response.Data = _mapper.Map<RegisterDto>(user);
             response.Data.Roles = (List<string>)await _userManager.GetRolesAsync(user);
 
-            // send to message broker
-            await _publishEndpoint.Publish<UserRegistered>(response.Data);
+            // send to message queue
+            UserRegistered userMessage = _mapper.Map<UserRegistered>(user);
+            userMessage.Roles = response.Data.Roles;
+            _userRegisteredEmitter.EnqueueMessage(userMessage);
+            //_userRegisterEmitter.EnqueueMessage("asd");
 
             return Ok(response);
         }
@@ -171,7 +176,7 @@ namespace AuthService.API
                 }
 
                 users.Add(_mapper.Map<RegisterDto>(user));
-                users[users.Count - 1].Roles = roles;
+                users[^1].Roles = roles;
             }
 
             serviceResponse.Data = users;
@@ -237,7 +242,7 @@ namespace AuthService.API
             if (user is null)
             {
                 response.Status = 404;
-                response.Message = "User not found by this email!";
+                response.Message.Append("User not found by this email!");
             }
             else
             {
@@ -245,13 +250,13 @@ namespace AuthService.API
                 var deleted = await _userManager.DeleteAsync(user);
                 if (deleted.Succeeded == false)
                 {
-                    response.Message = "Deleting user failed.";
+                    response.Message.Append("Deleting user failed.");
                     response.Status = 400;
                 }
             }
 
             if (response.Status >= 400)
-                throw new CustomException(response.Message, response.Status);
+                throw new CustomException(response.Message.ToString(), response.Status);
 
             return Ok(response);
         }
