@@ -10,6 +10,6 @@ namespace BlogService.Service.NodeRepository
 {
     public interface INodeRepository : IBaseRepository<Node>
     {
-
+        Task<Node> CreateNodeForUserIfNotExistsAsync(long userId);
     }
 }

@@ -16,5 +16,25 @@ namespace BlogService.Service.EdgeRepository
         {
 
         }
+
+        public async Task<Edge> CreateEdgeIfNotExistsAsync(long fromNodeId, long toNodeId, EdgeType edgeType)
+        {
+            var edge = await this.FirstOrDefaultAsync(x => x.FromDestinationId == fromNodeId
+                                                    && x.ToDestinationId == toNodeId
+                                                    && x.EdgeType == edgeType);
+
+            if (edge is null)
+            {
+                edge = new Edge
+                {
+                    FromDestinationId = fromNodeId,
+                    ToDestinationId = toNodeId,
+                    EdgeType = edgeType,
+                };
+                await this.AddAsync(edge);
+            }
+            return edge;
+        }
+
     }
 }

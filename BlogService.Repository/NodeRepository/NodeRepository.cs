@@ -16,5 +16,22 @@ namespace BlogService.Service.NodeRepository
         {
 
         }
+
+        public async Task<Node> CreateNodeForUserIfNotExistsAsync(long userId)
+        {
+            var userNode = await this.FirstOrDefaultAsync(x => x.NodeType == NodeType.User
+                                                    && x.CreatedById == userId);
+
+            if (userNode is null)
+            {
+                userNode = new Node
+                {
+                    NodeType = NodeType.User,
+                    CreatedById = userId,
+                };
+                await this.AddAsync(userNode);
+            }
+            return userNode;
+        }
     }
 }

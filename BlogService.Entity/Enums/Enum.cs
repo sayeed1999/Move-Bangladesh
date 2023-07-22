@@ -21,8 +21,10 @@ namespace BlogService.Entity
 
     public enum EdgeType
     {
-        Authored = 1,
-        AuthoredBy = 2,
+        Friend = 1,
+
+        Authored = 5,
+        AuthoredBy = 6,
 
         Liked = 7,
         LikedBy = 8,

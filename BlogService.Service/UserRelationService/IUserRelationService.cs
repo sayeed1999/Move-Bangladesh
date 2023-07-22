@@ -13,6 +13,5 @@ namespace BlogService.Service.UserRelationService
     {
         Task<UserRelation> RequestFriendship(UserRelation userRelation);
         Task<UserRelation> ResponseFriendship(UserRelation userRelation);
-
     }
 }

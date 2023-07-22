@@ -1,8 +1,11 @@
 ﻿using BlogService.Entity;
 using BlogService.Entity.Entities;
+using BlogService.Service.EdgeRepository;
+using BlogService.Service.NodeRepository;
 using BlogService.Service.UserRelationRepository;
 using BlogService.Service.UserRelationService;
 using BlogService.Service.UserRepository;
+using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.Entities;
 using Sayeed.NTier.Generic.Logic;
 using Sayeed.NTier.Generic.Repository;
@@ -18,14 +21,20 @@ namespace BlogService.Service.UserService
     {
         private readonly IUserRepository userRepository;
         private readonly IUserRelationRepository userRelationRepository;
+        private readonly INodeRepository nodeRepository;
+        private readonly IEdgeRepository edgeRepository;
 
         public UserRelationService(
             IUserRepository userRepository,
-            IUserRelationRepository userRelationRepository
+            IUserRelationRepository userRelationRepository,
+            INodeRepository nodeRepository,
+            IEdgeRepository edgeRepository
         ) : base(userRelationRepository)
         {
             this.userRepository = userRepository;
             this.userRelationRepository = userRelationRepository;
+            this.nodeRepository = nodeRepository;
+            this.edgeRepository = edgeRepository;
         }
 
         // TODO:- provide very clear messages with each error so that dev can track whats happening!
@@ -77,10 +86,7 @@ namespace BlogService.Service.UserService
             currentUserId = userRelation.ToUserId;
 
             // check if friend request exists
-            var userRelationInDB = await this.userRelationRepository.FirstOrDefaultAsync(
-                x => x.FromUserId == userRelation.FromUserId 
-                && x.ToUserId == userRelation.ToUserId);
-
+            var userRelationInDB = await CheckIfUserRelationExists(userRelation);
             if (userRelationInDB is null)
                 throw new CustomException("Friend request not found!", 404);
 
@@ -94,14 +100,20 @@ namespace BlogService.Service.UserService
                 && userRelationInDB.RelationType != RelationType.FriendRequestSent)
                 throw new CustomException("Friend request not found!", 400);
 
+            // accept friend request
+            if (userRelation.RelationType == RelationType.FriendRequestAccepted
+                && userRelationInDB.RelationType == RelationType.FriendRequestSent)
+            {
+                await this.MakeFriendsAsync(userRelationInDB.FromUserId, userRelationInDB.ToUserId);
+            }
+
             if (userRelation.RelationType == RelationType.Unfriended)
             {
                 // can unfriend only if user is a friend
                 if (userRelationInDB.RelationType != RelationType.FriendRequestAccepted)
                     throw new CustomException("User is not a friend!", 400);
 
-                // deleted relationship entity
-                await this.DeleteByIdAsync(userRelationInDB.Id);
+                await this.UnfriendUser(userRelation);
                 return userRelationInDB;
             }
 
@@ -111,6 +123,29 @@ namespace BlogService.Service.UserService
             userRelationInDB.RelationType = userRelation.RelationType;
             await this.UpdateAsync(userRelationInDB);
             return userRelation;
+        }
+
+        private async Task<UserRelation> CheckIfUserRelationExists(UserRelation userRelation)
+        {
+            return await this.userRelationRepository.FirstOrDefaultAsync(x => x.FromUserId == userRelation.FromUserId
+                                                                        && x.ToUserId == userRelation.ToUserId);
+        }
+
+        private async Task MakeFriendsAsync(long userAId, long userBId)
+        {
+            // check if nodes exist or add them
+            var userA = await this.nodeRepository.CreateNodeForUserIfNotExistsAsync(userAId);
+            var userB = await this.nodeRepository.CreateNodeForUserIfNotExistsAsync(userBId);
+
+            // establish bi-directional edges between nodes for A is a friend to B & B is a friend to A
+            var edgeAToB = await this.edgeRepository.CreateEdgeIfNotExistsAsync(userA.Id, userB.Id, EdgeType.Friend);
+            var edgeBToA = await this.edgeRepository.CreateEdgeIfNotExistsAsync(userB.Id, userA.Id, EdgeType.Friend);
+        }
+
+        private async Task UnfriendUser(UserRelation userRelation)
+        {
+            // deleted relationship entity
+            await this.DeleteByIdAsync(userRelation.Id);
         }
 
     }
