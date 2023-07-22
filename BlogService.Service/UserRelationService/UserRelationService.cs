@@ -47,7 +47,7 @@ namespace BlogService.Service.UserService
             if (userRelation.FromUserId == userRelation.ToUserId)
                 throw new IOException("Two users cannot be same!", 400);
 
-            // check if to any user doesn't
+            // check if any user doesn't exist
             var userInDB = await this.userRepository.FindByIdAsync(userRelation.FromUserId);
             if (userInDB is null)
                 throw new IOException("First user doesn't exist!", 400);
