@@ -32,7 +32,7 @@ namespace Sayeed.NTier.Generic.Logic
 
         public virtual async Task<IEnumerable<T>> GetAllAsync(int page = 1, int pageSize = 10)
         {
-            return await _repository.GetAllAsync(page, pageSize);
+            return await _repository.GetAllAsync(page: page, pageSize: pageSize);
         }
 
         public virtual async Task<T> FindByIdAsync(long id)

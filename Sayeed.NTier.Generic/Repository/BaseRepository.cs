@@ -86,6 +86,16 @@ namespace Sayeed.NTier.Generic.Repository
             if (includes != null)
                 query = includes.Aggregate(query, (current, include) => current.Include(include));
 
+            // Default OrderBy Id descending if orderBy is not provided
+            if (orderBy == null)
+            {
+                var primaryKeyProperty = _dbContext.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties.FirstOrDefault();
+                if (primaryKeyProperty != null && primaryKeyProperty.Name == "Id")
+                {
+                    orderBy = q => q.OrderByDescending(entity => EF.Property<object>(entity, "Id"));
+                }
+            }
+
             if (orderBy != null)
                 query = orderBy(query);
 
