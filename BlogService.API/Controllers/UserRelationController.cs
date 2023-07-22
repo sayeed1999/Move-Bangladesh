@@ -19,20 +19,26 @@ namespace BlogService.API.Controllers
         }
 
 
-        [HttpPost("request-friendship")]
+        [HttpPost("send-friend-request")]
         public async Task<IActionResult> RequestFriendshipAsync([FromBody] UserRelation userRelation)
         {
-            var result = await userRelationService.RequestFriendship(userRelation);
+            var result = await userRelationService.SendFriendRequest(userRelation);
             return Ok(result);
         }
 
-        [HttpPut("response-friendship")]
+        [HttpPost("response-friend-request")]
         public async Task<IActionResult> ResponseFriendshipAsync([FromBody] UserRelation userRelation)
         {
-            var result = await userRelationService.ResponseFriendship(userRelation);
+            var result = await userRelationService.ResponseFriendRequest(userRelation);
             return Ok(result);
         }
 
+        [HttpPost("unfriend-user")]
+        public async Task<IActionResult> UnfriendUserAsync([FromBody] UserRelation userRelation)
+        {
+            var result = await userRelationService.UnfriendUserAsync(userRelation);
+            return Ok(result);
+        }
 
     }
 }

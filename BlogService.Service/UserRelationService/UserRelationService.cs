@@ -38,7 +38,7 @@ namespace BlogService.Service.UserService
         }
 
         // TODO:- provide very clear messages with each error so that dev can track whats happening!
-        public async Task<UserRelation> RequestFriendship(UserRelation userRelation)
+        public async Task<UserRelation> SendFriendRequest(UserRelation userRelation)
         {
             userRelation.RelationType = RelationType.FriendRequestSent;
 
@@ -75,7 +75,7 @@ namespace BlogService.Service.UserService
         }
 
         // TODO:- provide very clear messages with each error so that dev can track whats happening!
-        public async Task<UserRelation> ResponseFriendship(UserRelation userRelation)
+        public async Task<UserRelation> ResponseFriendRequest(UserRelation userRelation)
         {
             // Note: here ToUser is who will respond!
 
@@ -84,6 +84,10 @@ namespace BlogService.Service.UserService
 
             // TODO:- dont allow to modify if from user is different from current user
             currentUserId = userRelation.ToUserId;
+
+            // unfriend user
+            if (userRelation.RelationType >= RelationType.Unfriended)
+                throw new CustomException("Cannot unfriend user using this endpoint!", 400);
 
             // check if friend request exists
             var userRelationInDB = await CheckIfUserRelationExists(userRelation);
@@ -108,19 +112,12 @@ namespace BlogService.Service.UserService
                 return userRelationInDB;
             }
 
-            // unfriend user
-            if (userRelation.RelationType == RelationType.Unfriended)
-            {
+            /*{
                 // can unfriend only if user is a friend
-                if (userRelationInDB.RelationType != RelationType.FriendRequestAccepted)
-                    throw new CustomException("User is not a friend!", 400);
-
-                await this.UnfriendUser(userRelation);
+                
+                await this.UnfriendUser(userRelationInDB);
                 return userRelationInDB;
-            }
-
-
-            // can block at any state
+            }*/
 
             userRelationInDB.RelationType = userRelation.RelationType;
             await this.UpdateAsync(userRelationInDB);
@@ -150,8 +147,21 @@ namespace BlogService.Service.UserService
             await this.userRelationRepository.UpdateAsync(userRelation);
         }
 
-        private async Task UnfriendUser(UserRelation userRelation)
+        public async Task<UserRelation> UnfriendUserAsync(UserRelation userRelation)
         {
+            // check if they are already friends
+            var userRelationInDB = await this.userRelationRepository.FirstOrDefaultAsync(
+                filter: x => (x.FromUserId == userRelation.FromUserId
+                                  && x.ToUserId == userRelation.ToUserId
+                                  && x.RelationType == RelationType.FriendRequestAccepted)
+                              || (x.FromUserId == userRelation.ToUserId
+                                  && x.ToUserId == userRelation.FromUserId
+                                  && x.RelationType == RelationType.FriendRequestAccepted));
+
+
+            if (userRelationInDB.RelationType != RelationType.FriendRequestAccepted)
+                throw new CustomException("User is not a friend!", 400);
+
             // find user nodes
             var userA = await this.nodeRepository.FirstOrDefaultAsync(x => x.CreatedById == userRelation.FromUserId);
             var userB = await this.nodeRepository.FirstOrDefaultAsync(x => x.CreatedById == userRelation.ToUserId);
@@ -160,7 +170,8 @@ namespace BlogService.Service.UserService
             var edgeBToA = await this.edgeRepository.DeleteEdgeIfExistsAsync(userB.Id, userA.Id, EdgeType.Friend);
 
             // deleted user relation entity
-            await this.DeleteByIdAsync(userRelation.Id);
+            await this.DeleteByIdAsync(userRelationInDB.Id);
+            return userRelationInDB;
         }
 
     }
