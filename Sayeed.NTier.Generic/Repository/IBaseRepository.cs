@@ -14,7 +14,23 @@ namespace Sayeed.NTier.Generic.Repository
     {
         public DbSet<T> DbSet { get; }
 
-        #region basic crud
+        /// <summary>
+        /// Example usage with filters, includes, and order by
+        /// var results = repository.GetAllAsync(
+        ///    filter: e => e.SomeProperty == someValue,
+        ///    orderBy: q => q.OrderBy(e => e.SomeProperty),
+        ///    includes: new List<Expression<Func<YourEntity, object>>>
+        ///    {
+        ///       e => e.NavigationProperty,
+        ///       e => e.AnotherNavigationProperty
+        ///    }).ToList();
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="includes"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null,
                                                 Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                                                 List<Expression<Func<T, object>>> includes = null,
@@ -26,7 +42,6 @@ namespace Sayeed.NTier.Generic.Repository
         public void UpdateById(long id, T item);
         public void Delete(T item);
         public Task DeleteByIdAsync(long id);
-        #endregion
 
         public Task<int> SaveChangesAsync();
 
