@@ -115,31 +115,30 @@ namespace Sayeed.NTier.Generic.Repository
         {
             item.GetType().GetProperty("Id")?.SetValue(item, 0); // setting the PK of the row as 0 when the PK is Id int
             await _dbSet.AddAsync(item);
-            // SaveChangesAsync will be called from UnitOfWork!
+            await _dbContext.SaveChangesAsync();
         }
 
-        public virtual void UpdateById(long id, T item)
+        public virtual async Task UpdateByIdAsync(long id, T item)
         {
-            // trick from StackOverFlow
             Type t = item.GetType();
             PropertyInfo prop = t.GetProperty("Id");
             long itemId = (long)prop.GetValue(item);
 
             if (id != itemId) throw new Exception("Access restricted!");
 
-            Update(item);
+            await UpdateAsync(item);
         }
 
-        public virtual void Update(T item)
+        public virtual async Task UpdateAsync(T item)
         {
             _dbSet.Update(item);
-            // SaveChangesAsync will be called from UnitOfWork!
+            await _dbContext.SaveChangesAsync();
         }
 
-        public virtual void Delete(T item)
+        public virtual async Task DeleteAsync(T item)
         {
             _dbSet.Remove(item);
-            // SaveChangesAsync will be called from UnitOfWork!
+            await _dbContext.SaveChangesAsync();
         }
 
         public virtual async Task DeleteByIdAsync(long id)
@@ -148,7 +147,7 @@ namespace Sayeed.NTier.Generic.Repository
 
             if (itemToBeDeleted == null) throw new Exception("Item not found!");
 
-            Delete(itemToBeDeleted);
+            await DeleteAsync(itemToBeDeleted);
         }
 
         public IQueryable<T> FromSql(string rawsql, params SqlParameter[] parameters)

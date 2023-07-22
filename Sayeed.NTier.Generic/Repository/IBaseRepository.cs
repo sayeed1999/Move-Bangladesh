@@ -38,9 +38,9 @@ namespace Sayeed.NTier.Generic.Repository
                                                 int pageSize = 10);
         public Task<T> FindByIdAsync(long id); // FindAsync() is only for PK's!
         public Task AddAsync(T item);
-        public void Update(T item);
-        public void UpdateById(long id, T item);
-        public void Delete(T item);
+        public Task UpdateAsync(T item);
+        public Task UpdateByIdAsync(long id, T item);
+        public Task DeleteAsync(T item);
         public Task DeleteByIdAsync(long id);
 
         public Task<int> SaveChangesAsync();
