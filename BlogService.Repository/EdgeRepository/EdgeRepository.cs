@@ -36,5 +36,18 @@ namespace BlogService.Service.EdgeRepository
             return edge;
         }
 
+        public async Task<Edge> DeleteEdgeIfExistsAsync(long fromNodeId, long toNodeId, EdgeType edgeType)
+        {
+            var edge = await this.FirstOrDefaultAsync(x => x.FromDestinationId == fromNodeId
+                                                    && x.ToDestinationId == toNodeId
+                                                    && x.EdgeType == edgeType);
+
+            if (edge is not null)
+            {
+                await this.DeleteAsync(edge);
+            }
+            return edge;
+        }
+
     }
 }

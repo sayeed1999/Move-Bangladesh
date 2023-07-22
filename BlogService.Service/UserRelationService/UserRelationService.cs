@@ -104,9 +104,11 @@ namespace BlogService.Service.UserService
             if (userRelation.RelationType == RelationType.FriendRequestAccepted
                 && userRelationInDB.RelationType == RelationType.FriendRequestSent)
             {
-                await this.MakeFriendsAsync(userRelationInDB.FromUserId, userRelationInDB.ToUserId);
+                await this.MakeFriendsAsync(userRelationInDB);
+                return userRelationInDB;
             }
 
+            // unfriend user
             if (userRelation.RelationType == RelationType.Unfriended)
             {
                 // can unfriend only if user is a friend
@@ -131,20 +133,31 @@ namespace BlogService.Service.UserService
                                                                         && x.ToUserId == userRelation.ToUserId);
         }
 
-        private async Task MakeFriendsAsync(long userAId, long userBId)
+        private async Task MakeFriendsAsync(UserRelation userRelation)
         {
             // check if nodes exist or add them
-            var userA = await this.nodeRepository.CreateNodeForUserIfNotExistsAsync(userAId);
-            var userB = await this.nodeRepository.CreateNodeForUserIfNotExistsAsync(userBId);
+            var userA = await this.nodeRepository.CreateNodeForUserIfNotExistsAsync(userRelation.FromUserId);
+            var userB = await this.nodeRepository.CreateNodeForUserIfNotExistsAsync(userRelation.ToUserId);
 
             // establish bi-directional edges between nodes for A is a friend to B & B is a friend to A
             var edgeAToB = await this.edgeRepository.CreateEdgeIfNotExistsAsync(userA.Id, userB.Id, EdgeType.Friend);
             var edgeBToA = await this.edgeRepository.CreateEdgeIfNotExistsAsync(userB.Id, userA.Id, EdgeType.Friend);
+
+            // update user relation entity
+            userRelation.RelationType = RelationType.FriendRequestAccepted;
+            await this.userRelationRepository.UpdateAsync(userRelation);
         }
 
         private async Task UnfriendUser(UserRelation userRelation)
         {
-            // deleted relationship entity
+            // find user nodes
+            var userA = await this.nodeRepository.FirstOrDefaultAsync(x => x.CreatedById == userRelation.FromUserId);
+            var userB = await this.nodeRepository.FirstOrDefaultAsync(x => x.CreatedById == userRelation.ToUserId);
+
+            var edgeAToB = await this.edgeRepository.DeleteEdgeIfExistsAsync(userA.Id, userB.Id, EdgeType.Friend);
+            var edgeBToA = await this.edgeRepository.DeleteEdgeIfExistsAsync(userB.Id, userA.Id, EdgeType.Friend);
+
+            // deleted user relation entity
             await this.DeleteByIdAsync(userRelation.Id);
         }
 
