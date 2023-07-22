@@ -10,7 +10,7 @@ namespace BlogService.Service.EdgeRepository
 {
     public interface IEdgeRepository : IBaseRepository<Edge>
     {
-        Task<Edge> CreateEdgeIfNotExistsAsync(long fromNodeId, long toNodeId, EdgeType edgeType);
+        Task<Edge> CreateEdgeIfNotExistsAsync(long fromNodeId, long toNodeId, EdgeType edgeType, long currentUserId);
         Task<Edge> DeleteEdgeIfExistsAsync(long fromNodeId, long toNodeId, EdgeType edgeType);
     }
 }

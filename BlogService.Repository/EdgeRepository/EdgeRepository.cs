@@ -17,7 +17,7 @@ namespace BlogService.Service.EdgeRepository
 
         }
 
-        public async Task<Edge> CreateEdgeIfNotExistsAsync(long fromNodeId, long toNodeId, EdgeType edgeType)
+        public async Task<Edge> CreateEdgeIfNotExistsAsync(long fromNodeId, long toNodeId, EdgeType edgeType, long currentUserId)
         {
             var edge = await this.FirstOrDefaultAsync(x => x.FromDestinationId == fromNodeId
                                                     && x.ToDestinationId == toNodeId
@@ -27,6 +27,7 @@ namespace BlogService.Service.EdgeRepository
             {
                 edge = new Edge
                 {
+                    CreatedById = currentUserId,
                     FromDestinationId = fromNodeId,
                     ToDestinationId = toNodeId,
                     EdgeType = edgeType,

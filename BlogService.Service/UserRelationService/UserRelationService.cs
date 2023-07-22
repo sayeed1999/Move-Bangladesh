@@ -135,13 +135,15 @@ namespace BlogService.Service.UserService
 
         private async Task MakeFriendsAsync(UserRelation userRelation)
         {
+            // here fromUser sent request, toUser accepted request, so toUser is the currentUser!
+
             // check if nodes exist or add them
             var userA = await this.nodeRepository.CreateNodeForUserIfNotExistsAsync(userRelation.FromUserId);
             var userB = await this.nodeRepository.CreateNodeForUserIfNotExistsAsync(userRelation.ToUserId);
 
             // establish bi-directional edges between nodes for A is a friend to B & B is a friend to A
-            var edgeAToB = await this.edgeRepository.CreateEdgeIfNotExistsAsync(userA.Id, userB.Id, EdgeType.Friend);
-            var edgeBToA = await this.edgeRepository.CreateEdgeIfNotExistsAsync(userB.Id, userA.Id, EdgeType.Friend);
+            var edgeAToB = await this.edgeRepository.CreateEdgeIfNotExistsAsync(userA.Id, userB.Id, EdgeType.Friend, userRelation.ToUserId);
+            var edgeBToA = await this.edgeRepository.CreateEdgeIfNotExistsAsync(userB.Id, userA.Id, EdgeType.Friend, userRelation.ToUserId);
 
             // update user relation entity
             userRelation.RelationType = RelationType.FriendRequestAccepted;
