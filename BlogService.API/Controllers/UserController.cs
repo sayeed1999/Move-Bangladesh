@@ -1,9 +1,8 @@
 ﻿using BlogService.Entity;
+using BlogService.Entity.Entities;
 using BlogService.Service.UserService;
 using Microsoft.AspNetCore.Mvc;
 using Sayeed.NTier.Generic.Controller;
-using Sayeed.NTier.Generic.Logic;
-using Sayeed.NTier.Generic.Repository;
 
 namespace BlogService.API.Controllers
 {
@@ -17,5 +16,6 @@ namespace BlogService.API.Controllers
         {
             this.userService = userService;
         }
+
     }
 }

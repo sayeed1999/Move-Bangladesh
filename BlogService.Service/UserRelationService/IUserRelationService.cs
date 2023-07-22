@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogService.Service.UserService
+namespace BlogService.Service.UserRelationService
 {
-    public interface IUserService : IBaseService<User>
+    public interface IUserRelationService : IBaseService<UserRelation>
     {
-        
+        Task<UserRelation> RequestFriendship(UserRelation userRelation);
     }
 }

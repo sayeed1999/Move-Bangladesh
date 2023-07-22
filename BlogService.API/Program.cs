@@ -8,6 +8,7 @@ using BlogService.Service.EdgeRepository;
 using BlogService.Service.NodeRepository;
 using BlogService.Service.PostService;
 using BlogService.Service.UserRelationRepository;
+using BlogService.Service.UserRelationService;
 using BlogService.Service.UserRepository;
 using BlogService.Service.UserService;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 // For Entity Framework
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]), ServiceLifetime.Scoped);
 
 // registering repository
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IEdgeRepository, EdgeRepository>();
 // registering services
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRelationService, UserRelationService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 

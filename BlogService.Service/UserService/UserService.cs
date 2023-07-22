@@ -25,5 +25,6 @@ namespace BlogService.Service.UserService
             this.userRepository = userRepository;
             this.userRelationRepository = userRelationRepository;
         }
+
     }
 }
