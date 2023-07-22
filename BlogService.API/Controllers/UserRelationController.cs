@@ -26,5 +26,13 @@ namespace BlogService.API.Controllers
             return Ok(result);
         }
 
+        [HttpPut("response-friendship")]
+        public async Task<IActionResult> ResponseFriendshipAsync([FromBody] UserRelation userRelation)
+        {
+            var result = await userRelationService.ResponseFriendship(userRelation);
+            return Ok(result);
+        }
+
+
     }
 }

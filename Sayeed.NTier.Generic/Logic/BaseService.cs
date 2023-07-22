@@ -46,13 +46,13 @@ namespace Sayeed.NTier.Generic.Logic
             await this.SaveChangesAsync();
         }
 
-        public virtual async Task UpdateById(long id, T item)
+        public virtual async Task UpdateByIdAsync(long id, T item)
         {
             _repository.UpdateById(id, item);
             await this.SaveChangesAsync();
         }
 
-        public virtual async Task Update(T item)
+        public virtual async Task UpdateAsync(T item)
         {
             _repository.Update(item);
             await this.SaveChangesAsync();

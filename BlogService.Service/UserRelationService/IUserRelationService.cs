@@ -12,5 +12,7 @@ namespace BlogService.Service.UserRelationService
     public interface IUserRelationService : IBaseService<UserRelation>
     {
         Task<UserRelation> RequestFriendship(UserRelation userRelation);
+        Task<UserRelation> ResponseFriendship(UserRelation userRelation);
+
     }
 }

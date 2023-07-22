@@ -47,10 +47,9 @@ namespace BlogService.Entity
     public enum RelationType
     {
         FriendRequestSent = 1,
-        FriendRequestRejected = 2,
-        FriendRequestAccepted = 3,
+        FriendRequestAccepted = 2,
+        FriendRequestRejected = 3,
         Unfriended = 4,
         Blocked = 5,
-        Unblocked = 6,
     }
 }
