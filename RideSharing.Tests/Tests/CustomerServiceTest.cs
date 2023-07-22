@@ -2,6 +2,7 @@
 using RideSharing.Entity;
 using RideSharing.Service;
 using RideSharing.Tests.MockRepositories;
+using Sayeed.NTier.Generic.Repository;
 
 namespace RideSharing.Tests.Tests
 {

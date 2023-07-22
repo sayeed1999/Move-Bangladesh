@@ -68,6 +68,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // registering services
+builder.Services.AddScoped<DbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ICabService, CabService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRatingService, CustomerRatingService>();
