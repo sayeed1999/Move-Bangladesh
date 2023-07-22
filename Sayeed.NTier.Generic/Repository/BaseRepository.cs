@@ -19,7 +19,7 @@ namespace Sayeed.NTier.Generic.Repository
         #region initializations & declarations
 
         private readonly DbContext _dbContext;
-        protected DbSet<T> _dbSet;
+        private DbSet<T> _dbSet;
 
         public BaseRepository(DbContext dbContext)
         {
@@ -29,6 +29,10 @@ namespace Sayeed.NTier.Generic.Repository
 
         #endregion
 
+        public DbSet<T> DbSet 
+        { 
+            get { return _dbSet; } 
+        }
 
         /// <summary>
         /// Need to be called after certain operations on db: add update delete, otherwise changes will not be saved..

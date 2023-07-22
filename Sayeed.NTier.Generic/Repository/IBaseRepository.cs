@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace Sayeed.NTier.Generic.Repository
 {
     public interface IBaseRepository<T> where T : class
     {
+        public DbSet<T> DbSet { get; }
+
         #region basic crud
         public Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null,
                                                 Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
