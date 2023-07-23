@@ -4,7 +4,12 @@ using BlogService.API.MessageQueues.Receiver;
 using BlogService.Entity;
 using BlogService.Infrastructure;
 using BlogService.Service.CommentService;
+using BlogService.Service.EdgeRepository;
+using BlogService.Service.NodeRepository;
 using BlogService.Service.PostService;
+using BlogService.Service.UserRelationRepository;
+using BlogService.Service.UserRelationService;
+using BlogService.Service.UserRepository;
 using BlogService.Service.UserService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,14 +25,23 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 // For Entity Framework
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]), ServiceLifetime.Scoped);
+
 // registering repository
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserRelationRepository, UserRelationRepository>();
+builder.Services.AddScoped<INodeRepository, NodeRepository>();
+builder.Services.AddScoped<IEdgeRepository, EdgeRepository>();
+
 // registering services
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRelationService, UserRelationService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+
+
 
 builder.Services.AddControllers().AddNewtonsoftJson(options => {
     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

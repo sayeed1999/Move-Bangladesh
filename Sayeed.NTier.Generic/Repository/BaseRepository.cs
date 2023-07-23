@@ -19,7 +19,7 @@ namespace Sayeed.NTier.Generic.Repository
         #region initializations & declarations
 
         private readonly DbContext _dbContext;
-        protected DbSet<T> _dbSet;
+        private DbSet<T> _dbSet;
 
         public BaseRepository(DbContext dbContext)
         {
@@ -29,6 +29,10 @@ namespace Sayeed.NTier.Generic.Repository
 
         #endregion
 
+        public DbSet<T> DbSet 
+        { 
+            get { return _dbSet; } 
+        }
 
         /// <summary>
         /// Need to be called after certain operations on db: add update delete, otherwise changes will not be saved..
@@ -41,14 +45,65 @@ namespace Sayeed.NTier.Generic.Repository
 
 
 
-        #region basic crud operations
-
-        public virtual async Task<IEnumerable<T>> GetAllAsync(int page = 1, int pageSize = 10)
+        public virtual async Task<IEnumerable<T>> GetAllAsync(
+            Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            List<Expression<Func<T, object>>> includes = null,
+            int page = 1,
+            int pageSize = 10)
         {
-            return await _dbSet
+            IQueryable<T> query = this.PrepareQuery(filter, orderBy, includes);
+            return await query
                         .Skip((page - 1) * pageSize)
                         .Take(pageSize)
                         .ToListAsync();
+        }
+
+        public virtual async Task<T> FirstOrDefaultAsync(
+            Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            List<Expression<Func<T, object>>> includes = null)
+        {
+            IQueryable<T> query = this.PrepareQuery(filter, orderBy, includes);
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public virtual async Task<T> SingleOrDefaultAsync(
+            Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            List<Expression<Func<T, object>>> includes = null)
+        {
+            IQueryable<T> query = this.PrepareQuery(filter, orderBy, includes);
+            return await query.SingleOrDefaultAsync();
+        }
+
+        private IQueryable<T> PrepareQuery(
+            Expression<Func<T, bool>> filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            List<Expression<Func<T, object>>> includes = null)
+        {
+            IQueryable<T> query = _dbSet.AsQueryable();
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (includes != null)
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+            // Default OrderBy Id descending if orderBy is not provided
+            if (orderBy == null)
+            {
+                var primaryKeyProperty = _dbContext.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties.FirstOrDefault();
+                if (primaryKeyProperty != null && primaryKeyProperty.Name == "Id")
+                {
+                    orderBy = q => q.OrderByDescending(entity => EF.Property<object>(entity, "Id"));
+                }
+            }
+
+            if (orderBy != null)
+                query = orderBy(query);
+
+            return query;
         }
 
         public virtual async Task<T> FindByIdAsync(long id)
@@ -60,31 +115,30 @@ namespace Sayeed.NTier.Generic.Repository
         {
             item.GetType().GetProperty("Id")?.SetValue(item, 0); // setting the PK of the row as 0 when the PK is Id int
             await _dbSet.AddAsync(item);
-            // SaveChangesAsync will be called from UnitOfWork!
+            await _dbContext.SaveChangesAsync();
         }
 
-        public virtual void UpdateById(long id, T item)
+        public virtual async Task UpdateByIdAsync(long id, T item)
         {
-            // trick from StackOverFlow
             Type t = item.GetType();
             PropertyInfo prop = t.GetProperty("Id");
             long itemId = (long)prop.GetValue(item);
 
             if (id != itemId) throw new Exception("Access restricted!");
 
-            Update(item);
+            await UpdateAsync(item);
         }
 
-        public virtual void Update(T item)
+        public virtual async Task UpdateAsync(T item)
         {
             _dbSet.Update(item);
-            // SaveChangesAsync will be called from UnitOfWork!
+            await _dbContext.SaveChangesAsync();
         }
 
-        public virtual void Delete(T item)
+        public virtual async Task DeleteAsync(T item)
         {
             _dbSet.Remove(item);
-            // SaveChangesAsync will be called from UnitOfWork!
+            await _dbContext.SaveChangesAsync();
         }
 
         public virtual async Task DeleteByIdAsync(long id)
@@ -93,158 +147,7 @@ namespace Sayeed.NTier.Generic.Repository
 
             if (itemToBeDeleted == null) throw new Exception("Item not found!");
 
-            Delete(itemToBeDeleted);
-        }
-
-        #endregion
-
-
-
-        #region advanced crud operations
-
-        public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
-        {
-            T? ret = null;
-            IQueryable<T> queryable = _dbSet.AsQueryable();
-            // foreach (Expression<Func<T, object>> i in includes) // another way of iterating over..
-            for (int i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
-            ret = await queryable.SingleOrDefaultAsync(filter);
-            return ret;
-        }
-
-        /// <summary>
-        /// This Where() doesn't support ThenInclude().
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        public IQueryable<T> Where(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
-        {
-            IQueryable<T> ret = _dbSet.Where(filter);
-            foreach (Expression<Func<T, object>> i in includes)
-                ret = ret.Include(i);
-            return ret;
-        }
-
-        public async Task<long> CountAsync()
-        {
-            return await _dbSet.CountAsync();
-        }
-
-        public async Task<long> CountAsync(Expression<Func<T, bool>> filter)
-        {
-            return await _dbSet.CountAsync(filter);
-        }
-
-        /// <summary>
-        /// This FirstOrDefaultAsync() doesn't support ThenInclude().
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
-        {
-            T? ret = null;
-            if (includes.Length > 0)
-            {
-                IQueryable<T> queryable = _dbSet.Include(includes[0]);
-                for (int i = 1; i < includes.Length; i++)
-                {
-                    queryable.Include(includes[i]);
-                }
-                ret = await queryable.FirstOrDefaultAsync(filter);
-            }
-            else
-            {
-                ret = await _dbSet.FirstOrDefaultAsync(filter);
-            }
-            return ret;
-        }
-
-        // Since LastOrDefault doesn't support anymore, we customized it!
-        public async Task<T> LastOrDefaultAsync(params Expression<Func<T, object>>[] includes)
-        {
-            T? ret = null;
-            IQueryable<T> queryable = _dbSet.AsQueryable();
-            for (int i = 0; i < includes.Length; i++) queryable.Include(includes[i]);
-
-            ret = await queryable.Skip(_dbSet.Count() - 1).FirstOrDefaultAsync();
-
-            return ret;
-        }
-
-        public async Task<bool> AnyAsync(Expression<Func<T, bool>> filter)
-        {
-            return await _dbSet.AnyAsync(filter);
-        }
-
-        public async Task<IEnumerable<T>> ToListAsync()
-        {
-            return await _dbSet.ToListAsync();
-        }
-
-        /// <summary>
-        /// This method supports multi level ThenIncludes().
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        public IQueryable<T> GetByWhereClause(
-            Expression<Func<T, bool>> filter,
-            params Func<IQueryable<T>, IIncludableQueryable<T, object>>[] includes
-        )
-        {
-            IQueryable<T> queryable = _dbSet.Where(filter);
-
-            foreach (var include in includes)
-            {
-                queryable = include(queryable);
-            }
-
-            return queryable;
-        }
-
-        /// <summary>
-        /// This method supports multi level ThenIncludes().
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        public async Task<T> GetBySingleOrDefaultAsync(
-            Expression<Func<T, bool>> filter,
-            params Func<IQueryable<T>, IIncludableQueryable<T, object>>[] includes
-        )
-        {
-            IQueryable<T> queryable = _dbSet.AsQueryable();
-
-            foreach (var include in includes)
-            {
-                queryable = include(queryable);
-            }
-
-            return await queryable.SingleOrDefaultAsync(filter);
-        }
-
-        /// <summary>
-        /// This method supports multi level ThenIncludes().
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="includes"></param>
-        /// <returns></returns>
-        public async Task<T> GetByFirstOrDefaultAsync(
-            Expression<Func<T, bool>> filter,
-            params Func<IQueryable<T>, IIncludableQueryable<T, object>>[] includes
-        )
-        {
-            IQueryable<T> queryable = _dbSet.AsQueryable();
-
-            //use aggregate
-            foreach (var include in includes)
-            {
-                queryable = include(queryable);
-            }
-
-            return await queryable.FirstOrDefaultAsync(filter);
+            await DeleteAsync(itemToBeDeleted);
         }
 
         public IQueryable<T> FromSql(string rawsql, params SqlParameter[] parameters)
@@ -252,8 +155,6 @@ namespace Sayeed.NTier.Generic.Repository
             throw new NotImplementedException("TODO:- '_dbSet.FromSqlRaw' method could not be resolved.");
             //return _dbSet.FromSqlRaw(rawsql, parameters);
         }
-
-        #endregion
 
     }
 }

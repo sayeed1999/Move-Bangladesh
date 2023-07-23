@@ -21,8 +21,10 @@ namespace BlogService.Entity
 
     public enum EdgeType
     {
-        Authored = 1,
-        AuthoredBy = 2,
+        Friend = 1,
+
+        Authored = 5,
+        AuthoredBy = 6,
 
         Liked = 7,
         LikedBy = 8,
@@ -42,5 +44,15 @@ namespace BlogService.Entity
         
         Reported = 100,
         ReportedBy = 101,
+    }
+
+    public enum RelationType
+    {
+        FriendRequestSent = 1,
+        FriendRequestCanceled = 2,
+        FriendRequestAccepted = 3,
+        FriendRequestRejected = 4,
+        Unfriended = 5,
+        Blocked = 6,
     }
 }

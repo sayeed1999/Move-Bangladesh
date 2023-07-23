@@ -1,4 +1,5 @@
 ﻿using BlogService.Entity;
+using BlogService.Entity.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace BlogService.Infrastructure
 
         #region dbsets
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRelation> UserRelations { get; set; }
         public DbSet<Node> Nodes { get; set; }
         public DbSet<Edge> Edges { get; set; }
         #endregion
@@ -51,6 +53,18 @@ namespace BlogService.Infrastructure
                 .HasOne(e => e.DeletedBy)
                 .WithMany()
                 .HasForeignKey(e => e.DeletedById);
+
+            builder.Entity<UserRelation>()
+                .HasOne(x => x.FromUser)
+                .WithMany()
+                .HasForeignKey(x => x.FromUserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<UserRelation>()
+                .HasOne(x => x.ToUser)
+                .WithMany()
+                .HasForeignKey(x => x.ToUserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

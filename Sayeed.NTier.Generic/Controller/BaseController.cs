@@ -40,7 +40,7 @@ namespace Sayeed.NTier.Generic.Controller
         [HttpPut("{id}")]
         public async Task UpdateById(int id, [FromBody] T body)
         {
-            await baseService.UpdateById(id, body);
+            await baseService.UpdateByIdAsync(id, body);
         }
 
         // DELETE api/<BaseController>/5

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlogService.Entity\BlogService.Entity.csproj" />
     <ProjectReference Include="..\BlogService.Infrastructure\BlogService.Infrastructure.csproj" />
-    <ProjectReference Include="..\BlogService.Repository\BlogService.Repository.csproj" />
     <ProjectReference Include="..\Sayeed.NTier.Generic\Sayeed.NTier.Generic.csproj" />
   </ItemGroup>
 

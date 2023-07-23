@@ -1,4 +1,7 @@
 ﻿using BlogService.Entity;
+using BlogService.Entity.Entities;
+using BlogService.Service.UserRelationRepository;
+using BlogService.Service.UserRepository;
 using Sayeed.NTier.Generic.Logic;
 using Sayeed.NTier.Generic.Repository;
 using System;
@@ -11,19 +14,17 @@ namespace BlogService.Service.UserService
 {
     public class UserService : BaseService<User>, IUserService
     {
-        private readonly IBaseRepository<User> userRepository;
-        private readonly IBaseRepository<Node> nodeRepository;
-        private readonly IBaseRepository<Edge> edgeRepository;
+        private readonly IUserRepository userRepository;
+        private readonly IUserRelationRepository userRelationRepository;
 
         public UserService(
-            IBaseRepository<User> userRepository,
-            IBaseRepository<Node> nodeRepository,
-            IBaseRepository<Edge> edgeRepository
+            IUserRepository userRepository,
+            IUserRelationRepository userRelationRepository
         ) : base(userRepository)
         {
             this.userRepository = userRepository;
-            this.nodeRepository = nodeRepository;
-            this.edgeRepository = edgeRepository;
+            this.userRelationRepository = userRelationRepository;
         }
+
     }
 }

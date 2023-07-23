@@ -24,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\BlogService.Repository\BlogService.Repository.csproj" />
 	  <ProjectReference Include="..\BlogService.Service\BlogService.Service.csproj" />
 	</ItemGroup>
 
