@@ -1,4 +1,7 @@
 ﻿using BlogService.Entity;
+using BlogService.Service.EdgeRepository;
+using BlogService.Service.NodeRepository;
+using BlogService.Service.UserRepository;
 using Sayeed.Generic.OnionArchitecture.Logic;
 using Sayeed.Generic.OnionArchitecture.Repository;
 using System;
@@ -16,9 +19,9 @@ namespace BlogService.Service.PostService
         private readonly IBaseRepository<Edge> edgeRepository;
 
         public PostService(
-            IBaseRepository<User> userRepository,
-            IBaseRepository<Node> nodeRepository,
-            IBaseRepository<Edge> edgeRepository
+            IUserRepository userRepository,
+            INodeRepository nodeRepository,
+            IEdgeRepository edgeRepository
         ) : base(nodeRepository)
         {
             this.userRepository = userRepository;
