@@ -35,9 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogService.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogService.Service", "BlogService.Service\BlogService.Service.csproj", "{A152EC97-9EF7-4045-91A7-2AE6AFE49269}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sayeed.NTier.Generic", "Sayeed.NTier.Generic\Sayeed.NTier.Generic.csproj", "{FAEB184C-15E4-4E8A-A6C0-D4F895E3F794}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogService.Repository", "BlogService.Repository\BlogService.Repository.csproj", "{C51CEE81-3C23-48DB-B37A-2916B84FC938}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogService.Repository", "BlogService.Repository\BlogService.Repository.csproj", "{C51CEE81-3C23-48DB-B37A-2916B84FC938}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,10 +95,6 @@ Global
 		{A152EC97-9EF7-4045-91A7-2AE6AFE49269}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A152EC97-9EF7-4045-91A7-2AE6AFE49269}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A152EC97-9EF7-4045-91A7-2AE6AFE49269}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FAEB184C-15E4-4E8A-A6C0-D4F895E3F794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAEB184C-15E4-4E8A-A6C0-D4F895E3F794}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAEB184C-15E4-4E8A-A6C0-D4F895E3F794}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAEB184C-15E4-4E8A-A6C0-D4F895E3F794}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C51CEE81-3C23-48DB-B37A-2916B84FC938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C51CEE81-3C23-48DB-B37A-2916B84FC938}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C51CEE81-3C23-48DB-B37A-2916B84FC938}.Release|Any CPU.ActiveCfg = Release|Any CPU
