@@ -2,8 +2,8 @@
 using BlogService.Service.UserRelationService;
 using BlogService.Service.UserService;
 using Microsoft.AspNetCore.Mvc;
-using Sayeed.NTier.Generic.Controller;
-using Sayeed.NTier.Generic.Logic;
+using Sayeed.Generic.OnionArchitecture.Controller;
+using Sayeed.Generic.OnionArchitecture.Logic;
 
 namespace BlogService.API.Controllers
 {

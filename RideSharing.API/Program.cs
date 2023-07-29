@@ -9,7 +9,7 @@ using RideSharing.API;
 using RideSharing.Common.Middlewares;
 using AuthService.Entity;
 using RideSharing.Service;
-using Sayeed.NTier.Generic.Repository;
+using Sayeed.Generic.OnionArchitecture.Repository;
 using RideSharing.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 

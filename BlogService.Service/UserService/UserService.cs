@@ -2,8 +2,8 @@
 using BlogService.Entity.Entities;
 using BlogService.Service.UserRelationRepository;
 using BlogService.Service.UserRepository;
-using Sayeed.NTier.Generic.Logic;
-using Sayeed.NTier.Generic.Repository;
+using Sayeed.Generic.OnionArchitecture.Logic;
+using Sayeed.Generic.OnionArchitecture.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

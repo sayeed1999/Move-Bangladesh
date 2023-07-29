@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using RideSharing.Common.MessageQueues.Receiver;
 using RideSharing.Common.Middlewares;
-using Sayeed.NTier.Generic.Repository;
+using Sayeed.Generic.OnionArchitecture.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
