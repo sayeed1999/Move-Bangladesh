@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RideSharing.Entity
 {
-    public class User : Base
+    public abstract class User : Base
     {
         public long AuthUserId { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BlogService.Entity;
 using BlogService.Infrastructure;
+using BlogService.Service.UserService;
 using RideSharing.Common.MessageQueues.Messages;
 
 namespace BlogService.API.MessageQueues.Actions
@@ -8,12 +9,12 @@ namespace BlogService.API.MessageQueues.Actions
     public class Actions
     {
         private readonly IMapper _mapper;
-        private readonly AppDbContext _dbContext;
+        private readonly IUserService userService;
 
-        public Actions(IMapper mapper, AppDbContext dbContext)
+        public Actions(IMapper mapper, IUserService userService)
         {
             _mapper = mapper;
-            _dbContext = dbContext;
+            this.userService = userService;
         }
 
         public async Task OnUserRegistered(UserRegistered message)
@@ -22,8 +23,7 @@ namespace BlogService.API.MessageQueues.Actions
 
             try
             {
-                await _dbContext.Users.AddAsync(user);
-                await _dbContext.SaveChangesAsync();
+                await userService.AddAsync(user);
             }
             catch (Exception ex)
             {

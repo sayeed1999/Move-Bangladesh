@@ -15,6 +15,7 @@ using RideSharing.Service;
 using Sayeed.Generic.OnionArchitecture.Repository;
 using RideSharing.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
