@@ -24,6 +24,7 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 // For Entity Framework
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
 
+
 // Adding Authentication
 builder.Services
     .AddAuthentication(options =>
@@ -123,7 +124,11 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 
+builder.Services.AddScoped<Actions>();
+
 var app = builder.Build();
+
+
 
 // rabbitmq emitter configs
 var userRegisteredConsumer = new UserRegisteredConsumer();
@@ -159,7 +164,7 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

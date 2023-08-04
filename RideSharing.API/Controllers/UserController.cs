@@ -10,7 +10,7 @@ namespace RideSharing.API.Controllers
     [Route("api/v1/users")]
     public class UserController : BaseController<User>
     {
-        public UserController(IUserService baseService) : base(baseService)
+        public UserController(IUserService userService) : base(userService)
         {
         }
     }
