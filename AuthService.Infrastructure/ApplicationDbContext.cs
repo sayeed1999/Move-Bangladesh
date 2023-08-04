@@ -1,15 +1,14 @@
-﻿
-using AuthService.Entity;
-using Microsoft.AspNetCore.Identity;
+﻿using AuthService.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace AuthService.Infrastructure
 {
     public class ApplicationDbContext : IdentityDbContext<User, Role, long>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

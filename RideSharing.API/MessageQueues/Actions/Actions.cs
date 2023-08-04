@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using BlogService.Entity;
-using BlogService.Infrastructure;
 using RideSharing.Common.MessageQueues.Messages;
+using RideSharing.Entity;
+using RideSharing.Infrastructure;
 
-namespace BlogService.API.MessageQueues.Actions
+namespace RideSharing.API.MessageQueues.Actions
 {
     public class Actions
     {
         private readonly IMapper _mapper;
-        private readonly AppDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public Actions(IMapper mapper, AppDbContext dbContext)
+        public Actions(IMapper mapper, ApplicationDbContext dbContext)
         {
             _mapper = mapper;
             _dbContext = dbContext;

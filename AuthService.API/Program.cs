@@ -1,23 +1,20 @@
-using System.Text;
+using AuthService.API;
+using AuthService.API.MessageQueues.Emitter;
+using AuthService.Entity;
+using AuthService.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
-using AuthService.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using AuthService.API;
+using Newtonsoft.Json.Serialization;
 using RideSharing.Common.Middlewares;
-using AuthService.Entity;
-using RideSharing.Common.MessageQueues.Emitter;
-using Microsoft.Extensions.Hosting;
-using RideSharing.Common.MessageQueues.Receiver;
-using AuthService.API.MessageQueues.Emitter;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigurationManager configuration = builder.Configuration;
+var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
@@ -55,9 +52,9 @@ builder.Services
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy(AuthorizationPolicies.AdminOnly, 
+    options.AddPolicy(AuthorizationPolicies.AdminOnly,
         policy => policy.RequireRole(
-            Roles.Admin, 
+            Roles.Admin,
             Roles.Moderator)
         );
 });
@@ -67,7 +64,8 @@ builder.Services.AddMvcCore(options =>
     options.Filters.Add(new AuthorizeFilter());
 });
 
-builder.Services.AddControllers().AddNewtonsoftJson(options => {
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
@@ -129,7 +127,6 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 
-
 var app = builder.Build();
 
 // stopping rabbitmq instances
@@ -139,11 +136,10 @@ lifetime.ApplicationStopping.Register(() =>
 {
     var emitter = app.Services.GetRequiredService<UserRegisteredEmitter>();
     emitter.Stop();
-    
+
     var emitter2 = app.Services.GetRequiredService<UserModifiedEmitter>();
     emitter2.Stop();
 });
-
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())

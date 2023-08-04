@@ -1,10 +1,10 @@
-﻿using System.Text;
+﻿using AuthService.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RideSharing.Common.Entities;
-using AuthService.Entity;
+using System.Text;
 
 namespace AuthService.API
 {
@@ -39,7 +39,7 @@ namespace AuthService.API
                 {
                     if (role.Name != null) temp.Add(role.Name);
                 }
-                if (temp.Count == 0) serviceResponse.Message.Append(  "No roles found. Try inserting roles.");
+                if (temp.Count == 0) serviceResponse.Message.Append("No roles found. Try inserting roles.");
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using Moq;
+using RideSharing.Common.Enums;
 using RideSharing.Entity;
 using RideSharing.Common.Enums;
 using Sayeed.Generic.OnionArchitecture.Repository;
@@ -12,10 +13,10 @@ namespace RideSharing.Tests.MockRepositories
             new Customer
             {
                 Id = 1,
-                Address = "abc", 
-                Email = "cust1@gmail.com", 
-                Gender = Gender.Male, 
-                Name = "Cust 1", 
+                Address = "abc",
+                Email = "cust1@gmail.com",
+                Gender = Gender.Male,
+                Name = "Cust 1",
                 Phone = "880***",
                 CreatedBy = 1,
                 CreatedDateUtc = DateTime.UtcNow,
@@ -44,6 +45,5 @@ namespace RideSharing.Tests.MockRepositories
 
             return this;
         }
-
     }
 }

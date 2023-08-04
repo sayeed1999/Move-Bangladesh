@@ -7,7 +7,6 @@ namespace AuthService.API.MessageQueues.Emitter
     {
         public UserRegisteredEmitter() : base("user-registered")
         {
-
         }
     }
 }

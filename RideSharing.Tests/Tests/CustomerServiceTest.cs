@@ -1,15 +1,9 @@
 ﻿using RideSharing.Service;
+using RideSharing.Repository;
+using RideSharing.Repository;
 using RideSharing.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
+using RideSharing.Service;
 using RideSharing.Tests.MockRepositories;
-using Sayeed.Generic.OnionArchitecture.Repository;
 
 namespace RideSharing.Tests.Tests
 {
