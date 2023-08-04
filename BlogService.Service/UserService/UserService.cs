@@ -10,7 +10,7 @@ namespace BlogService.Service.UserService
         private readonly IBaseRepository<Node> nodeRepository;
         private readonly IBaseRepository<Edge> edgeRepository;
 
-        public UserService(
+        public UserService( 
             IBaseRepository<User> userRepository,
             IBaseRepository<Node> nodeRepository,
             IBaseRepository<Edge> edgeRepository
