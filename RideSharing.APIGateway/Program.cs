@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Configuration;
+using RideSharing.APIGateway;
+using Yarp.ReverseProxy.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddReverseProxy().LoadFromConfig(_configuration.GetSection("ReverseProxy"));
+builder.Services
+    .AddSingleton<IProxyConfigProvider>(new CustomProxyConfigProvider())
+    .AddReverseProxy();
+    //.LoadFromConfig(_configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
@@ -16,6 +21,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
