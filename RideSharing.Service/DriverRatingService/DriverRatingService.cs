@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RideSharing.Service
 {
-    public class DriverRatingService : Sayeed.NTier.Generic.Logic.BaseService<DriverRating>, IDriverRatingService
+    public class DriverRatingService : BaseService<DriverRating>, IDriverRatingService
     {
         public DriverRatingService(IBaseRepository<DriverRating> repository) : base(repository)
         {

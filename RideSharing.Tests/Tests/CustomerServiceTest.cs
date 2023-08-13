@@ -1,10 +1,9 @@
 ﻿using RideSharing.Service;
-using RideSharing.Repository;
-using RideSharing.Repository;
 using RideSharing.Entity;
 using RideSharing.Service;
 using RideSharing.Tests.MockRepositories;
-using Sayeed.NTier.Generic.Repository;
+using Moq;
+using Sayeed.Generic.OnionArchitecture.Repository;
 
 namespace RideSharing.Tests.Tests
 {
