@@ -17,7 +17,7 @@ namespace RideSharing.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -30,13 +30,13 @@ namespace RideSharing.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CreatedBy")
+                    b.Property<long>("CreatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDateUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("DeletedBy")
+                    b.Property<long?>("DeletedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedDateUtc")
@@ -52,7 +52,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<long?>("UpdatedBy")
+                    b.Property<long?>("UpdatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateUtc")
@@ -60,9 +60,15 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Cabs");
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Cabs", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Customer", b =>
@@ -77,13 +83,13 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("CreatedBy")
+                    b.Property<long>("CreatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDateUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("DeletedBy")
+                    b.Property<long?>("DeletedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedDateUtc")
@@ -107,7 +113,7 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("UpdatedBy")
+                    b.Property<long?>("UpdatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateUtc")
@@ -118,9 +124,15 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("UpdatedById");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.CustomerRating", b =>
@@ -131,7 +143,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CreatedBy")
+                    b.Property<long>("CreatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDateUtc")
@@ -140,7 +152,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<long>("CustomerId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("DeletedBy")
+                    b.Property<long?>("DeletedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedDateUtc")
@@ -159,7 +171,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<long>("TripId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UpdatedBy")
+                    b.Property<long?>("UpdatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateUtc")
@@ -167,13 +179,19 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedById");
+
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DeletedById");
 
                     b.HasIndex("DriverId");
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("CustomerRatings");
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("CustomerRatings", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Driver", b =>
@@ -188,13 +206,13 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("CreatedBy")
+                    b.Property<long>("CreatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDateUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("DeletedBy")
+                    b.Property<long?>("DeletedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedDateUtc")
@@ -218,7 +236,7 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("UpdatedBy")
+                    b.Property<long?>("UpdatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateUtc")
@@ -229,9 +247,15 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("UpdatedById");
+
                     b.HasIndex("UserId");
 
-                    b.ToTable("Drivers");
+                    b.ToTable("Drivers", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.DriverRating", b =>
@@ -242,7 +266,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CreatedBy")
+                    b.Property<long>("CreatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDateUtc")
@@ -251,7 +275,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<long>("CustomerId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("DeletedBy")
+                    b.Property<long?>("DeletedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedDateUtc")
@@ -270,7 +294,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<long>("TripId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UpdatedBy")
+                    b.Property<long?>("UpdatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateUtc")
@@ -278,13 +302,19 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedById");
+
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DeletedById");
 
                     b.HasIndex("DriverId");
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("DriverRatings");
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("DriverRatings", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Payment", b =>
@@ -298,13 +328,13 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CreatedBy")
+                    b.Property<long>("CreatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDateUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("DeletedBy")
+                    b.Property<long?>("DeletedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedDateUtc")
@@ -316,7 +346,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long?>("UpdatedBy")
+                    b.Property<long?>("UpdatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateUtc")
@@ -324,7 +354,13 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Trip", b =>
@@ -335,7 +371,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CreatedBy")
+                    b.Property<long>("CreatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDateUtc")
@@ -344,7 +380,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<long>("CustomerId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("DeletedBy")
+                    b.Property<long?>("DeletedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("DeletedDateUtc")
@@ -367,7 +403,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<long?>("UpdatedBy")
+                    b.Property<long?>("UpdatedById")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedDateUtc")
@@ -375,13 +411,19 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedById");
+
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DeletedById");
 
                     b.HasIndex("DriverId");
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("Trips");
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Trips", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.User", b =>
@@ -392,93 +434,138 @@ namespace RideSharing.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                    b.Property<long>("AuthUserId")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedDateUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("DeletedById")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletedDateUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
+                    b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("UpdatedById")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("UpdatedDateUtc")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.HasIndex("AuthUserId")
+                        .IsUnique();
+
+                    b.HasIndex("DeletedById");
+
+                    b.HasIndex("UpdatedById");
+
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Cab", b =>
                 {
+                    b.HasOne("RideSharing.Entity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RideSharing.Entity.User", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("RideSharing.Entity.Driver", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("RideSharing.Entity.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DeletedBy");
+
                     b.Navigation("Driver");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Customer", b =>
                 {
+                    b.HasOne("RideSharing.Entity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RideSharing.Entity.User", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("RideSharing.Entity.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("RideSharing.Entity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DeletedBy");
+
+                    b.Navigation("UpdatedBy");
+
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("RideSharing.Entity.CustomerRating", b =>
                 {
+                    b.HasOne("RideSharing.Entity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("RideSharing.Entity.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("RideSharing.Entity.User", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RideSharing.Entity.Driver", "Driver")
                         .WithMany("CustomerRatings")
@@ -492,31 +579,75 @@ namespace RideSharing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("RideSharing.Entity.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("DeletedBy");
 
                     b.Navigation("Driver");
 
                     b.Navigation("Trip");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Driver", b =>
                 {
+                    b.HasOne("RideSharing.Entity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RideSharing.Entity.User", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("RideSharing.Entity.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("RideSharing.Entity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DeletedBy");
+
+                    b.Navigation("UpdatedBy");
+
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("RideSharing.Entity.DriverRating", b =>
                 {
+                    b.HasOne("RideSharing.Entity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("RideSharing.Entity.Customer", "Customer")
                         .WithMany("DriverRatings")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("RideSharing.Entity.User", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RideSharing.Entity.Driver", "Driver")
                         .WithMany()
@@ -530,20 +661,67 @@ namespace RideSharing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("RideSharing.Entity.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("DeletedBy");
 
                     b.Navigation("Driver");
 
                     b.Navigation("Trip");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("RideSharing.Entity.Payment", b =>
+                {
+                    b.HasOne("RideSharing.Entity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RideSharing.Entity.User", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("RideSharing.Entity.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DeletedBy");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Trip", b =>
                 {
+                    b.HasOne("RideSharing.Entity.User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("RideSharing.Entity.Customer", "Customer")
                         .WithMany("Trips")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("RideSharing.Entity.User", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("RideSharing.Entity.Driver", "Driver")
                         .WithMany("Trips")
@@ -557,11 +735,37 @@ namespace RideSharing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("RideSharing.Entity.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("DeletedBy");
 
                     b.Navigation("Driver");
 
                     b.Navigation("Payment");
+
+                    b.Navigation("UpdatedBy");
+                });
+
+            modelBuilder.Entity("RideSharing.Entity.User", b =>
+                {
+                    b.HasOne("RideSharing.Entity.User", "DeletedBy")
+                        .WithMany()
+                        .HasForeignKey("DeletedById");
+
+                    b.HasOne("RideSharing.Entity.User", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
+                    b.Navigation("DeletedBy");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("RideSharing.Entity.Customer", b =>

@@ -7,9 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Sayeed.Generic.OnionArchitecture" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BlogService.Infrastructure\BlogService.Infrastructure.csproj" />
     <ProjectReference Include="..\BlogService.Repository\BlogService.Repository.csproj" />
-    <ProjectReference Include="..\Sayeed.NTier.Generic\Sayeed.NTier.Generic.csproj" />
   </ItemGroup>
 
 </Project>

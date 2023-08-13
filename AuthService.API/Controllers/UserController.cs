@@ -29,10 +29,11 @@ namespace AuthService.API
         public UserController(
             IMapper mapper,
             UserRegisteredEmitter userRegisteredEmitter,
-            UserManager<User> userManager, 
-            RoleManager<Role> roleManager, 
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             IOptions<AppSettings> appSettings
-        ) {
+        )
+        {
             _mapper = mapper;
             _userRegisteredEmitter = userRegisteredEmitter;
             _userManager = userManager;
@@ -85,11 +86,11 @@ namespace AuthService.API
 
             if (result.Succeeded)
             {
-                response.Message.Append( "User registered successfully!");
-                User registeredUser = await _userManager.FindByEmailAsync(user.Email);
+                response.Message.Append("User registered successfully!");
+                var registeredUser = await _userManager.FindByEmailAsync(user.Email);
 
-                int addedRoleCount = await AddRolesToUser(registeredUser, model.Roles);
-                response.Message.Append( " User is added to " + addedRoleCount + " respective roles.");
+                var addedRoleCount = await AddRolesToUser(registeredUser, model.Roles);
+                response.Message.Append(" User is added to " + addedRoleCount + " respective roles.");
             }
             else
             {
@@ -109,7 +110,7 @@ namespace AuthService.API
             response.Data.Roles = (List<string>)await _userManager.GetRolesAsync(user);
 
             // send to message queue
-            UserRegistered userMessage = _mapper.Map<UserRegistered>(user);
+            var userMessage = _mapper.Map<UserRegistered>(user);
             userMessage.Roles = response.Data.Roles;
             _userRegisteredEmitter.EnqueueMessage(userMessage);
             //_userRegisterEmitter.EnqueueMessage("asd");
@@ -123,8 +124,8 @@ namespace AuthService.API
         {
             var serviceResponse = new Response<string>(); // for the token!
 
-            User user = await _userManager.FindByEmailAsync(model.Email);
-            bool isValidPassword = await _userManager.CheckPasswordAsync(user, model.Password);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var isValidPassword = await _userManager.CheckPasswordAsync(user, model.Password);
 
             if (user == null || !isValidPassword)
                 throw new CustomException("Email or password is invalid!", 400);
@@ -132,7 +133,7 @@ namespace AuthService.API
             var userRoles = await _userManager.GetRolesAsync(user);
             var authClaims = new List<Claim> {
                     new Claim(JwtRegisteredClaimNames.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Email, user.Email),  
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
             foreach (var userRole in userRoles)
@@ -145,8 +146,8 @@ namespace AuthService.API
             var token = new JwtSecurityToken(
                 audience: _appSettings.JWT.ValidAudience,
                 issuer: _appSettings.JWT.ValidIssuer,
-                expires: DateTime.Now.AddDays(1), 
-                claims: authClaims, 
+                expires: DateTime.Now.AddDays(1),
+                claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
 
             serviceResponse.Data = new JwtSecurityTokenHandler().WriteToken(token);
@@ -190,7 +191,7 @@ namespace AuthService.API
 
             List<Role> dbRoles = await _roleManager.Roles.ToListAsync();
 
-            User user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user is null)
                 throw new CustomException("No user found!", 404);
@@ -204,7 +205,7 @@ namespace AuthService.API
                 }
             }
 
-            RegisterDto ret = _mapper.Map<RegisterDto>(user);
+            var ret = _mapper.Map<RegisterDto>(user);
             ret.Roles = roles;
 
             serviceResponse.Data = ret;
@@ -217,7 +218,7 @@ namespace AuthService.API
             var serviceResponse = new Response<RegisterDto>();
             serviceResponse.Data = model;
 
-            User user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user is null)
                 throw new CustomException("User not found!", 404);
 
@@ -233,11 +234,11 @@ namespace AuthService.API
         }
 
         [HttpDelete("email/{email}")]
-        public async Task<ActionResult<Response<RegisterDto>>> Delete([FromRoute]string email)
+        public async Task<ActionResult<Response<RegisterDto>>> Delete([FromRoute] string email)
         {
             var response = new Response<RegisterDto>();
 
-            User user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
 
             if (user is null)
             {
@@ -246,7 +247,7 @@ namespace AuthService.API
             }
             else
             {
-                int removedRolesCount = await RemoveRolesFromUser(user, new List<string>());
+                var removedRolesCount = await RemoveRolesFromUser(user, new List<string>());
                 var deleted = await _userManager.DeleteAsync(user);
                 if (deleted.Succeeded == false)
                 {
@@ -269,10 +270,10 @@ namespace AuthService.API
 
         private async Task<int> AddRolesToUser(User user, IEnumerable<string> roles)
         {
-            int addedRoleCount = 0;
+            var addedRoleCount = 0;
             var rolesInDB = await _userManager.GetRolesAsync(user);
 
-            foreach (string role in roles)
+            foreach (var role in roles)
             {
                 // A non-admin user can not add an admin role to his account
                 if (
@@ -284,7 +285,7 @@ namespace AuthService.API
                     )
                 ) continue;
 
-                    if (string.IsNullOrWhiteSpace(role)) continue;
+                if (string.IsNullOrWhiteSpace(role)) continue;
                 if (!(await _roleManager.RoleExistsAsync(role))) continue;
                 if (!(await _userManager.IsInRoleAsync(user, role.ToLower().Trim())))
                 {
@@ -297,7 +298,7 @@ namespace AuthService.API
 
         private async Task<int> RemoveRolesFromUser(User user, IEnumerable<string> newRoles)
         {
-            int removedRoleCount = 0;
+            var removedRoleCount = 0;
             var oldRoles = await _userManager.GetRolesAsync(user);
 
             // Only internal users can remove role
@@ -317,5 +318,4 @@ namespace AuthService.API
             return removedRoleCount;
         }
     }
-
 }

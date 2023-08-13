@@ -1,9 +1,4 @@
 ﻿using RideSharing.Entity.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RideSharing.Entity
 {
@@ -18,6 +13,5 @@ namespace RideSharing.Entity
         public TripStatus Status { get; set; }
         public String Source { get; set; }
         public String Destination { get; set; }
-
     }
 }

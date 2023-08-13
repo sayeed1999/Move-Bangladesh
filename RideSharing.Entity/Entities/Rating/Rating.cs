@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RideSharing.Entity
+﻿namespace RideSharing.Entity
 {
     // Since there are two schemas for rating e.g CustomerRating & DriverRating having similar field names,
     // so i inherit their props from a parent 'Rating' schema.

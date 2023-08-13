@@ -1,6 +1,6 @@
 ﻿using RideSharing.Entity;
-using Sayeed.NTier.Generic.Logic;
-using Sayeed.NTier.Generic.Repository;
+using Sayeed.Generic.OnionArchitecture.Logic;
+using Sayeed.Generic.OnionArchitecture.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +11,13 @@ namespace RideSharing.Service
 {
     public class UserService : BaseService<User>, IUserService
     {
-        public UserService(IBaseRepository<User> repository) : base(repository)
+        private readonly IBaseRepository<User> userRepository;
+        
+        public UserService( 
+            IBaseRepository<User> userRepository
+        ) : base(userRepository)
         {
+            this.userRepository = userRepository;
         }
     }
 }

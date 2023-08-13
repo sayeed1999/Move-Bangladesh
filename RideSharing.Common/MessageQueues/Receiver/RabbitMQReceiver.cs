@@ -1,10 +1,8 @@
-﻿using RabbitMQ.Client.Events;
+﻿using Newtonsoft.Json;
 using RabbitMQ.Client;
-using System.Text;
-using Newtonsoft.Json;
+using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
-using System.Threading.Channels;
-using RideSharing.Common.MessageQueues.Messages;
+using System.Text;
 
 namespace RideSharing.Common.MessageQueues.Receiver
 {
@@ -13,9 +11,13 @@ namespace RideSharing.Common.MessageQueues.Receiver
         protected BlockingCollection<T> messages = new();
         //private readonly ManualResetEventSlim _eventSlim = new();
 
-        public RabbitMQReceiver(string exchange) : this(exchange, null) { }
+        public RabbitMQReceiver(string exchange) : this(exchange, null)
+        {
+        }
 
-        public RabbitMQReceiver(string exchange, string? routingKey) : base(exchange, routingKey) { }
+        public RabbitMQReceiver(string exchange, string? routingKey) : base(exchange, routingKey)
+        {
+        }
 
         public void Start(Func<T, Task> action)
         {
@@ -28,7 +30,7 @@ namespace RideSharing.Common.MessageQueues.Receiver
                     using (var channel = connection.CreateModel())
                     {
                         channel.ExchangeDeclare(
-                            exchange: exchange, 
+                            exchange: exchange,
                             type: exchangeType,
                             durable: true,
                             autoDelete: false);
@@ -42,9 +44,9 @@ namespace RideSharing.Common.MessageQueues.Receiver
                         var consumer = new EventingBasicConsumer(channel);
                         consumer.Received += (model, ea) =>
                         {
-                            byte[] body = ea.Body.ToArray();
+                            var body = ea.Body.ToArray();
                             var message = Encoding.UTF8.GetString(body);
-                            T obj = JsonConvert.DeserializeObject<T>(message);
+                            var obj = JsonConvert.DeserializeObject<T>(message);
                             messages.Add(obj);
                         };
 
@@ -63,7 +65,7 @@ namespace RideSharing.Common.MessageQueues.Receiver
 
         private async Task ProcessMessageAsync(Func<T, Task> action)
         {
-            foreach (T message in messages.GetConsumingEnumerable())
+            foreach (var message in messages.GetConsumingEnumerable())
             {
                 await action(message);
             }

@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Sayeed.Generic.OnionArchitecture" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RideSharing.Entity\RideSharing.Entity.csproj" />
-    <ProjectReference Include="..\Sayeed.NTier.Generic\Sayeed.NTier.Generic.csproj" />
   </ItemGroup>
 
 </Project>

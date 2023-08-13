@@ -1,5 +1,6 @@
 ﻿using BlogService.Entity;
-using Sayeed.NTier.Generic.Logic;
+using BlogService.Entity.Dtos;
+using Sayeed.Generic.OnionArchitecture.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace BlogService.Service.PostService
 {
     public interface IPostService : IBaseService<Node>
     {
+        Task<PostDto> CreatePost(PostDto post);
     }
 }

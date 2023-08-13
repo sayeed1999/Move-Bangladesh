@@ -1,11 +1,4 @@
 ﻿using RideSharing.Common.Enums;
-using RideSharing.Entity.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RideSharing.Entity
 {

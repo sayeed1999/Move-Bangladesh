@@ -1,5 +1,6 @@
 ﻿using BlogService.Entity;
-using Sayeed.NTier.Generic.Repository;
+using BlogService.Entity.Dtos;
+using Sayeed.Generic.OnionArchitecture.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace BlogService.Service.NodeRepository
     public interface INodeRepository : IBaseRepository<Node>
     {
         Task<Node> CreateNodeForUserIfNotExistsAsync(long userId);
+        Task<Node> CreateNodeForPostIfNotExistsAsync(PostDto post);
+
     }
 }

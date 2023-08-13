@@ -1,5 +1,5 @@
 ﻿using BlogService.Entity;
-using Sayeed.NTier.Generic.Repository;
+using Sayeed.Generic.OnionArchitecture.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
