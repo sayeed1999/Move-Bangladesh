@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Primitives;
 using Yarp.ReverseProxy.Configuration;
 using Yarp.ReverseProxy.LoadBalancing;
+using Yarp.ReverseProxy.Transforms;
 
 namespace RideSharing.APIGateway
 {
@@ -14,13 +15,17 @@ namespace RideSharing.APIGateway
             // Should be based on your application needs.
             var routeConfig = new RouteConfig
             {
-                RouteId = "route1",
-                ClusterId = "cluster1",
+                RouteId = "auth",
+                ClusterId = "auth",
                 Match = new RouteMatch
                 {
-                    Path = "/api/service1/{**catch-all}"
+                    Path = "/auth/{**catch-all}"
                 }
             };
+
+            routeConfig = routeConfig
+                .WithTransformPathRemovePrefix(prefix: "/auth/")
+                .WithTransformResponseHeader(headerName: "Source", value: "YARP", append: true);
 
             var routeConfigs = new[] { routeConfig };
 
@@ -28,12 +33,12 @@ namespace RideSharing.APIGateway
             {
             new ClusterConfig
             {
-                ClusterId = "cluster1",
+                ClusterId = "auth",
                 LoadBalancingPolicy = LoadBalancingPolicies.RoundRobin,
                 Destinations = new Dictionary<string, DestinationConfig>
                 {
                     { "destination1", new DestinationConfig { Address = "https://localhost:5001/" } },
-                    { "destination2", new DestinationConfig { Address = "https://localhost:5002/" } }
+                    //{ "destination2", new DestinationConfig { Address = "https://localhost:5002/" } }
                 }
             }
         };
