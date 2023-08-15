@@ -10,9 +10,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
-    .AddSingleton<IProxyConfigProvider>(new CustomProxyConfigProvider())
-    .AddReverseProxy();
-    //.LoadFromConfig(_configuration.GetSection("ReverseProxy"));
+    .AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+builder.Services.AddHttpClient("AuthService", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:5000/auth/");
+});
 
 var app = builder.Build();
 
