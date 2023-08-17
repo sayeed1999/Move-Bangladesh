@@ -28,6 +28,7 @@ namespace RideSharing.Entity
             var r = validator.Validate(driver);
             // TODO: use result object
             if (r.IsValid) return driver;
+            return null;
         }
     }
 }
