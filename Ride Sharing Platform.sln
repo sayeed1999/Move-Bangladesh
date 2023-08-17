@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.API", "AuthServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Common", "RideSharing.Common\RideSharing.Common.csproj", "{3C881DC2-C3A1-4263-9A43-ACE399F9871E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Tests", "RideSharing.Tests\RideSharing.Tests.csproj", "{835969BE-2781-471D-9651-567FB860AA27}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Entity", "AuthService.Entity\AuthService.Entity.csproj", "{097EC066-A9E7-4354-9429-AF783085F8FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.APIGateway", "RideSharing.APIGateway\RideSharing.APIGateway.csproj", "{27C4EDC2-2AB8-46AF-8E80-CD96FAB6D87F}"
@@ -63,10 +61,6 @@ Global
 		{3C881DC2-C3A1-4263-9A43-ACE399F9871E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C881DC2-C3A1-4263-9A43-ACE399F9871E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C881DC2-C3A1-4263-9A43-ACE399F9871E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{835969BE-2781-471D-9651-567FB860AA27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{835969BE-2781-471D-9651-567FB860AA27}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{835969BE-2781-471D-9651-567FB860AA27}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{835969BE-2781-471D-9651-567FB860AA27}.Release|Any CPU.Build.0 = Release|Any CPU
 		{097EC066-A9E7-4354-9429-AF783085F8FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{097EC066-A9E7-4354-9429-AF783085F8FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{097EC066-A9E7-4354-9429-AF783085F8FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
