@@ -1,4 +1,7 @@
-﻿using RideSharing.Common.Enums;
+﻿using FluentValidation;
+using RideSharing.Common.Enums;
+using RideSharing.Entity;
+using System.Data;
 
 namespace RideSharing.Entity
 {
@@ -23,8 +26,24 @@ namespace RideSharing.Entity
         public static Customer Create(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber)
         {
             var customer = new Customer(id, firstName, lastName, gender, email, userName, phoneNumber);
-            return customer;
+
+            var validator = new CustomerValidator();
+            var validationResult = validator.Validate(customer);
+
+            // TODO:- use Result object
+            if (validationResult.IsValid) return customer;
+            return null;
         }
 
+
+
+    }
+}
+public class CustomerValidator : AbstractValidator<Customer>
+{
+    public CustomerValidator()
+    {
+        RuleFor(customer => customer.Id).GreaterThanOrEqualTo(0);
+        RuleFor(customer => customer.Email).EmailAddress();
     }
 }

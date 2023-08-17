@@ -1,4 +1,6 @@
-﻿using RideSharing.Common.Enums;
+﻿using FluentValidation;
+using RideSharing.Common.Enums;
+using RideSharing.Entity;
 
 namespace RideSharing.Entity
 {
@@ -21,7 +23,19 @@ namespace RideSharing.Entity
         public static Driver Create(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber)
         {
             var driver = new Driver(id, firstName, lastName, gender, email, userName,phoneNumber);
-            return driver;
+
+            var validator = new DriverValidator();
+            var r = validator.Validate(driver);
+            // TODO: use result object
+            if (r.IsValid) return driver;
         }
+    }
+}
+public class DriverValidator : AbstractValidator<Driver>
+{
+    public DriverValidator()
+    {
+        RuleFor(c => c.Id).GreaterThanOrEqualTo(0);
+        RuleFor(c => c.Email).EmailAddress();
     }
 }
