@@ -10,11 +10,11 @@ namespace RideSharing.Entity
             IsVerified = false;
         }
 
-        public Gender Gender { get; private set; }
-        public string Name { get; private set; }
-        public string Address { get; private set; }
-        public string Phone { get; private set; }
-        public string Email { get; private set; }
-        public bool? IsVerified { get; private set; }
+        public Gender Gender { get; protected set; }
+        public string Name { get; protected set; }
+        public string Address { get; protected set; }
+        public string Phone { get; protected set; }
+        public string Email { get; protected set; }
+        public bool? IsVerified { get; protected set; }
     }
 }

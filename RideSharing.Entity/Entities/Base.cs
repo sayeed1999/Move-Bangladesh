@@ -10,9 +10,9 @@
             DeletedDateUtc = null;
         }
 
-        public long Id { get; private set; }
-        public DateTime CreatedDateUtc { get; private set; }
-        public DateTime? UpdatedDateUtc { get; private set; }
-        public DateTime? DeletedDateUtc { get; private set; }
+        public long Id { get; protected set; }
+        public DateTime CreatedDateUtc { get; protected set; }
+        public DateTime? UpdatedDateUtc { get; protected set; }
+        public DateTime? DeletedDateUtc { get; protected set; }
     }
 }
