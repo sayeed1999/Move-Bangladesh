@@ -4,14 +4,14 @@ namespace RideSharing.Entity
 {
     public class Trip : Base
     {
-        public long CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
-        public long DriverId { get; set; }
-        public virtual Driver Driver { get; set; }
-        public long PaymentId { get; set; }
-        public virtual Payment Payment { get; set; }
-        public TripStatus Status { get; set; }
-        public String Source { get; set; }
-        public String Destination { get; set; }
+        public long CustomerId { get; private set; }
+        public virtual Customer Customer { get; private set; }
+        public long DriverId { get; private set; }
+        public virtual Driver Driver { get; private set; }
+        public long PaymentId { get; private set; }
+        public virtual Payment Payment { get; private set; }
+        public TripStatus Status { get; private set; }
+        public String Source { get; private set; }
+        public String Destination { get; private set; }
     }
 }

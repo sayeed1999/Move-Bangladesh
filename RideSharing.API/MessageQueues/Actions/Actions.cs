@@ -22,6 +22,24 @@ namespace RideSharing.API.MessageQueues.Actions
 
             try
             {
+                // if customer
+                var customer = Customer.Create(message.Id,
+                                               message.FirstName,
+                                               message.LastName,
+                                               message.Gender,
+                                               message.Email,
+                                               message.UserName,
+                                               message.PhoneNumber);
+
+                // if driver
+                var driver = Driver.Create(message.Id,
+                                           message.FirstName,
+                                           message.LastName,
+                                           message.Gender,
+                                           message.Email,
+                                           message.UserName,
+                                           message.PhoneNumber);
+
                 //await _dbContext.Users.AddAsync(user);
                 await _dbContext.SaveChangesAsync();
             }

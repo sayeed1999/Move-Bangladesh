@@ -4,13 +4,13 @@
     // so i inherit their props from a parent 'Rating' schema.
     public class Rating : Base
     {
-        public long CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
-        public long DriverId { get; set; }
-        public virtual Driver Driver { get; set; }
-        public long TripId { get; set; }
-        public virtual Trip Trip { get; set; }
-        public short RatingValue { get; set; }
-        public string Feedback { get; set; }
+        public long CustomerId { get; private set; }
+        public virtual Customer Customer { get; private set; }
+        public long DriverId { get; private set; }
+        public virtual Driver Driver { get; private set; }
+        public long TripId { get; private set; }
+        public virtual Trip Trip { get; private set; }
+        public short RatingValue { get; private set; }
+        public string Feedback { get; private set; }
     }
 }

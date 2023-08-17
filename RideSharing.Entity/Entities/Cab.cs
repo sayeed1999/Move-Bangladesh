@@ -4,9 +4,9 @@ namespace RideSharing.Entity
 {
     public class Cab : Base
     {
-        public string RegNo { get; set; }
-        public long DriverId { get; set; }
-        public virtual Driver Driver { get; set; }
-        public CabType Type { get; set; }
+        public string RegNo { get; private set; }
+        public long DriverId { get; private set; }
+        public virtual Driver Driver { get; private set; }
+        public CabType Type { get; private set; }
     }
 }

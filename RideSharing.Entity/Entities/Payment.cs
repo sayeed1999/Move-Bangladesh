@@ -4,8 +4,8 @@ namespace RideSharing.Entity
 {
     public class Payment : Base
     {
-        public PaymentMethod Method { get; set; }
-        public PaymentStatus Status { get; set; }
-        public long Amount { get; set; }
+        public PaymentMethod Method { get; private set; }
+        public PaymentStatus Status { get; private set; }
+        public long Amount { get; private set; }
     }
 }
