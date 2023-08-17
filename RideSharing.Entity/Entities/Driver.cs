@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using CSharpFunctionalExtensions;
+using FluentValidation;
 using RideSharing.Common.Enums;
 using RideSharing.Entity;
 
@@ -20,15 +21,15 @@ namespace RideSharing.Entity
         public virtual List<CustomerRating> CustomerRatings { get; protected set; }
         public virtual List<Trip> Trips { get; protected set; }
 
-        public static Driver Create(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber)
+        public static Result<Driver> Create(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber)
         {
             var driver = new Driver(id, firstName, lastName, gender, email, userName,phoneNumber);
 
             var validator = new DriverValidator();
             var r = validator.Validate(driver);
-            // TODO: use result object
-            if (r.IsValid) return driver;
-            return null;
+
+            if (r.IsValid) return Result.Success(driver);
+            return Result.Failure<Driver>("domain not valid");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using CSharpFunctionalExtensions;
+using FluentValidation;
 using RideSharing.Common.Enums;
 using RideSharing.Entity;
 using System.Data;
@@ -23,16 +24,15 @@ namespace RideSharing.Entity
         public virtual List<DriverRating> DriverRatings { get; protected set; }
         public virtual List<Trip> Trips { get; protected set; }
 
-        public static Customer Create(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber)
+        public static Result<Customer> Create(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber)
         {
             var customer = new Customer(id, firstName, lastName, gender, email, userName, phoneNumber);
 
             var validator = new CustomerValidator();
             var validationResult = validator.Validate(customer);
 
-            // TODO:- use Result object
-            if (validationResult.IsValid) return customer;
-            return null;
+            if (validationResult.IsValid) return Result.Success(customer);
+            return Result.Failure<Customer>("not valid");
         }
 
 
