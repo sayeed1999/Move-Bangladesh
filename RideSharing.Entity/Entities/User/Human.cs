@@ -4,6 +4,7 @@ namespace RideSharing.Entity
 {
     public abstract class Human
     {
+        public long Id { get; set; }
         public Gender Gender { get; set; } = Gender.Unknown;
         public string Name { get; set; }
         public string Address { get; set; }

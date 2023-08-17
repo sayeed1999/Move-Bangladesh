@@ -6,74 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RideSharing.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitializeDatabase : Migration
+    public partial class initdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Method = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
-                    UpdatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
-                    UpdatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -84,12 +27,6 @@ namespace RideSharing.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customers_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,13 +35,6 @@ namespace RideSharing.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
-                    UpdatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
-                    DeletedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -115,12 +45,24 @@ namespace RideSharing.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Drivers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Drivers_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Method = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,11 +74,8 @@ namespace RideSharing.Infrastructure.Migrations
                     RegNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DriverId = table.Column<long>(type: "bigint", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     CreatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
                     UpdatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
                     DeletedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -162,11 +101,8 @@ namespace RideSharing.Infrastructure.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     Source = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Destination = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     CreatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
                     UpdatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
                     DeletedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -198,11 +134,8 @@ namespace RideSharing.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     CreatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
                     UpdatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
                     DeletedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CustomerId = table.Column<long>(type: "bigint", nullable: false),
                     DriverId = table.Column<long>(type: "bigint", nullable: false),
@@ -239,11 +172,8 @@ namespace RideSharing.Infrastructure.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
                     CreatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
                     UpdatedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true),
                     DeletedDateUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CustomerId = table.Column<long>(type: "bigint", nullable: false),
                     DriverId = table.Column<long>(type: "bigint", nullable: false),
@@ -295,11 +225,6 @@ namespace RideSharing.Infrastructure.Migrations
                 column: "TripId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_UserId",
-                table: "Customers",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DriverRatings_CustomerId",
                 table: "DriverRatings",
                 column: "CustomerId");
@@ -313,11 +238,6 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "IX_DriverRatings_TripId",
                 table: "DriverRatings",
                 column: "TripId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Drivers_UserId",
-                table: "Drivers",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trips_CustomerId",
@@ -358,9 +278,6 @@ namespace RideSharing.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Payments");
-
-            migrationBuilder.DropTable(
-                name: "User");
         }
     }
 }
