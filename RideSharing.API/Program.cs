@@ -81,7 +81,6 @@ builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IDriverRatingService, DriverRatingService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ITripService, TripService>();
-builder.Services.AddScoped<IUserService, UserService>();
 
 // builder.Services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
 // registering repos

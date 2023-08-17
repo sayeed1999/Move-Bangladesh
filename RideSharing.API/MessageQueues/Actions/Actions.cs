@@ -18,11 +18,11 @@ namespace RideSharing.API.MessageQueues.Actions
 
         public async Task OnUserRegistered(UserRegistered message)
         {
-            var user = _mapper.Map<User>(message);
+            //var user = _mapper.Map<User>(message);
 
             try
             {
-                await _dbContext.Users.AddAsync(user);
+                //await _dbContext.Users.AddAsync(user);
                 await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -32,7 +32,7 @@ namespace RideSharing.API.MessageQueues.Actions
 
         public async Task OnUserModified(UserModified message)
         {
-            var user = _mapper.Map<User>(message);
+            //var user = _mapper.Map<User>(message);
 
             // TODO:- update user
         }
