@@ -1,29 +1,45 @@
-﻿using AutoMapper;
+﻿using AuthService.Entity;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Entity;
 using RideSharing.Infrastructure;
+using RideSharing.Service;
 
 namespace RideSharing.API.MessageQueues.Actions
 {
     public class Actions
     {
-        private readonly IMapper _mapper;
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ICustomerService customerService;
+        private readonly IDriverService driverService;
+        private readonly ApplicationDbContext context;
 
-        public Actions(IMapper mapper, ApplicationDbContext dbContext)
+        public Actions(ICustomerService customerService, IDriverService driverService, ApplicationDbContext context)
         {
-            _mapper = mapper;
-            _dbContext = dbContext;
+            this.customerService = customerService;
+            this.driverService = driverService;
+            this.context = context;
         }
-
+        
         public async Task OnUserRegistered(UserRegistered message)
         {
-            //var user = _mapper.Map<User>(message);
-
             try
             {
-                // if customer
-                var customer = Customer.Create(message.Id,
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    // if customer
+                    var customer = Customer.Create(message.Id,
+                                                   message.FirstName,
+                                                   message.LastName,
+                                                   message.Gender,
+                                                   message.Email,
+                                                   message.UserName,
+                                                   message.PhoneNumber);
+
+                    await customerService.AddAsync(customer);
+
+                    // if driver
+                    var driver = Driver.Create(message.Id,
                                                message.FirstName,
                                                message.LastName,
                                                message.Gender,
@@ -31,17 +47,9 @@ namespace RideSharing.API.MessageQueues.Actions
                                                message.UserName,
                                                message.PhoneNumber);
 
-                // if driver
-                var driver = Driver.Create(message.Id,
-                                           message.FirstName,
-                                           message.LastName,
-                                           message.Gender,
-                                           message.Email,
-                                           message.UserName,
-                                           message.PhoneNumber);
-
-                //await _dbContext.Users.AddAsync(user);
-                await _dbContext.SaveChangesAsync();
+                    await driverService.AddAsync(driver);
+                    transaction.Commit();
+                }
             }
             catch (Exception ex)
             {
@@ -50,9 +58,37 @@ namespace RideSharing.API.MessageQueues.Actions
 
         public async Task OnUserModified(UserModified message)
         {
-            //var user = _mapper.Map<User>(message);
+            try
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    // if customer
+                    var customer = Customer.Create(message.Id,
+                                                   message.FirstName,
+                                                   message.LastName,
+                                                   message.Gender,
+                                                   message.Email,
+                                                   message.UserName,
+                                                   message.PhoneNumber);
 
-            // TODO:- update user
+                    await customerService.AddAsync(customer);
+
+                    // if driver
+                    var driver = Driver.Create(message.Id,
+                                               message.FirstName,
+                                               message.LastName,
+                                               message.Gender,
+                                               message.Email,
+                                               message.UserName,
+                                               message.PhoneNumber);
+
+                    await driverService.UpdateAsync(driver);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }
