@@ -49,18 +49,10 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // registering services
-builder.Services.AddScoped<DbContext, ApplicationDbContext>();
-builder.Services.AddScoped<ICabService, CabService>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<ICustomerRatingService, CustomerRatingService>();
-builder.Services.AddScoped<IDriverService, DriverService>();
-builder.Services.AddScoped<IDriverRatingService, DriverRatingService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
-builder.Services.AddScoped<ITripService, TripService>();
-
-// builder.Services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
-// registering repos
-builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services
+    .AddScoped<DbContext, ApplicationDbContext>()
+    .RegisterApplicationLayer()
+    .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

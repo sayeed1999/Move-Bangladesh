@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace RideSharing.Service
 {
+    /// <summary>
+    /// Returns a reference to this instance of IServiceCollection
+    /// </summary>
     public static class DependencyInjection
     {
         public static IServiceCollection RegisterApplicationLayer(this IServiceCollection services)
@@ -16,7 +19,9 @@ namespace RideSharing.Service
                 .AddScoped<ICustomerService, CustomerService>()
                 .AddScoped<ICustomerRatingService, CustomerRatingService>()
                 .AddScoped<IDriverService, DriverService>()
-                .AddScoped<IDriverRatingService, DriverRatingService>();
+                .AddScoped<IDriverRatingService, DriverRatingService>()
+                .AddScoped<IPaymentService, PaymentService>()
+                .AddScoped<ITripService, TripService>();
         }
     }
 }
