@@ -15,7 +15,7 @@ namespace RideSharing.Entity
             Gender = gender;
             Email = email;
             Phone = phoneNumber;
-            
+            UserName = userName;
             DriverRatings = new();
             Trips = new();
         }
