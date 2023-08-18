@@ -36,7 +36,7 @@ namespace RideSharing.API.MessageQueues.Actions
                                                    message.UserName,
                                                    message.PhoneNumber);
 
-                    await customerService.AddAsync(customer);
+                    await customerService.AddAsync(customer.Value);
 
                     // if driver
                     var driver = Driver.Create(message.Id,
@@ -47,7 +47,7 @@ namespace RideSharing.API.MessageQueues.Actions
                                                message.UserName,
                                                message.PhoneNumber);
 
-                    await driverService.AddAsync(driver);
+                    await driverService.AddAsync(driver.Value);
                     transaction.Commit();
                 }
             }
@@ -71,7 +71,7 @@ namespace RideSharing.API.MessageQueues.Actions
                                                    message.UserName,
                                                    message.PhoneNumber);
 
-                    await customerService.AddAsync(customer);
+                    await customerService.AddAsync(customer.Value);
 
                     // if driver
                     var driver = Driver.Create(message.Id,
@@ -82,7 +82,7 @@ namespace RideSharing.API.MessageQueues.Actions
                                                message.UserName,
                                                message.PhoneNumber);
 
-                    await driverService.UpdateAsync(driver);
+                    await driverService.UpdateAsync(driver.Value);
                 }
             }
             catch (Exception ex)
