@@ -2,18 +2,17 @@
 {
     public abstract class Base
     {
+        protected Base()
+        {
+            Id = 0;
+            CreatedDateUtc = DateTime.UtcNow;
+            UpdatedDateUtc = DateTime.UtcNow;
+            DeletedDateUtc = null;
+        }
 
-        public long Id { get; set; }
-        public User CreatedBy { get; set; }
-        public long CreatedById { get; set; }
-        public DateTime CreatedDateUtc { get; set; } = DateTime.UtcNow;
-
-        public User? UpdatedBy { get; set; }
-        public long? UpdatedById { get; set; }
-        public DateTime? UpdatedDateUtc { get; set; }
-
-        public User? DeletedBy { get; set; }
-        public long? DeletedById { get; set; }
-        public DateTime? DeletedDateUtc { get; set; }
+        public long Id { get; protected set; }
+        public DateTime CreatedDateUtc { get; protected set; }
+        public DateTime? UpdatedDateUtc { get; protected set; }
+        public DateTime? DeletedDateUtc { get; protected set; }
     }
 }

@@ -15,6 +15,7 @@ using RideSharing.Service;
 using Sayeed.Generic.OnionArchitecture.Repository;
 using RideSharing.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -25,43 +26,19 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 // For Entity Framework
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
 
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy(AuthorizationPolicies.AdminOnly,
+//        policy => policy.RequireRole(
+//            Roles.Admin,
+//            Roles.Moderator)
+//        );
+//});
 
-// Adding Authentication
-builder.Services
-    .AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    // Adding Jwt Bearer
-    .AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.RequireHttpsMetadata = false;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidAudience = configuration["AppSettings:JWT:ValidAudience"],
-            ValidIssuer = configuration["AppSettings:JWT:ValidIssuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AppSettings:JWT:Secret"] ?? string.Empty))
-        };
-    });
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy(AuthorizationPolicies.AdminOnly,
-        policy => policy.RequireRole(
-            Roles.Admin,
-            Roles.Moderator)
-        );
-});
-
-builder.Services.AddMvcCore(options =>
-{
-    options.Filters.Add(new AuthorizeFilter());
-});
+//builder.Services.AddMvcCore(options =>
+//{
+//    options.Filters.Add(new AuthorizeFilter());
+//});
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
@@ -72,19 +49,10 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // registering services
-builder.Services.AddScoped<DbContext, ApplicationDbContext>();
-builder.Services.AddScoped<ICabService, CabService>();
-builder.Services.AddScoped<ICustomerService, CustomerService>();
-builder.Services.AddScoped<ICustomerRatingService, CustomerRatingService>();
-builder.Services.AddScoped<IDriverService, DriverService>();
-builder.Services.AddScoped<IDriverRatingService, DriverRatingService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
-builder.Services.AddScoped<ITripService, TripService>();
-builder.Services.AddScoped<IUserService, UserService>();
-
-// builder.Services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
-// registering repos
-builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+builder.Services
+    .AddScoped<DbContext, ApplicationDbContext>()
+    .RegisterApplicationLayer()
+    .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
