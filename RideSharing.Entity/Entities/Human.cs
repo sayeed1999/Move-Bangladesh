@@ -9,7 +9,7 @@ namespace RideSharing.Entity
             Gender = Gender.Unknown;
             IsVerified = false;
         }
-
+        public long AuthUserId { get; protected set; }
         public Gender Gender { get; protected set; }
         public string Name { get; protected set; }
         public string Address { get; protected set; }

@@ -8,6 +8,10 @@ namespace RideSharing.Entity
 {
     public class Customer : Human
     {
+        private Customer()
+        {
+
+        }
         private Customer(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber) : base()
         {
             Id = id;
