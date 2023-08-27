@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
 using RideSharing.Entity;
-using RideSharing.Entity.Entities;
 using RideSharing.Entity.Enums;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
@@ -22,15 +21,12 @@ namespace RideSharing.API
         }
 
         [HttpPost("request")]
-        public async Task<ActionResult<Response<RideRequest>>> RequestRide(RideRequest model)
+        public async Task<ActionResult<Response<Trip>>> RequestRide(Trip model)
         {
-            if (!ModelState.IsValid) // this one line with check "are all required fields of registerDto provided or not"
-                throw new CustomException("Model is not valid!", 400);
+            //if (!ModelState.IsValid) // this one line with check "are all required fields of registerDto provided or not"
+            //    throw new CustomException("Model is not valid!", 400);
            
-            model.Status = RideStatusEnum.Pending;
-            model.RequestTime = DateTime.UtcNow;
-
-            _dbContext.RideRequests.Add(model);
+            _dbContext.Trips.Add(model);
             await _dbContext.SaveChangesAsync();
 
             return Ok($"Ride request {model.Id} submitted successfully.");
@@ -39,17 +35,17 @@ namespace RideSharing.API
 
 
         [HttpPut("cancel/{requestId}")]
-        public async Task<ActionResult<Response<RideRequest>>> CancelRide(int requestId)
+        public async Task<ActionResult<Response<Trip>>> CancelRide(int requestId)
         {
-            var rideRequest = await _dbContext.RideRequests.FindAsync(requestId);
+            var rideRequest = await _dbContext.Trips.FindAsync(requestId);
 
             if (rideRequest == null)
                 return NotFound($"Ride request {requestId} not found.");
 
-            if (rideRequest.Status == RideStatusEnum.Canceled)
+            if (rideRequest.Status == TripStatus.TripCanceled)
                 return BadRequest($"Ride request {requestId} is already canceled.");
 
-            rideRequest.Status = RideStatusEnum.Canceled;
+            //rideRequest.Status = TripStatus.TripCanceled;
             await _dbContext.SaveChangesAsync();
 
             return Ok($"Ride request {requestId} has been canceled.");
@@ -57,9 +53,9 @@ namespace RideSharing.API
 
 
         [HttpGet("status/{requestId}")]
-        public async Task<ActionResult<Response<RideRequest>>> GetRideStatus(int requestId)
+        public async Task<ActionResult<Response<Trip>>> GetRideStatus(int requestId)
         {
-            var rideRequest = await _dbContext.RideRequests.FindAsync(requestId);
+            var rideRequest = await _dbContext.Trips.FindAsync(requestId);
 
             if (rideRequest == null)
                 return NotFound($"Ride request {requestId} not found.");
@@ -67,10 +63,11 @@ namespace RideSharing.API
             return Ok($"Ride request {requestId} status: {rideRequest.Status}");
         }
 
+
         [HttpPut("accept/{requestId}/{driverId}")]
-        public async Task<ActionResult<Response<RideRequest>>> AcceptRide(int requestId, int driverId)
+        public async Task<ActionResult<Response<Trip>>> AcceptRide(int requestId, int driverId)
         {
-            var rideRequest = await _dbContext.RideRequests.FindAsync(requestId);
+            var rideRequest = await _dbContext.Trips.FindAsync(requestId);
             var driver = await _dbContext.Drivers.FindAsync(driverId);
 
             if (rideRequest == null)
@@ -79,13 +76,13 @@ namespace RideSharing.API
             if (driver == null)
                 return NotFound($"Driver {driverId} not found.");
 
-            if (rideRequest.Status != RideStatusEnum.Pending)
+            if (rideRequest.Status != TripStatus.TripRequested)
                 return BadRequest($"Ride request {requestId} is not pending.");
 
-            rideRequest.Status = RideStatusEnum.Accepted;
+            //rideRequest.Status = TripStatus.TripAccepted;
 
             // Associate the driver with the ride request (if needed)
-            rideRequest.Driver = driver;
+            //rideRequest.Driver = driver;
 
             await _dbContext.SaveChangesAsync();
 
