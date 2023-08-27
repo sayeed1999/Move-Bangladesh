@@ -142,7 +142,7 @@ namespace AuthService.API
             }
 
             // preraring return token
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT.Secret.ToString()));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT.Secret));
             var token = new JwtSecurityToken(
                 audience: _appSettings.JWT.ValidAudience,
                 issuer: _appSettings.JWT.ValidIssuer,

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RideSharing.Entity;
+using RideSharing.Entity.Entities;
 
 namespace RideSharing.Infrastructure
 {
@@ -26,6 +27,8 @@ namespace RideSharing.Infrastructure
         public DbSet<Cab> Cabs { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Trip> Trips { get; set; }
+
+        public DbSet<RideRequest> RideRequests { get; set; }
 
         // Connection String is initialized from RideSharing.API -> Startup.cs...
 
