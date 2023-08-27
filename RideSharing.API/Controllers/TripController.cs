@@ -1,4 +1,5 @@
 ﻿using AuthService.Entity;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
 using RideSharing.Entity;
@@ -23,13 +24,13 @@ namespace RideSharing.API
         [HttpPost("request")]
         public async Task<ActionResult<Response<Trip>>> RequestRide(Trip model)
         {
-            //if (!ModelState.IsValid) // this one line with check "are all required fields of registerDto provided or not"
-            //    throw new CustomException("Model is not valid!", 400);
-           
-            _dbContext.Trips.Add(model);
+            Result<Trip> trip = Trip.CreateNewTrip(model.CustomerId, model.DriverId, model.Source, model.Destination);
+            if (trip.IsFailure) return BadRequest("Please provide valid data.");
+
+            _dbContext.Trips.Add(trip.Value);
             await _dbContext.SaveChangesAsync();
 
-            return Ok($"Ride request {model.Id} submitted successfully.");
+            return Ok($"Ride request {trip.Value.Id} submitted successfully.");
 
         }
 
