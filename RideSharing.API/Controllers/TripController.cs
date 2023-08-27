@@ -39,7 +39,7 @@ namespace RideSharing.API
 
 
         [HttpPut("cancel/{requestId}")]
-        public async Task<IActionResult> CancelRide(int requestId)
+        public async Task<ActionResult<Response<RideRequest>>> CancelRide(int requestId)
         {
             var rideRequest = await _dbContext.RideRequests.FindAsync(requestId);
 
@@ -57,7 +57,7 @@ namespace RideSharing.API
 
 
         [HttpGet("status/{requestId}")]
-        public async Task<IActionResult> GetRideStatus(int requestId)
+        public async Task<ActionResult<Response<RideRequest>>> GetRideStatus(int requestId)
         {
             var rideRequest = await _dbContext.RideRequests.FindAsync(requestId);
 
@@ -65,6 +65,31 @@ namespace RideSharing.API
                 return NotFound($"Ride request {requestId} not found.");
 
             return Ok($"Ride request {requestId} status: {rideRequest.Status}");
+        }
+
+        [HttpPut("accept/{requestId}/{driverId}")]
+        public async Task<ActionResult<Response<RideRequest>>> AcceptRide(int requestId, int driverId)
+        {
+            var rideRequest = await _dbContext.RideRequests.FindAsync(requestId);
+            var driver = await _dbContext.Drivers.FindAsync(driverId);
+
+            if (rideRequest == null)
+                return NotFound($"Ride request {requestId} not found.");
+
+            if (driver == null)
+                return NotFound($"Driver {driverId} not found.");
+
+            if (rideRequest.Status != RideStatusEnum.Pending)
+                return BadRequest($"Ride request {requestId} is not pending.");
+
+            rideRequest.Status = RideStatusEnum.Accepted;
+
+            // Associate the driver with the ride request (if needed)
+            rideRequest.Driver = driver;
+
+            await _dbContext.SaveChangesAsync();
+
+            return Ok($"Ride request {requestId} has been accepted by driver {driver.Name}.");
         }
     }
 }
