@@ -26,15 +26,15 @@ namespace AuthService.API.Helpers
 
         public AutoMapperProfile()
         {
-            CreateMap<UserRegistered, User>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => 0))
-                .ForMember(dest => dest.AuthUserId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
+            //CreateMap<UserRegistered, User>()
+            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => 0))
+            //    .ForMember(dest => dest.AuthUserId, opt => opt.MapFrom(src => src.Id))
+            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
 
-            CreateMap<UserModified, User>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => 0))
-                .ForMember(dest => dest.AuthUserId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
+            //CreateMap<UserModified, User>()
+            //    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => 0))
+            //    .ForMember(dest => dest.AuthUserId, opt => opt.MapFrom(src => src.Id))
+            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName + " " + src.LastName));
         }
 
     }

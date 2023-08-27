@@ -19,7 +19,6 @@ namespace RideSharing.Infrastructure
 
         #region User
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Driver> Drivers { get; set; }
 
@@ -42,25 +41,6 @@ namespace RideSharing.Infrastructure
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-            // overriding key behaviors..
-            builder.Entity<User>()
-                .HasIndex(e => e.AuthUserId)
-                .IsUnique();
-
-            builder.Entity<User>()
-                .Ignore(e => e.CreatedBy)
-                .Ignore(e => e.CreatedById);
-
-            builder.Entity<User>()
-                .HasOne(e => e.UpdatedBy)
-                .WithMany()
-                .HasForeignKey(e => e.UpdatedById);
-
-            builder.Entity<User>()
-                .HasOne(e => e.DeletedBy)
-                .WithMany()
-                .HasForeignKey(e => e.DeletedById);
         }
     }
 }
