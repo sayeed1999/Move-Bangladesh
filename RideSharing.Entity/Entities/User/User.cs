@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using RideSharing.Common.Enums;
+﻿using RideSharing.Common.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace RideSharing.Entity
