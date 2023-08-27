@@ -7,6 +7,10 @@ namespace RideSharing.Entity
 {
     public class Driver : Human
     {
+        private Driver()
+        {
+
+        }
         private Driver(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber) : base()
         {
             Id = id;
