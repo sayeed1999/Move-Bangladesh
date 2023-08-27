@@ -4,6 +4,7 @@ using RideSharing.Common.Entities;
 using RideSharing.Entity;
 using RideSharing.Entity.Entities;
 using RideSharing.Entity.Enums;
+using RideSharing.Infrastructure;
 using RideSharing.Service;
 using Sayeed.Generic.OnionArchitecture.Controller;
 
@@ -14,8 +15,7 @@ namespace RideSharing.API
     public class TripController : BaseController<Trip>
     {
 
-        private readonly List<RideRequest> _rideRequests = new List<RideRequest>();
-        private readonly Dictionary<int, RideStatusEnum> _rideStatuses = new Dictionary<int, RideStatusEnum>();
+        private readonly ApplicationDbContext _dbContext;
 
         public TripController(ITripService baseService) : base(baseService)
         {
