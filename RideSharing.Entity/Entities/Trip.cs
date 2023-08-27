@@ -48,6 +48,20 @@ namespace RideSharing.Entity
             if (result.IsValid) return Result.Success(x);
             return Result.Failure<Trip>("Model is invalid");
         }
+
+        public static Result<Trip> Modify(long id, TripStatus status)
+        {
+            if (status == null || id <= 0) return Result.Failure<Trip>("Model is invalid");
+
+            var x = new Trip()
+            {
+                Id = id,
+                Status = status,
+            };
+
+            return Result.Success(x);
+        }
+
     }
 }
 

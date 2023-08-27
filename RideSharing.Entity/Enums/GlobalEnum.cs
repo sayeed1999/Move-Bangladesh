@@ -2,7 +2,6 @@
 {
     public enum CabType
     {
-        Unknown,
         TwoWheels,
         ThreeWheels,
         FourWheels,
@@ -11,7 +10,6 @@
 
     public enum TripStatus
     {
-        Unknown,
         TripRequested,
         TripAccepted,
         TripCanceled,
@@ -21,7 +19,6 @@
 
     public enum PaymentMethod
     {
-        Unknown,
         Cash,
         Bkash,
         Nagad,
@@ -30,7 +27,6 @@
 
     public enum PaymentStatus
     {
-        Unknown,
         Processing,
         Failed,
         Success,
