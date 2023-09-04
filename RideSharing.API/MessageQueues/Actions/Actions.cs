@@ -5,6 +5,7 @@ using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Entity;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
+using RideSharing.Entity.Constants;
 
 namespace RideSharing.API.MessageQueues.Actions
 {
@@ -28,7 +29,7 @@ namespace RideSharing.API.MessageQueues.Actions
                 using (var transaction = context.Database.BeginTransaction())
                 {
                     // if customer
-                    if (message.Roles.Contains("customer"))
+                    if (message.Roles.Contains(UserRole.Customer))
                     {
                         var customer = Customer.Create(message.Id,
                                                                            message.FirstName,
@@ -43,7 +44,7 @@ namespace RideSharing.API.MessageQueues.Actions
 
 
                     // if driver
-                    if (message.Roles.Contains("driver"))
+                    if (message.Roles.Contains(UserRole.Driver))
                     {
                         var driver = Driver.Create(message.Id,
                                                                       message.FirstName,
@@ -71,7 +72,7 @@ namespace RideSharing.API.MessageQueues.Actions
                 using (var transaction = context.Database.BeginTransaction())
                 {
                     // if customer
-                    if (message.Roles.Contains("customer"))
+                    if (message.Roles.Contains(UserRole.Customer))
                     {
                         var customer = Customer.Create(message.Id,
                             message.FirstName,
@@ -85,7 +86,7 @@ namespace RideSharing.API.MessageQueues.Actions
                     }
 
                     // if driver
-                    if (message.Roles.Contains("driver"))
+                    if (message.Roles.Contains(UserRole.Driver))
                     {
                         var driver = Driver.Create(message.Id,
                             message.FirstName,
