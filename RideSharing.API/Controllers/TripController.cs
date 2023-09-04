@@ -1,8 +1,10 @@
 ﻿using AuthService.Entity;
 using CSharpFunctionalExtensions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
 using RideSharing.Entity;
+using RideSharing.Entity.Dtos;
 using RideSharing.Entity.Enums;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
@@ -14,22 +16,23 @@ namespace RideSharing.API
     [ApiController]
     public class TripController : BaseController<Trip>
     {
+        private readonly IMediator _mediator;
         private readonly ITripService tripService;
 
-        public TripController(ITripService tripService) : base(tripService)
+        public TripController(
+            IMediator mediator,
+            ITripService tripService) : base(tripService)
         {
+            this._mediator = mediator;
             this.tripService = tripService;
         }
 
         [HttpPost("request")]
-        public async Task<ActionResult<Response<Trip>>> RequestRide(Trip model)
+        public async Task<ActionResult<Response<Trip>>> RequestRide(TripRequestDto model)
         {
-            Result<Trip> trip = Trip.CreateNewTrip(model.CustomerId, model.DriverId, model.Source, model.Destination);
-            if (trip.IsFailure) return BadRequest("Please provide valid data.");
-
-            var res = await tripService.AddAsync(trip.Value);
-
-            return Ok($"Ride request {res.Id} submitted successfully.");
+            var res = await _mediator.Send(model);
+            if (res.IsFailure) return BadRequest(res.Error);
+            return Ok($"Ride request {res.Value.Id} submitted successfully.");
 
         }
 
