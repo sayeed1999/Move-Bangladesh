@@ -5,6 +5,7 @@ using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Entity;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
+using RideSharing.Entity.Constants;
 
 namespace RideSharing.API.MessageQueues.Actions
 {
@@ -20,7 +21,7 @@ namespace RideSharing.API.MessageQueues.Actions
             this.driverService = driverService;
             this.context = context;
         }
-        
+
         public async Task OnUserRegistered(UserRegistered message)
         {
             try
@@ -28,26 +29,34 @@ namespace RideSharing.API.MessageQueues.Actions
                 using (var transaction = context.Database.BeginTransaction())
                 {
                     // if customer
-                    var customer = Customer.Create(message.Id,
-                                                   message.FirstName,
-                                                   message.LastName,
-                                                   message.Gender,
-                                                   message.Email,
-                                                   message.UserName,
-                                                   message.PhoneNumber);
+                    if (message.Roles.Contains(UserRole.Customer))
+                    {
+                        var customer = Customer.Create(message.Id,
+                                                                           message.FirstName,
+                                                                           message.LastName,
+                                                                           message.Gender,
+                                                                           message.Email,
+                                                                           message.UserName,
+                                                                           message.PhoneNumber);
 
-                    await customerService.AddAsync(customer.Value);
+                        await customerService.AddAsync(customer.Value);
+                    }
+
 
                     // if driver
-                    var driver = Driver.Create(message.Id,
-                                               message.FirstName,
-                                               message.LastName,
-                                               message.Gender,
-                                               message.Email,
-                                               message.UserName,
-                                               message.PhoneNumber);
+                    if (message.Roles.Contains(UserRole.Driver))
+                    {
+                        var driver = Driver.Create(message.Id,
+                                                                      message.FirstName,
+                                                                      message.LastName,
+                                                                      message.Gender,
+                                                                      message.Email,
+                                                                      message.UserName,
+                                                                      message.PhoneNumber);
 
-                    await driverService.AddAsync(driver.Value);
+                        await driverService.AddAsync(driver.Value);
+                    }
+
                     transaction.Commit();
                 }
             }
@@ -63,26 +72,33 @@ namespace RideSharing.API.MessageQueues.Actions
                 using (var transaction = context.Database.BeginTransaction())
                 {
                     // if customer
-                    var customer = Customer.Create(message.Id,
-                                                   message.FirstName,
-                                                   message.LastName,
-                                                   message.Gender,
-                                                   message.Email,
-                                                   message.UserName,
-                                                   message.PhoneNumber);
+                    if (message.Roles.Contains(UserRole.Customer))
+                    {
+                        var customer = Customer.Create(message.Id,
+                            message.FirstName,
+                            message.LastName,
+                            message.Gender,
+                            message.Email,
+                            message.UserName,
+                            message.PhoneNumber);
 
-                    await customerService.AddAsync(customer.Value);
+                        await customerService.AddAsync(customer.Value);
+                    }
 
                     // if driver
-                    var driver = Driver.Create(message.Id,
-                                               message.FirstName,
-                                               message.LastName,
-                                               message.Gender,
-                                               message.Email,
-                                               message.UserName,
-                                               message.PhoneNumber);
+                    if (message.Roles.Contains(UserRole.Driver))
+                    {
+                        var driver = Driver.Create(message.Id,
+                            message.FirstName,
+                            message.LastName,
+                            message.Gender,
+                            message.Email,
+                            message.UserName,
+                            message.PhoneNumber);
 
-                    await driverService.UpdateAsync(driver.Value);
+                        await driverService.UpdateAsync(driver.Value);
+                    }
+                    transaction.Commit();
                 }
             }
             catch (Exception ex)

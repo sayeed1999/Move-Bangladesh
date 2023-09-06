@@ -35,6 +35,7 @@ namespace RideSharing.Entity
         {
             var x = new Trip()
             {
+                Id = 0,
                 CustomerId = customerId,
                 DriverId = driverId,
                 Source = source,

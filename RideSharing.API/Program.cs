@@ -16,6 +16,9 @@ using Sayeed.Generic.OnionArchitecture.Repository;
 using RideSharing.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -46,8 +49,8 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(TripService).GetTypeInfo().Assembly));
 // registering services
 builder.Services
     .AddScoped<DbContext, ApplicationDbContext>()
