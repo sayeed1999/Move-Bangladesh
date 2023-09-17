@@ -35,8 +35,11 @@ namespace RideSharing.Service
 
         public async Task<Result<Trip>> Handle(TripModifyDto model, CancellationToken cancellationToken)
         {
-            var rideRequest = await this.baseRepository.FindByIdAsync(model.TripId);
-            if (rideRequest == null) return Result.Failure<Trip>($"Ride request {model.TripId} not found.");
+            var tripInDB = await this.baseRepository.FindByIdAsync(model.TripId);
+            if (tripInDB == null) return Result.Failure<Trip>($"Ride request {model.TripId} not found.");
+
+            // Logic: A Trip Status can only update incrementally. Check TripStatus enum.
+            if (tripInDB.Status >= model.TripStatus) return Result.Failure<Trip>("Cannot reverse a trip status to a past value!");
 
             var trip = Trip.Modify(model.TripId, model.TripStatus);
 
