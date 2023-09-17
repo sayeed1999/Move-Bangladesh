@@ -38,17 +38,12 @@ namespace RideSharing.API
 
 
         [HttpPut("{tripId}/update")]
-        public async Task<ActionResult<Response<Trip>>> Update(int tripId, TripStatus status)
+        public async Task<ActionResult<Response<Trip>>> Update(int tripId, TripModifyDto model)
         {
-            var rideRequest = await tripService.FindByIdAsync(tripId);
-
-            if (rideRequest == null)
-                return NotFound($"Ride request {tripId} not found.");
-
-            var trip = Trip.Modify(tripId, status);
-            var res = await tripService.UpdateAsync(trip.Value);
-
-            return Ok($"Ride request {res.Id} has been canceled.");
+            model.TripId = tripId;
+            var res = await _mediator.Send(model);
+            if (res.IsFailure) return BadRequest(res.Error);
+            return Ok($"Ride request {res.Value.Id} has been canceled.");
         }
 
 

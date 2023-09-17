@@ -1,9 +1,7 @@
 using AuthService.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using RideSharing.API;
@@ -13,10 +11,6 @@ using RideSharing.Common.Middlewares;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
 using Sayeed.Generic.OnionArchitecture.Repository;
-using RideSharing.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using System.Text;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using MediatR;
 

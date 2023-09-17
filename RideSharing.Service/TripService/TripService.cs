@@ -12,7 +12,9 @@ using System.Threading.Tasks;
 
 namespace RideSharing.Service
 {
-    public class TripService : BaseService<Trip>, ITripService, IRequestHandler<TripRequestDto, Result<Trip>>
+    public class TripService : BaseService<Trip>, ITripService, 
+        IRequestHandler<TripRequestDto, Result<Trip>>,
+        IRequestHandler<TripModifyDto, Result<Trip>>
     {
         private readonly IBaseRepository<Trip> baseRepository;
 
@@ -27,6 +29,18 @@ namespace RideSharing.Service
             if (trip.IsFailure) return Result.Failure<Trip>("Please provide valid data.");
 
             var res = await this.baseRepository.AddAsync(trip.Value);
+
+            return Result.Success<Trip>(res);
+        }
+
+        public async Task<Result<Trip>> Handle(TripModifyDto model, CancellationToken cancellationToken)
+        {
+            var rideRequest = await this.baseRepository.FindByIdAsync(model.TripId);
+            if (rideRequest == null) return Result.Failure<Trip>($"Ride request {model.TripId} not found.");
+
+            var trip = Trip.Modify(model.TripId, model.TripStatus);
+
+            var res = await this.baseRepository.UpdateAsync(trip.Value);
 
             return Result.Success<Trip>(res);
         }
