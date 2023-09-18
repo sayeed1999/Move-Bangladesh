@@ -3,12 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using RideSharing.Common.Middlewares;
-using RideSharing.Infrastructure;
-using RideSharing.Service;
 using Sayeed.Generic.OnionArchitecture.Repository;
 using System.Reflection;
 using MediatR;
 using RideSharing.CustomerAPI;
+using RideSharing.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -40,11 +39,9 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(TripService).GetTypeInfo().Assembly));
 // registering services
 builder.Services
     .AddScoped<DbContext, ApplicationDbContext>()
-    .RegisterApplicationLayer()
     .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

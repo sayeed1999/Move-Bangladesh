@@ -26,37 +26,5 @@ namespace RideSharing.API
             this._mediator = mediator;
             this.tripService = tripService;
         }
-
-        [HttpPost("request")]
-        public async Task<ActionResult<Response<Trip>>> RequestRide(TripRequestDto model)
-        {
-            var res = await _mediator.Send(model);
-            if (res.IsFailure) return BadRequest(res.Error);
-            return Ok($"Ride request {res.Value.Id} submitted successfully.");
-
-        }
-
-
-        [HttpPut("{tripId}/update")]
-        public async Task<ActionResult<Response<Trip>>> Update(int tripId, TripModifyDto model)
-        {
-            model.TripId = tripId;
-            var res = await _mediator.Send(model);
-            if (res.IsFailure) return BadRequest(res.Error);
-            return Ok($"Ride request {res.Value.Id} has been canceled.");
-        }
-
-
-        [HttpGet("{tripId}/status")]
-        public async Task<ActionResult<Response<Trip>>> GetRideStatus(int tripId)
-        {
-            var rideRequest = await tripService.FindByIdAsync(tripId);
-
-            if (rideRequest == null)
-                return NotFound($"Ride request {tripId} not found.");
-
-            return Ok($"Ride request {tripId} status: {rideRequest.Status}");
-        }
-
     }
 }
