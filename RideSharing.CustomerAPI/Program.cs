@@ -2,15 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
-using RideSharing.API;
-using RideSharing.API.MessageQueues.Actions;
-using RideSharing.API.MessageQueues.Receiver;
 using RideSharing.Common.Middlewares;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
 using Sayeed.Generic.OnionArchitecture.Repository;
 using System.Reflection;
 using MediatR;
+using RideSharing.CustomerAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -88,30 +86,30 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 
-builder.Services.AddScoped<Actions>();
+//builder.Services.AddScoped<Actions>();
 
 var app = builder.Build();
 
 
 
 // rabbitmq emitter configs
-var userRegisteredConsumer = new UserRegisteredConsumer();
-var userModifierConsumer = new UserModifiedConsumer();
+//var userRegisteredConsumer = new UserRegisteredConsumer();
+//var userModifierConsumer = new UserModifiedConsumer();
 
-var scope = app.Services.CreateScope();
+//var scope = app.Services.CreateScope();
 
-var actions = scope.ServiceProvider.GetRequiredService<Actions>();
-userRegisteredConsumer.Start(actions.OnUserRegistered);
-userModifierConsumer.Start(actions.OnUserModified);
+//var actions = scope.ServiceProvider.GetRequiredService<Actions>();
+//userRegisteredConsumer.Start(actions.OnUserRegistered);
+//userModifierConsumer.Start(actions.OnUserModified);
 
-// stopping rabbitmq instances
-var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
-lifetime.ApplicationStopping.Register(() =>
-{
-    userRegisteredConsumer.Stop();
-    userModifierConsumer.Stop();
-    scope.Dispose();
-});
+//// stopping rabbitmq instances
+//var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+//lifetime.ApplicationStopping.Register(() =>
+//{
+//    userRegisteredConsumer.Stop();
+//    userModifierConsumer.Stop();
+//    scope.Dispose();
+//});
 
 
 
