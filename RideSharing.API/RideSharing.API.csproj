@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AuthService.Entity\AuthService.Entity.csproj" />
     <ProjectReference Include="..\RideSharing.Common\RideSharing.Common.csproj" />
     <ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
     <ProjectReference Include="..\RideSharing.Service\RideSharing.Service.csproj" />

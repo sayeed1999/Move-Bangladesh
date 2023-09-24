@@ -1,5 +1,4 @@
-﻿using AuthService.Entity;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;

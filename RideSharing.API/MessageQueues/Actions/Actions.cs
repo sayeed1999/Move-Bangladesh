@@ -1,5 +1,4 @@
-﻿using AuthService.Entity;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Entity;

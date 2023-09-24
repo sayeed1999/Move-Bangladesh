@@ -7,30 +7,12 @@ using Sayeed.Generic.OnionArchitecture.Repository;
 using System.Reflection;
 using MediatR;
 using RideSharing.CustomerAPI;
-using RideSharing.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-
-// For Entity Framework
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
-
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy(AuthorizationPolicies.AdminOnly,
-//        policy => policy.RequireRole(
-//            Roles.Admin,
-//            Roles.Moderator)
-//        );
-//});
-
-//builder.Services.AddMvcCore(options =>
-//{
-//    options.Filters.Add(new AuthorizeFilter());
-//});
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
@@ -39,10 +21,6 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
-// registering services
-builder.Services
-    .AddScoped<DbContext, ApplicationDbContext>()
-    .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
