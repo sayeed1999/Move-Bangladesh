@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CSharpFunctionalExtensions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
 using RideSharing.Entity;
@@ -18,14 +19,14 @@ namespace RideSharing.CustomerAPI.Controllers.TripCommands
         }
 
         [HttpGet("{tripId}/status")]
-        public async Task<ActionResult<Response<Trip>>> GetRideStatus(int tripId)
+        public async Task<ActionResult<Response<Trip>>> GetRideStatus(TripQueryDto queryDto)
         {
-            Trip rideRequest = null;//await tripService.FindByIdAsync(tripId);
+            Result<Trip> ride = await _mediator.Send(queryDto);
 
-            if (rideRequest == null)
-                return NotFound($"Ride request {tripId} not found.");
+            if (ride.IsFailure)
+                return NotFound($"Ride request {queryDto.TripId} not found.");
 
-            return Ok($"Ride request {tripId} status: {rideRequest.Status}");
+            return Ok($"Ride request {queryDto.TripId} status: {ride.Value.Status}");
         }
     }
 }

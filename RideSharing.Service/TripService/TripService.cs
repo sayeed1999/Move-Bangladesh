@@ -14,7 +14,8 @@ namespace RideSharing.Service
 {
     public class TripService : BaseService<Trip>, ITripService, 
         IRequestHandler<TripRequestDto, Result<Trip>>,
-        IRequestHandler<TripModifyDto, Result<Trip>>
+        IRequestHandler<TripModifyDto, Result<Trip>>,
+        IRequestHandler<TripQueryDto, Result<Trip>>
     {
         private readonly IBaseRepository<Trip> baseRepository;
 
@@ -46,6 +47,14 @@ namespace RideSharing.Service
             var res = await this.baseRepository.UpdateAsync(trip.Value);
 
             return Result.Success<Trip>(res);
+        }
+
+        public async Task<Result<Trip>> Handle(TripQueryDto model, CancellationToken cancellationToken)
+        {
+            var tripInDB = await this.baseRepository.FindByIdAsync(model.TripId);
+            if (tripInDB == null) return Result.Failure<Trip>($"Ride request {model.TripId} not found.");
+
+            return Result.Success<Trip>(tripInDB);
         }
     }
 }
