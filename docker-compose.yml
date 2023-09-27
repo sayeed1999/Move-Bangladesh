@@ -1,0 +1,64 @@
+version: '3.8'
+
+# services define individual containers and their configurations
+services:
+
+  # api gateway / reverse proxy
+  api-gateway:
+    image: api-gateway
+    build:
+      context: .
+      dockerfile: RideSharing.ApiGateway/Dockerfile
+    ports:
+      - 5000:5000
+      - 6000:6000
+    networks:
+      - authnet
+    restart: always
+
+  # admin api (contains all generic crud endpoints)
+  ride-sharing-api:
+    image: ride-sharing-api
+    build:
+      context: .
+      dockerfile: RideSharing.API/Dockerfile
+    ports:
+      - 5002:5002
+      - 6002:6002
+    networks:
+      - authnet
+    restart: always
+
+  # customer api (riders & customers only)
+  ride-sharing-customer-api:
+    image: ride-sharing-customer-api
+    build:
+      context: .
+      dockerfile: RideSharing.CustomerAPI/Dockerfile
+    ports:
+      - 5003:5003
+      - 6003:6003
+    networks:
+      - authnet
+    restart: always
+
+  # auth service api (identity provider for microservices)
+  auth-api:
+    image: auth-api
+    build:
+      context: .
+      dockerfile: AuthService.API/Dockerfile
+    ports:
+      - 5001:5001
+      - 6001:6001
+    networks:
+      - authnet
+    restart: always
+
+# volumes define persistent storages to storage services' data to manage data persistence
+# volumes:
+
+# networks define custom networks for communication between services or between a service and a volume
+networks:
+  # a custom network defined for our services and volumes
+  authnet:
