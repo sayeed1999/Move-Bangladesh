@@ -1,8 +1,8 @@
 # Use the official .NET 7 runtime as the base image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5002
+EXPOSE 6002
 
 # Use the official .NET 7 SDK for building
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
