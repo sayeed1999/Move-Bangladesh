@@ -55,10 +55,9 @@ services:
       - authnet
     restart: always
 
-# volumes define persistent storages to storage services' data to manage data persistence
+# volumes are a physical areas of disk space shared between the host and the containers
 # volumes:
 
-# networks define custom networks for communication between services or between a service and a volume
+# networks define the communication rules between containers, and between a container and the host
 networks:
-  # a custom network defined for our services and volumes
-  authnet:
+  authnet: # a custom network to allow the containers to interact together
