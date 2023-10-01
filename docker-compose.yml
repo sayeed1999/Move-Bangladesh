@@ -1,20 +1,9 @@
-version: '3.8'
+version: '3.9'
 
 # services define individual containers and their configurations
 services:
 
   # api gateway / reverse proxy
-  api-gateway:
-    image: api-gateway
-    build:
-      context: .
-      dockerfile: RideSharing.ApiGateway/Dockerfile
-    ports:
-      - 5000:80
-      - 6000:443
-    networks:
-      - authnet
-    restart: always
 
   # admin api (contains all generic crud endpoints)
   ride-sharing-api:
@@ -23,37 +12,29 @@ services:
       context: .
       dockerfile: RideSharing.API/Dockerfile
     ports:
-      - 5002:80
-      - 6002:443
+      - "5002:80"
+      - "6002:443"
+    networks:
+      - authnet
+    restart: always
+    depends_on:
+      - ride-sharing-api-db
+
+  ride-sharing-api-db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: ride-sharing-api-db
+    ports: # not actually needed, because the two services are on the same network
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=123456Aa
     networks:
       - authnet
     restart: always
 
   # customer api (riders & customers only)
-  ride-sharing-customer-api:
-    image: ride-sharing-customer-api
-    build:
-      context: .
-      dockerfile: RideSharing.CustomerAPI/Dockerfile
-    ports:
-      - 5003:80
-      - 6003:443
-    networks:
-      - authnet
-    restart: always
 
   # auth service api (identity provider for microservices)
-  auth-api:
-    image: auth-api
-    build:
-      context: .
-      dockerfile: AuthService.API/Dockerfile
-    ports:
-      - 5001:80
-      - 6001:443
-    networks:
-      - authnet
-    restart: always
 
 # volumes are a physical areas of disk space shared between the host and the containers
 # volumes:
