@@ -81,4 +81,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/", () => "RideSharing.CustomerAPI is running.");
+
 app.Run();
