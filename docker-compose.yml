@@ -35,7 +35,7 @@ services:
 
   auth-api-db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container-name: auth-api-db
+    container_name: auth-api-db
     ports: # not actually needed, because the two services are on the same network
       - "6001:1433"
     environment:
