@@ -119,7 +119,7 @@ lifetime.ApplicationStopping.Register(() =>
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI();
 }
 
@@ -132,5 +132,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/", () => "RideSharing.API is running.");
 
 app.Run();
