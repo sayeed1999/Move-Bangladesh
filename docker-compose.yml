@@ -40,7 +40,7 @@ services:
       - "6001:1433"
     environment:
       - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa
+      - SA_PASSWORD=123456Aa@
     networks:
       - authnet
     restart: always
@@ -68,7 +68,7 @@ services:
       - "6002:1433"
     environment:
       - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa
+      - SA_PASSWORD=123456Aa@
     networks:
       - authnet
     restart: always
@@ -96,7 +96,7 @@ services:
       - "6003:1433"
     environment:
       - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa
+      - SA_PASSWORD=123456Aa@
     networks:
       - authnet
     restart: always
