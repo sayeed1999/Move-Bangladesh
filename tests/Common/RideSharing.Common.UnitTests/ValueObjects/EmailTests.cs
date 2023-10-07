@@ -31,7 +31,7 @@ public class EmailTests
     [Fact]
     public void Constructor_WithInvalidEmail_ThrowsException()
     {
-        FluentActions.Invoking(() => new Email(ValidEmail))
+        FluentActions.Invoking(() => new Email(InvalidEmail))
             .Should().Throw<Exception>();
     }
 
