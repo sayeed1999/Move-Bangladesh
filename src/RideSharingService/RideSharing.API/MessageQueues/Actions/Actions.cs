@@ -5,6 +5,7 @@ using RideSharing.Entity;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
 using RideSharing.Entity.Constants;
+using RideSharing.Common.ValueObjects;
 
 namespace RideSharing.API.MessageQueues.Actions
 {
@@ -34,7 +35,7 @@ namespace RideSharing.API.MessageQueues.Actions
                                                                            message.FirstName,
                                                                            message.LastName,
                                                                            message.Gender,
-                                                                           message.Email,
+                                                                           new Email(message.Email),
                                                                            message.UserName,
                                                                            message.PhoneNumber);
 
@@ -77,7 +78,7 @@ namespace RideSharing.API.MessageQueues.Actions
                             message.FirstName,
                             message.LastName,
                             message.Gender,
-                            message.Email,
+                            new Email(message.Email),
                             message.UserName,
                             message.PhoneNumber);
 
