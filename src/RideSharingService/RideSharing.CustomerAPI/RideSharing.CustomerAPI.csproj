@@ -22,12 +22,13 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Sayeed.Generic.OnionArchitecture" Version="1.0.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Common\RideSharing.Common\RideSharing.Common.csproj" />
 		<ProjectReference Include="..\RideSharing.Entity\RideSharing.Entity.csproj" />
+		<ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
+		<ProjectReference Include="..\RideSharing.Service\RideSharing.Service.csproj" />
 	</ItemGroup>
 
 </Project>

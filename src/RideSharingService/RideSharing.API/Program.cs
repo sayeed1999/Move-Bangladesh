@@ -5,6 +5,7 @@ using RideSharing.API.MessageQueues.Actions;
 using RideSharing.Common.Middlewares;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
+using RideSharing.Common.RegisterServices;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -30,7 +31,7 @@ builder.Services
     .RegisterApplicationLayer()
     .AddScoped<Actions>() // rabbitmq actions!
     .ConfigureApiBehavior()
-    .RegisterSwagger();
+    .RegisterSwagger(nameof(RideSharing.API));
 
 var app = builder.Build();
 
