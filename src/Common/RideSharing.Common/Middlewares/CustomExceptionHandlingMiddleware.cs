@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using RideSharing.Common.Entities;
+using RideSharing.Common.Exceptions;
 using System.Text;
 
 namespace RideSharing.Common.Middlewares
