@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RideSharing.Common.Entities;
+using RideSharing.Common.Exceptions;
 using System.Text;
 
 namespace AuthService.API

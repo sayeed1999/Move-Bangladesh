@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RideSharing.Common.Entities;
+using RideSharing.Common.Exceptions;
 using RideSharing.Common.MessageQueues.Messages;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
