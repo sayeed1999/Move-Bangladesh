@@ -1,6 +1,4 @@
-﻿using RideSharing.Common.Enums;
-
-namespace RideSharing.Common.MessageQueues.Messages
+﻿namespace RideSharing.Common.MessageQueues.Messages
 {
     public class UserRegistered
     {
