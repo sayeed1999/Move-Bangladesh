@@ -1,0 +1,62 @@
+version: "3.9"
+
+# services refer to containers' configuration
+services:
+  # Keycloak container
+  keycloak:
+    restart: always
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+      KC_HOSTNAME: ${KC_HOSTNAME}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres/keycloak
+      KC_DB_USERNAME: ${KC_DB_USERNAME}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_SMTP_SERVER_EMAIL: ${KC_SMTP_SERVER_EMAIL}
+      KC_SMTP_SERVER_HOST: ${KC_SMTP_SERVER_HOST}
+      KC_SMTP_SERVER_PORT: ${KC_SMTP_SERVER_PORT}
+      KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
+      KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
+    ports:
+      # - "9990:8080" # keycloak disables http port on production
+      - "9991:8443"
+    volumes:
+      - ${KC_HTTPS_CERTIFICATE_FILE}:/opt/keycloak/conf/server.crt.pem
+      - ${KC_HTTPS_CERTIFICATE_KEY_FILE}:/opt/keycloak/conf/server.key.pem
+      - ${KC_REALM_CONFIG_FILE}:/opt/keycloak/data/import/realm.json
+    networks:
+      - authnet
+    command: ["start-dev", "--import-realm"]
+    depends_on:
+      - postgres
+  
+  # Keycloak database container
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: keycloak-postgres
+    restart: always
+    volumes: 
+      - ${KC_USERDATA_BACKUP_LOCATION}:/var/lib/postgresql/data # user data will be recovered from this location on container destroy and re-create
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    
+    # ports:
+    #   - "9992:5432" # no need to expose this port as since keycloak will access it internally
+    networks:
+      - authnet
+
+# volumes are a physical areas of disk space shared between the host and the containers
+# volumes:
+
+# networks define the communication rules between containers, and between a container and the host
+networks:
+  authnet: # a custom network to allow the containers to interact together
