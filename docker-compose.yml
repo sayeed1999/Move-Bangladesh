@@ -3,47 +3,47 @@ version: '3.9'
 # services define individual containers and their configurations
 services:
 
-  # api gateway / reverse proxy
-  api-gateway:
-    image: api-gateway
-    container_name: api-gateway
-    build:
-      context: .
-      dockerfile: RideSharing.APIGateway/Dockerfile
-    ports:
-      - "5000:80"
-      - "7000:443"
-    networks:
-      - authnet
-    restart: always
+  # # api gateway / reverse proxy
+  # api-gateway:
+  #   image: api-gateway
+  #   container_name: api-gateway
+  #   build:
+  #     context: .
+  #     dockerfile: RideSharing.APIGateway/Dockerfile
+  #   ports:
+  #     - "5000:80"
+  #     - "7000:443"
+  #   networks:
+  #     - authnet
+  #   restart: always
 
-  # auth api
-  auth-api:
-    image: auth-api
-    container_name: auth-api
-    build:
-      context: .
-      dockerfile: AuthService.API/Dockerfile
-    ports:
-      - "5001:80"
-      - "7001:443"
-    networks:
-      - authnet
-    restart: always
-    depends_on:
-      - auth-api-db
+  # # auth api
+  # auth-api:
+  #   image: auth-api
+  #   container_name: auth-api
+  #   build:
+  #     context: .
+  #     dockerfile: AuthService.API/Dockerfile
+  #   ports:
+  #     - "5001:80"
+  #     - "7001:443"
+  #   networks:
+  #     - authnet
+  #   restart: always
+  #   depends_on:
+  #     - auth-api-db
 
-  auth-api-db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container_name: auth-api-db
-    ports: # not actually needed, because the two services are on the same network
-      - "6001:1433"
-    environment:
-      - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa@
-    networks:
-      - authnet
-    restart: always
+  # auth-api-db:
+  #   image: "mcr.microsoft.com/mssql/server:2022-latest"
+  #   container_name: auth-api-db
+  #   ports: # not actually needed, because the two services are on the same network
+  #     - "6001:1433"
+  #   environment:
+  #     - ACCEPT_EULA=y
+  #     - SA_PASSWORD=123456Aa@
+  #   networks:
+  #     - authnet
+  #   restart: always
 
   # admin api (contains all generic crud endpoints)
   ride-sharing-api:
