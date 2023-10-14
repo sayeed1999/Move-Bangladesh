@@ -15,6 +15,18 @@ services:
       - authnet
     restart: always
 
+  # db for ridesharing platform
+  ride-sharing-api-db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: ride-sharing-api-db
+    ports: # not actually needed, because the two services are on the same network
+      - "6002:1433"
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=123456Aa@
+    networks:
+      - authnet
+    restart: always
 
   # admin api (contains all generic crud endpoints)
   ride-sharing-api:
@@ -29,20 +41,8 @@ services:
     networks:
       - authnet
     restart: always
-    # depends_on:
-    #   - ride-sharing-api-db
-
-  # ride-sharing-api-db:
-  #   image: "mcr.microsoft.com/mssql/server:2022-latest"
-  #   container_name: ride-sharing-api-db
-  #   ports: # not actually needed, because the two services are on the same network
-  #     - "6002:1433"
-  #   environment:
-  #     - ACCEPT_EULA=y
-  #     - SA_PASSWORD=123456Aa@
-  #   networks:
-  #     - authnet
-  #   restart: always
+    depends_on:
+      - ride-sharing-api-db
 
   # customer api (riders & customers only)
   ride-sharing-customer-api:
@@ -58,24 +58,12 @@ services:
       - authnet
     restart: always
     depends_on:
-      - ride-sharing-customer-api-db
+      - ride-sharing-api-db
 
-  # ride-sharing-api-customer-db:
-  #   image: "mcr.microsoft.com/mssql/server:2022-latest"
-  #   container_name: ride-sharing-customer-api-db
-  #   ports: # not actually needed, because the two services are on the same network
-  #     - "6003:1433"
-  #   environment:
-  #     - ACCEPT_EULA=y
-  #     - SA_PASSWORD=123456Aa@
-  #   networks:
-  #     - authnet
-  #   restart: always
-
-  # auth service api (identity provider for microservices)
 
 # volumes are a physical areas of disk space shared between the host and the containers
 # volumes:
+
 
 # networks define the communication rules between containers, and between a container and the host
 networks:
