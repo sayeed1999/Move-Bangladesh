@@ -51,25 +51,25 @@ services:
       context: .
       dockerfile: src/RideSharingService/RideSharing.API/Dockerfile
     ports:
-      - "5002:80"
-      - "7002:443"
+      - "5002:8080"
+      - "7002:8081"
     networks:
       - authnet
     restart: always
-    depends_on:
-      - ride-sharing-api-db
+    # depends_on:
+    #   - ride-sharing-api-db
 
-  ride-sharing-api-db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container_name: ride-sharing-api-db
-    ports: # not actually needed, because the two services are on the same network
-      - "6002:1433"
-    environment:
-      - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa@
-    networks:
-      - authnet
-    restart: always
+  # ride-sharing-api-db:
+  #   image: "mcr.microsoft.com/mssql/server:2022-latest"
+  #   container_name: ride-sharing-api-db
+  #   ports: # not actually needed, because the two services are on the same network
+  #     - "6002:1433"
+  #   environment:
+  #     - ACCEPT_EULA=y
+  #     - SA_PASSWORD=123456Aa@
+  #   networks:
+  #     - authnet
+  #   restart: always
 
   # # customer api (riders & customers only)
   # ride-sharing-customer-api:
