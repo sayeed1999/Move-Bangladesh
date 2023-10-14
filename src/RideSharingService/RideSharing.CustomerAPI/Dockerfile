@@ -1,25 +1,26 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
-#For more information, please see https://aka.ms/containercompat
-
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+EXPOSE 8081
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj", "RideSharing.CustomerAPI/"]
-COPY ["RideSharing.Common/RideSharing.Common.csproj", "RideSharing.Common/"]
-COPY ["RideSharing.Entity/RideSharing.Entity.csproj", "RideSharing.Entity/"]
-RUN dotnet restore "RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj"
+COPY ["src/RideSharingService/RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj", "src/RideSharingService/RideSharing.CustomerAPI/"]
+COPY ["src/Common/RideSharing.Common/RideSharing.Common.csproj", "src/Common/RideSharing.Common/"]
+COPY ["src/RideSharingService/RideSharing.Entity/RideSharing.Entity.csproj", "src/RideSharingService/RideSharing.Entity/"]
+COPY ["src/RideSharingService/RideSharing.Infrastructure/RideSharing.Infrastructure.csproj", "src/RideSharingService/RideSharing.Infrastructure/"]
+COPY ["src/RideSharingService/RideSharing.Service/RideSharing.Service.csproj", "src/RideSharingService/RideSharing.Service/"]
+RUN dotnet restore "src/RideSharingService/RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj"
 COPY . .
-WORKDIR "/src/RideSharing.CustomerAPI"
-RUN dotnet build "RideSharing.CustomerAPI.csproj" -c Release -o /app/build
+WORKDIR "/src/src/RideSharingService/RideSharing.CustomerAPI"
+RUN dotnet build "RideSharing.CustomerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "RideSharing.CustomerAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "RideSharing.CustomerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
