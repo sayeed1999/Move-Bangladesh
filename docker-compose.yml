@@ -1,5 +1,3 @@
-version: '3.9'
-
 # services define individual containers and their configurations
 services:
 
@@ -51,7 +49,7 @@ services:
     container_name: ride-sharing-api
     build:
       context: .
-      dockerfile: RideSharing.API/Dockerfile
+      dockerfile: src/RideSharingService/RideSharing.API/Dockerfile
     ports:
       - "5002:80"
       - "7002:443"
@@ -73,33 +71,33 @@ services:
       - authnet
     restart: always
 
-  # customer api (riders & customers only)
-  ride-sharing-customer-api:
-    image: ride-sharing-customer-api
-    container_name: ride-sharing-customer-api
-    build:
-      context: .
-      dockerfile: RideSharing.CustomerAPI/Dockerfile
-    ports:
-      - "5003:80"
-      - "7003:443"
-    networks:
-      - authnet
-    restart: always
-    depends_on:
-      - ride-sharing-customer-api-db
+  # # customer api (riders & customers only)
+  # ride-sharing-customer-api:
+  #   image: ride-sharing-customer-api
+  #   container_name: ride-sharing-customer-api
+  #   build:
+  #     context: .
+  #     dockerfile: RideSharing.CustomerAPI/Dockerfile
+  #   ports:
+  #     - "5003:80"
+  #     - "7003:443"
+  #   networks:
+  #     - authnet
+  #   restart: always
+  #   depends_on:
+  #     - ride-sharing-customer-api-db
 
-  ride-sharing-api-customer-db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container_name: ride-sharing-customer-api-db
-    ports: # not actually needed, because the two services are on the same network
-      - "6003:1433"
-    environment:
-      - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa@
-    networks:
-      - authnet
-    restart: always
+  # ride-sharing-api-customer-db:
+  #   image: "mcr.microsoft.com/mssql/server:2022-latest"
+  #   container_name: ride-sharing-customer-api-db
+  #   ports: # not actually needed, because the two services are on the same network
+  #     - "6003:1433"
+  #   environment:
+  #     - ACCEPT_EULA=y
+  #     - SA_PASSWORD=123456Aa@
+  #   networks:
+  #     - authnet
+  #   restart: always
 
   # auth service api (identity provider for microservices)
 
