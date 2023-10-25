@@ -1,60 +1,39 @@
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Serialization;
-using RideSharing.API;
-using RideSharing.API.MessageQueues.Actions;
 using RideSharing.Common.Middlewares;
-using RideSharing.Infrastructure;
-using RideSharing.Service;
-using RideSharing.Common.RegisterServices;
 
-var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+namespace RideSharing.API;
 
-// Add services to the container.
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-
-// For Entity Framework
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration["AppSettings:ConnectionStrings:ConnStr"]));
-
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
+public class Program
 {
-    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-});
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(TripService).GetTypeInfo().Assembly));
+        // Register prefixed only environment variables.
+        builder.Configuration.AddEnvironmentVariables("AdminAPI__");
 
-// registering services
-builder.Services
-    .RegisterServices()
-    .RegisterInfrastructureLayer()
-    .RegisterApplicationLayer()
-    .AddScoped<Actions>() // rabbitmq actions!
-    .ConfigureApiBehavior()
-    .RegisterSwagger(nameof(RideSharing.API));
+        builder.Services.ConfigureServices(builder.Configuration);
 
-var app = builder.Build();
+        var app = builder.Build();
 
-// Register RabbitMQ emiiters & consumers to application...
-app.RegisterRabbitMQToApplication();
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
-// Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        // Custom middlewares.
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+        app.UseMiddleware<CustomExceptionHandlingMiddleware>();
+
+        app.UseHttpsRedirection();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.MapGet("/", () => "RideSharing.API is running.");
+
+        app.Run();
+    }
 }
-
-// Custom middlewares..
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseMiddleware<CustomExceptionHandlingMiddleware>();
-
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapGet("/", () => "RideSharing.API is running.");
-
-app.Run();

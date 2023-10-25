@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,6 +7,17 @@ namespace RideSharing.Common.RegisterServices
 {
     public static class DependencyInjection
     {
+        public static IServiceCollection ConfigureNewtonsoftJson(this IServiceCollection services)
+        {
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
+
+            return services;
+        }
+
         public static IServiceCollection ConfigureApiBehavior(this IServiceCollection services)
         {
             // Disable 404 automatic response
