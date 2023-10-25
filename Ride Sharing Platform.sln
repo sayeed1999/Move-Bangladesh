@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Entity.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Service.UnitTests", "tests\RideSharingService\RideSharing.Service.UnitTests\RideSharing.Service.UnitTests.csproj", "{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.CustomerAPI.UnitTests", "tests\RideSharingService\RideSharing.CustomerAPI.UnitTests\RideSharing.CustomerAPI.UnitTests.csproj", "{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +96,10 @@ Global
 		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{B8760DF1-36B1-43E0-B40A-DCA118B78C1B} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
 		{E2FD8C3D-6F07-443F-9AA8-14BD42DDE32C} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
 		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
+		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}
