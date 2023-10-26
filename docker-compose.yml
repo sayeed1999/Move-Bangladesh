@@ -6,6 +6,8 @@ services:
     image: postgres:16.0
     container_name: keycloak-database
     restart: unless-stopped
+    volumes:
+      - ${KC_POSTGRES_BACKUP_LOCATION}:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${KC_POSTGRES_DB}
       POSTGRES_USER: ${KC_POSTGRES_USER}
