@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{248A29EB-B997-4B67-9D1F-3CCD5FBB927E}"
 	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		.env.example = .env.example
 		.gitignore = .gitignore
 		docker-compose.yml = docker-compose.yml
 		README.md = README.md
@@ -44,7 +46,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Entity.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Service.UnitTests", "tests\RideSharingService\RideSharing.Service.UnitTests\RideSharing.Service.UnitTests.csproj", "{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.CustomerAPI.UnitTests", "tests\RideSharingService\RideSharing.CustomerAPI.UnitTests\RideSharing.CustomerAPI.UnitTests.csproj", "{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.CustomerAPI.UnitTests", "tests\RideSharingService\RideSharing.CustomerAPI.UnitTests\RideSharing.CustomerAPI.UnitTests.csproj", "{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
