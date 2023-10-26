@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
 using RideSharing.Entity;
 using RideSharing.Entity.Dtos;
+using System.ComponentModel.DataAnnotations;
 
 namespace RideSharing.CustomerAPI.Controllers.TripCommands
 {
@@ -19,14 +20,16 @@ namespace RideSharing.CustomerAPI.Controllers.TripCommands
         }
 
         [HttpGet("{tripId}/status")]
-        public async Task<ActionResult<Response<Trip>>> GetRideStatus(TripQueryDto queryDto)
+        public async Task<ActionResult<Response<Trip>>> GetRideStatus([Required] int tripId)
         {
-            Result<Trip> ride = await _mediator.Send(queryDto);
+            var dto = TripQueryDto.Create(tripId);
+
+            Result<Trip> ride = await _mediator.Send(dto);
 
             if (ride.IsFailure)
-                return NotFound($"Ride request {queryDto.TripId} not found.");
+                return NotFound($"Ride request {dto.TripId} not found.");
 
-            return Ok($"Ride request {queryDto.TripId} status: {ride.Value.Status}");
+            return Ok($"Ride request {dto.TripId} status: {ride.Value.Status}");
         }
     }
 }

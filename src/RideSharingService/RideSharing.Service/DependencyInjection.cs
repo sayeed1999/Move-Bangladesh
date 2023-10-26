@@ -8,7 +8,7 @@ namespace RideSharing.Service;
 /// </summary>
 public static class DependencyInjection
 {
-    public static IServiceCollection RegisterServices(this IServiceCollection services)
+    private static IServiceCollection RegisterApplicationLayerDependencies(this IServiceCollection services)
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
@@ -20,6 +20,7 @@ public static class DependencyInjection
     public static IServiceCollection RegisterApplicationLayer(this IServiceCollection services)
     {
         services
+            .RegisterApplicationLayerDependencies()
             .AddScoped<ICabService, CabService>()
             .AddScoped<ICustomerService, CustomerService>()
             .AddScoped<ICustomerRatingService, CustomerRatingService>()
