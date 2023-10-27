@@ -1,39 +1,57 @@
 # services define individual containers and their configurations
 services:
   
-  # keycloak (identity provider) database
-  keycloak-database:
-    image: postgres:16.0
-    container_name: keycloak-database
-    restart: unless-stopped
-    volumes:
-      - ${KC_POSTGRES_BACKUP_LOCATION}:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: ${KC_POSTGRES_DB}
-      POSTGRES_USER: ${KC_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${KC_POSTGRES_PASS}
-    ports:
-      - "5432:5432"
-    networks:
-      - keycloak-local
-  
-  # keycloak (identity provider)
+# Keycloak container
   keycloak:
-    depends_on:
-      - keycloak-database
+    restart: unless-stopped
     image: quay.io/keycloak/keycloak:22.0.3
     container_name: keycloak
-    restart: unless-stopped
     environment:
       KEYCLOAK_ADMIN: ${KC_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
-    command:
-      - start-dev
+      # KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt.pem
+      # KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+      KC_HOSTNAME: ${KC_HOSTNAME}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres/keycloak
+      KC_DB_USERNAME: ${KC_DB_USERNAME}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      # KC_SMTP_SERVER_EMAIL: ${KC_SMTP_SERVER_EMAIL}
+      # KC_SMTP_SERVER_HOST: ${KC_SMTP_SERVER_HOST}
+      # KC_SMTP_SERVER_PORT: ${KC_SMTP_SERVER_PORT}
+      # KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
+      # KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
     ports:
-      - "9990:8080"
-      - "9991:8081"
+      - "9990:8080" # keycloak disables http port on production
+      - "9991:8443"
+    volumes:
+      # - ${KC_HTTPS_CERTIFICATE_FILE}:/opt/keycloak/conf/server.crt.pem
+      # - ${KC_HTTPS_CERTIFICATE_KEY_FILE}:/opt/keycloak/conf/server.key.pem
+      - ${KC_REALM_EXPORT_FILE}:/opt/keycloak/data/import/realm.json
     networks:
-      - keycloak-local
+      - globalnet
+    command: ["start-dev", "--import-realm"]
+    depends_on:
+      - postgres
+
+  # Keycloak database container
+  postgres:
+    image: postgres:15
+    container_name: keycloak-postgres
+    restart: unless-stopped
+    volumes: 
+      - ${KC_POSTGRES_BACKUP_LOCATION}:/var/lib/postgresql/data # user data will be recovered from this location on container destroy and re-create
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: ${KC_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${KC_POSTGRES_PASS}
+
+    # ports:
+    #   - "9992:5432" # no need to expose this port as since keycloak will access it internally
+    networks:
+      - globalnet
       
   
   
@@ -48,7 +66,7 @@ services:
       - "5000:8080"
       - "7000:8081"
     networks:
-      - api-net
+      - globalnet
     restart: unless-stopped
 
 
@@ -62,7 +80,7 @@ services:
       - ACCEPT_EULA=y
       - SA_PASSWORD=123456Aa@
     networks:
-      - api-net
+      - globalnet
     restart: unless-stopped
 
   # admin api (contains all generic crud endpoints)
@@ -76,7 +94,7 @@ services:
       - "5002:8080"
       - "7002:8081"
     networks:
-      - api-net
+      - globalnet
     restart: unless-stopped
     depends_on:
       - ride-sharing-api-db
@@ -92,7 +110,7 @@ services:
       - "5003:8080"
       - "7003:8081"
     networks:
-      - api-net
+      - globalnet
     restart: unless-stopped
     depends_on:
       - ride-sharing-api-db
@@ -105,4 +123,4 @@ services:
 # networks define the communication rules between containers, and between a container and the host
 networks:
   keycloak-local: # network for keycloak communication
-  api-net: # network for api communications
+  globalnet: # network for api communications

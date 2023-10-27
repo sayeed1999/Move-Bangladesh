@@ -48,6 +48,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Service.UnitTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.CustomerAPI.UnitTests", "tests\RideSharingService\RideSharing.CustomerAPI.UnitTests\RideSharing.CustomerAPI.UnitTests.csproj", "{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{3A40E1D3-F043-404E-873F-47EE0895DD87}"
+	ProjectSection(SolutionItems) = preProject
+		keycloak\realm-export.json = keycloak\realm-export.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +128,7 @@ Global
 		{E2FD8C3D-6F07-443F-9AA8-14BD42DDE32C} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
 		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
 		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
+		{3A40E1D3-F043-404E-873F-47EE0895DD87} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}
