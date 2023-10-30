@@ -5,7 +5,7 @@ using Keycloak.AuthServices.Authorization;
 
 namespace RideSharing.Common.RegisterServices;
 
-public static class KeycloakServiceExtensions
+public static class KeycloakServiceExtension
 {
     public static IServiceCollection ConfigureKeycloakAuthorizationServices(this IServiceCollection services, IConfiguration configuration)
     {

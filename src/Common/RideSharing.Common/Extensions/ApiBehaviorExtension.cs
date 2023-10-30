@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RideSharing.Common.RegisterServices;
 
-public static class ApiBehaviorExtensions
+public static class ApiBehaviorExtension
 {
     public static IServiceCollection ConfigureApiBehavior(this IServiceCollection services)
     {
