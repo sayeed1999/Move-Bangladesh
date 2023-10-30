@@ -1,7 +1,7 @@
 ﻿namespace RideSharing.Common.Constants;
 
-public abstract class Roles
+public static class ApplicationRole
 {
-    public const string Administrator = nameof(Administrator);
+    public const string Admin = nameof(Admin);
     public const string User = nameof(User);
 }
