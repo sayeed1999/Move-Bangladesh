@@ -4,7 +4,7 @@ services:
 # Keycloak container
   keycloak:
     restart: unless-stopped
-    image: quay.io/keycloak/keycloak:22.0.3
+    image: quay.io/keycloak/keycloak:22.0.5
     container_name: keycloak
     environment:
       KEYCLOAK_ADMIN: ${KC_ADMIN}
@@ -15,7 +15,8 @@ services:
       KC_METRICS_ENABLED: true
       KC_HOSTNAME: ${KC_HOSTNAME}
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres/keycloak
+      # KC_DB_URL: jdbc:postgresql://postgres/keycloak
+      KC_DB_URL_HOST: keycloak-postgres
       KC_DB_USERNAME: ${KC_DB_USERNAME}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD}
       # KC_SMTP_SERVER_EMAIL: ${KC_SMTP_SERVER_EMAIL}
@@ -34,11 +35,11 @@ services:
       - globalnet
     command: ["start-dev", "--import-realm"]
     depends_on:
-      - postgres
+      - keycloak-postgres
 
   # Keycloak database container
-  postgres:
-    image: postgres:15
+  keycloak-postgres:
+    image: postgres:16
     container_name: keycloak-postgres
     restart: unless-stopped
     volumes: 
