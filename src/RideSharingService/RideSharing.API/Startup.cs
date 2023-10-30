@@ -21,6 +21,7 @@ public static class Startup
             .ConfigureNewtonsoftJson()
             .ConfigureApiBehavior()
             .RegisterSwagger(nameof(API))
+            .ConfigureAuthorizationServices(configuration)
             // register application layers..
             .RegisterInfrastructureLayer()
             .RegisterApplicationLayer();
