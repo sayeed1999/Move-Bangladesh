@@ -21,6 +21,7 @@ public static class Startup
             .ConfigureNewtonsoftJson()
             .ConfigureApiBehavior()
             .RegisterSwagger(nameof(API))
+            .ConfigureKeycloakAuthorizationServices(configuration)
             // register application layers..
             .RegisterInfrastructureLayer()
             .RegisterApplicationLayer();
