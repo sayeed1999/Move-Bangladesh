@@ -26,7 +26,7 @@ public static class Startup
         });
 
         // For Entity Framework
-        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration[$"{nameof(AppSettings)}:{nameof(ConnectionStrings)}:DatabaseConnectionString"]));
+        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(nameof(ConnectionStrings.DatabaseConnectionString))));
 
         // Add other services
         services
