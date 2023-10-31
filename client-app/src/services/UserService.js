@@ -10,7 +10,7 @@ const _kc = new Keycloak('/keycloak.json');
  */
 const initKeycloak = (onAuthenticatedCallback) => {
   _kc.init({
-    flow: 'implicit'
+    flow: 'standard'
   })
     .then((authenticated) => {
       if (!authenticated) {
