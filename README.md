@@ -1,6 +1,15 @@
-Run "docker compose up -d" to run all containers at once.
+## Run/Stop Docker containers:-
 
-Run "docker compose down" to tear down all containers.
+- Run "docker compose up -d" to run all containers at once.
+- Run "docker compose down" to tear down all containers.
+
+## Set environment variables in development (from Visual Studio):-
+
+- Open Developer PowerShell & run the following commands:
+- setx API__ConnectionStrings__DatabaseConnectionString "<connection_string_here>"
+- setx API__ClientApplication__AllowedOrigins "http://localhost:3000" (if frontend is running on this domain)
+- setx API__Keycloak__Host "http://localhost:9990"
+- setx API__Keycloak__Realm "RideSharing"
 
 ## Keycloak usage:-
 
