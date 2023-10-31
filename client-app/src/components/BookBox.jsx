@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import BookList from "./BookList";
 import Menu from "./Menu";
 import NoMatch from "./NoMatch";
-import RenderOnRole from "./RenderOnRole";
+import RenderOnRole from "./Guards/RenderOnRole";
 import SecretBooks from "./SecretBooks";
 
 const BookBox = () => (

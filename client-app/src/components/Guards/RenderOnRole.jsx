@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import UserService from "../services/UserService";
-import NotAllowed from "./NotAllowed";
+import UserService from "../../services/UserService";
+import NotAllowed from "../NotAllowed";
 
 const RenderOnRole = ({ roles, showNotAllowed, children }) => (
   UserService.hasRole(roles)) ? children : showNotAllowed ? <NotAllowed/> : null;

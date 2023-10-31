@@ -6,7 +6,7 @@ import RenderOnAuthenticated from "./Guards/RenderOnAuthenticated";
 import Welcome from "./Welcome";
 
 const App = ({ store }) => (
-  // <Provider store={store}>
+  <Provider store={store}>
     <BrowserRouter>
       <div className="container">
         <RenderOnAnonymous>
@@ -17,7 +17,7 @@ const App = ({ store }) => (
         </RenderOnAuthenticated>
       </div>
     </BrowserRouter>
-  // </Provider>
+  </Provider>
 );
 
 export default App;
