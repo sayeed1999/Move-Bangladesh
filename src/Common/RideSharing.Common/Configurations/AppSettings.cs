@@ -4,6 +4,7 @@ public class AppSettings
 {
     public ConnectionStrings ConnectionStrings { get; set; }
     public ClientApplication ClientApplication { get; set; }
+    public Keycloak Keycloak { get; set; }
     public RedisServer RedisServer { get; set; }
     public SmtpServer SmtpServer { get; set; }
 }
@@ -16,6 +17,13 @@ public class ConnectionStrings
 public class ClientApplication
 {
     public string AllowedOrigins { get; set; }
+}
+
+public class Keycloak
+{
+    public string Host { get; set; }
+    public string Realm { get; set; }
+    //public string Client {  get; set; }
 }
 
 public class RedisServer

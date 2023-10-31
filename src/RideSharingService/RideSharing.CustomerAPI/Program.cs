@@ -9,7 +9,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Register prefixed only environment variables.
-        builder.Configuration.AddEnvironmentVariables("CustomerAPI__");
+        builder.Configuration.AddEnvironmentVariables("API__");
 
         builder.Services.ConfigureServices(builder.Configuration);
 

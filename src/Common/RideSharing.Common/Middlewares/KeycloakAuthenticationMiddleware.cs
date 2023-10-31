@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Claims;
-using RideSharing.Configurations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -9,19 +8,21 @@ using Microsoft.IdentityModel.Protocols;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using RideSharing.Common.Configurations;
 
 namespace RideSharing.Common.Middlewares
 {
     /// <summary>
     /// This middleware validates a jwt token and authorizes a user from 'keycloak' identity provider.
+    /// N.B: This middleware is only needed for Azure Functions app since there is no application startup to register built-in aspnetcore middlewares.
     /// </summary>
     public class KeycloakAuthenticationMiddleware : IMiddleware
     {
         private readonly ILogger<KeycloakAuthenticationMiddleware> logger;
-        private readonly KeycloakConfig _config;
+        private readonly Keycloak _config;
         private TokenValidationParameters _validationParameters;
 
-        public KeycloakAuthenticationMiddleware(ILogger<KeycloakAuthenticationMiddleware> logger, IOptions<KeycloakConfig> config)
+        public KeycloakAuthenticationMiddleware(ILogger<KeycloakAuthenticationMiddleware> logger, IOptions<Keycloak> config)
         {
             this.logger = logger;
             _config = config.Value;
@@ -89,7 +90,7 @@ namespace RideSharing.Common.Middlewares
 
         private async Task ConfigureValidation()
         {
-            var serviceDiscoveryEndpoint = $"{_config.AuthUrl}/realms/{_config.Tenant}/.well-known/openid-configuration";
+            var serviceDiscoveryEndpoint = $"{_config.Host}/realms/{_config.Realm}/.well-known/openid-configuration";
             var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(serviceDiscoveryEndpoint, new OpenIdConnectConfigurationRetriever());
             var oidcConfig = await configManager.GetConfigurationAsync().ConfigureAwait(false);
             var validAudiences = new string[] { "realm-management", "account" };
