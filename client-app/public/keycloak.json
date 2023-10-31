@@ -1,0 +1,8 @@
+{
+  "realm": "RideSharing",
+  "auth-server-url": "http://localhost:9990/",
+  "resource": "api",
+  "ssl-required": "external",
+  "public-client": true,
+  "confidential-port": 0
+}
