@@ -1,7 +1,22 @@
 # services define individual containers and their configurations
 services:
-  
-# Keycloak container
+
+  # reverse proxy server
+  nginx:
+    restart: unless-stopped
+    image: nginx:1.24.0
+    container_name: nginx_server
+    ports:
+      - "9990:9990" # http port for keycloak (Note:- disable on production)
+      # - "9991:9991" # https port for keycloak
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - globalnet
+    depends_on:
+      - keycloak
+
+  # Keycloak container
   keycloak:
     restart: unless-stopped
     image: quay.io/keycloak/keycloak:22.0.5
@@ -23,9 +38,6 @@ services:
       # KC_SMTP_SERVER_PORT: ${KC_SMTP_SERVER_PORT}
       # KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
       # KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
-    ports:
-      - "9990:8080" # keycloak disables http port on production
-      - "9991:8443"
     volumes:
       # - ${KC_HTTPS_CERTIFICATE_FILE}:/opt/keycloak/conf/server.crt.pem
       # - ${KC_HTTPS_CERTIFICATE_KEY_FILE}:/opt/keycloak/conf/server.key.pem
