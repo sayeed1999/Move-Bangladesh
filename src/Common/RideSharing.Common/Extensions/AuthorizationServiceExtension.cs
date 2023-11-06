@@ -23,7 +23,6 @@ public static class AuthorizationServiceExtension
             })
             .AddJwtBearer(options =>
             {
-                options.RequireHttpsMetadata = false; // Set to true for production usage
                 options.SaveToken = true;
                 options.Authority = authority;
 
