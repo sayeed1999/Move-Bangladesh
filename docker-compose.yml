@@ -8,9 +8,11 @@ services:
     container_name: nginx_server
     ports:
       - "9990:9990" # http port for keycloak (Note:- disable on production)
-      # - "9991:9991" # https port for keycloak
+      - "9991:9991" # https port for keycloak (requires valid ssl certificate)
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ~/server.crt.pem:/etc/nginx/ssl/nginx.crt.pem
+      - ~/server.key.pem:/etc/nginx/ssl/nginx.key.pem
     networks:
       - globalnet
     depends_on:
@@ -24,8 +26,8 @@ services:
     environment:
       KEYCLOAK_ADMIN: ${KC_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
-      # KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt.pem
-      # KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
       KC_HEALTH_ENABLED: true
       KC_METRICS_ENABLED: true
       KC_HOSTNAME: ${KC_HOSTNAME}
@@ -39,8 +41,8 @@ services:
       # KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
       # KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
     volumes:
-      # - ${KC_HTTPS_CERTIFICATE_FILE}:/opt/keycloak/conf/server.crt.pem
-      # - ${KC_HTTPS_CERTIFICATE_KEY_FILE}:/opt/keycloak/conf/server.key.pem
+      - ~/server.crt.pem:/opt/keycloak/conf/server.crt.pem
+      - ~/server.key.pem:/opt/keycloak/conf/server.key.pem
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm.json
     networks:
       - globalnet
@@ -65,7 +67,6 @@ services:
     networks:
       - globalnet
       
-  
   
   # # api gateway / reverse proxy
   # api-gateway:
