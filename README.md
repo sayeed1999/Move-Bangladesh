@@ -1,4 +1,4 @@
-# Docker Compose - Keycloak with Nginx & Postgres
+# Project Setup - Keycloak with Nginx & Postgres
 
 This readme is intended to explain how to setup and run the project using docker containers.
 
