@@ -32,8 +32,8 @@ services:
       KC_DB_USERNAME: ${KC_DB_USERNAME}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD}
       KC_SMTP_SERVER_EMAIL: ${KC_SMTP_SERVER_EMAIL}
-      KC_SMTP_SERVER_HOST: ${KC_SMTP_SERVER_HOST}
-      KC_SMTP_SERVER_PORT: ${KC_SMTP_SERVER_PORT}
+      KC_SMTP_SERVER_HOST: mailhog
+      KC_SMTP_SERVER_PORT: 1025
       KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
       KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
     volumes:
@@ -46,21 +46,30 @@ services:
 
   # Keycloak database container
   keycloak-postgres:
+    restart: unless-stopped
     image: postgres:16
     container_name: keycloak-postgres
-    restart: unless-stopped
     volumes: 
       - ~/ridesharing/keycloak/backup:/var/lib/postgresql/data # user data will be recovered from this location on container destroy and re-create
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: ${KC_POSTGRES_USER}
       POSTGRES_PASSWORD: ${KC_POSTGRES_PASS}
-
     # ports:
     #   - "9992:5432" # no need to expose this port as since keycloak will access it internally
     networks:
       - globalnet
-      
+   
+  # Mailhog (local mail server)
+  mailhog:
+    restart: unless-stopped
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025" # SMTP port
+      - "8025:8025" # Web UI port
+    networks:
+      - globalnet
   
   # # api gateway / reverse proxy
   # api-gateway:
