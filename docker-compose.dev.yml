@@ -7,11 +7,9 @@ services:
     image: nginx:1.24.0
     container_name: nginx_server
     ports:
-      - "9991:9991" # points to https port for keycloak (requires valid ssl certificate)
+      - "9990:9990" # points to http port for keycloak (Note:- keycloak disables http on production)
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ~/server.crt.pem:/etc/nginx/ssl/nginx.crt.pem # ssl certificate file
-      - ~/server.key.pem:/etc/nginx/ssl/nginx.key.pem # ssl certificate key file
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
     networks:
       - globalnet
     depends_on:
@@ -25,8 +23,6 @@ services:
     environment:
       KEYCLOAK_ADMIN: ${KC_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
-      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt.pem
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
       KC_HEALTH_ENABLED: true
       KC_METRICS_ENABLED: true
       KC_PROXY: edge
@@ -41,12 +37,10 @@ services:
       KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
       KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
     volumes:
-      - ~/server.crt.pem:/opt/keycloak/conf/server.crt.pem # ssl certificate file
-      - ~/server.key.pem:/opt/keycloak/conf/server.key.pem # ssl certificate key file
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm.json
     networks:
       - globalnet
-    command: ["start", "--auto-build", "--import-realm"]
+    command: ["start-dev", "--auto-build", "--import-realm"]
     depends_on:
       - keycloak-postgres
 
