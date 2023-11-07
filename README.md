@@ -1,6 +1,18 @@
-# Project Setup - Keycloak with Nginx & Postgres
+# Docker Compose Deployment - Keycloak with Nginx & Postgres
 
-This readme is intended to explain how to setup and run the project using docker containers.
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Setting Up the Project](#setting-up-the-project)
+  - [Generate SSL Certificate](#generate-ssl-certificate)
+  - [Set Environment Variables for Docker Compose](#set-environment-variables-for-docker-compose)
+  - [Set Environment Variables for API development](#set-environment-variables-for-API-development)
+- [Running the Containers](#running-the-containers)
+  - [Production Environment](#production-environment)
+  - [Development Environment](#development-environment)
+- [Accessing Keycloak](#accessing-keycloak)
+- [Destroying the Containers](#destroying-the-containers)
+- [References](#references)
 
 ## Prerequisites
 
@@ -31,31 +43,40 @@ Following the `.env.example` file, create another file `.env` in the same direct
 
 ## Set Environment Variables for API development
 
-Open Developer PowerShell & run the following commands:
+Open Developer PowerShell from project root directory & run the following commands:
 
 ```
 setx API__ConnectionStrings__DatabaseConnectionString "<connection_string_here>"
 setx API__ClientApplication__AllowedOrigins "http://localhost:3000" (if frontend is running on this domain)
-setx API__Keycloak__Host "https://localhost:9991"
+setx API__Keycloak__Host "http://localhost:9990"
 setx API__Keycloak__Realm "RideSharing"
 ```
 
-## Running the Project:-
+## Running the Containers
 
-Open terminal from project root directory. Run the following command to run all containers in detached mode:
+### Production Environment
+
+Open Terminal from project root directory and run the following command to run all containers in detached mode:
 
 ```
-docker compose build --no-cache
 docker compose up -d
 ```
 
-## Usage
+### Development Environment
+
+Open Terminal from project root directory and run the following command to run all containers in detached mode:
+
+```
+docker compose -f docker-compose.dev.yml up -d
+```
+
+## Accessing Keycloak
 
 - Access Keycloak Administrator Console through `http://localhost:9990`(only for dev env) and `https://localhost:9991`.
 - Login using default account. (user: admin, pass: admin)
 - Navigate to 'RideSharing' realm (tenant)
 
-## Destroying the Project:-
+## Destroying the Containers
 
 Run the following command to destroy all containers:
 
@@ -63,4 +84,10 @@ Run the following command to destroy all containers:
 docker compose down
 ```
 
+## References
 
+To learn more about each of these topics, head to the following documentations:-
+
+- [Keycloak documentation](https://www.keycloak.org/documentation)
+- [Docker documentation](https://docs.docker.com/)
+- [Nginx documentation](https://nginx.org/en/docs/)
