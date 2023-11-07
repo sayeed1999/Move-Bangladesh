@@ -35,11 +35,11 @@ services:
       KC_DB_URL_HOST: keycloak-postgres
       KC_DB_USERNAME: ${KC_DB_USERNAME}
       KC_DB_PASSWORD: ${KC_DB_PASSWORD}
-      # KC_SMTP_SERVER_EMAIL: ${KC_SMTP_SERVER_EMAIL}
-      # KC_SMTP_SERVER_HOST: ${KC_SMTP_SERVER_HOST}
-      # KC_SMTP_SERVER_PORT: ${KC_SMTP_SERVER_PORT}
-      # KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
-      # KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
+      KC_SMTP_SERVER_EMAIL: ${KC_SMTP_SERVER_EMAIL}
+      KC_SMTP_SERVER_HOST: ${KC_SMTP_SERVER_HOST}
+      KC_SMTP_SERVER_PORT: ${KC_SMTP_SERVER_PORT}
+      KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
+      KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
     volumes:
       - ~/server.crt.pem:/opt/keycloak/conf/server.crt.pem
       - ~/server.key.pem:/opt/keycloak/conf/server.key.pem
