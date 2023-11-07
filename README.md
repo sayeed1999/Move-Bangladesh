@@ -10,7 +10,9 @@
 - [Running the Containers](#running-the-containers)
   - [Production Environment](#production-environment)
   - [Development Environment](#development-environment)
-- [Accessing Keycloak](#accessing-keycloak)
+- [Usage](#usage)
+  - [Access Keycloak](#access-keycloak)
+  - [Access MailHog](#access-mailhog)
 - [Destroying the Containers](#destroying-the-containers)
 - [References](#references)
 
@@ -70,11 +72,17 @@ Open Terminal from project root directory and run the following command to run a
 docker compose -f docker-compose.dev.yml up -d
 ```
 
-## Accessing Keycloak
+## Usage
+
+### Access Keycloak
 
 - Access Keycloak Administrator Console through `http://localhost:9990`(only for dev env) and `https://localhost:9991`.
 - Login using default account. (user: admin, pass: admin)
 - Navigate to 'RideSharing' realm (tenant)
+
+### Access MailHog
+
+- Access Local MailHog Server through `http://localhost:8025`(only for dev env).
 
 ## Destroying the Containers
 
