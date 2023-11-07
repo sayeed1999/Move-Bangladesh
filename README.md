@@ -45,6 +45,8 @@ Following the `.env.example` file, create another file `.env` in the same direct
 
 ## Set Environment Variables for API development
 
+<i>Skip this if you are not developing API or writing code and debug.</i>
+
 Open Developer PowerShell from project root directory & run the following commands:
 
 ```
