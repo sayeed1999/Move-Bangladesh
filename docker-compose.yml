@@ -30,7 +30,8 @@ services:
       KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
       KC_HEALTH_ENABLED: true
       KC_METRICS_ENABLED: true
-      KC_HOSTNAME: ${KC_HOSTNAME}
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: false
       KC_DB: postgres
       KC_DB_URL_HOST: keycloak-postgres
       KC_DB_USERNAME: ${KC_DB_USERNAME}
@@ -46,7 +47,7 @@ services:
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm.json
     networks:
       - globalnet
-    command: ["start", "--import-realm"]
+    command: ["start", "--auto-build", "--import-realm"]
     depends_on:
       - keycloak-postgres
 
