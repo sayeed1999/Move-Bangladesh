@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Protocols" Version="7.0.2" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.0.2" />
     <PackageReference Include="Microsoft.OpenApi" Version="1.6.9" />
-    <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.6.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
