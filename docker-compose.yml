@@ -9,7 +9,7 @@ services:
     ports:
       - "9991:9991" # points to https port for keycloak (requires valid ssl certificate)
       - "4000:4000" # ride sharing api http port
-      - "4001:4001" # ride sharing customer api http port
+      - "5000:5000" # ride sharing customer api http port
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ~/server.crt.pem:/etc/nginx/ssl/nginx.crt.pem # ssl certificate file

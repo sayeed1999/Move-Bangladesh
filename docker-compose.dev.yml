@@ -9,7 +9,7 @@ services:
     ports:
       - "9990:9990" # points to http port for keycloak (Note:- keycloak disables http on production)
       - "4000:4000" # ride sharing api http port
-      - "4001:4001" # ride sharing customer api http port
+      - "5000:5000" # ride sharing customer api http port
     volumes:
       - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
     networks:

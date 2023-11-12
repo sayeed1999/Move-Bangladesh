@@ -82,6 +82,15 @@ docker compose -f docker-compose.dev.yml up -d
 - Login using default account. (user: admin, pass: admin)
 - Navigate to 'RideSharing' realm (tenant)
 
+### Access APIs
+- Access RideSharing API through `https:localhost:4000`.
+  
+  `GET https://localhost:4000` returns "RideSharing.API is running" message.
+  
+- Access RideSharing Customer API through `https:localhost:5000`.
+
+  `GET https://localhost:5000` returns "RideSharing.CustomerAPI is running" message.
+
 ### Access MailHog
 
 - Access Local MailHog Server through `http://localhost:8025`(only for dev env).
