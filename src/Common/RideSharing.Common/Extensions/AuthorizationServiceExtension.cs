@@ -25,6 +25,7 @@ public static class AuthorizationServiceExtension
             {
                 options.SaveToken = true;
                 options.Authority = authority;
+                options.RequireHttpsMetadata = false; // set to true on production!
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {

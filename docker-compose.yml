@@ -8,6 +8,8 @@ services:
     container_name: nginx_server
     ports:
       - "9991:9991" # points to https port for keycloak (requires valid ssl certificate)
+      - "4000:4000" # ride sharing api http port
+      - "4001:4001" # ride sharing customer api http port
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ~/server.crt.pem:/etc/nginx/ssl/nginx.crt.pem # ssl certificate file
@@ -55,19 +57,37 @@ services:
     image: postgres:16
     container_name: keycloak-postgres
     restart: unless-stopped
-    volumes: 
-      - ~/ridesharing/keycloak/backup:/var/lib/postgresql/data # user data will be recovered from this location on container destroy and re-create
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: ${KC_POSTGRES_USER}
       POSTGRES_PASSWORD: ${KC_POSTGRES_PASS}
-
     # ports:
     #   - "9992:5432" # no need to expose this port as since keycloak will access it internally
+    volumes: 
+      - ~/ridesharing/keycloak/backup:/var/lib/postgresql/data # user data will be recovered from this location on container destroy and re-create
     networks:
       - globalnet
 
+  # RideSharing API
+  ridesharing-api:
+    build:
+      context: .
+      dockerfile: src/RideSharingService/RideSharing.API/Dockerfile
+    container_name: ridesharing-api
+    restart: unless-stopped
+    networks:
+      - globalnet
 
+  # RideSharing Customer API
+  ridesharing-customer-api:
+    build:
+      context: .
+      dockerfile: src/RideSharingService/RideSharing.CustomerAPI/Dockerfile
+    container_name: ridesharing-customer-api
+    restart: unless-stopped
+    networks:
+      - globalnet
+  
 
 # volumes are a physical areas of disk space shared between the host and the containers
 # volumes:
