@@ -14,13 +14,14 @@ COPY ["src/Common/RideSharing.Common/RideSharing.Common.csproj", "src/Common/Rid
 COPY ["src/RideSharingService/RideSharing.Entity/RideSharing.Entity.csproj", "src/RideSharingService/RideSharing.Entity/"]
 COPY ["src/RideSharingService/RideSharing.Infrastructure/RideSharing.Infrastructure.csproj", "src/RideSharingService/RideSharing.Infrastructure/"]
 COPY ["src/RideSharingService/RideSharing.Service/RideSharing.Service.csproj", "src/RideSharingService/RideSharing.Service/"]
-RUN dotnet restore "src/RideSharingService/RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj"
+RUN dotnet restore "./src/RideSharingService/RideSharing.CustomerAPI/./RideSharing.CustomerAPI.csproj"
 COPY . .
 WORKDIR "/src/src/RideSharingService/RideSharing.CustomerAPI"
-RUN dotnet build "RideSharing.CustomerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./RideSharing.CustomerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "RideSharing.CustomerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./RideSharing.CustomerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
