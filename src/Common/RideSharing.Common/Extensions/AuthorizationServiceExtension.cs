@@ -4,12 +4,14 @@ using RideSharing.Common.Policies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using RideSharing.Common.Configurations;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace RideSharing.Common.RegisterServices;
 
 public static class AuthorizationServiceExtension
 {
-    public static IServiceCollection ConfigureAuthorizationServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureAuthorizationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
     {
         var host = configuration.GetSection(nameof(Keycloak))[nameof(Keycloak.Host)];
         var realm = configuration.GetSection(nameof(Keycloak))[nameof(Keycloak.Realm)];
@@ -23,9 +25,14 @@ public static class AuthorizationServiceExtension
             })
             .AddJwtBearer(options =>
             {
+                // Valid ssl check is disabled for development environment because keycloak http port has no ssl!
+                if (environment.IsDevelopment())
+                {
+                    options.RequireHttpsMetadata = false;
+                }
+
                 options.SaveToken = true;
                 options.Authority = authority;
-                options.RequireHttpsMetadata = false; // set to true on production!
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {

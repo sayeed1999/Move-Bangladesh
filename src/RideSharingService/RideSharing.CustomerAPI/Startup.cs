@@ -10,7 +10,7 @@ namespace RideSharing.CustomerAPI;
 
 public static class Startup
 {
-    public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
     {
         // Register sub-sections from appsettings.json
         services.Configure<ConnectionStrings>(configuration.GetSection(nameof(ConnectionStrings)));
@@ -33,7 +33,7 @@ public static class Startup
             .ConfigureNewtonsoftJson()
             .ConfigureApiBehavior()
             .RegisterSwagger(nameof(CustomerAPI))
-            .ConfigureAuthorizationServices(configuration)
+            .ConfigureAuthorizationServices(configuration, environment)
             // register application layers..
             .RegisterInfrastructureLayer()
             .RegisterApplicationLayer();

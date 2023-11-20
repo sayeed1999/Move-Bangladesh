@@ -11,7 +11,7 @@ public class Program
         // Register prefixed only environment variables.
         builder.Configuration.AddEnvironmentVariables("API__");
 
-        builder.Services.ConfigureServices(builder.Configuration);
+        builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 
         var app = builder.Build();
 
