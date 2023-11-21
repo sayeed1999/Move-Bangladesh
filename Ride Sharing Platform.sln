@@ -67,10 +67,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{E8371E64
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentations", "Documentations", "{5240773F-24BC-4A31-8E72-AC5DC72EC50C}"
 	ProjectSection(SolutionItems) = preProject
-		KEYCLOAK.md = KEYCLOAK.md
-		POSTGRESQL.md = POSTGRESQL.md
+		Documentations\KEYCLOAK.md = Documentations\KEYCLOAK.md
+		Documentations\POSTGRESQL.md = Documentations\POSTGRESQL.md
 		Documentations\RABBITMQ.md = Documentations\RABBITMQ.md
-		REDIS.md = REDIS.md
+		Documentations\REDIS.md = Documentations\REDIS.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{F80900B7-A383-48F8-9B14-F37D0E41132F}"

@@ -1,4 +1,4 @@
-# Keycloak Deployment Guide
+# Keycloak with Nginx & Postgres - Deployment Guide
 
 Follow this guide to learn how to run Keycloak containers, access Keycloak administrator console, and destroy the containers.
 
