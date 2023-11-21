@@ -7,7 +7,6 @@ services:
     image: nginx:1.24.0
     container_name: nginx_server
     ports:
-      - "9991:9991" # points to https port for keycloak (requires valid ssl certificate)
       - "4000:4000" # ride sharing api http port
       - "5000:5000" # ride sharing customer api http port
     volumes:
@@ -18,55 +17,6 @@ services:
       - globalnet
     depends_on:
       - keycloak
-
-  # Keycloak container
-  keycloak:
-    restart: unless-stopped
-    image: quay.io/keycloak/keycloak:22.0.5
-    container_name: keycloak
-    environment:
-      KEYCLOAK_ADMIN: ${KC_ADMIN}
-      KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
-      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/conf/server.crt.pem
-      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/conf/server.key.pem
-      KC_HEALTH_ENABLED: true
-      KC_METRICS_ENABLED: true
-      KC_PROXY: edge
-      KC_HOSTNAME_STRICT: false
-      KC_DB: postgres
-      KC_DB_URL_HOST: keycloak-postgres
-      KC_DB_USERNAME: ${KC_DB_USERNAME}
-      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
-      KC_SMTP_SERVER_EMAIL: ${KC_SMTP_SERVER_EMAIL}
-      KC_SMTP_SERVER_HOST: ${KC_SMTP_SERVER_HOST}
-      KC_SMTP_SERVER_PORT: ${KC_SMTP_SERVER_PORT}
-      KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
-      KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
-    volumes:
-      - ~/server.crt.pem:/opt/keycloak/conf/server.crt.pem # ssl certificate file
-      - ~/server.key.pem:/opt/keycloak/conf/server.key.pem # ssl certificate key file
-      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm.json
-    networks:
-      - globalnet
-    command: ["start", "--auto-build", "--import-realm"]
-    depends_on:
-      - keycloak-postgres
-
-  # Keycloak database container
-  keycloak-postgres:
-    image: postgres:16
-    container_name: keycloak-postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: ${KC_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${KC_POSTGRES_PASS}
-    # ports:
-    #   - "9992:5432" # no need to expose this port as since keycloak will access it internally
-    volumes: 
-      - ~/ridesharing/keycloak/backup:/var/lib/postgresql/data # user data will be recovered from this location on container destroy and re-create
-    networks:
-      - globalnet
 
   # RideSharing API
   ridesharing-api:

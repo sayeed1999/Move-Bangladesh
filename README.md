@@ -11,7 +11,6 @@
   - [Production Environment](#production-environment)
   - [Development Environment](#development-environment)
 - [Usage](#usage)
-  - [Access Keycloak](#access-keycloak)
   - [Access APIs](#access-apis)
   - [Access MailHog](#access-mailhog)
 - [Destroying the Containers](#destroying-the-containers)
@@ -76,12 +75,6 @@ docker compose -f docker-compose.dev.yml up -d
 ```
 
 ## Usage
-
-### Access Keycloak
-
-- Access Keycloak Administrator Console through `http://localhost:9990`(only for dev env) and `https://localhost:9991`.
-- Login using default account. (user: admin, pass: admin)
-- Navigate to 'RideSharing' realm (tenant)
 
 ### Access APIs
 - Access RideSharing API through `https:localhost:4000`.

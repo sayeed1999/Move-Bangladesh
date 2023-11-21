@@ -4,13 +4,38 @@ Follow this guide to learn how to run Keycloak containers, access Keycloak admin
 
 ## Table of Contents
 
-- [Set Environment Variables](#set-environment-variables)
+- [Prerequisites](#prerequisites)
+- [Setting Up the Project](#setting-up-the-project)
+  - [Generate SSL Certificate](#generate-ssl-certificate)
+  - [Set Environment Variables](#set-environment-variables)
 - [Running the Containers](#running-the-containers)
-- [Accessing Keycloak Administrator Console](#accessing-keycloak-administrator-console)
-- [Accessing Local Mail Server](#accessing-local-mail-server)
+- [Usage](#usage)
+  - [Accessing Keycloak Administrator Console](#accessing-keycloak-administrator-console)
+  - [Accessing Local Mail Server](#accessing-local-mail-server)
 - [Destroying the Containers](#destroying-the-containers)
 
-## Set Environment Variables
+## Prerequisites
+
+Before you begin, ensure you have the following installed & running properly on your server:
+
+- Docker or Docker Desktop
+- WSL (Windows Subsystem for Linux) if the server OS is Windows
+
+## Setting Up the Project
+
+### Generate SSL Certificate
+
+To obtain a valid SSL certificate for your server, open bash terminal and run the following command:
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key.pem -out server.crt.pem
+```
+
+This will generate two files on the home directory of the server:
+- SSL certificate file (`server.key.pem`)
+- SSL certificate key file (`server.crt.pem`)
+
+### Set Environment Variables
 
 Check `.env.example` file and create a similar file named `.env`.
 Here is an example file: -
@@ -44,7 +69,9 @@ Follow the following steps to deploy Keycloak in your local machine: -
   docker-compose -f docker-compose-keycloak.dev.yml up -d
   ```
 
-## Accessing Keycloak Administrator Console
+## Usage
+
+### Accessing Keycloak Administrator Console
 
 - Open up your favorite web browser.
 - Navigate to [http://localhost:9990](http://localhost:9990).

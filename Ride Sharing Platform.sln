@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.env = .env
 		.env.example = .env.example
 		.gitignore = .gitignore
+		docker-compose-keycloak.prod.yml = docker-compose-keycloak.prod.yml
 		docker-compose-rabbitmq.yml = docker-compose-rabbitmq.yml
 		docker-compose-keycloak.dev.yml = docker-compose-keycloak.dev.yml
 		docker-compose-postgres.yml = docker-compose-postgres.yml
