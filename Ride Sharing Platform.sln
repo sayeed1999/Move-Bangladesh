@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.env.example = .env.example
 		.gitignore = .gitignore
 		docker-compose-rabbitmq.yml = docker-compose-rabbitmq.yml
+		docker-compose-keycloak.dev.yml = docker-compose-keycloak.dev.yml
 		docker-compose-postgres.yml = docker-compose-postgres.yml
 		docker-compose-redis.yml = docker-compose-redis.yml
 		docker-compose.dev.yml = docker-compose.dev.yml
@@ -65,6 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{E8371E64
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentations", "Documentations", "{5240773F-24BC-4A31-8E72-AC5DC72EC50C}"
 	ProjectSection(SolutionItems) = preProject
+		KEYCLOAK.md = KEYCLOAK.md
 		POSTGRESQL.md = POSTGRESQL.md
 		Documentations\RABBITMQ.md = Documentations\RABBITMQ.md
 		REDIS.md = REDIS.md
