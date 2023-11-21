@@ -72,6 +72,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentations", "Documenta
 		REDIS.md = REDIS.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{F80900B7-A383-48F8-9B14-F37D0E41132F}"
+	ProjectSection(SolutionItems) = preProject
+		nginx\keycloak\nginx.conf = nginx\keycloak\nginx.conf
+		nginx\keycloak\nginx.dev.conf = nginx\keycloak\nginx.dev.conf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -150,6 +156,7 @@ Global
 		{3A40E1D3-F043-404E-873F-47EE0895DD87} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
 		{E8371E64-8EDE-414F-8B4B-725180C30A82} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
 		{5240773F-24BC-4A31-8E72-AC5DC72EC50C} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
+		{F80900B7-A383-48F8-9B14-F37D0E41132F} = {E8371E64-8EDE-414F-8B4B-725180C30A82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}

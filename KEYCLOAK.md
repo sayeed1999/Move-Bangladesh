@@ -1,12 +1,12 @@
 # Keycloak Deployment Guide
 
-Follow this guide to learn how to run Keycloak containers, access Keycloak management console, and destroy the containers.
+Follow this guide to learn how to run Keycloak containers, access Keycloak administrator console, and destroy the containers.
 
 ## Table of Contents
 
 - [Set Environment Variables](#set-environment-variables)
 - [Running the Containers](#running-the-containers)
-- [Accessing Keycloak Management Console](#accessing-keycloak-management-console)
+- [Accessing Keycloak Administrator Console](#accessing-keycloak-administrator-console)
 - [Accessing Local Mail Server](#accessing-local-mail-server)
 - [Destroying the Containers](#destroying-the-containers)
 
@@ -41,10 +41,10 @@ Follow the following steps to deploy Keycloak in your local machine: -
 - Open up a terminal from the project root directory.
 - Run the following command:
   ```
-  docker-compose -f docker-compose-keycloak.yml up -d
+  docker-compose -f docker-compose-keycloak.dev.yml up -d
   ```
 
-## Accessing Keycloak Management Console
+## Accessing Keycloak Administrator Console
 
 - Open up your favorite web browser.
 - Navigate to [http://localhost:9990](http://localhost:9990).
@@ -64,5 +64,5 @@ Follow the following steps to destroy the containers: -
 - Open up a terminal from the project root directory.
 - Run the following command:
   ```
-  docker-compose -f docker-compose-keycloak.yml down
+  docker-compose -f docker-compose-keycloak.dev.yml down
   ```
