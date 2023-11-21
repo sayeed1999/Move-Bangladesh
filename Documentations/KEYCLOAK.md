@@ -60,7 +60,9 @@ KC_SMTP_SERVER_PASS=
 
 ## Running the Containers
 
-Follow the following steps to deploy Keycloak in your local machine: -
+### Development Mode
+
+Follow the following steps to deploy Keycloak in development mode: -
 
 - Ensure Docker is running on your system.
 - Open up a terminal from the project root directory.
@@ -69,7 +71,20 @@ Follow the following steps to deploy Keycloak in your local machine: -
   docker-compose -f docker-compose-keycloak.dev.yml up -d
   ```
 
+### Production Mode
+
+Follow the following steps to deploy Keycloak in production mode: -
+
+- Ensure Docker is running on your system.
+- Open up a terminal from the project root directory.
+- Run the following command:
+  ```
+  docker-compose -f docker-compose-keycloak.prod.yml up -d
+  ```
+
 ## Usage
+
+### Development Mode
 
 ### Accessing Keycloak Administrator Console
 
@@ -79,12 +94,20 @@ Follow the following steps to deploy Keycloak in your local machine: -
 
 ### Accessing Local Mail Server
 
-**Note: This section is only for development environment.**
-
 - Open up your favorite web browser.
 - Navigate to [http://localhost:8025](http://localhost:8025).
 
+### Production Mode
+
+### Accessing Keycloak Administrator Console
+
+- Open up your favorite web browser.
+- Navigate to [https://localhost:9991](https://localhost:9991).
+- Login using default admin username=`$KC_ADMIN` and password=`$KC_ADMIN_PASSWORD` taking the values from .env file.
+
 ## Destroying the Containers
+
+### Development Mode
 
 Follow the following steps to destroy the containers: -
 
@@ -93,3 +116,14 @@ Follow the following steps to destroy the containers: -
   ```
   docker-compose -f docker-compose-keycloak.dev.yml down
   ```
+
+### Production Mode
+
+Follow the following steps to destroy the containers: -
+
+- Open up a terminal from the project root directory.
+- Run the following command:
+  ```
+  docker-compose -f docker-compose-keycloak.prod.yml down
+  ```
+
