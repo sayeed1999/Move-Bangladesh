@@ -5,15 +5,7 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{248A29EB-B997-4B67-9D1F-3CCD5FBB927E}"
 	ProjectSection(SolutionItems) = preProject
-		.env = .env
-		.env.example = .env.example
 		.gitignore = .gitignore
-		docker-compose-keycloak.prod.yml = docker-compose-keycloak.prod.yml
-		docker-compose-rabbitmq.yml = docker-compose-rabbitmq.yml
-		docker-compose-keycloak.dev.yml = docker-compose-keycloak.dev.yml
-		docker-compose-postgres.yml = docker-compose-postgres.yml
-		docker-compose-redis.yml = docker-compose-redis.yml
-		docker-compose.dev.yml = docker-compose.dev.yml
 		docker-compose.yml = docker-compose.yml
 		README.md = README.md
 	EndProjectSection
@@ -55,29 +47,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.CustomerAPI.UnitTests", "tests\RideSharingService\RideSharing.CustomerAPI.UnitTests\RideSharing.CustomerAPI.UnitTests.csproj", "{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{3A40E1D3-F043-404E-873F-47EE0895DD87}"
-	ProjectSection(SolutionItems) = preProject
-		keycloak\realm-export.json = keycloak\realm-export.json
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{E8371E64-8EDE-414F-8B4B-725180C30A82}"
-	ProjectSection(SolutionItems) = preProject
-		nginx\nginx.conf = nginx\nginx.conf
-		nginx\nginx.dev.conf = nginx\nginx.dev.conf
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentations", "Documentations", "{5240773F-24BC-4A31-8E72-AC5DC72EC50C}"
-	ProjectSection(SolutionItems) = preProject
-		Documentations\KEYCLOAK.md = Documentations\KEYCLOAK.md
-		Documentations\POSTGRESQL.md = Documentations\POSTGRESQL.md
-		Documentations\RABBITMQ.md = Documentations\RABBITMQ.md
-		Documentations\REDIS.md = Documentations\REDIS.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{F80900B7-A383-48F8-9B14-F37D0E41132F}"
-	ProjectSection(SolutionItems) = preProject
-		nginx\keycloak\nginx.conf = nginx\keycloak\nginx.conf
-		nginx\keycloak\nginx.dev.conf = nginx\keycloak\nginx.dev.conf
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,10 +104,6 @@ Global
 		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,11 +120,6 @@ Global
 		{92A2FEBB-2B6F-487C-84AB-BCB0CFD1B2FE} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 		{C1977F88-FEEE-4AFA-861D-644BF4FEF811} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 		{51B33F09-B763-44AC-B5E5-335154FD4AFF} = {F7745BB3-CFC6-49CB-A066-53375EE45099}
-		{9282A615-724E-49E1-8075-CBEF01232451} = {51B33F09-B763-44AC-B5E5-335154FD4AFF}
-		{B8760DF1-36B1-43E0-B40A-DCA118B78C1B} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
-		{E2FD8C3D-6F07-443F-9AA8-14BD42DDE32C} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
-		{2E8D2F3D-D9EB-4EFE-81E5-F9555185E1F7} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
-		{F3D6AF4F-3693-4E46-81DD-A0F2F824F575} = {4CE3B9E7-4849-46E9-981D-A97550E1929E}
 		{3A40E1D3-F043-404E-873F-47EE0895DD87} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
 		{E8371E64-8EDE-414F-8B4B-725180C30A82} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
 		{5240773F-24BC-4A31-8E72-AC5DC72EC50C} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
