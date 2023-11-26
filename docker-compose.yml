@@ -1,111 +1,49 @@
-version: '3.9'
-
 # services define individual containers and their configurations
 services:
 
-  # api gateway / reverse proxy
-  api-gateway:
-    image: api-gateway
-    container_name: api-gateway
-    build:
-      context: .
-      dockerfile: RideSharing.APIGateway/Dockerfile
+  # reverse proxy server
+  nginx:
+    restart: unless-stopped
+    image: nginx:1.24.0
+    container_name: nginx_server
     ports:
-      - "5000:80"
-      - "7000:443"
+      - "4000:4000" # ride sharing api http port
+      - "5000:5000" # ride sharing customer api http port
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ~/server.crt.pem:/etc/nginx/ssl/nginx.crt.pem # ssl certificate file
+      - ~/server.key.pem:/etc/nginx/ssl/nginx.key.pem # ssl certificate key file
     networks:
-      - authnet
-    restart: always
-
-  # auth api
-  auth-api:
-    image: auth-api
-    container_name: auth-api
-    build:
-      context: .
-      dockerfile: AuthService.API/Dockerfile
-    ports:
-      - "5001:80"
-      - "7001:443"
-    networks:
-      - authnet
-    restart: always
+      - globalnet
     depends_on:
-      - auth-api-db
+      - keycloak
 
-  auth-api-db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container_name: auth-api-db
-    ports: # not actually needed, because the two services are on the same network
-      - "6001:1433"
-    environment:
-      - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa@
-    networks:
-      - authnet
-    restart: always
-
-  # admin api (contains all generic crud endpoints)
-  ride-sharing-api:
-    image: ride-sharing-api
-    container_name: ride-sharing-api
+  # RideSharing API
+  ridesharing-api:
     build:
       context: .
-      dockerfile: RideSharing.API/Dockerfile
-    ports:
-      - "5002:80"
-      - "7002:443"
+      dockerfile: src/RideSharingService/RideSharing.API/Dockerfile
+    container_name: ridesharing-api
+    restart: unless-stopped
     networks:
-      - authnet
-    restart: always
-    depends_on:
-      - ride-sharing-api-db
+      - globalnet
 
-  ride-sharing-api-db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container_name: ride-sharing-api-db
-    ports: # not actually needed, because the two services are on the same network
-      - "6002:1433"
-    environment:
-      - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa@
-    networks:
-      - authnet
-    restart: always
-
-  # customer api (riders & customers only)
-  ride-sharing-customer-api:
-    image: ride-sharing-customer-api
-    container_name: ride-sharing-customer-api
+  # RideSharing Customer API
+  ridesharing-customer-api:
     build:
       context: .
-      dockerfile: RideSharing.CustomerAPI/Dockerfile
-    ports:
-      - "5003:80"
-      - "7003:443"
+      dockerfile: src/RideSharingService/RideSharing.CustomerAPI/Dockerfile
+    container_name: ridesharing-customer-api
+    restart: unless-stopped
     networks:
-      - authnet
-    restart: always
-    depends_on:
-      - ride-sharing-customer-api-db
-
-  ride-sharing-api-customer-db:
-    image: "mcr.microsoft.com/mssql/server:2022-latest"
-    container_name: ride-sharing-customer-api-db
-    ports: # not actually needed, because the two services are on the same network
-      - "6003:1433"
-    environment:
-      - ACCEPT_EULA=y
-      - SA_PASSWORD=123456Aa@
-    networks:
-      - authnet
-    restart: always
-
-  # auth service api (identity provider for microservices)
+      - globalnet
+  
 
 # volumes are a physical areas of disk space shared between the host and the containers
 # volumes:
 
+
 # networks define the communication rules between containers, and between a container and the host
 networks:
-  authnet: # a custom network to allow the containers to interact together
+  keycloak-local: # network for keycloak communication
+  globalnet: # network for api communications

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
 using RideSharing.Entity;
 using RideSharing.Entity.Dtos;
+using System.ComponentModel.DataAnnotations;
 
 namespace RideSharing.CustomerAPI.Controllers.TripCommands
 {
@@ -18,7 +19,7 @@ namespace RideSharing.CustomerAPI.Controllers.TripCommands
         }
 
         [HttpPut("{tripId}/update")]
-        public async Task<ActionResult<Response<Trip>>> Update(int tripId, TripModifyDto model)
+        public async Task<ActionResult<Response<Trip>>> Update([Required] int tripId, TripModifyDto model)
         {
             model.TripId = tripId;
             var res = await _mediator.Send(model);

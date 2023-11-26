@@ -1,0 +1,53 @@
+# services define individual containers and their configurations
+services:
+
+  # reverse proxy server
+  nginx:
+    restart: unless-stopped
+    image: nginx:1.24.0
+    container_name: nginx_server
+    ports:
+      - "4000:4000" # ride sharing api http port
+      - "5000:5000" # ride sharing customer api http port
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
+    networks:
+      - globalnet
+  
+  # RideSharing API
+  ridesharing-api:
+    build:
+      context: .
+      dockerfile: src/RideSharingService/RideSharing.API/Dockerfile
+    container_name: ridesharing-api
+    restart: unless-stopped
+    networks:
+      - globalnet
+
+  # RideSharing Customer API
+  ridesharing-customer-api:
+    build:
+      context: .
+      dockerfile: src/RideSharingService/RideSharing.CustomerAPI/Dockerfile
+    container_name: ridesharing-customer-api
+    restart: unless-stopped
+    networks:
+      - globalnet
+   
+  # Mailhog (local mail server)
+  mailhog:
+    restart: unless-stopped
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025" # SMTP port
+      - "8025:8025" # Web UI port
+    networks:
+      - globalnet
+
+# volumes are a physical areas of disk space shared between the host and the containers
+# volumes:
+
+# networks define the communication rules between containers, and between a container and the host
+networks:
+  globalnet: # network for api communications

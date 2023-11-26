@@ -1,86 +1,39 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Serialization;
 using RideSharing.Common.Middlewares;
-using Sayeed.Generic.OnionArchitecture.Repository;
-using System.Reflection;
-using MediatR;
-using RideSharing.CustomerAPI;
 
-var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+namespace RideSharing.CustomerAPI;
 
-// Add services to the container.
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
+public class Program
 {
-    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-});
-
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "RideSharing.CustomerAPI", Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    public static void Main(string[] args)
     {
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer"
-    });
+        var builder = WebApplication.CreateBuilder(args);
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-    {
+        // Register prefixed only environment variables.
+        builder.Configuration.AddEnvironmentVariables("API__");
+
+        builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
+
+        var app = builder.Build();
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
         {
-            new OpenApiSecurityScheme
-            {
-            Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                },
-                Scheme = "Bearer",
-                Name = "Bearer",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.Http
-            },
-            new List<string>()
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
-    });
-});
 
-// Disable 404 automatic response
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-});
+        // Custom middlewares.
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+        app.UseMiddleware<CustomExceptionHandlingMiddleware>();
 
-var app = builder.Build();
+        app.UseHttpsRedirection();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
+        app.MapControllers();
 
-// Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        app.MapGet("/", () => "RideSharing.API is running.");
+
+        app.Run();
+    }
 }
-
-// Custom middlewares..
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseMiddleware<CustomExceptionHandlingMiddleware>();
-
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapGet("/", () => "RideSharing.CustomerAPI is running.");
-
-app.Run();
