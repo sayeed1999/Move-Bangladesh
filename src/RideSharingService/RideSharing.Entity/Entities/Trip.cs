@@ -2,10 +2,11 @@
 using FluentValidation;
 using RideSharing.Entity;
 using RideSharing.Entity.Enums;
+using Sayeed.Generic.OnionArchitecture.Entity;
 
 namespace RideSharing.Entity
 {
-    public class Trip : Base
+    public class Trip : BaseEntity
     {
         private Trip() : base() { }  
         private Trip(long customerId, Customer customer, long driverId, Driver driver, long paymentId, Payment payment, TripStatus status, string source, string destination) : base()

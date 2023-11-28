@@ -1,8 +1,10 @@
-﻿namespace RideSharing.Entity
+﻿using Sayeed.Generic.OnionArchitecture.Entity;
+
+namespace RideSharing.Entity
 {
     // Since there are two schemas for rating e.g CustomerRating & DriverRating having similar field names,
     // so i inherit their props from a parent 'Rating' schema.
-    public abstract class Rating : Base
+    public abstract class Rating : BaseEntity
     {
         public Rating() : base()
         {

@@ -25,9 +25,6 @@ public static class Startup
             options.Filters.Add(new IsAdminOrAuthorizeFilter(ApplicationPolicy.AdminOnly));
         });
 
-        // For Entity Framework
-        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(nameof(ConnectionStrings.DatabaseConnectionString))));
-
         // Add other services
         services
             .ConfigureNewtonsoftJson()
@@ -35,7 +32,7 @@ public static class Startup
             .RegisterSwagger(nameof(CustomerAPI))
             .ConfigureAuthorizationServices(configuration, environment)
             // register application layers..
-            .RegisterInfrastructureLayer()
+            .RegisterInfrastructureLayer(configuration)
             .RegisterApplicationLayer();
 
         return services;

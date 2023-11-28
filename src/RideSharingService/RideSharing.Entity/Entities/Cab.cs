@@ -1,8 +1,9 @@
 ﻿using RideSharing.Entity.Enums;
+using Sayeed.Generic.OnionArchitecture.Entity;
 
 namespace RideSharing.Entity
 {
-    public class Cab : Base
+    public class Cab : BaseEntity
     {
         private Cab() : base()
         {

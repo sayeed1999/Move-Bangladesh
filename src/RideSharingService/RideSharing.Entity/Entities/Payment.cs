@@ -1,8 +1,9 @@
 ﻿using RideSharing.Entity.Enums;
+using Sayeed.Generic.OnionArchitecture.Entity;
 
 namespace RideSharing.Entity
 {
-    public class Payment : Base
+    public class Payment : BaseEntity
     {
         private Payment() :base() { }
 
