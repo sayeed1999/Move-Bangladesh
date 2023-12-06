@@ -1,8 +1,9 @@
 ﻿using RideSharing.Common.Enums;
+using Sayeed.Generic.OnionArchitecture.Entity;
 
 namespace RideSharing.Entity
 {
-    public abstract class Human : Base
+    public abstract class Human : BaseEntity
     {
         public Human() : base()
         {
