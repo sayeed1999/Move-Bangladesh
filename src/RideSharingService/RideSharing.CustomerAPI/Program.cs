@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using RideSharing.Common.Middlewares;
 
 namespace RideSharing.CustomerAPI;
@@ -12,6 +13,11 @@ public class Program
         builder.Configuration.AddEnvironmentVariables("API__");
 
         builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
+        builder.Services.AddStackExchangeRedisCache(redisOptions =>
+        {
+            string connection = builder.Configuration.GetConnectionString("Redis");
+            redisOptions.Configuration = connection;
+        });
 
         var app = builder.Build();
 
