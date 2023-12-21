@@ -1,10 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
-using RideSharing.Domain;
-using RideSharing.Domain.Dtos;
 
-namespace RideSharing.CustomerAPI.Controllers.TripCommands
+namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 {
     [Route("api/external/trips")]
     [ApiController]
@@ -14,11 +12,11 @@ namespace RideSharing.CustomerAPI.Controllers.TripCommands
 
         public TripRequestCommand(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpPost("request")]
-        public async Task<ActionResult<Response<Trip>>> RequestRide(TripRequestDto model)
+        public async Task<ActionResult<Response<TripRequestCommandResponseDto>>> RequestRide(TripRequestCommandDto model)
         {
             var res = await _mediator.Send(model);
             if (res.IsFailure) return BadRequest(res.Error);

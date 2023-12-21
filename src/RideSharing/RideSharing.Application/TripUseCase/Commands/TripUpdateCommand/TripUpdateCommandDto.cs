@@ -1,10 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
+using RideSharing.Domain;
 using RideSharing.Domain.Enums;
 
-namespace RideSharing.Domain.Dtos
+namespace RideSharing.Application.TripHandlers.Commands.TripUpdateCommand
 {
-    public class TripModifyDto : IRequest<Result<Trip>>
+    public class TripUpdateCommandDto : IRequest<Result<Trip>>
     {
         public long TripId { get; set; }
         public TripStatus TripStatus { get; set; }

@@ -2,11 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
-using RideSharing.Domain;
-using RideSharing.Domain.Dtos;
 using System.ComponentModel.DataAnnotations;
 
-namespace RideSharing.CustomerAPI.Controllers.TripCommands
+namespace RideSharing.CustomerAPI.Controllers.Trip.Queries
 {
     [Route("api/external/trips")]
     [ApiController]
@@ -16,15 +14,15 @@ namespace RideSharing.CustomerAPI.Controllers.TripCommands
 
         public TripStatusQuery(IMediator mediator)
         {
-            this._mediator = mediator;
+            _mediator = mediator;
         }
 
         [HttpGet("{tripId}/status")]
-        public async Task<ActionResult<Response<Trip>>> GetRideStatus([Required] int tripId)
+        public async Task<ActionResult<Response<TripStatusQueryResponseDto>>> GetRideStatus([Required] int tripId)
         {
-            var dto = TripQueryDto.Create(tripId);
+            var dto = TripStatusQueryDto.Create(tripId);
 
-            Result<Trip> ride = await _mediator.Send(dto);
+            Result<TripStatusQueryResponseDto> ride = await _mediator.Send(dto);
 
             if (ride.IsFailure)
                 return NotFound($"Ride request {dto.TripId} not found.");
