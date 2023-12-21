@@ -11,7 +11,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/RideSharingService/RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj", "src/RideSharingService/RideSharing.CustomerAPI/"]
 COPY ["src/Common/RideSharing.Common/RideSharing.Common.csproj", "src/Common/RideSharing.Common/"]
-COPY ["src/RideSharingService/RideSharing.Entity/RideSharing.Entity.csproj", "src/RideSharingService/RideSharing.Entity/"]
+COPY ["src/RideSharingService/RideSharing.Domain/RideSharing.Domain.csproj", "src/RideSharingService/RideSharing.Domain/"]
 COPY ["src/RideSharingService/RideSharing.Infrastructure/RideSharing.Infrastructure.csproj", "src/RideSharingService/RideSharing.Infrastructure/"]
 COPY ["src/RideSharingService/RideSharing.Service/RideSharing.Service.csproj", "src/RideSharingService/RideSharing.Service/"]
 RUN dotnet restore "./src/RideSharingService/RideSharing.CustomerAPI/./RideSharing.CustomerAPI.csproj"

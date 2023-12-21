@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using RideSharing.Entity.Dtos;
-using RideSharing.Entity;
+using RideSharing.Domain.Dtos;
+using RideSharing.Domain;
 
 namespace RideSharing.Service
 {

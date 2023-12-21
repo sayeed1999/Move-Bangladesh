@@ -1,14 +1,14 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
-using RideSharing.Entity;
-using RideSharing.Entity.Enums;
+using RideSharing.Domain;
+using RideSharing.Domain.Enums;
 using Sayeed.Generic.OnionArchitecture.Entity;
 
-namespace RideSharing.Entity
+namespace RideSharing.Domain
 {
     public class Trip : BaseEntity
     {
-        private Trip() : base() { }  
+        private Trip() : base() { }
         private Trip(long customerId, Customer customer, long driverId, Driver driver, long paymentId, Payment payment, TripStatus status, string source, string destination) : base()
         {
             CustomerId = customerId;

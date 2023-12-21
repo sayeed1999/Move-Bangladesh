@@ -25,7 +25,7 @@ namespace RideSharing.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RideSharing.Entity.Cab", b =>
+            modelBuilder.Entity("RideSharing.Domain.Cab", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +59,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.ToTable("Cabs");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.Customer", b =>
+            modelBuilder.Entity("RideSharing.Domain.Customer", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +94,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.CustomerRating", b =>
+            modelBuilder.Entity("RideSharing.Domain.CustomerRating", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,7 +138,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.ToTable("CustomerRatings");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.Driver", b =>
+            modelBuilder.Entity("RideSharing.Domain.Driver", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -173,7 +173,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.ToTable("Drivers");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.DriverRating", b =>
+            modelBuilder.Entity("RideSharing.Domain.DriverRating", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,7 +217,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.ToTable("DriverRatings");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.Payment", b =>
+            modelBuilder.Entity("RideSharing.Domain.Payment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,7 +248,7 @@ namespace RideSharing.Infrastructure.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.Trip", b =>
+            modelBuilder.Entity("RideSharing.Domain.Trip", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -296,9 +296,9 @@ namespace RideSharing.Infrastructure.Migrations
                     b.ToTable("Trips");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.Cab", b =>
+            modelBuilder.Entity("RideSharing.Domain.Cab", b =>
                 {
-                    b.HasOne("RideSharing.Entity.Driver", "Driver")
+                    b.HasOne("RideSharing.Domain.Driver", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -307,21 +307,21 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Navigation("Driver");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.CustomerRating", b =>
+            modelBuilder.Entity("RideSharing.Domain.CustomerRating", b =>
                 {
-                    b.HasOne("RideSharing.Entity.Customer", "Customer")
+                    b.HasOne("RideSharing.Domain.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RideSharing.Entity.Driver", "Driver")
+                    b.HasOne("RideSharing.Domain.Driver", "Driver")
                         .WithMany("CustomerRatings")
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RideSharing.Entity.Trip", "Trip")
+                    b.HasOne("RideSharing.Domain.Trip", "Trip")
                         .WithMany()
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -334,21 +334,21 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Navigation("Trip");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.DriverRating", b =>
+            modelBuilder.Entity("RideSharing.Domain.DriverRating", b =>
                 {
-                    b.HasOne("RideSharing.Entity.Customer", "Customer")
+                    b.HasOne("RideSharing.Domain.Customer", "Customer")
                         .WithMany("DriverRatings")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RideSharing.Entity.Driver", "Driver")
+                    b.HasOne("RideSharing.Domain.Driver", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RideSharing.Entity.Trip", "Trip")
+                    b.HasOne("RideSharing.Domain.Trip", "Trip")
                         .WithMany()
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -361,21 +361,21 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Navigation("Trip");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.Trip", b =>
+            modelBuilder.Entity("RideSharing.Domain.Trip", b =>
                 {
-                    b.HasOne("RideSharing.Entity.Customer", "Customer")
+                    b.HasOne("RideSharing.Domain.Customer", "Customer")
                         .WithMany("Trips")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RideSharing.Entity.Driver", "Driver")
+                    b.HasOne("RideSharing.Domain.Driver", "Driver")
                         .WithMany("Trips")
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RideSharing.Entity.Payment", "Payment")
+                    b.HasOne("RideSharing.Domain.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -388,14 +388,14 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.Customer", b =>
+            modelBuilder.Entity("RideSharing.Domain.Customer", b =>
                 {
                     b.Navigation("DriverRatings");
 
                     b.Navigation("Trips");
                 });
 
-            modelBuilder.Entity("RideSharing.Entity.Driver", b =>
+            modelBuilder.Entity("RideSharing.Domain.Driver", b =>
                 {
                     b.Navigation("CustomerRatings");
 

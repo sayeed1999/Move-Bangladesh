@@ -1,11 +1,11 @@
-﻿using RideSharing.Entity.Enums;
+﻿using RideSharing.Domain.Enums;
 using Sayeed.Generic.OnionArchitecture.Entity;
 
-namespace RideSharing.Entity
+namespace RideSharing.Domain
 {
     public class Payment : BaseEntity
     {
-        private Payment() :base() { }
+        private Payment() : base() { }
 
         private Payment(PaymentMethod method, PaymentStatus status, long amount) : base()
         {

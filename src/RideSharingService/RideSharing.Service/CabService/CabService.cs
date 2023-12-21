@@ -1,4 +1,4 @@
-﻿using RideSharing.Entity;
+﻿using RideSharing.Domain;
 using Sayeed.Generic.OnionArchitecture.Logic;
 using Sayeed.Generic.OnionArchitecture.Repository;
 using System;

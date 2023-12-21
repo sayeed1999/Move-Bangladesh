@@ -1,4 +1,4 @@
-﻿namespace RideSharing.Entity
+﻿namespace RideSharing.Domain
 {
     // This schema is the driver ratings submitted by customers
     public class DriverRating : Rating

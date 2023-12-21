@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using RideSharing.Common.Enums;
-using RideSharing.Entity;
+using RideSharing.Domain;
 
-namespace RideSharing.Entity
+namespace RideSharing.Domain
 {
     public class Driver : Human
     {
@@ -27,7 +27,7 @@ namespace RideSharing.Entity
 
         public static Result<Driver> Create(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber)
         {
-            var driver = new Driver(id, firstName, lastName, gender, email, userName,phoneNumber);
+            var driver = new Driver(id, firstName, lastName, gender, email, userName, phoneNumber);
 
             var validator = new DriverValidator();
             var r = validator.Validate(driver);

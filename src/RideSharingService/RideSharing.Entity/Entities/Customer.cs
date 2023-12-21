@@ -2,10 +2,9 @@
 using FluentValidation;
 using RideSharing.Common.Enums;
 using RideSharing.Common.ValueObjects;
-using RideSharing.Entity;
-using System.Data;
+using RideSharing.Domain;
 
-namespace RideSharing.Entity
+namespace RideSharing.Domain
 {
     public class Customer : Human
     {
@@ -24,7 +23,7 @@ namespace RideSharing.Entity
             DriverRatings = new();
             Trips = new();
         }
-        
+
 
         public virtual List<DriverRating> DriverRatings { get; protected set; }
         public virtual List<Trip> Trips { get; protected set; }

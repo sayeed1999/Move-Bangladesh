@@ -1,6 +1,6 @@
 ﻿using Sayeed.Generic.OnionArchitecture.Entity;
 
-namespace RideSharing.Entity
+namespace RideSharing.Domain
 {
     // Since there are two schemas for rating e.g CustomerRating & DriverRating having similar field names,
     // so i inherit their props from a parent 'Rating' schema.
@@ -8,7 +8,7 @@ namespace RideSharing.Entity
     {
         public Rating() : base()
         {
-            
+
         }
         public long CustomerId { get; protected set; }
         public virtual Customer Customer { get; protected set; }

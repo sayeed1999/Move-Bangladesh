@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using RideSharing.Entity;
-using RideSharing.Entity.Dtos;
+using RideSharing.Domain;
+using RideSharing.Domain.Dtos;
 using Sayeed.Generic.OnionArchitecture.Logic;
 using Sayeed.Generic.OnionArchitecture.Repository;
 using System;

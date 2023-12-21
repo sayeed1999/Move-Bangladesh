@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.MessageQueues.Messages;
-using RideSharing.Entity;
+using RideSharing.Domain;
 using RideSharing.Infrastructure;
 using RideSharing.Service;
-using RideSharing.Entity.Constants;
+using RideSharing.Domain.Constants;
 using RideSharing.Common.ValueObjects;
 
 namespace RideSharing.API.MessageQueues.Actions

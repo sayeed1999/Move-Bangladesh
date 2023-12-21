@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RideSharing.Entity;
+using RideSharing.Domain;
 
 namespace RideSharing.Infrastructure
 {

@@ -32,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.APIGateway", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Common", "src\Common\RideSharing.Common\RideSharing.Common.csproj", "{52BBE0B0-B5D3-4BEF-A833-E4674A283C18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Entity", "src\RideSharingService\RideSharing.Entity\RideSharing.Entity.csproj", "{A51627BC-CEF9-4EFB-81AB-8293F3491FDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Domain", "src\RideSharingService\RideSharing.Entity\RideSharing.Domain.csproj", "{A51627BC-CEF9-4EFB-81AB-8293F3491FDE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Infrastructure", "src\RideSharingService\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj", "{EC59DB9A-4A1F-43CC-B02A-3A5E62CA9DE3}"
 EndProject

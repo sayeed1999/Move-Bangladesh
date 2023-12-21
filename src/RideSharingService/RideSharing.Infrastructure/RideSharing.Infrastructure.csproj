@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RideSharing.Entity\RideSharing.Entity.csproj" />
+    <ProjectReference Include="..\RideSharing.Domain\RideSharing.Domain.csproj" />
   </ItemGroup>
 
 </Project>

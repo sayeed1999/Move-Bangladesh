@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using RideSharing.Common.MessageQueues.Messages;
-using RideSharing.Entity;
+using RideSharing.Domain;
 
 namespace AuthService.API.Helpers
 {

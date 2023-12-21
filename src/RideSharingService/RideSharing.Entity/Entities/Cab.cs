@@ -1,13 +1,13 @@
-﻿using RideSharing.Entity.Enums;
+﻿using RideSharing.Domain.Enums;
 using Sayeed.Generic.OnionArchitecture.Entity;
 
-namespace RideSharing.Entity
+namespace RideSharing.Domain
 {
     public class Cab : BaseEntity
     {
         private Cab() : base()
         {
-            
+
         }
 
         private Cab(string regNo, long driverId, Driver driver, CabType type) : base()

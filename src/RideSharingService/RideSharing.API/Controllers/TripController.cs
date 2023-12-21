@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RideSharing.Entity;
+using RideSharing.Domain;
 using RideSharing.Service;
 using Sayeed.Generic.OnionArchitecture.Controller;
 

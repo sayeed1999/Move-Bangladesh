@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Common.Entities;
-using RideSharing.Entity;
-using RideSharing.Entity.Dtos;
+using RideSharing.Domain;
+using RideSharing.Domain.Dtos;
 
 namespace RideSharing.CustomerAPI.Controllers.TripCommands
 {

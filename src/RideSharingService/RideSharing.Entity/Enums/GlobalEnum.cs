@@ -1,4 +1,4 @@
-﻿namespace RideSharing.Entity.Enums
+﻿namespace RideSharing.Domain.Enums
 {
     public enum CabType
     {

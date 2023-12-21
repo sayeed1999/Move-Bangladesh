@@ -1,13 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using RideSharing.Entity.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RideSharing.Domain.Enums;
 
-namespace RideSharing.Entity.Dtos
+namespace RideSharing.Domain.Dtos
 {
     public class TripModifyDto : IRequest<Result<Trip>>
     {
