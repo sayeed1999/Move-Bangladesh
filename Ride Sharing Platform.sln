@@ -8,10 +8,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.env = .env
 		.env.example = .env.example
 		.gitignore = .gitignore
-		docker-compose-keycloak.prod.yml = docker-compose-keycloak.prod.yml
-		docker-compose-rabbitmq.yml = docker-compose-rabbitmq.yml
 		docker-compose-keycloak.dev.yml = docker-compose-keycloak.dev.yml
+		docker-compose-keycloak.prod.yml = docker-compose-keycloak.prod.yml
 		docker-compose-postgres.yml = docker-compose-postgres.yml
+		docker-compose-rabbitmq.yml = docker-compose-rabbitmq.yml
 		docker-compose-redis.yml = docker-compose-redis.yml
 		docker-compose.dev.yml = docker-compose.dev.yml
 		docker-compose.yml = docker-compose.yml
@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9CBAEE2E-802
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F7745BB3-CFC6-49CB-A066-53375EE45099}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RideSharingService", "RideSharingService", "{118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RideSharing", "RideSharing", "{118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RideSharingService", "RideSharingService", "{4CE3B9E7-4849-46E9-981D-A97550E1929E}"
 EndProject
