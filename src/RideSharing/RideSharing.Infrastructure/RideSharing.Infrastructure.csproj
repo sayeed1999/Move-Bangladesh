@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RideSharing.Application\RideSharing.Application.csproj" />
     <ProjectReference Include="..\RideSharing.Domain\RideSharing.Domain.csproj" />
   </ItemGroup>
 
