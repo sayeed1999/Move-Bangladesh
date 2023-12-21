@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application;
+using RideSharing.Application.Abstractions;
 using RideSharing.Domain;
 using Sayeed.Generic.OnionArchitecture.Controller;
 
@@ -9,7 +9,7 @@ namespace RideSharing.API
     [ApiController]
     public class CabController : BaseController<Cab>
     {
-        public CabController(ICabService baseService) : base(baseService)
+        public CabController(ICabRepository baseService) : base(baseService)
         {
         }
     }

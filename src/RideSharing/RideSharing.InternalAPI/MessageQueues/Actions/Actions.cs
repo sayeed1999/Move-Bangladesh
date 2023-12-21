@@ -3,19 +3,19 @@ using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Domain;
 using RideSharing.Infrastructure;
-using RideSharing.Application;
 using RideSharing.Domain.Constants;
 using RideSharing.Common.ValueObjects;
+using RideSharing.Application.Abstractions;
 
 namespace RideSharing.API.MessageQueues.Actions
 {
     public class Actions
     {
-        private readonly ICustomerService customerService;
-        private readonly IDriverService driverService;
+        private readonly ICustomerRepository customerService;
+        private readonly IDriverRepository driverService;
         private readonly ApplicationDbContext context;
 
-        public Actions(ICustomerService customerService, IDriverService driverService, ApplicationDbContext context)
+        public Actions(ICustomerRepository customerService, IDriverRepository driverService, ApplicationDbContext context)
         {
             this.customerService = customerService;
             this.driverService = driverService;

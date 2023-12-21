@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RideSharing.Application;
 using RideSharing.Application.Abstractions;
 using RideSharing.Infrastructure.Repositories;
 
@@ -28,5 +29,13 @@ public static class DependencyInjection
         => services.AddScoped<DbContext, ApplicationDbContext>();
 
     private static IServiceCollection RegisterRepository(this IServiceCollection services)
-        => services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        => services
+            .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
+            .AddScoped<ICabRepository, CabRepository>()
+            .AddScoped<ICustomerRatingRepository, CustomerRatingRepository>()
+            .AddScoped<ICustomerRepository, CustomerRepository>()
+            .AddScoped<IDriverRatingRepository, DriverRatingRepository>()
+            .AddScoped<IDriverRepository, DriverRepository>()
+            .AddScoped<IPaymentRepository, PaymentRepository>()
+            .AddScoped<ITripRepository, TripRepository>();
 }

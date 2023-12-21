@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RideSharing.Domain;
-using RideSharing.Application;
 using Sayeed.Generic.OnionArchitecture.Controller;
+using RideSharing.Application.Abstractions;
 
 namespace RideSharing.API
 {
@@ -9,7 +9,7 @@ namespace RideSharing.API
     [ApiController]
     public class PaymentController : BaseController<Payment>
     {
-        public PaymentController(IPaymentService baseService) : base(baseService)
+        public PaymentController(IPaymentRepository baseService) : base(baseService)
         {
         }
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application;
+using RideSharing.Application.Abstractions;
 using RideSharing.Domain;
 using Sayeed.Generic.OnionArchitecture.Controller;
 
@@ -11,7 +11,7 @@ namespace RideSharing.API
     [ApiController]
     public class CustomerController : BaseController<Customer>
     {
-        public CustomerController(ICustomerService baseService) : base(baseService)
+        public CustomerController(ICustomerRepository baseService) : base(baseService)
         {
         }
     }

@@ -2,5 +2,6 @@
 {
     public class TripUpdateCommandResponseDto
     {
+        public long Id { get; set; }
     }
 }
