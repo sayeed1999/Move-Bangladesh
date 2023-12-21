@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Domain;
 using RideSharing.Infrastructure;
-using RideSharing.Service;
+using RideSharing.Application;
 using RideSharing.Domain.Constants;
 using RideSharing.Common.ValueObjects;
 

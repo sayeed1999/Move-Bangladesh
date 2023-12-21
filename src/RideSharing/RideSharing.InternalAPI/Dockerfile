@@ -13,7 +13,7 @@ COPY ["src/RideSharingService/RideSharing.API/RideSharing.API.csproj", "src/Ride
 COPY ["src/Common/RideSharing.Common/RideSharing.Common.csproj", "src/Common/RideSharing.Common/"]
 COPY ["src/RideSharingService/RideSharing.Infrastructure/RideSharing.Infrastructure.csproj", "src/RideSharingService/RideSharing.Infrastructure/"]
 COPY ["src/RideSharingService/RideSharing.Domain/RideSharing.Domain.csproj", "src/RideSharingService/RideSharing.Domain/"]
-COPY ["src/RideSharingService/RideSharing.Service/RideSharing.Service.csproj", "src/RideSharingService/RideSharing.Service/"]
+COPY ["src/RideSharingService/RideSharing.Application/RideSharing.Application.csproj", "src/RideSharingService/RideSharing.Application/"]
 RUN dotnet restore "./src/RideSharingService/RideSharing.API/./RideSharing.API.csproj"
 COPY . .
 WORKDIR "/src/src/RideSharingService/RideSharing.API"

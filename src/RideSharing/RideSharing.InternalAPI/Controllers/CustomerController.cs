@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RideSharing.Application;
 using RideSharing.Domain;
-using RideSharing.Service;
 using Sayeed.Generic.OnionArchitecture.Controller;
 
 namespace RideSharing.API
