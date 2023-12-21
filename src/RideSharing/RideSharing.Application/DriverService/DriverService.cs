@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RideSharing.Service
+namespace RideSharing.Application
 {
     public class DriverService : BaseService<Driver>, IDriverService
     {

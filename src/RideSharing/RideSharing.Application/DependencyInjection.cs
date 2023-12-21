@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace RideSharing.Service;
+namespace RideSharing.Application;
 
 /// <summary>
 /// Returns a reference to this instance of IServiceCollection

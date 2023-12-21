@@ -18,7 +18,7 @@ services:
   ridesharing-api:
     build:
       context: .
-      dockerfile: src/RideSharingService/RideSharing.API/Dockerfile
+      dockerfile: src/RideSharingService/RideSharing.InternalAPI/Dockerfile
     container_name: ridesharing-api
     restart: unless-stopped
     networks:

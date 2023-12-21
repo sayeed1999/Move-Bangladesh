@@ -9,16 +9,16 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/Common/RideSharing.APIGateway/RideSharing.APIGateway.csproj", "src/Common/RideSharing.APIGateway/"]
-RUN dotnet restore "src/Common/RideSharing.APIGateway/RideSharing.APIGateway.csproj"
+COPY ["src/Common/RideSharing.InternalAPIGateway/RideSharing.InternalAPIGateway.csproj", "src/Common/RideSharing.InternalAPIGateway/"]
+RUN dotnet restore "src/Common/RideSharing.InternalAPIGateway/RideSharing.InternalAPIGateway.csproj"
 COPY . .
-WORKDIR "/src/src/Common/RideSharing.APIGateway"
-RUN dotnet build "RideSharing.APIGateway.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/Common/RideSharing.InternalAPIGateway"
+RUN dotnet build "RideSharing.InternalAPIGateway.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "RideSharing.APIGateway.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "RideSharing.InternalAPIGateway.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "RideSharing.APIGateway.dll"]
+ENTRYPOINT ["dotnet", "RideSharing.InternalAPIGateway.dll"]

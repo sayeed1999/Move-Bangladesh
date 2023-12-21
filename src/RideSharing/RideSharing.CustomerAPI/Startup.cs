@@ -4,7 +4,7 @@ using RideSharing.Common.Constants;
 using RideSharing.Common.Filters;
 using RideSharing.Common.RegisterServices;
 using RideSharing.Infrastructure;
-using RideSharing.Service;
+using RideSharing.Application;
 
 namespace RideSharing.CustomerAPI;
 

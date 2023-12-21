@@ -3,7 +3,7 @@ using MediatR;
 using RideSharing.Domain.Dtos;
 using RideSharing.Domain;
 
-namespace RideSharing.Service
+namespace RideSharing.Application
 {
     public partial class TripService
         : IRequestHandler<TripRequestDto, Result<Trip>>

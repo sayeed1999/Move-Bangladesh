@@ -88,7 +88,7 @@ docker compose -f docker-compose.dev.yml up -d
 
 ### Access APIs
 - Access RideSharing API through `https:localhost:4000`.
-  `GET https://localhost:4000` returns <i>`RideSharing.API is running`</i> message.
+  `GET https://localhost:4000` returns <i>`RideSharing.InternalAPI is running`</i> message.
   
 - Access RideSharing Customer API through `https:localhost:5000`.
   `GET https://localhost:5000` returns <i>`RideSharing.CustomerAPI is running`</i> message.

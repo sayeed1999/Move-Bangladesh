@@ -27,7 +27,7 @@ namespace RideSharing.Infrastructure
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Trip> Trips { get; set; }
 
-        // Connection String is initialized from RideSharing.API -> Startup.cs...
+        // Connection String is initialized from RideSharing.InternalAPI -> Startup.cs...
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

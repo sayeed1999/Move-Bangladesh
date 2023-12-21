@@ -69,15 +69,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{F8
 		nginx\keycloak\nginx.dev.conf = nginx\keycloak\nginx.dev.conf
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.API", "src\RideSharing\RideSharing.API\RideSharing.API.csproj", "{43005DBE-B6E6-4E62-8C24-FAAFA8832337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.InternalAPI", "src\RideSharing\RideSharing.API\RideSharing.InternalAPI.csproj", "{43005DBE-B6E6-4E62-8C24-FAAFA8832337}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.CustomerAPI", "src\RideSharing\RideSharing.CustomerAPI\RideSharing.CustomerAPI.csproj", "{09F1C768-E726-488C-BBB9-8DFF9844DDCF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Domain", "src\RideSharing\RideSharing.Entity\RideSharing.Domain.csproj", "{4A22391C-4EA5-4BFE-ABA9-20435A7944D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Application", "src\RideSharing\RideSharing.Service\RideSharing.Application.csproj", "{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Infrastructure", "src\RideSharing\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj", "{992CF09A-DC0B-496F-AEBD-EB9433516CCC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Application", "src\RideSharing\RideSharing.Application\RideSharing.Application.csproj", "{58E8CB6F-90EE-46BE-8E0C-DE333E707943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,14 +125,14 @@ Global
 		{4A22391C-4EA5-4BFE-ABA9-20435A7944D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A22391C-4EA5-4BFE-ABA9-20435A7944D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A22391C-4EA5-4BFE-ABA9-20435A7944D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{992CF09A-DC0B-496F-AEBD-EB9433516CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{992CF09A-DC0B-496F-AEBD-EB9433516CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{992CF09A-DC0B-496F-AEBD-EB9433516CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{992CF09A-DC0B-496F-AEBD-EB9433516CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58E8CB6F-90EE-46BE-8E0C-DE333E707943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58E8CB6F-90EE-46BE-8E0C-DE333E707943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58E8CB6F-90EE-46BE-8E0C-DE333E707943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58E8CB6F-90EE-46BE-8E0C-DE333E707943}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,8 +156,8 @@ Global
 		{43005DBE-B6E6-4E62-8C24-FAAFA8832337} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 		{09F1C768-E726-488C-BBB9-8DFF9844DDCF} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 		{4A22391C-4EA5-4BFE-ABA9-20435A7944D1} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
-		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 		{992CF09A-DC0B-496F-AEBD-EB9433516CCC} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
+		{58E8CB6F-90EE-46BE-8E0C-DE333E707943} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}

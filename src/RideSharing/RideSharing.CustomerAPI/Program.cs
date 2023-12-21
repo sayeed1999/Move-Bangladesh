@@ -32,7 +32,7 @@ public class Program
 
         app.MapControllers();
 
-        app.MapGet("/", () => "RideSharing.API is running.");
+        app.MapGet("/", () => "RideSharing.InternalAPI is running.");
 
         app.Run();
     }
