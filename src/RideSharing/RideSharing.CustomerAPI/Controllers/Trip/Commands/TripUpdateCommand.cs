@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RideSharing.Application.TripUseCase.Commands.TripUpdateCommand;
 using RideSharing.Common.Entities;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,7 +18,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
         }
 
         [HttpPut("{tripId}/update")]
-        public async Task<ActionResult<Response<TripRequestCommandResponseDto>>> Update([Required] int tripId, TripUpdateCommandDto model)
+        public async Task<ActionResult<Response<TripUpdateCommandResponseDto>>> Update([Required] int tripId, TripUpdateCommandDto model)
         {
             model.TripId = tripId;
             var res = await _mediator.Send(model);

@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using RideSharing.Domain;
 
-namespace RideSharing.Application.TripHandlers.Commands.TripRequestCommand
+namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 {
-    public class TripRequestCommandDto : IRequest<Result<Trip>>
+    public class TripRequestCommandDto : IRequest<Result<TripRequestCommandResponseDto>>
     {
         public long CustomerId { get; set; }
         public long DriverId { get; set; }

@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RideSharing.Application.TripUseCase.Queries.TripStatusQuery;
 using RideSharing.Common.Entities;
 using System.ComponentModel.DataAnnotations;
 

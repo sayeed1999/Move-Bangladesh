@@ -1,11 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using RideSharing.Application.TripHandlers.Commands.TripRequestCommand;
 using RideSharing.Domain;
 
-namespace RideSharing.Application
+namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 {
-    public partial class TripService
+    public class TripRequestCommandHandler
         : IRequestHandler<TripRequestCommandDto, Result<TripRequestCommandResponseDto>>
     {
         public async Task<Result<TripRequestCommandResponseDto>> Handle(TripRequestCommandDto model, CancellationToken cancellationToken)

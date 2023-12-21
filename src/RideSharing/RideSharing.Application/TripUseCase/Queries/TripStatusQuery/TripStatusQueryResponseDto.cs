@@ -1,4 +1,4 @@
-﻿namespace RideSharing.Application.TripHandlers.Queries.TripStatusQuery
+﻿namespace RideSharing.Application.TripUseCase.Queries.TripStatusQuery
 {
     public class TripStatusQueryResponseDto
     {

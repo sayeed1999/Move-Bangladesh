@@ -1,4 +1,4 @@
-﻿namespace RideSharing.Application.TripHandlers.Commands.TripUpdateCommand
+﻿namespace RideSharing.Application.TripUseCase.Commands.TripUpdateCommand
 {
     public class TripUpdateCommandResponseDto
     {

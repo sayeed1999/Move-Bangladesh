@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 
-namespace RideSharing.Application.TripHandlers.Queries.TripStatusQuery
+namespace RideSharing.Application.TripUseCase.Queries.TripStatusQuery
 {
     public class TripStatusQueryDto : IRequest<Result<TripStatusQueryResponseDto>>
     {

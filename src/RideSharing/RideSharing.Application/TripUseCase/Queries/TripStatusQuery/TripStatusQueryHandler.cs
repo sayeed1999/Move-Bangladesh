@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using RideSharing.Application.TripHandlers.Queries.TripStatusQuery;
 
-namespace RideSharing.Application
+namespace RideSharing.Application.TripUseCase.Queries.TripStatusQuery
 {
-    public partial class TripService
+    public class TripStatusQuery
         : IRequestHandler<TripStatusQueryDto, Result<TripStatusQueryResponseDto>>
     {
         public async Task<Result<TripStatusQueryResponseDto>> Handle(TripStatusQueryDto model, CancellationToken cancellationToken)
