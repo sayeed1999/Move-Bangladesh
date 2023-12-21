@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace RideSharing.Application;
 
@@ -10,10 +10,14 @@ public static class DependencyInjection
 {
     private static IServiceCollection RegisterApplicationLayerDependencies(this IServiceCollection services)
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        var assembly = typeof(DependencyInjection).Assembly;
 
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
-    
+        services.AddAutoMapper(assembly);
+
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
+
+        services.AddValidatorsFromAssembly(assembly);
+
         return services;
     }
 

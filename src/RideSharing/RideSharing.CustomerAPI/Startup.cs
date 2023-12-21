@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using RideSharing.Application;
 using RideSharing.Common.Configurations;
 using RideSharing.Common.Constants;
 using RideSharing.Common.Filters;
 using RideSharing.Common.RegisterServices;
 using RideSharing.Infrastructure;
-using RideSharing.Application;
 
 namespace RideSharing.CustomerAPI;
 
@@ -31,9 +30,9 @@ public static class Startup
             .ConfigureApiBehavior()
             .RegisterSwagger(nameof(CustomerAPI))
             .ConfigureAuthorizationServices(configuration, environment)
-            // register application layers..
-            .RegisterInfrastructureLayer(configuration)
-            .RegisterApplicationLayer();
+            // register project layers
+            .RegisterApplicationLayer()
+            .RegisterInfrastructureLayer(configuration);
 
         return services;
     }
