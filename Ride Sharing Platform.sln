@@ -23,9 +23,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F7745BB3-CFC6-49CB-A066-53375EE45099}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RideSharing", "RideSharing", "{118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}"
-	ProjectSection(SolutionItems) = preProject
-		src\RideSharing\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj = src\RideSharing\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RideSharingService", "RideSharingService", "{4CE3B9E7-4849-46E9-981D-A97550E1929E}"
 EndProject
@@ -78,7 +75,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.CustomerAPI", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Domain", "src\RideSharing\RideSharing.Entity\RideSharing.Domain.csproj", "{4A22391C-4EA5-4BFE-ABA9-20435A7944D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Service", "src\RideSharing\RideSharing.Service\RideSharing.Service.csproj", "{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Application", "src\RideSharing\RideSharing.Service\RideSharing.Application.csproj", "{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Infrastructure", "src\RideSharing\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj", "{992CF09A-DC0B-496F-AEBD-EB9433516CCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -130,6 +129,10 @@ Global
 		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{992CF09A-DC0B-496F-AEBD-EB9433516CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{992CF09A-DC0B-496F-AEBD-EB9433516CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{992CF09A-DC0B-496F-AEBD-EB9433516CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{992CF09A-DC0B-496F-AEBD-EB9433516CCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,6 +157,7 @@ Global
 		{09F1C768-E726-488C-BBB9-8DFF9844DDCF} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 		{4A22391C-4EA5-4BFE-ABA9-20435A7944D1} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 		{382E1EF6-20B7-4E9D-8141-08F4D7F18CF0} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
+		{992CF09A-DC0B-496F-AEBD-EB9433516CCC} = {118A2D1F-F3F0-4C9D-A953-CA0159DD0B42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}
