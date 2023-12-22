@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Common\RideSharing.Common\RideSharing.Common.csproj" />
+		<ProjectReference Include="..\RideSharing.Common\RideSharing.Common.csproj" />
 		<ProjectReference Include="..\RideSharing.Application\RideSharing.Application.csproj" />
 		<ProjectReference Include="..\RideSharing.Domain\RideSharing.Domain.csproj" />
 		<ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
