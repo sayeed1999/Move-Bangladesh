@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -16,9 +15,8 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
@@ -33,9 +31,8 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "Drivers",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
@@ -50,18 +47,17 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "Payments",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TripId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TripId = table.Column<Guid>(type: "uuid", nullable: false),
                     PaymentMethod = table.Column<int>(type: "integer", nullable: false),
                     PaymentStatus = table.Column<int>(type: "integer", nullable: false),
                     Amount = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true)
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,9 +69,8 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AuthUserId = table.Column<long>(type: "bigint", nullable: true),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AuthUserId = table.Column<Guid>(type: "uuid", nullable: true),
                     Gender = table.Column<int>(type: "integer", nullable: false),
                     DOB = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
@@ -93,17 +88,16 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "Cabs",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     RegNo = table.Column<string>(type: "text", nullable: false),
-                    DriverId = table.Column<long>(type: "bigint", nullable: false),
+                    DriverId = table.Column<Guid>(type: "uuid", nullable: false),
                     CabType = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true)
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -120,18 +114,18 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "Trips",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
-                    DriverId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DriverId = table.Column<Guid>(type: "uuid", nullable: false),
                     TripStatus = table.Column<int>(type: "integer", nullable: false),
                     Source = table.Column<string>(type: "text", nullable: false),
                     Destination = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedBy = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<long>(type: "bigint", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DeletedBy = table.Column<long>(type: "bigint", nullable: true)
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,11 +154,10 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "CustomerRatings",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
-                    DriverId = table.Column<long>(type: "bigint", nullable: false),
-                    TripId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DriverId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TripId = table.Column<Guid>(type: "uuid", nullable: false),
                     RatingValue = table.Column<short>(type: "smallint", nullable: false),
                     Feedback = table.Column<string>(type: "text", nullable: false)
                 },
@@ -195,11 +188,10 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "DriverRatings",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
-                    DriverId = table.Column<long>(type: "bigint", nullable: false),
-                    TripId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DriverId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TripId = table.Column<Guid>(type: "uuid", nullable: false),
                     RatingValue = table.Column<short>(type: "smallint", nullable: false),
                     Feedback = table.Column<string>(type: "text", nullable: false)
                 },

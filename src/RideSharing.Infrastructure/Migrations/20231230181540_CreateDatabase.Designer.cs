@@ -12,7 +12,7 @@ using RideSharing.Infrastructure;
 namespace RideSharing.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231230082353_CreateDatabase")]
+    [Migration("20231230181540_CreateDatabase")]
     partial class CreateDatabase
     {
         /// <inheritdoc />
@@ -27,11 +27,9 @@ namespace RideSharing.Infrastructure.Migrations
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Cab", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<int>("CabType")
                         .HasColumnType("integer");
@@ -39,17 +37,17 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("CreatedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
 
-                    b.Property<long>("DriverId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("RegNo")
                         .IsRequired()
@@ -58,8 +56,8 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("UpdatedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -70,11 +68,9 @@ namespace RideSharing.Infrastructure.Migrations
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Customer", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -92,8 +88,8 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -102,17 +98,15 @@ namespace RideSharing.Infrastructure.Migrations
 
             modelBuilder.Entity("RideSharing.Domain.Entities.CustomerRating", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
 
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("DriverId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Feedback")
                         .IsRequired()
@@ -121,8 +115,8 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<short>("RatingValue")
                         .HasColumnType("smallint");
 
-                    b.Property<long>("TripId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("TripId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -137,11 +131,9 @@ namespace RideSharing.Infrastructure.Migrations
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Driver", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -159,8 +151,8 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -169,17 +161,15 @@ namespace RideSharing.Infrastructure.Migrations
 
             modelBuilder.Entity("RideSharing.Domain.Entities.DriverRating", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
 
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("DriverId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Feedback")
                         .IsRequired()
@@ -188,8 +178,8 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<short>("RatingValue")
                         .HasColumnType("smallint");
 
-                    b.Property<long>("TripId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("TripId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -204,11 +194,9 @@ namespace RideSharing.Infrastructure.Migrations
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Payment", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
@@ -216,14 +204,14 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("CreatedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("integer");
@@ -231,14 +219,14 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("integer");
 
-                    b.Property<long>("TripId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("TripId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("UpdatedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -247,30 +235,30 @@ namespace RideSharing.Infrastructure.Migrations
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Trip", b =>
                 {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("CreatedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uuid");
 
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("DeletedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Destination")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("DriverId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Source")
                         .IsRequired()
@@ -282,8 +270,8 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("UpdatedBy")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -296,18 +284,16 @@ namespace RideSharing.Infrastructure.Migrations
 
             modelBuilder.Entity("RideSharing.Domain.Entities.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long?>("AuthUserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid?>("AuthUserId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DOB")
                         .HasColumnType("timestamp with time zone");
