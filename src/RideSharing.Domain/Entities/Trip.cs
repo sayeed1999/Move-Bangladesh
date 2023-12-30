@@ -10,7 +10,6 @@ public class Trip : BaseEntity
 	public virtual Customer Customer { get; protected set; }
 	public long DriverId { get; protected set; }
 	public virtual Driver Driver { get; protected set; }
-	public long PaymentId { get; protected set; }
 	public virtual Payment Payment { get; protected set; }
 	public TripStatus TripStatus { get; protected set; }
 	public String Source { get; protected set; }

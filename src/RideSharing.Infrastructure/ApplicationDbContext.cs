@@ -31,5 +31,10 @@ public class ApplicationDbContext : DbContext
 		{
 			relationship.DeleteBehavior = DeleteBehavior.Restrict;
 		}
+
+		builder.Entity<Trip>()
+			.HasOne(x => x.Payment)
+			.WithOne(x => x.Trip)
+			.HasPrincipalKey<Payment>(x => x.TripId);
 	}
 }
