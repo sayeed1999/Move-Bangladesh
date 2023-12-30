@@ -5,8 +5,8 @@ services:
   postgres-server:
     image: 'postgres:latest'
     container_name: postgres-server
-    # ports:
-    #   - 15432:5432
+    ports:
+      - 5432:5432
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -25,7 +25,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
     depends_on:
-      - postgres-db-server
+      - postgres-server
     volumes:
       - ~/backup/pgadmin/:/var/lib/pgadmin/
     networks:
