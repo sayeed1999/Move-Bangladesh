@@ -1,27 +1,27 @@
 ﻿using RideSharing.Domain.Enums;
-using Sayeed.Generic.OnionArchitecture.Entity;
 
-namespace RideSharing.Domain
+namespace RideSharing.Domain.Entities
 {
-    public class Payment : BaseEntity
-    {
-        private Payment() : base() { }
+	public class Payment : BaseEntity
+	{
+		public long TripId { get; protected set; }
+		public virtual Trip Trip { get; protected set; }
+		public PaymentMethod PaymentMethod { get; protected set; }
+		public PaymentStatus PaymentStatus { get; protected set; }
+		public long Amount { get; protected set; }
 
-        private Payment(PaymentMethod method, PaymentStatus status, long amount) : base()
-        {
-            Method = method;
-            Status = status;
-            Amount = amount;
-        }
+		public static Payment Create(long Id, long TripId, PaymentMethod Method, PaymentStatus Status, long Amount)
+		{
+			Payment payment = new()
+			{
+				Id = Id,
+				TripId = TripId,
+				PaymentMethod = Method,
+				PaymentStatus = Status,
+				Amount = Amount,
+			};
 
-        public PaymentMethod Method { get; protected set; }
-        public PaymentStatus Status { get; protected set; }
-        public long Amount { get; protected set; }
-
-        public static Payment Create(PaymentMethod Method, PaymentStatus Status, long Amount)
-        {
-            var payment = new Payment();
-            return payment;
-        }
-    }
+			return payment;
+		}
+	}
 }

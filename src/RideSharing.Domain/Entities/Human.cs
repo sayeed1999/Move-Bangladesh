@@ -1,23 +1,28 @@
-﻿using RideSharing.Common.Enums;
-using Sayeed.Generic.OnionArchitecture.Entity;
+﻿using RideSharing.Common.ValueObjects;
 
-namespace RideSharing.Domain
+namespace RideSharing.Domain.Entities;
+
+public abstract class Human
 {
-    public abstract class Human : BaseEntity
-    {
-        public Human() : base()
-        {
-            Gender = Gender.Unknown;
-            IsVerified = false;
-        }
+	public Human()
+	{
 
-        public long AuthUserId { get; protected set; }
-        public string UserName { get; set; }
-        public Gender Gender { get; protected set; }
-        public string Name { get; protected set; }
-        public string Address { get; protected set; }
-        public string Phone { get; protected set; }
-        public string Email { get; protected set; }
-        public bool? IsVerified { get; protected set; }
-    }
+	}
+
+	public Human(long id, long userId, string name, Email email, string phone, string location)
+	{
+		Id = id;
+		UserId = userId;
+		Name = name;
+		Email = email.Value;
+		Phone = phone;
+		Location = location;
+	}
+
+	public long Id { get; set; }
+	public long UserId { get; set; }
+	public string Name { get; set; }
+	public string Email { get; set; }
+	public string Phone { get; set; }
+	public string Location { get; set; }
 }

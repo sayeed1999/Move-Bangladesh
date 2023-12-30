@@ -1,53 +1,39 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
-using RideSharing.Common.Enums;
 using RideSharing.Common.ValueObjects;
-using RideSharing.Domain;
 
-namespace RideSharing.Domain
+namespace RideSharing.Domain.Entities;
+
+public class Customer : Human
 {
-    public class Customer : Human
-    {
-        private Customer()
-        {
+	public Customer() : base() { }
 
-        }
-        private Customer(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber) : base()
-        {
-            Id = id;
-            Name = firstName + " " + lastName;
-            Gender = gender;
-            Email = email;
-            Phone = phoneNumber;
-            UserName = userName;
-            DriverRatings = new();
-            Trips = new();
-        }
+	public Customer(long id, long userId, string name, Email email, string phone, string location)
+		: base(id, userId, name, email, phone, location)
+	{
 
+	}
 
-        public virtual List<DriverRating> DriverRatings { get; protected set; }
-        public virtual List<Trip> Trips { get; protected set; }
+	public virtual HashSet<DriverRating> DriverRatings { get; protected set; } = new();
+	public virtual HashSet<Trip> Trips { get; protected set; } = new();
 
-        public static Result<Customer> Create(long id, string firstName, string lastName, Gender gender, Email email, string userName, string phoneNumber)
-        {
-            var customer = new Customer(id, firstName, lastName, gender, email.Value, userName, phoneNumber);
+	public static Result<Customer> Create(long id, long userId, string name, Email email, string phone, string location)
+	{
+		Customer customer = new(id, userId, name, email, phone, location);
 
-            var validator = new CustomerValidator();
-            var validationResult = validator.Validate(customer);
+		var validator = new CustomerValidator();
+		var validationResult = validator.Validate(customer);
 
-            if (validationResult.IsValid) return Result.Success(customer);
-            return Result.Failure<Customer>("not valid");
-        }
+		if (validationResult.IsValid) return Result.Success(customer);
+		return Result.Failure<Customer>("not valid");
+	}
 
-
-
-    }
-}
-public class CustomerValidator : AbstractValidator<Customer>
-{
-    public CustomerValidator()
-    {
-        RuleFor(customer => customer.Id).GreaterThanOrEqualTo(0);
-        RuleFor(customer => customer.Email).EmailAddress();
-    }
+	private class CustomerValidator : AbstractValidator<Customer>
+	{
+		public CustomerValidator()
+		{
+			RuleFor(customer => customer.Id).GreaterThanOrEqualTo(0);
+			RuleFor(customer => customer.Email).EmailAddress();
+		}
+	}
 }

@@ -1,25 +1,19 @@
-﻿namespace RideSharing.Domain
-{
-    // This schema is the driver ratings submitted by customers
-    public class DriverRating : Rating
-    {
-        private DriverRating() : base() { }
-        private DriverRating(long customerId, Customer customer, long driverId, Driver driver, long tripId, Trip trip, short ratingValue, string feedback)
-        {
-            CustomerId = customerId;
-            Customer = customer;
-            DriverId = driverId;
-            Driver = driver;
-            TripId = tripId;
-            Trip = trip;
-            RatingValue = ratingValue;
-            Feedback = feedback;
-        }
+﻿namespace RideSharing.Domain.Entities;
 
-        public static DriverRating Create(long customerId, Customer customer, long driverId, Driver driver, long tripId, Trip trip, short ratingValue, string feedback)
-        {
-            var x = new DriverRating();
-            return x;
-        }
-    }
+public class DriverRating : Rating
+{
+	public DriverRating() : base() { }
+
+	public DriverRating(long id, long customerId, long driverId, long tripId, short ratingValue, string feedback)
+		: base(id, customerId, driverId, tripId, ratingValue, feedback)
+	{
+
+	}
+
+	public static DriverRating Create(long id, long customerId, long driverId, long tripId, short ratingValue, string feedback)
+	{
+		DriverRating driverRating = new(id, customerId, driverId, tripId, ratingValue, feedback);
+
+		return driverRating;
+	}
 }

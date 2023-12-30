@@ -1,8 +1,8 @@
-﻿using RideSharing.Domain;
+﻿using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.Abstractions
 {
-    public interface ICabRepository : IBaseRepository<Cab>
-    {
-    }
+	public interface ICabRepository : IBaseRepository<Cab>
+	{
+	}
 }

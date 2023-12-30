@@ -1,70 +1,53 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
-using RideSharing.Domain;
 using RideSharing.Domain.Enums;
-using Sayeed.Generic.OnionArchitecture.Entity;
 
-namespace RideSharing.Domain
+namespace RideSharing.Domain.Entities;
+
+public class Trip : BaseEntity
 {
-	public class Trip : BaseEntity
+	public long CustomerId { get; protected set; }
+	public virtual Customer Customer { get; protected set; }
+	public long DriverId { get; protected set; }
+	public virtual Driver Driver { get; protected set; }
+	public long PaymentId { get; protected set; }
+	public virtual Payment Payment { get; protected set; }
+	public TripStatus TripStatus { get; protected set; }
+	public String Source { get; protected set; }
+	public String Destination { get; protected set; }
+
+	public static Result<Trip> CreateNewTrip(long customerId, long driverId, string source, string destination)
 	{
-		private Trip() : base() { }
-		private Trip(long customerId, Customer customer, long driverId, Driver driver, long paymentId, Payment payment, TripStatus status, string source, string destination) : base()
+		var x = new Trip()
 		{
-			CustomerId = customerId;
-			Customer = customer;
-			DriverId = driverId;
-			Driver = driver;
-			PaymentId = paymentId;
-			Payment = payment;
-			TripStatus = status;
-			Source = source;
-			Destination = destination;
-		}
+			Id = 0,
+			CustomerId = customerId,
+			DriverId = driverId,
+			Source = source,
+			Destination = destination,
+			TripStatus = TripStatus.TripRequested,
+		};
 
-		public long CustomerId { get; protected set; }
-		public virtual Customer Customer { get; protected set; }
-		public long DriverId { get; protected set; }
-		public virtual Driver Driver { get; protected set; }
-		public long PaymentId { get; protected set; }
-		public virtual Payment Payment { get; protected set; }
-		public TripStatus TripStatus { get; protected set; }
-		public String Source { get; protected set; }
-		public String Destination { get; protected set; }
+		var validator = new TripValidator();
+		var result = validator.Validate(x);
 
-		public static Result<Trip> CreateNewTrip(long customerId, long driverId, string source, string destination)
-		{
-			var x = new Trip()
-			{
-				Id = 0,
-				CustomerId = customerId,
-				DriverId = driverId,
-				Source = source,
-				Destination = destination,
-				TripStatus = TripStatus.TripRequested,
-			};
-
-			var validator = new TripValidator();
-			var result = validator.Validate(x);
-
-			if (result.IsValid) return Result.Success(x);
-			return Result.Failure<Trip>("Model is invalid");
-		}
-
-		public static Result<Trip> Modify(long id, TripStatus status)
-		{
-			if (status == null || id <= 0) return Result.Failure<Trip>("Model is invalid");
-
-			var x = new Trip()
-			{
-				Id = id,
-				TripStatus = status,
-			};
-
-			return Result.Success(x);
-		}
-
+		if (result.IsValid) return Result.Success(x);
+		return Result.Failure<Trip>("Model is invalid");
 	}
+
+	public static Result<Trip> Modify(long id, TripStatus status)
+	{
+		if (status == null || id <= 0) return Result.Failure<Trip>("Model is invalid");
+
+		var x = new Trip()
+		{
+			Id = id,
+			TripStatus = status,
+		};
+
+		return Result.Success(x);
+	}
+
 }
 
 public class TripValidator : AbstractValidator<Trip>

@@ -1,47 +1,40 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using RideSharing.Common.Enums;
-using RideSharing.Domain;
+using RideSharing.Common.ValueObjects;
 
-namespace RideSharing.Domain
+namespace RideSharing.Domain.Entities;
+
+public class Driver : Human
 {
-    public class Driver : Human
-    {
-        private Driver()
-        {
+	public Driver() : base() { }
 
-        }
-        private Driver(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber) : base()
-        {
-            Id = id;
-            Name = firstName + " " + lastName;
-            Gender = gender;
-            Email = email;
-            Phone = phoneNumber;
-            UserName = userName;
-            CustomerRatings = new();
-            Trips = new();
-        }
-        public virtual List<CustomerRating> CustomerRatings { get; protected set; }
-        public virtual List<Trip> Trips { get; protected set; }
+	public Driver(long id, long userId, string name, Email email, string phone, string location)
+		: base(id, userId, name, email, phone, location)
+	{
 
-        public static Result<Driver> Create(long id, string firstName, string lastName, Gender gender, string email, string userName, string phoneNumber)
-        {
-            var driver = new Driver(id, firstName, lastName, gender, email, userName, phoneNumber);
+	}
 
-            var validator = new DriverValidator();
-            var r = validator.Validate(driver);
+	public virtual HashSet<CustomerRating> CustomerRatings { get; protected set; } = new();
+	public virtual HashSet<Trip> Trips { get; protected set; } = new();
 
-            if (r.IsValid) return Result.Success(driver);
-            return Result.Failure<Driver>("domain not valid");
-        }
-    }
-}
-public class DriverValidator : AbstractValidator<Driver>
-{
-    public DriverValidator()
-    {
-        RuleFor(c => c.Id).GreaterThanOrEqualTo(0);
-        RuleFor(c => c.Email).EmailAddress();
-    }
+	public static Result<Driver> Create(long id, long userId, string name, Gender gender, Email email, string phone, string location)
+	{
+		Driver driver = new(id, userId, name, email, phone, location);
+
+		var validator = new DriverValidator();
+		var validationResult = validator.Validate(driver);
+
+		if (validationResult.IsValid) return Result.Success(driver);
+		return Result.Failure<Driver>("not valid");
+	}
+
+	private class DriverValidator : AbstractValidator<Driver>
+	{
+		public DriverValidator()
+		{
+			RuleFor(c => c.Id).GreaterThanOrEqualTo(0);
+			RuleFor(c => c.Email).EmailAddress();
+		}
+	}
 }
