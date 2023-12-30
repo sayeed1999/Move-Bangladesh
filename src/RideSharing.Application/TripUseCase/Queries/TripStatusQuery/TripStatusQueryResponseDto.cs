@@ -1,4 +1,4 @@
-﻿using RideSharing.Domain;
+﻿using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripUseCase.Queries.TripStatusQuery
 {

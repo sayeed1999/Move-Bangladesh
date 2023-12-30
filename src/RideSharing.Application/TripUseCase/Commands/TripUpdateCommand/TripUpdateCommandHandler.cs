@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
-using RideSharing.Domain;
+using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripUseCase.Commands.TripUpdateCommand
 {

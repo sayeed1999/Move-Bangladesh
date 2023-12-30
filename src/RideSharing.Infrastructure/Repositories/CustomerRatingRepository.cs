@@ -1,14 +1,14 @@
 ﻿using RideSharing.Application.Abstractions;
-using RideSharing.Domain;
+using RideSharing.Domain.Entities;
 using RideSharing.Infrastructure;
-using Sayeed.Generic.OnionArchitecture.Repository;
+using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Application
 {
-    public class CustomerRatingRepository : BaseRepository<CustomerRating>, ICustomerRatingRepository
-    {
-        public CustomerRatingRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        {
-        }
-    }
+	public class CustomerRatingRepository : BaseRepository<CustomerRating>, ICustomerRatingRepository
+	{
+		public CustomerRatingRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+		{
+		}
+	}
 }

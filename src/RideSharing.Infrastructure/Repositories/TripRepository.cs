@@ -1,15 +1,15 @@
 ﻿using RideSharing.Application.Abstractions;
-using RideSharing.Domain;
+using RideSharing.Domain.Entities;
 using RideSharing.Infrastructure;
-using Sayeed.Generic.OnionArchitecture.Repository;
+using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Application
 {
-    public partial class TripRepository : BaseRepository<Trip>, ITripRepository
-    {
-        public TripRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        {
+	public partial class TripRepository : BaseRepository<Trip>, ITripRepository
+	{
+		public TripRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+		{
 
-        }
-    }
+		}
+	}
 }
