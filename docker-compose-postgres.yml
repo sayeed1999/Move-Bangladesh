@@ -3,7 +3,7 @@ version: '3'
 services:
   # postgres database service
   postgres-server:
-    image: 'postgres:latest'
+    image: 'postgis/postgis'
     container_name: postgres-server
     ports:
       - 5432:5432
