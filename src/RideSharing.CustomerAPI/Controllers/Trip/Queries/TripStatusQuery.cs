@@ -19,7 +19,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Queries
 		}
 
 		[HttpGet("{tripId}/status")]
-		public async Task<ActionResult<Response<TripStatusQueryResponseDto>>> GetRideStatus([Required] int tripId)
+		public async Task<ActionResult<Response<TripStatusQueryResponseDto>>> GetRideStatus([Required] Guid tripId)
 		{
 			var dto = TripStatusQueryDto.Create(tripId);
 

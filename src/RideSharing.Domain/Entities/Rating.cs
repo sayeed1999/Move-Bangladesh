@@ -4,7 +4,7 @@ public abstract class Rating
 {
 	protected Rating() { }
 
-	protected Rating(long id, long customerId, long driverId, long tripId, short ratingValue, string feedback)
+	protected Rating(Guid id, Guid customerId, Guid driverId, Guid tripId, short ratingValue, string feedback)
 	{
 		Id = id;
 		CustomerId = customerId;
@@ -14,12 +14,12 @@ public abstract class Rating
 		Feedback = feedback;
 	}
 
-	public long Id { get; protected set; }
-	public long CustomerId { get; protected set; }
+	public Guid Id { get; protected set; }
+	public Guid CustomerId { get; protected set; }
 	public virtual Customer Customer { get; protected set; }
-	public long DriverId { get; protected set; }
+	public Guid DriverId { get; protected set; }
 	public virtual Driver Driver { get; protected set; }
-	public long TripId { get; protected set; }
+	public Guid TripId { get; protected set; }
 	public virtual Trip Trip { get; protected set; }
 	public short RatingValue { get; protected set; }
 	public string Feedback { get; protected set; }

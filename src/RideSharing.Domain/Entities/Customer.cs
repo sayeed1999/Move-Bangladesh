@@ -8,7 +8,7 @@ public class Customer : Human
 {
 	public Customer() : base() { }
 
-	public Customer(long id, long userId, string name, Email email, string phone, string location)
+	public Customer(Guid id, Guid userId, string name, Email email, string phone, string location)
 		: base(id, userId, name, email, phone, location)
 	{
 
@@ -17,7 +17,7 @@ public class Customer : Human
 	public virtual HashSet<DriverRating> DriverRatings { get; protected set; } = new();
 	public virtual HashSet<Trip> Trips { get; protected set; } = new();
 
-	public static Result<Customer> Create(long id, long userId, string name, Email email, string phone, string location)
+	public static Result<Customer> Create(Guid id, Guid userId, string name, Email email, string phone, string location)
 	{
 		Customer customer = new(id, userId, name, email, phone, location);
 
@@ -32,7 +32,6 @@ public class Customer : Human
 	{
 		public CustomerValidator()
 		{
-			RuleFor(customer => customer.Id).GreaterThanOrEqualTo(0);
 			RuleFor(customer => customer.Email).EmailAddress();
 		}
 	}

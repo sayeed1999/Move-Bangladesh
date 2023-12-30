@@ -9,7 +9,7 @@ public abstract class Human
 
 	}
 
-	public Human(long id, long userId, string name, Email email, string phone, string location)
+	public Human(Guid id, Guid userId, string name, Email email, string phone, string location)
 	{
 		Id = id;
 		UserId = userId;
@@ -19,8 +19,8 @@ public abstract class Human
 		Location = location;
 	}
 
-	public long Id { get; set; }
-	public long UserId { get; set; }
+	public Guid Id { get; set; }
+	public Guid UserId { get; set; }
 	public string Name { get; set; }
 	public string Email { get; set; }
 	public string Phone { get; set; }

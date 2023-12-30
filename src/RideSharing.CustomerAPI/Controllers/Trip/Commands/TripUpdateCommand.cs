@@ -18,7 +18,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 		}
 
 		[HttpPut("{tripId}/update")]
-		public async Task<ActionResult<Response<TripUpdateCommandResponseDto>>> Update([Required] int tripId, TripUpdateCommandDto model)
+		public async Task<ActionResult<Response<TripUpdateCommandResponseDto>>> Update([Required] Guid tripId, TripUpdateCommandDto model)
 		{
 			model.TripId = tripId;
 			var res = await _mediator.Send(model);

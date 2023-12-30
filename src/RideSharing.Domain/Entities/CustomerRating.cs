@@ -5,13 +5,13 @@ public class CustomerRating : Rating
 {
 	public CustomerRating() : base() { }
 
-	public CustomerRating(long id, long customerId, long driverId, long tripId, short ratingValue, string feedback)
+	public CustomerRating(Guid id, Guid customerId, Guid driverId, Guid tripId, short ratingValue, string feedback)
 		: base(id, customerId, driverId, tripId, ratingValue, feedback)
 	{
 
 	}
 
-	public static CustomerRating Create(long id, long customerId, long driverId, long tripId, short ratingValue, string feedback)
+	public static CustomerRating Create(Guid id, Guid customerId, Guid driverId, Guid tripId, short ratingValue, string feedback)
 	{
 		CustomerRating customerRating = new(id, customerId, driverId, tripId, ratingValue, feedback);
 

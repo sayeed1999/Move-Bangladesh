@@ -10,8 +10,8 @@ public class User
 		IsVerified = false;
 	}
 
-	public long Id { get; protected set; }
-	public long? AuthUserId { get; protected set; } // if user came from another authentication provider!!
+	public Guid Id { get; protected set; }
+	public Guid? AuthUserId { get; protected set; } // if user came from another authentication provider!!
 	public Gender Gender { get; protected set; }
 	public DateTime DOB { get; protected set; }
 	public string Name { get; protected set; }

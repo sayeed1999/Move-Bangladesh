@@ -14,9 +14,9 @@ namespace RideSharing.Application.TripUseCase.Commands.TripUpdateCommand
 			TripStatus = trip.TripStatus.ToString();
 		}
 
-		public long TripId { get; set; }
-		public long CustomerId { get; set; }
-		public long DriverId { get; set; }
+		public Guid TripId { get; set; }
+		public Guid CustomerId { get; set; }
+		public Guid DriverId { get; set; }
 		public string Source { get; set; }
 		public string Destination { get; set; }
 		public string TripStatus { get; set; }

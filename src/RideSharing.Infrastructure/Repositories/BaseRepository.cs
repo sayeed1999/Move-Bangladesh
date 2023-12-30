@@ -99,7 +99,7 @@ namespace RideSharing.Infrastructure.Repositories
 			return query;
 		}
 
-		public virtual async Task<T> FindByIdAsync(long id)
+		public virtual async Task<T> FindByIdAsync(Guid id)
 		{
 			return await _dbSet.FindAsync(id);
 		}

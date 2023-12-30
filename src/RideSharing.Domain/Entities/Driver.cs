@@ -9,7 +9,7 @@ public class Driver : Human
 {
 	public Driver() : base() { }
 
-	public Driver(long id, long userId, string name, Email email, string phone, string location)
+	public Driver(Guid id, Guid userId, string name, Email email, string phone, string location)
 		: base(id, userId, name, email, phone, location)
 	{
 
@@ -18,7 +18,7 @@ public class Driver : Human
 	public virtual HashSet<CustomerRating> CustomerRatings { get; protected set; } = new();
 	public virtual HashSet<Trip> Trips { get; protected set; } = new();
 
-	public static Result<Driver> Create(long id, long userId, string name, Gender gender, Email email, string phone, string location)
+	public static Result<Driver> Create(Guid id, Guid userId, string name, Gender gender, Email email, string phone, string location)
 	{
 		Driver driver = new(id, userId, name, email, phone, location);
 
@@ -33,7 +33,6 @@ public class Driver : Human
 	{
 		public DriverValidator()
 		{
-			RuleFor(c => c.Id).GreaterThanOrEqualTo(0);
 			RuleFor(c => c.Email).EmailAddress();
 		}
 	}
