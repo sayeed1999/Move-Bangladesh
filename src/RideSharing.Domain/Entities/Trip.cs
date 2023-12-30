@@ -47,13 +47,12 @@ public class Trip : BaseEntity
 		return Result.Success(x);
 	}
 
-}
-
-public class TripValidator : AbstractValidator<Trip>
-{
-	public TripValidator()
+	private class TripValidator : AbstractValidator<Trip>
 	{
-		RuleFor(x => x.Source).NotEmpty();
-		RuleFor(x => x.Destination).NotEmpty();
+		public TripValidator()
+		{
+			RuleFor(x => x.Source).NotEmpty();
+			RuleFor(x => x.Destination).NotEmpty();
+		}
 	}
 }
