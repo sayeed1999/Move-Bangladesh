@@ -26,15 +26,31 @@ public class ApplicationDbContext : DbContext
 	{
 		base.OnModelCreating(builder);
 
+		// TODO:- if postgres is not being used, this method should not get called. Try Open-Closed principle!
+		// To make sure that the PostGIS extension is installed in your database:
+		builder.HasPostgresExtension("postgis");
+
 		// restrict all cascade delete
 		foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
 		{
 			relationship.DeleteBehavior = DeleteBehavior.Restrict;
 		}
 
+		#region Trip Entity Properties
+
 		builder.Entity<Trip>()
 			.HasOne(x => x.Payment)
 			.WithOne(x => x.Trip)
 			.HasPrincipalKey<Payment>(x => x.TripId);
+
+		builder.Entity<Trip>()
+			.Property(x => x.Source)
+			.HasColumnType("geometry (point)");
+
+		builder.Entity<Trip>()
+			.Property(x => x.Destination)
+			.HasColumnType("geometry (point)");
+
+		#endregion
 	}
 }

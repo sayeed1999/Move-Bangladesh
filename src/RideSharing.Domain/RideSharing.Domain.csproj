@@ -17,6 +17,7 @@
     <PackageReference Include="FluentValidation" Version="11.7.1" />
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="8.0.0" />
     <PackageReference Include="Sayeed.Generic.OnionArchitecture" Version="2.0.1" />
   </ItemGroup>
 

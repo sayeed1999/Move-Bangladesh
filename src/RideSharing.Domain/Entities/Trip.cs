@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using NetTopologySuite.Geometries;
 using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities;
@@ -12,10 +13,10 @@ public class Trip : BaseEntity
 	public virtual Driver Driver { get; protected set; }
 	public virtual Payment Payment { get; protected set; }
 	public TripStatus TripStatus { get; protected set; }
-	public String Source { get; protected set; }
-	public String Destination { get; protected set; }
+	public Point Source { get; protected set; }
+	public Point Destination { get; protected set; }
 
-	public static Result<Trip> CreateNewTrip(Guid customerId, Guid driverId, string source, string destination)
+	public static Result<Trip> CreateNewTrip(Guid customerId, Guid driverId, Point source, Point destination)
 	{
 		var x = new Trip()
 		{

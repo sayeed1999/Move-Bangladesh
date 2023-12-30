@@ -1,4 +1,5 @@
-﻿using RideSharing.Domain.Entities;
+﻿using NetTopologySuite.Geometries;
+using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripUseCase.Commands.TripUpdateCommand
 {
@@ -17,8 +18,8 @@ namespace RideSharing.Application.TripUseCase.Commands.TripUpdateCommand
 		public Guid TripId { get; set; }
 		public Guid CustomerId { get; set; }
 		public Guid DriverId { get; set; }
-		public string Source { get; set; }
-		public string Destination { get; set; }
+		public Point Source { get; set; }
+		public Point Destination { get; set; }
 		public string TripStatus { get; set; }
 	}
 }

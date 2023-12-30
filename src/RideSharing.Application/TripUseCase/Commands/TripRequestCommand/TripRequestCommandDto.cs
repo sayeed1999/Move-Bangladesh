@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
+using NetTopologySuite.Geometries;
 
 namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 {
@@ -7,7 +8,7 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 	{
 		public Guid CustomerId { get; set; }
 		public Guid DriverId { get; set; }
-		public string Source { get; set; }
-		public string Destination { get; set; }
+		public Point Source { get; set; }
+		public Point Destination { get; set; }
 	}
 }
