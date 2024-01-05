@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.TripUseCase.Queries.TripStatusQuery;
 using RideSharing.Common.Entities;
@@ -18,6 +19,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Queries
 			_mediator = mediator;
 		}
 
+		[AllowAnonymous]
 		[HttpGet("{tripId}/status")]
 		public async Task<ActionResult<Response<TripStatusQueryResponseDto>>> GetRideStatus([Required] Guid tripId)
 		{
