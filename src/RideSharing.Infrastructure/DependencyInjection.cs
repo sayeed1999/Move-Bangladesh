@@ -2,9 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using RideSharing.Application;
-using RideSharing.Application.Abstractions;
-using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Infrastructure;
 
@@ -19,8 +16,7 @@ public static class DependencyInjection
 	public static IServiceCollection RegisterInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
 		=> services
 			.RegisterPosgreSQL(configuration)
-			.RegisterDbContext()
-			.RegisterRepository();
+			.RegisterDbContext();
 
 	private static IServiceCollection RegisterPosgreSQL(this IServiceCollection services, IConfiguration configuration)
 	{
@@ -38,15 +34,4 @@ public static class DependencyInjection
 
 	private static IServiceCollection RegisterDbContext(this IServiceCollection services)
 		=> services.AddScoped<DbContext, ApplicationDbContext>();
-
-	private static IServiceCollection RegisterRepository(this IServiceCollection services)
-		=> services
-			.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
-			.AddScoped<ICabRepository, CabRepository>()
-			.AddScoped<ICustomerRatingRepository, CustomerRatingRepository>()
-			.AddScoped<ICustomerRepository, CustomerRepository>()
-			.AddScoped<IDriverRatingRepository, DriverRatingRepository>()
-			.AddScoped<IDriverRepository, DriverRepository>()
-			.AddScoped<IPaymentRepository, PaymentRepository>()
-			.AddScoped<ITripRepository, TripRepository>();
 }
