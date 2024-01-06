@@ -66,6 +66,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.CustomerAPI.Uni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Domain.UnitTests", "tests\RideSharing.Domain.UnitTests\RideSharing.Domain.UnitTests.csproj", "{82B891E7-536C-43C7-A252-B5D8B8CF4E53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.InternalAPI", "src\RideSharing.InternalAPI\RideSharing.InternalAPI.csproj", "{D700D7F4-24BE-4410-9207-17A882CEFDBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +110,10 @@ Global
 		{82B891E7-536C-43C7-A252-B5D8B8CF4E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82B891E7-536C-43C7-A252-B5D8B8CF4E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82B891E7-536C-43C7-A252-B5D8B8CF4E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D700D7F4-24BE-4410-9207-17A882CEFDBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D700D7F4-24BE-4410-9207-17A882CEFDBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D700D7F4-24BE-4410-9207-17A882CEFDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D700D7F4-24BE-4410-9207-17A882CEFDBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +132,7 @@ Global
 		{FC6594F8-55D2-4E64-B9C8-07B67CA7865F} = {F7745BB3-CFC6-49CB-A066-53375EE45099}
 		{04A95E40-0FD7-4DD0-80B2-E4F643C76568} = {F7745BB3-CFC6-49CB-A066-53375EE45099}
 		{82B891E7-536C-43C7-A252-B5D8B8CF4E53} = {F7745BB3-CFC6-49CB-A066-53375EE45099}
+		{D700D7F4-24BE-4410-9207-17A882CEFDBF} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}
