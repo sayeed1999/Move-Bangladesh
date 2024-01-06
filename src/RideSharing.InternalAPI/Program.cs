@@ -22,6 +22,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
 
 app.MapGet("/", () => "RideSharing.Internal API is running!");
 

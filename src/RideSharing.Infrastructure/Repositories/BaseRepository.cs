@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace RideSharing.Infrastructure.Repositories
 {
+	// TODO: use primary key type generically
 	public class BaseRepository<T> : IBaseRepository<T>
 		where T : class
 	{
@@ -35,6 +36,12 @@ namespace RideSharing.Infrastructure.Repositories
 			return await _dbContext.SaveChangesAsync();
 		}
 
+		// TODO: use generic pagination here
+		public virtual async Task<IEnumerable<T>> FindAllAsync()
+		{
+			return await _dbSet.ToListAsync();
+		}
+
 		public virtual async Task<T> FindByIdAsync(Guid id)
 		{
 			return await _dbSet.FindAsync(id);
@@ -48,11 +55,11 @@ namespace RideSharing.Infrastructure.Repositories
 			return item;
 		}
 
-		public virtual async Task<T> UpdateByIdAsync(long id, T item)
+		public virtual async Task<T> UpdateByIdAsync(Guid id, T item)
 		{
 			Type t = item.GetType();
 			PropertyInfo prop = t.GetProperty("Id");
-			long itemId = (long)prop.GetValue(item);
+			Guid itemId = (Guid)prop.GetValue(item);
 			//long itemId = item.Id;
 
 			if (id != itemId) throw new Exception("Access restricted!");
@@ -74,7 +81,7 @@ namespace RideSharing.Infrastructure.Repositories
 			return item;
 		}
 
-		public virtual async Task<T> DeleteByIdAsync(long id)
+		public virtual async Task<T> DeleteByIdAsync(Guid id)
 		{
 			var itemToBeDeleted = await _dbSet.FindAsync(id);
 
