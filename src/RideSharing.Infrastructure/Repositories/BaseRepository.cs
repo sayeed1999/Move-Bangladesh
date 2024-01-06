@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RideSharing.Application.Abstractions;
-using System.Linq.Expressions;
 using System.Reflection;
 
 namespace RideSharing.Infrastructure.Repositories
@@ -34,69 +33,6 @@ namespace RideSharing.Infrastructure.Repositories
 		public virtual async Task<int> SaveChangesAsync()
 		{
 			return await _dbContext.SaveChangesAsync();
-		}
-
-
-
-		public virtual async Task<IEnumerable<T>> GetAllAsync(
-			Expression<Func<T, bool>> filter = null,
-			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			List<Expression<Func<T, object>>> includes = null,
-			int page = 1,
-			int pageSize = 10)
-		{
-			IQueryable<T> query = PrepareQuery(filter, orderBy, includes);
-			return await query
-						.Skip((page - 1) * pageSize)
-						.Take(pageSize)
-						.ToListAsync();
-		}
-
-		public virtual async Task<T> FirstOrDefaultAsync(
-			Expression<Func<T, bool>> filter = null,
-			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			List<Expression<Func<T, object>>> includes = null)
-		{
-			IQueryable<T> query = PrepareQuery(filter, orderBy, includes);
-			return await query.FirstOrDefaultAsync();
-		}
-
-		public virtual async Task<T> SingleOrDefaultAsync(
-			Expression<Func<T, bool>> filter = null,
-			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			List<Expression<Func<T, object>>> includes = null)
-		{
-			IQueryable<T> query = PrepareQuery(filter, orderBy, includes);
-			return await query.SingleOrDefaultAsync();
-		}
-
-		private IQueryable<T> PrepareQuery(
-			Expression<Func<T, bool>> filter = null,
-			Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-			List<Expression<Func<T, object>>> includes = null)
-		{
-			IQueryable<T> query = _dbSet.AsQueryable();
-
-			if (filter != null)
-				query = query.Where(filter);
-
-			if (includes != null)
-				query = includes.Aggregate(query, (current, include) => current.Include(include));
-
-			// Default OrderBy Id descending if orderBy is not provided
-			if (orderBy == null)
-			{
-				var primaryKeyProperty = _dbContext.Model.FindEntityType(typeof(T)).FindPrimaryKey().Properties.FirstOrDefault();
-				if (primaryKeyProperty != null && primaryKeyProperty.Name == "Id")
-				{
-					orderBy = q => q.OrderByDescending(entity => EF.Property<object>(entity, "Id"));
-				}
-			}
-
-			if (orderBy != null)
-				query = orderBy(query);
-
-			return query;
 		}
 
 		public virtual async Task<T> FindByIdAsync(Guid id)
