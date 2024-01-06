@@ -1,13 +1,12 @@
-﻿using RideSharing.Application;
-using RideSharing.Common.Constants;
+﻿using RideSharing.Common.Constants;
 using RideSharing.Common.Extensions;
 using RideSharing.Common.Filters;
 using RideSharing.Common.RegisterServices;
 using RideSharing.Infrastructure;
 
-namespace RideSharing.CustomerAPI;
+namespace RideSharing.InternalAPI;
 
-public static class Startup
+public static class DependencyInjection
 {
 	public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
 	{
@@ -21,11 +20,9 @@ public static class Startup
 			.ConfigureAppSettings(configuration)
 			.ConfigureNewtonsoftJson()
 			.ConfigureApiBehavior()
-			.RegisterSwagger(nameof(CustomerAPI))
+			.RegisterSwagger(nameof(InternalAPI))
 			.ConfigureAuthorizationServices(configuration, environment)
-			.RegisterApplicationLayer()
-			.RegisterInfrastructureLayer(configuration)
-			.RegisterInfrastructureToApplication();
+			.RegisterInfrastructureLayer(configuration);
 
 		return services;
 	}

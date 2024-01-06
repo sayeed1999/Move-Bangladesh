@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RideSharing.Common\RideSharing.Common.csproj" />
+    <ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
