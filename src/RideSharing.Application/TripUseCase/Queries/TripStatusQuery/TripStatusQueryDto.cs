@@ -3,18 +3,13 @@ using MediatR;
 
 namespace RideSharing.Application.TripUseCase.Queries.TripStatusQuery
 {
-	public class TripStatusQueryDto : IRequest<Result<TripStatusQueryResponseDto>>
+	public record struct TripStatusQueryDto(
+		Guid TripId)
+		: IRequest<Result<TripStatusQueryResponseDto>>
 	{
-		private TripStatusQueryDto() { }
-
-		public static TripStatusQueryDto Create(Guid tripId)
+		public static TripStatusQueryDto Create(Guid TripId)
 		{
-			return new TripStatusQueryDto()
-			{
-				TripId = tripId,
-			};
+			return new TripStatusQueryDto(TripId);
 		}
-
-		public Guid TripId { get; private set; }
 	}
 }

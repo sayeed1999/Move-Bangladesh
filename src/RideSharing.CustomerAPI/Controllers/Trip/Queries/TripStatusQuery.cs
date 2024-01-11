@@ -28,9 +28,9 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Queries
 			Result<TripStatusQueryResponseDto> ride = await _mediator.Send(dto);
 
 			if (ride.IsFailure)
-				return NotFound($"Ride request {dto.TripId} not found.");
+				return NotFound($"Ride request {tripId} not found.");
 
-			return Ok($"Ride request {dto.TripId} status: {ride.Value.TripStatus}");
+			return Ok($"Ride request created with id: {tripId}.");
 		}
 	}
 }

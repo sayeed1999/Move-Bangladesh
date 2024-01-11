@@ -2,9 +2,9 @@
 
 namespace RideSharing.Common.Entities;
 
-public class Response<T> where T : class
+public class Response<T>
 {
-    public T Data { get; set; }
-    public StringBuilder Message { get; set; } = new("Success!");
-    public short Status { get; set; } = 200;
+	public T Data { get; set; }
+	public StringBuilder Message { get; set; } = new("Success!");
+	public short Status { get; set; } = 200;
 }

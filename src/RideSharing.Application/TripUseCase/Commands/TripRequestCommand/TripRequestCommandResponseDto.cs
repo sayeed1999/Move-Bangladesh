@@ -3,23 +3,23 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 {
-	public class TripRequestCommandResponseDto
+	public record struct TripRequestCommandResponseDto(
+		Guid TripId,
+		Guid CustomerId,
+		Guid DriverId,
+		Point Source,
+		Point Destination,
+		string TripStatus)
 	{
 		public TripRequestCommandResponseDto(Trip trip)
+			: this(trip.Id,
+				  trip.CustomerId,
+				  trip.DriverId,
+				  trip.Source,
+				  trip.Destination,
+				  trip.TripStatus.ToString())
 		{
-			TripId = trip.Id;
-			CustomerId = trip.CustomerId;
-			DriverId = trip.DriverId;
-			Source = trip.Source;
-			Destination = trip.Destination;
-			TripStatus = trip.TripStatus.ToString();
-		}
 
-		public Guid TripId { get; set; }
-		public Guid CustomerId { get; set; }
-		public Guid DriverId { get; set; }
-		public Point Source { get; set; }
-		public Point Destination { get; set; }
-		public string TripStatus { get; set; }
+		}
 	}
 }

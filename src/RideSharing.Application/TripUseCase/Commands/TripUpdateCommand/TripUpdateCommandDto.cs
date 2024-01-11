@@ -4,9 +4,10 @@ using RideSharing.Domain.Enums;
 
 namespace RideSharing.Application.TripUseCase.Commands.TripUpdateCommand
 {
-	public class TripUpdateCommandDto : IRequest<Result<TripUpdateCommandResponseDto>>
+	public record struct TripUpdateCommandDto(
+		Guid TripId,
+		TripStatus TripStatus) : IRequest<Result<TripUpdateCommandResponseDto>>
 	{
-		public Guid TripId { get; set; }
-		public TripStatus TripStatus { get; set; }
+
 	}
 }
