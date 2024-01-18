@@ -1,5 +1,4 @@
-﻿using NetTopologySuite.Geometries;
-using RideSharing.Domain.Entities;
+﻿using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripUseCase.Queries.TripStatusQuery
 {
@@ -7,15 +6,15 @@ namespace RideSharing.Application.TripUseCase.Queries.TripStatusQuery
 		Guid TripId,
 		Guid CustomerId,
 		Guid DriverId,
-		Point Source,
-		Point Destination)
+		Tuple<double, double> Source,
+		Tuple<double, double> Destination)
 	{
 		public TripStatusQueryResponseDto(Trip trip)
 			: this(trip.Id,
 				  trip.CustomerId,
 				  trip.DriverId,
-				  trip.Source,
-				  trip.Destination)
+				  new Tuple<double, double>(trip.Source.X, trip.Source.Y),
+				  new Tuple<double, double>(trip.Destination.X, trip.Destination.Y))
 		{
 
 		}

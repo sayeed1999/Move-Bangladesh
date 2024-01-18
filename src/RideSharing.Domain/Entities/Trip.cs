@@ -16,14 +16,14 @@ public class Trip : BaseEntity
 	public Point Source { get; protected set; }
 	public Point Destination { get; protected set; }
 
-	public static Result<Trip> CreateNewTrip(Guid customerId, Guid driverId, Point source, Point destination)
+	public static Result<Trip> CreateNewTrip(Guid customerId, Guid driverId, Tuple<double, double> source, Tuple<double, double> destination)
 	{
 		var x = new Trip()
 		{
 			CustomerId = customerId,
 			DriverId = driverId,
-			Source = source,
-			Destination = destination,
+			Source = new Point(source.Item1, source.Item2),
+			Destination = new Point(destination.Item1, destination.Item2),
 			TripStatus = TripStatus.TripRequested,
 		};
 
