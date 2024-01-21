@@ -42,10 +42,12 @@ namespace RideSharing.Infrastructure.Repositories
 			return await _dbSet.ToListAsync();
 		}
 
-		public virtual async Task<T> FindByIdAsync(Guid id)
-		{
-			return await _dbSet.FindAsync(id);
-		}
+		/// <summary>
+		/// Finds an the entity by primary key.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns>Returns the entity(T) found or null.</returns>
+		public virtual async Task<T> FindByIdAsync(Guid id) => await _dbSet.FindAsync(id);
 
 		public virtual async Task<T> AddAsync(T item)
 		{

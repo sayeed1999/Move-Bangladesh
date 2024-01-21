@@ -25,6 +25,8 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 		[HttpPost("request")]
 		public async Task<ActionResult<Response<TripRequestCommandResponseDto>>> RequestRide(TripRequestCommandDto model)
 		{
+			// TODO: - get current user from HttpContextAccessor & check customerID != currentUserId
+
 			var res = await _mediator.Send(model);
 
 			if (res.IsFailure) return BadRequest(res.Error);

@@ -17,6 +17,13 @@ public class Trip : BaseEntity
 	public Point Destination { get; protected set; }
 	public CabType CabType { get; protected set; }
 
+	/// <summary>
+	/// This field is used to track a ride is current on-going or not. 
+	/// As multiple TripStatus refers to a stopped ride, 
+	/// it's easy to track a ride is not active with the help of a helper variable.
+	/// </summary>
+	public bool IsActive { get; protected set; }
+
 	public static Result<Trip> RequestTrip(
 		Guid customerId,
 		Tuple<double,
@@ -32,6 +39,7 @@ public class Trip : BaseEntity
 			Destination = new Point(destination.Item1, destination.Item2),
 			TripStatus = TripStatus.TripRequested,
 			CabType = cabType,
+			IsActive = true,
 		};
 
 		var validator = new TripValidator();
