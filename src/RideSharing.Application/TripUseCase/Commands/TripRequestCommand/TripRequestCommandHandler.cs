@@ -17,12 +17,19 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 
 		public async Task<Result<TripRequestCommandResponseDto>> Handle(TripRequestCommandDto model, CancellationToken cancellationToken)
 		{
-			Result<Trip> trip = Trip.CreateNewTrip(model.CustomerId, model.DriverId, model.Source, model.Destination);
+			Result<Trip> trip = Trip.RequestTrip(
+				model.CustomerId,
+				model.Source,
+				model.Destination,
+				model.CabType);
+
 			if (trip.IsFailure) return Result.Failure<TripRequestCommandResponseDto>("Please provide valid data.");
 
 			var res = await this.tripRepository.AddAsync(trip.Value);
 
-			return Result.Success<TripRequestCommandResponseDto>(new TripRequestCommandResponseDto(res));
+			var responseDto = new TripRequestCommandResponseDto(res);
+
+			return Result.Success<TripRequestCommandResponseDto>(responseDto);
 		}
 	}
 }

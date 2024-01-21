@@ -5,7 +5,7 @@ namespace RideSharing.Application.TripUseCase.Commands.TripUpdateCommand
 	public record struct TripUpdateCommandResponseDto(
 		Guid TripId,
 		Guid CustomerId,
-		Guid DriverId,
+		Guid? DriverId,
 		Tuple<double, double> Source,
 		Tuple<double, double> Destination,
 		string TripStatus)

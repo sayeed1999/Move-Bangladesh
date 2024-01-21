@@ -5,7 +5,7 @@ namespace RideSharing.Application.TripUseCase.Queries.TripStatusQuery
 	public record struct TripStatusQueryResponseDto(
 		Guid TripId,
 		Guid CustomerId,
-		Guid DriverId,
+		Guid? DriverId,
 		Tuple<double, double> Source,
 		Tuple<double, double> Destination)
 	{

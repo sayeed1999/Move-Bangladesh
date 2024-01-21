@@ -16,12 +16,20 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 			_mediator = mediator;
 		}
 
+		/// <summary>
+		/// Customer will request a trip using this endpoint by selecting source, destination, cabType.
+		/// Initially the driverId will be null because driver is not chosen yet.
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost("request")]
 		public async Task<ActionResult<Response<TripRequestCommandResponseDto>>> RequestRide(TripRequestCommandDto model)
 		{
 			var res = await _mediator.Send(model);
+
 			if (res.IsFailure) return BadRequest(res.Error);
-			return Ok($"Ride request {res.Value.TripId} submitted successfully.");
+
+			return Created();
 		}
 	}
 }

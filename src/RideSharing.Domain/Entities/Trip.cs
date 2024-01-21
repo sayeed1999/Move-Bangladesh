@@ -9,22 +9,29 @@ public class Trip : BaseEntity
 {
 	public Guid CustomerId { get; protected set; }
 	public virtual Customer Customer { get; protected set; }
-	public Guid DriverId { get; protected set; }
+	public Guid? DriverId { get; protected set; }
 	public virtual Driver Driver { get; protected set; }
 	public virtual Payment Payment { get; protected set; }
 	public TripStatus TripStatus { get; protected set; }
 	public Point Source { get; protected set; }
 	public Point Destination { get; protected set; }
+	public CabType CabType { get; protected set; }
 
-	public static Result<Trip> CreateNewTrip(Guid customerId, Guid driverId, Tuple<double, double> source, Tuple<double, double> destination)
+	public static Result<Trip> RequestTrip(
+		Guid customerId,
+		Tuple<double,
+		double> source,
+		Tuple<double, double> destination,
+		CabType cabType)
 	{
 		var x = new Trip()
 		{
 			CustomerId = customerId,
-			DriverId = driverId,
+			DriverId = null, //Guid.Empty,
 			Source = new Point(source.Item1, source.Item2),
 			Destination = new Point(destination.Item1, destination.Item2),
 			TripStatus = TripStatus.TripRequested,
+			CabType = cabType,
 		};
 
 		var validator = new TripValidator();
