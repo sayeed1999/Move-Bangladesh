@@ -8,23 +8,26 @@
 		BigWheels,
 	}
 
+	public enum TripRequestStatus
+	{
+		NoDriverAccepted = 1,
+		CustomerCanceled = 2,
+		DriverAccepted = 3,
+		DriverCanceled = 4,
+	}
+
 	public enum TripStatus
 	{
-		TripRequested = 0,
-		CustomerCanceledBeforeAccepting = 1,
-		TripAccepted = 2,
-		CustomerCanceledAfterAccepting = 3,
-		RiderCanceled = 4,
-		JourneyStarted = 5,
-		JourneyEnded = 6,
+		TripStarted = 1,
+		TripCompleted = 2,
 	}
 
 	public enum PaymentMethod
 	{
-		Cash,
-		Bkash,
-		Nagad,
-		Card,
+		CoD = 1, // Cash On Delivery
+		Bkash = 2,
+		Nagad = 3,
+		Card = 4,
 	}
 
 	public enum PaymentStatus

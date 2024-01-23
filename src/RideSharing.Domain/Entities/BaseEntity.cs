@@ -2,6 +2,12 @@
 
 public abstract class BaseEntity
 {
+	public BaseEntity()
+	{
+		CreatedAt = DateTime.UtcNow;
+		UpdatedAt = DateTime.UtcNow;
+	}
+
 	public Guid Id { get; set; }
 	public DateTime CreatedAt { get; set; }
 	public Guid CreatedBy { get; set; }
