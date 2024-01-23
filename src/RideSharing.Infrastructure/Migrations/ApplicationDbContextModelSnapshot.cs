@@ -62,7 +62,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Cabs");
+                    b.ToTable("Cabs", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Customer", b =>
@@ -92,7 +92,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.CustomerRating", b =>
@@ -125,7 +125,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("CustomerRatings");
+                    b.ToTable("CustomerRatings", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Driver", b =>
@@ -155,7 +155,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Drivers");
+                    b.ToTable("Drivers", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.DriverRating", b =>
@@ -188,7 +188,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("DriverRatings");
+                    b.ToTable("DriverRatings", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Payment", b =>
@@ -229,7 +229,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Trip", b =>
@@ -262,9 +262,6 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<Guid?>("DriverId")
                         .HasColumnType("uuid");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
                     b.Property<Point>("Source")
                         .IsRequired()
                         .HasColumnType("geometry (point)");
@@ -284,7 +281,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasIndex("DriverId");
 
-                    b.ToTable("Trips");
+                    b.ToTable("Trips", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.User", b =>
@@ -323,7 +320,7 @@ namespace RideSharing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.Cab", b =>
