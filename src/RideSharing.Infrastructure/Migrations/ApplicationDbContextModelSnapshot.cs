@@ -237,9 +237,6 @@ namespace RideSharing.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("CabType")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -259,7 +256,7 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("geometry (point)");
 
-                    b.Property<Guid?>("DriverId")
+                    b.Property<Guid>("DriverId")
                         .HasColumnType("uuid");
 
                     b.Property<Point>("Source")
@@ -399,7 +396,8 @@ namespace RideSharing.Infrastructure.Migrations
                     b.HasOne("RideSharing.Domain.Entities.Driver", "Driver")
                         .WithMany("Trips")
                         .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("RideSharing.Domain.Entities.Payment", "Payment")
                         .WithOne("Trip")
