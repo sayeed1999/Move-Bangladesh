@@ -8,16 +8,18 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 		Tuple<double, double> Source,
 		Tuple<double, double> Destination,
 		string TripStatus,
-		string CabType
+		string CabType,
+		string PaymentMethod
 		)
 	{
-		public TripRequestCommandResponseDto(Trip trip)
+		public TripRequestCommandResponseDto(TripRequest trip)
 			: this(trip.Id,
 				  trip.CustomerId,
 				  new Tuple<double, double>(trip.Source.X, trip.Source.Y),
 				  new Tuple<double, double>(trip.Destination.X, trip.Destination.Y),
-				  trip.TripStatus.ToString(),
-				  trip.CabType.ToString())
+				  trip.Status.ToString(),
+				  trip.CabType.ToString(),
+				  trip.PaymentMethod.ToString())
 		{
 
 		}

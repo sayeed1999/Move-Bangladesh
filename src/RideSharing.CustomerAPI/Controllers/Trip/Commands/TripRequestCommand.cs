@@ -5,7 +5,7 @@ using RideSharing.Common.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 {
-	[Route("api/external/trips")]
+	[Route("api/external/trip-requests")]
 	[ApiController]
 	public class TripRequestCommand : ControllerBase
 	{
@@ -22,7 +22,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		[HttpPost("request")]
+		[HttpPost]
 		public async Task<ActionResult<Response<TripRequestCommandResponseDto>>> RequestRide(TripRequestCommandDto model)
 		{
 			// TODO: - get current user from HttpContextAccessor & check customerID != currentUserId

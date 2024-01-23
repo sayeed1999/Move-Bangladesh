@@ -17,30 +17,6 @@ public class Trip : BaseEntity
 	public Point Destination { get; protected set; }
 	public CabType CabType { get; protected set; }
 
-	public static Result<Trip> RequestTrip(
-		Guid customerId,
-		Tuple<double,
-		double> source,
-		Tuple<double, double> destination,
-		CabType cabType)
-	{
-		var x = new Trip()
-		{
-			CustomerId = customerId,
-			DriverId = Guid.Empty,
-			Source = new Point(source.Item1, source.Item2),
-			Destination = new Point(destination.Item1, destination.Item2),
-			TripStatus = TripStatus.TripRequested,
-			CabType = cabType,
-		};
-
-		var validator = new TripValidator();
-		var result = validator.Validate(x);
-
-		if (result.IsValid) return Result.Success(x);
-		return Result.Failure<Trip>("Model is invalid");
-	}
-
 	public static Result<Trip> Modify(Guid id, TripStatus status)
 	{
 		if (status == null) return Result.Failure<Trip>("Model is invalid");

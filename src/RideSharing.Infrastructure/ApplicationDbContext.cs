@@ -17,6 +17,7 @@ public class ApplicationDbContext : DbContext
 	public DbSet<DriverRating> DriverRatings { get; set; }
 	public DbSet<Cab> Cabs { get; set; }
 	public DbSet<Payment> Payments { get; set; }
+	public DbSet<TripRequest> TripRequests { get; set; }
 	public DbSet<Trip> Trips { get; set; }
 	#endregion
 
