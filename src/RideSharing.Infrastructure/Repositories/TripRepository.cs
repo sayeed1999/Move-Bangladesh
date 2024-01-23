@@ -5,7 +5,7 @@ using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Application
 {
-	public partial class TripRepository : BaseRepository<Trip>, ITripRepository
+	public class TripRepository : BaseRepository<Trip>, ITripRepository
 	{
 		public TripRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
 		{
