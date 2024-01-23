@@ -8,7 +8,8 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 		Guid CustomerId,
 		Tuple<double, double> Source,
 		Tuple<double, double> Destination,
-		CabType CabType)
+		CabType CabType,
+		PaymentMethod PaymentMethod)
 		: IRequest<Result<TripRequestCommandResponseDto>>
 	{
 
