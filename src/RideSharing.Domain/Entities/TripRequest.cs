@@ -14,7 +14,6 @@ public class TripRequest : BaseEntity
 	public CabType CabType { get; protected set; }
 	public PaymentMethod PaymentMethod { get; protected set; }
 	public TripRequestStatus Status { get; protected set; }
-	public bool IsActive { get; protected set; }
 
 	/// <summary>
 	/// Use this method when a customer wants to request for a trip.
@@ -41,7 +40,8 @@ public class TripRequest : BaseEntity
 			CabType = cabType,
 			PaymentMethod = paymentMethod,
 			Status = TripRequestStatus.NoDriverAccepted, // This should be the default type if no driver accepts the ride.
-			IsActive = true,
+			CreatedAt = DateTime.UtcNow,
+			UpdatedAt = DateTime.UtcNow, // considering CreatedAt == UpdatedAt when trip is requested
 		};
 
 		var validator = new TripRequestValidator();

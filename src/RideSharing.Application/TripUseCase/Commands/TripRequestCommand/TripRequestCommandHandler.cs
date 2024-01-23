@@ -34,17 +34,21 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 				return Result.Failure<TripRequestCommandResponseDto>("Customer is not found.");
 			}
 
-			// Step 2: check customer has pending rides
+			// Step 2: check customer has ongoing trip requests
+			// If a trip is requested in less than one minute and it is neither canceled nor started, it is considered an active requested trip.
+			// If a trip request has no activity within one minute, it is considered auto-canceled.
+			DateTime oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
+
 			var requestedTrip = await this.tripRequestRepository.DbSet.FirstOrDefaultAsync(
-				x => x.Status != TripRequestStatus.DriverAccepted
-				&& x.IsActive == true);
+				x => x.Status == TripRequestStatus.NoDriverAccepted
+					&& x.UpdatedAt >= oneMinuteAgo);
 
 			if (requestedTrip != null)
 			{
 				return Result.Failure<TripRequestCommandResponseDto>("Customer has already a requested trip.");
 			}
 
-			// Step 3: check customer has unfinished rides
+			// Step 3: check customer has ongoing trips
 			var unfinishedTrip = await this.tripRepository.DbSet.FirstOrDefaultAsync(
 				x => x.TripStatus != TripStatus.TripCompleted);
 
