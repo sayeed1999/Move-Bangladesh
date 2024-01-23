@@ -1,6 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 
@@ -29,13 +28,13 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 				return Result.Failure<TripRequestCommandResponseDto>("Customer is not found.");
 			}
 
-			// Step 2: check customer has pending rides
-			var pendingTrip = await this.tripRepository.DbSet.FirstOrDefaultAsync(x => x.IsActive == true);
+			// Step 2: check customer has pending rides TODO: change the business logic with TripRequest entity
+			//var pendingTrip = await this.tripRepository.DbSet.FirstOrDefaultAsync(x => x.IsActive == true);
 
-			if (pendingTrip != null)
-			{
-				return Result.Failure<TripRequestCommandResponseDto>("Customer has already an unfinished trip.");
-			}
+			//if (pendingTrip != null)
+			//{
+			//	return Result.Failure<TripRequestCommandResponseDto>("Customer has already an unfinished trip.");
+			//}
 
 			// Step 3: create ride entity
 			Result<Trip> trip = Trip.RequestTrip(
