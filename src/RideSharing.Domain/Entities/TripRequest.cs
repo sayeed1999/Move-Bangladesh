@@ -51,6 +51,14 @@ public class TripRequest : BaseEntity
 		return Result.Failure<TripRequest>("Model is invalid");
 	}
 
+	public static Result<TripRequest> Cancel(TripRequest tripRequest)
+	{
+		tripRequest.Status = TripRequestStatus.CustomerCanceledBeforeDriverFound;
+		tripRequest.UpdatedAt = DateTime.UtcNow;
+
+		return Result.Success(tripRequest);
+	}
+
 	private class TripRequestValidator : AbstractValidator<TripRequest>
 	{
 		public TripRequestValidator()
