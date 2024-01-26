@@ -11,10 +11,10 @@ namespace RideSharing.Infrastructure.Repositories
 
 		#region initializations & declarations
 
-		private readonly DbContext _dbContext;
-		private DbSet<T> _dbSet;
+		protected readonly ApplicationDbContext _dbContext;
+		protected DbSet<T> _dbSet;
 
-		public BaseRepository(DbContext dbContext)
+		public BaseRepository(ApplicationDbContext dbContext)
 		{
 			_dbContext = dbContext;
 			_dbSet = dbContext.Set<T>();
