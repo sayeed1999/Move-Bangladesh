@@ -5,7 +5,7 @@ namespace RideSharing.Infrastructure.Repositories
 {
 	public class UserRepository : BaseRepository<User>, IUserRepository
 	{
-		public UserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+		public UserRepository(ApplicationDbContext applicationDbContext, DapperContext dapperContext) : base(applicationDbContext, dapperContext)
 		{
 
 		}

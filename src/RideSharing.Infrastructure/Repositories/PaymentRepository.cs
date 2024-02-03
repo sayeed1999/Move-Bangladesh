@@ -7,7 +7,7 @@ namespace RideSharing.Application
 {
 	public class PaymentRepository : BaseRepository<Payment>, IPaymentRepository
 	{
-		public PaymentRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+		public PaymentRepository(ApplicationDbContext applicationDbContext, DapperContext dapperContext) : base(applicationDbContext, dapperContext)
 		{
 		}
 	}

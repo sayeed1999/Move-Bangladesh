@@ -13,11 +13,13 @@ namespace RideSharing.Infrastructure.Repositories
 		#region initializations & declarations
 
 		protected readonly ApplicationDbContext _dbContext;
+		protected readonly DapperContext _dapperContext;
 		protected DbSet<T> _dbSet;
 
-		public BaseRepository(ApplicationDbContext dbContext)
+		public BaseRepository(ApplicationDbContext dbContext, DapperContext dapperContext)
 		{
 			_dbContext = dbContext;
+			_dapperContext = dapperContext;
 			_dbSet = dbContext.Set<T>();
 		}
 
@@ -27,6 +29,8 @@ namespace RideSharing.Infrastructure.Repositories
 		{
 			get { return _dbSet; }
 		}
+
+		#region Transactional helpers
 
 		public virtual async Task<IDbContextTransaction> BeginTransactionAsync()
 		{
@@ -43,6 +47,8 @@ namespace RideSharing.Infrastructure.Repositories
 		{
 			await transaction.RollbackAsync();
 		}
+
+		#endregion
 
 		/// <summary>
 		/// Need to be called after certain operations on db: add update delete, otherwise changes will not be saved..

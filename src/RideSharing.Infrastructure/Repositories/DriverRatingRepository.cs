@@ -7,7 +7,7 @@ namespace RideSharing.Application
 {
 	public class DriverRatingRepository : BaseRepository<DriverRating>, IDriverRatingRepository
 	{
-		public DriverRatingRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+		public DriverRatingRepository(ApplicationDbContext applicationDbContext, DapperContext dapperContext) : base(applicationDbContext, dapperContext)
 		{
 		}
 	}

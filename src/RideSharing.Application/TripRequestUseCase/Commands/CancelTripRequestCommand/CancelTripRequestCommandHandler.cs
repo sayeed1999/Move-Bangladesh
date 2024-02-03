@@ -1,9 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
-using RideSharing.Domain.Enums;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand
 {
@@ -35,11 +33,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 			}
 
 			// Step 2: check trip request exists
-			DateTime oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
-
-			var requestedTrip = await tripRequestRepository.DbSet.FirstOrDefaultAsync(
-				x => x.Status == TripRequestStatus.NoDriverAccepted
-					&& x.UpdatedAt >= oneMinuteAgo);
+			var requestedTrip = await tripRequestRepository.GetActiveTripRequest(request.CustomerId);
 
 			if (requestedTrip == null)
 			{
@@ -72,10 +66,6 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 			catch (Exception ex)
 			{
 				await tripRequestRepository.RollBackTransactionAsync(transaction);
-
-				// Last Step: return result
-
-				var responseDto = new CancelTripRequestCommandResponseDto(true);
 
 				return Result.Failure<CancelTripRequestCommandResponseDto>($"Failed with error: {ex.Message}");
 			}

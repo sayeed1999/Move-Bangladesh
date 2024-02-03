@@ -1,9 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
-using RideSharing.Domain.Enums;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 {
@@ -38,13 +36,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 			}
 
 			// Step 2: check customer has ongoing trip requests
-			// If a trip is requested in less than one minute and it is neither canceled nor started, it is considered an active requested trip.
-			// If a trip request has no activity within one minute, it is considered auto-canceled.
-			DateTime oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
-
-			var requestedTrip = await tripRequestRepository.DbSet.FirstOrDefaultAsync(
-				x => x.Status == TripRequestStatus.NoDriverAccepted
-					&& x.UpdatedAt >= oneMinuteAgo);
+			var requestedTrip = await tripRequestRepository.GetActiveTripRequest(model.CustomerId);
 
 			if (requestedTrip != null)
 			{
@@ -52,8 +44,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 			}
 
 			// Step 3: check customer has ongoing trips
-			var unfinishedTrip = await tripRepository.DbSet.FirstOrDefaultAsync(
-				x => x.TripStatus != TripStatus.TripCompleted);
+			var unfinishedTrip = await tripRepository.GetActiveTrip(model.CustomerId);
 
 			if (unfinishedTrip != null)
 			{
