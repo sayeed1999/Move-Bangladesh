@@ -11,13 +11,16 @@ namespace RideSharing.Application.TripUseCase.Commands.CancelTripRequestCommand
 		: IRequestHandler<CancelTripRequestCommandDto, Result<CancelTripRequestCommandResponseDto>>
 	{
 		private readonly ITripRequestRepository tripRequestRepository;
+		private readonly ITripRequestLogRepository tripRequestLogRepository;
 		private readonly ICustomerRepository customerRepository;
 
 		public CancelTripRequestCommandHandler(
 			ITripRequestRepository tripRequestRepository,
+			ITripRequestLogRepository tripRequestLogRepository,
 			ICustomerRepository customerRepository)
 		{
 			this.tripRequestRepository = tripRequestRepository;
+			this.tripRequestLogRepository = tripRequestLogRepository;
 			this.customerRepository = customerRepository;
 		}
 
@@ -46,13 +49,36 @@ namespace RideSharing.Application.TripUseCase.Commands.CancelTripRequestCommand
 			// Step 3: prepare domain entity
 			Result<TripRequest> canceledTripRequest = TripRequest.Cancel(requestedTrip);
 
-			// Step 4: update database
-			var res = await this.tripRequestRepository.UpdateAsync(canceledTripRequest.Value);
+			// Step 4: perform database operations
 
-			// Last Step: return result
-			var responseDto = new CancelTripRequestCommandResponseDto(true);
+			var transaction = await this.tripRequestRepository.BeginTransactionAsync();
 
-			return Result.Success(responseDto);
+			TripRequest res;
+
+			try
+			{
+				res = await this.tripRequestRepository.UpdateAsync(canceledTripRequest.Value);
+
+				await this.tripRequestLogRepository.AddAsync(new TripRequestLog(res));
+
+				await this.tripRequestRepository.CommitTransactionAsync(transaction);
+
+				// Last Step: return result
+
+				var responseDto = new CancelTripRequestCommandResponseDto(true);
+
+				return Result.Success(responseDto);
+			}
+			catch (Exception ex)
+			{
+				await this.tripRequestRepository.RollBackTransactionAsync(transaction);
+
+				// Last Step: return result
+
+				var responseDto = new CancelTripRequestCommandResponseDto(true);
+
+				return Result.Failure<CancelTripRequestCommandResponseDto>($"Failed with error: {ex.Message}");
+			}
 		}
 	}
 }

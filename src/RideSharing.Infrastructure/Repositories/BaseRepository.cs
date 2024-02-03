@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using RideSharing.Application.Abstractions;
 using System.Reflection;
 
@@ -25,6 +26,22 @@ namespace RideSharing.Infrastructure.Repositories
 		public DbSet<T> DbSet
 		{
 			get { return _dbSet; }
+		}
+
+		public virtual async Task<IDbContextTransaction> BeginTransactionAsync()
+		{
+			var transaction = await _dbContext.Database.BeginTransactionAsync();
+			return transaction;
+		}
+
+		public virtual async Task CommitTransactionAsync(IDbContextTransaction transaction)
+		{
+			await transaction.CommitAsync();
+		}
+
+		public virtual async Task RollBackTransactionAsync(IDbContextTransaction transaction)
+		{
+			await transaction.RollbackAsync();
 		}
 
 		/// <summary>
