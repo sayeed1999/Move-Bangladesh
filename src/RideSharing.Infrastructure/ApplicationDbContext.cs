@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RideSharing.Domain.Entities;
+using RideSharing.Infrastructure.EntityConfigurations;
 
 namespace RideSharing.Infrastructure;
 
@@ -38,20 +39,10 @@ public class ApplicationDbContext : DbContext
 			relationship.DeleteBehavior = DeleteBehavior.Restrict;
 		}
 
-		#region Trip Entity Properties
+		#region Apply Entity Configurations
 
-		builder.Entity<Trip>()
-			.HasOne(x => x.Payment)
-			.WithOne(x => x.Trip)
-			.HasPrincipalKey<Payment>(x => x.TripId);
-
-		builder.Entity<Trip>()
-			.Property(x => x.Source)
-			.HasColumnType("geometry (point)");
-
-		builder.Entity<Trip>()
-			.Property(x => x.Destination)
-			.HasColumnType("geometry (point)");
+		new TripRequestEntityConfigurations().Configure(builder);
+		new TripEntityConfigurations().Configure(builder);
 
 		#endregion
 	}
