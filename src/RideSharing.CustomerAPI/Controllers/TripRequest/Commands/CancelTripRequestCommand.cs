@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.TripUseCase.Commands.CancelTripRequestCommand;
+using RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand;
 using RideSharing.Common.Entities;
 
-namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
+namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 {
 
 	[Route("api/external/trip-requests")]
@@ -14,7 +14,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 
 		public CancelTripRequestCommand(IMediator mediator)
 		{
-			this._mediator = mediator;
+			_mediator = mediator;
 		}
 
 		/// <summary>

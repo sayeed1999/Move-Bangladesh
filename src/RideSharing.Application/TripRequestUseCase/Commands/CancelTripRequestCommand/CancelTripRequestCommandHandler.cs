@@ -5,7 +5,7 @@ using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 using RideSharing.Domain.Enums;
 
-namespace RideSharing.Application.TripUseCase.Commands.CancelTripRequestCommand
+namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand
 {
 	public class CancelTripRequestCommandHandler
 		: IRequestHandler<CancelTripRequestCommandDto, Result<CancelTripRequestCommandResponseDto>>
@@ -27,7 +27,7 @@ namespace RideSharing.Application.TripUseCase.Commands.CancelTripRequestCommand
 		public async Task<Result<CancelTripRequestCommandResponseDto>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
-			var customerInDB = await this.customerRepository.FindByIdAsync(request.CustomerId);
+			var customerInDB = await customerRepository.FindByIdAsync(request.CustomerId);
 
 			if (customerInDB == null)
 			{
@@ -37,7 +37,7 @@ namespace RideSharing.Application.TripUseCase.Commands.CancelTripRequestCommand
 			// Step 2: check trip request exists
 			DateTime oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
 
-			var requestedTrip = await this.tripRequestRepository.DbSet.FirstOrDefaultAsync(
+			var requestedTrip = await tripRequestRepository.DbSet.FirstOrDefaultAsync(
 				x => x.Status == TripRequestStatus.NoDriverAccepted
 					&& x.UpdatedAt >= oneMinuteAgo);
 
@@ -51,17 +51,17 @@ namespace RideSharing.Application.TripUseCase.Commands.CancelTripRequestCommand
 
 			// Step 4: perform database operations
 
-			var transaction = await this.tripRequestRepository.BeginTransactionAsync();
+			var transaction = await tripRequestRepository.BeginTransactionAsync();
 
 			TripRequest res;
 
 			try
 			{
-				res = await this.tripRequestRepository.UpdateAsync(canceledTripRequest.Value);
+				res = await tripRequestRepository.UpdateAsync(canceledTripRequest.Value);
 
-				await this.tripRequestLogRepository.AddAsync(new TripRequestLog(res));
+				await tripRequestLogRepository.AddAsync(new TripRequestLog(res));
 
-				await this.tripRequestRepository.CommitTransactionAsync(transaction);
+				await tripRequestRepository.CommitTransactionAsync(transaction);
 
 				// Last Step: return result
 
@@ -71,7 +71,7 @@ namespace RideSharing.Application.TripUseCase.Commands.CancelTripRequestCommand
 			}
 			catch (Exception ex)
 			{
-				await this.tripRequestRepository.RollBackTransactionAsync(transaction);
+				await tripRequestRepository.RollBackTransactionAsync(transaction);
 
 				// Last Step: return result
 

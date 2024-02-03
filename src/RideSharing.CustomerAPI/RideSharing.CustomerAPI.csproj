@@ -25,4 +25,8 @@
 		<ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Controllers\TripRequest\Queries\" />
+	</ItemGroup>
+
 </Project>

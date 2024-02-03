@@ -5,7 +5,7 @@ using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 using RideSharing.Domain.Enums;
 
-namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
+namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 {
 	public class TripRequestCommandHandler
 		: IRequestHandler<TripRequestCommandDto, Result<TripRequestCommandResponseDto>>
@@ -30,7 +30,7 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 		public async Task<Result<TripRequestCommandResponseDto>> Handle(TripRequestCommandDto model, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
-			var customerInDB = await this.customerRepository.FindByIdAsync(model.CustomerId);
+			var customerInDB = await customerRepository.FindByIdAsync(model.CustomerId);
 
 			if (customerInDB == null)
 			{
@@ -42,7 +42,7 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 			// If a trip request has no activity within one minute, it is considered auto-canceled.
 			DateTime oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
 
-			var requestedTrip = await this.tripRequestRepository.DbSet.FirstOrDefaultAsync(
+			var requestedTrip = await tripRequestRepository.DbSet.FirstOrDefaultAsync(
 				x => x.Status == TripRequestStatus.NoDriverAccepted
 					&& x.UpdatedAt >= oneMinuteAgo);
 
@@ -52,7 +52,7 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 			}
 
 			// Step 3: check customer has ongoing trips
-			var unfinishedTrip = await this.tripRepository.DbSet.FirstOrDefaultAsync(
+			var unfinishedTrip = await tripRepository.DbSet.FirstOrDefaultAsync(
 				x => x.TripStatus != TripStatus.TripCompleted);
 
 			if (unfinishedTrip != null)
@@ -77,14 +77,14 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 
 			TripRequest? res;
 
-			var transaction = await this.tripRequestRepository.BeginTransactionAsync();
+			var transaction = await tripRequestRepository.BeginTransactionAsync();
 			try
 			{
-				res = await this.tripRequestRepository.AddAsync(tripRequest.Value);
+				res = await tripRequestRepository.AddAsync(tripRequest.Value);
 
-				await this.tripRequestLogRepository.AddAsync(new TripRequestLog(res));
+				await tripRequestLogRepository.AddAsync(new TripRequestLog(res));
 
-				await this.tripRequestRepository.CommitTransactionAsync(transaction);
+				await tripRequestRepository.CommitTransactionAsync(transaction);
 
 				// Step 5: return response
 				var responseDto = new TripRequestCommandResponseDto(res);
@@ -93,7 +93,7 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 			}
 			catch (Exception ex)
 			{
-				await this.tripRequestRepository.RollBackTransactionAsync(transaction);
+				await tripRequestRepository.RollBackTransactionAsync(transaction);
 
 				return Result.Failure<TripRequestCommandResponseDto>($"Failed with error: {ex.Message}");
 			}

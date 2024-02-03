@@ -1,6 +1,6 @@
 ﻿using RideSharing.Domain.Entities;
 
-namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
+namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 {
 	public record struct TripRequestCommandResponseDto(
 		Guid TripId,

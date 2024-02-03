@@ -18,4 +18,8 @@
     <ProjectReference Include="..\RideSharing.Domain\RideSharing.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TripRequestUseCase\Queries\" />
+  </ItemGroup>
+
 </Project>
