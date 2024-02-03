@@ -11,15 +11,18 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 		: IRequestHandler<TripRequestCommandDto, Result<TripRequestCommandResponseDto>>
 	{
 		private readonly ITripRequestRepository tripRequestRepository;
+		private readonly ITripRequestLogRepository tripRequestLogRepository;
 		private readonly ITripRepository tripRepository;
 		private readonly ICustomerRepository customerRepository;
 
 		public TripRequestCommandHandler(
 			ITripRequestRepository tripRequestRepository,
+			ITripRequestLogRepository tripRequestLogRepository,
 			ITripRepository tripRepository,
 			ICustomerRepository customerRepository)
 		{
 			this.tripRequestRepository = tripRequestRepository;
+			this.tripRequestLogRepository = tripRequestLogRepository;
 			this.tripRepository = tripRepository;
 			this.customerRepository = customerRepository;
 		}
@@ -70,13 +73,30 @@ namespace RideSharing.Application.TripUseCase.Commands.TripRequestCommand
 				return Result.Failure<TripRequestCommandResponseDto>("Please provide valid data.");
 			}
 
-			// Step 5: save in db
-			var res = await this.tripRequestRepository.AddAsync(tripRequest.Value);
+			// Step 5: perform db operations
 
-			// Step 5: return response
-			var responseDto = new TripRequestCommandResponseDto(res);
+			TripRequest? res;
 
-			return Result.Success<TripRequestCommandResponseDto>(responseDto);
+			var transaction = await this.tripRequestRepository.BeginTransactionAsync();
+			try
+			{
+				res = await this.tripRequestRepository.AddAsync(tripRequest.Value);
+
+				await this.tripRequestLogRepository.AddAsync(new TripRequestLog(res));
+
+				await this.tripRequestRepository.CommitTransactionAsync(transaction);
+
+				// Step 5: return response
+				var responseDto = new TripRequestCommandResponseDto(res);
+
+				return Result.Success(responseDto);
+			}
+			catch (Exception ex)
+			{
+				await this.tripRequestRepository.RollBackTransactionAsync(transaction);
+
+				return Result.Failure<TripRequestCommandResponseDto>($"Failed with error: {ex.Message}");
+			}
 		}
 	}
 }
