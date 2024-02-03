@@ -41,8 +41,9 @@ public class ApplicationDbContext : DbContext
 
 		#region Apply Entity Configurations
 
-		new TripRequestEntityConfigurations().Configure(builder);
-		new TripEntityConfigurations().Configure(builder);
+		new TripRequestEntityConfigurations().Configure(builder.Entity<TripRequest>());
+
+		new TripEntityConfigurations().Configure(builder.Entity<Trip>());
 
 		#endregion
 	}
