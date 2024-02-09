@@ -36,7 +36,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 			}
 
 			// Step 2: check customer has ongoing trip requests
-			var requestedTrip = await tripRequestRepository.GetActiveTripRequest(model.CustomerId);
+			var requestedTrip = await tripRequestRepository.GetActiveTripRequestForCustomer(model.CustomerId);
 
 			if (requestedTrip != null)
 			{
@@ -51,7 +51,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 				return Result.Failure<TripRequestCommandResponseDto>("Customer has already an ongoing trip.");
 			}
 
-			// Step 4: create ride entity
+			// Step 4: create trip request entity
 			Result<TripRequest> tripRequest = TripRequest.Create(
 				model.CustomerId,
 				model.Source,

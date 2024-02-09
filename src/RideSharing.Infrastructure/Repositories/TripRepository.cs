@@ -25,7 +25,7 @@ namespace RideSharing.Application
 		{
 			var query = new StringBuilder();
 
-			query.Append("SELECT TOP 1 FROM Trips");
+			query.Append("SELECT TOP 1 * FROM Trips");
 			query.Append($" WHERE {nameof(Trip.TripStatus)} <> @{nameof(Trip.TripStatus)}");
 			query.Append($" AND {nameof(Trip.CustomerId)} = @{nameof(Trip.CustomerId)}");
 
@@ -33,6 +33,26 @@ namespace RideSharing.Application
 
 			parameters.Add(nameof(Trip.TripStatus), TripStatus.TripCompleted, System.Data.DbType.Int16);
 			parameters.Add(nameof(Trip.CustomerId), customerId, System.Data.DbType.Guid);
+
+			using (var connection = _dapperContext.CreateConnection())
+			{
+				var trip = await connection.QueryFirstOrDefaultAsync(query.ToString(), parameters);
+				return trip;
+			}
+		}
+
+		public async Task<Trip> GetActiveTripForDriver(Guid driverId)
+		{
+			var query = new StringBuilder();
+
+			query.Append("SELECT TOP 1 * FROM Trips");
+			query.Append($" WHERE {nameof(Trip.TripStatus)} <> @{nameof(Trip.TripStatus)}");
+			query.Append($" AND {nameof(Trip.DriverId)} = @{nameof(Trip.DriverId)}");
+
+			var parameters = new DynamicParameters();
+
+			parameters.Add(nameof(Trip.TripStatus), TripStatus.TripCompleted, System.Data.DbType.Int16);
+			parameters.Add(nameof(Trip.DriverId), driverId, System.Data.DbType.Guid);
 
 			using (var connection = _dapperContext.CreateConnection())
 			{

@@ -16,7 +16,7 @@ namespace RideSharing.Infrastructure.Repositories
 
 		}
 
-		public async Task<TripRequest> GetActiveTripRequest(Guid customerId)
+		public async Task<TripRequest> GetActiveTripRequestForCustomer(Guid customerId)
 		{
 			// If a trip is requested in less than one minute and it is neither canceled nor started, it is considered an active requested trip.
 			// If a trip request has no activity within one minute, it is considered auto-canceled.

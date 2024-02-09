@@ -9,11 +9,6 @@ namespace RideSharing.Infrastructure.EntityConfigurations
 		public void Configure(EntityTypeBuilder<Trip> builder)
 		{
 			builder
-				.HasOne(x => x.Payment)
-				.WithOne(x => x.Trip)
-				.HasPrincipalKey<Payment>(x => x.TripId);
-
-			builder
 				.Property(x => x.Source)
 				.HasColumnType("geometry (point)");
 
