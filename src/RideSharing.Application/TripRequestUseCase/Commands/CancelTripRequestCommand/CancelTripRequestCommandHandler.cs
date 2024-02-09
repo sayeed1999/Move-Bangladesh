@@ -33,7 +33,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 			}
 
 			// Step 2: check trip request exists
-			var requestedTrip = await tripRequestRepository.GetActiveTripRequest(request.CustomerId);
+			var requestedTrip = await tripRequestRepository.GetActiveTripRequestForCustomer(request.CustomerId);
 
 			if (requestedTrip == null)
 			{

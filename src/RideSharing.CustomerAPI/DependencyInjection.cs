@@ -17,5 +17,6 @@ public static class DependencyInjection
 			.AddScoped<IPaymentRepository, PaymentRepository>()
 			.AddScoped<ITripRequestRepository, TripRequestRepository>()
 			.AddScoped<ITripRequestLogRepository, TripRequestLogRepository>()
-			.AddScoped<ITripRepository, TripRepository>();
+			.AddScoped<ITripRepository, TripRepository>()
+			.AddScoped<ITripLogRepository, TripLogRepository>();
 }
