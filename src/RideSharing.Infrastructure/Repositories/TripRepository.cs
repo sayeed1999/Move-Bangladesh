@@ -21,7 +21,7 @@ namespace RideSharing.Application
 		//var unfinishedTrip = await tripRepository.DbSet.FirstOrDefaultAsync(
 		//	x => x.TripStatus != TripStatus.TripCompleted);
 
-		public async Task<Trip> GetActiveTrip(Guid customerId)
+		public async Task<Trip> GetActiveTripForCustomer(Guid customerId)
 		{
 			var query = new StringBuilder();
 
