@@ -21,8 +21,9 @@
 
 	public enum TripStatus
 	{
-		TripStarted = 1,
-		TripCompleted = 2,
+		DriverAccepted = 1,
+		TripStarted = 2,
+		TripCompleted = 3,
 	}
 
 	public enum PaymentMethod

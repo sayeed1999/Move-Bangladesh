@@ -59,6 +59,14 @@ public class TripRequest : BaseEntity
 		return Result.Success(tripRequest);
 	}
 
+	public static Result<TripRequest> DriverAccepted(TripRequest tripRequest)
+	{
+		tripRequest.Status = TripRequestStatus.DriverAccepted;
+		tripRequest.UpdatedAt = DateTime.UtcNow;
+
+		return Result.Success(tripRequest);
+	}
+
 	private class TripRequestValidator : AbstractValidator<TripRequest>
 	{
 		public TripRequestValidator()
