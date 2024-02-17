@@ -18,6 +18,14 @@ builder.Services.RegisterSwagger(nameof(RideSharing.AuthenticationAPI));
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+	using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
+	{
+		context.Database.Migrate();
+	}
+}
+
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
