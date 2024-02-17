@@ -1,4 +1,5 @@
 using RideSharing.Common.Middlewares;
+using RideSharing.Infrastructure;
 using RideSharing.InternalAPI;
 
 var builder = WebApplication.CreateBuilder(args);
