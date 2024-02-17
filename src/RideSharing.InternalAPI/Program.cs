@@ -9,6 +9,15 @@ builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
+// Apply migration on program start
+using (var scope = app.Services.CreateScope())
+{
+	using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
+	{
+		context.Database.Migrate();
+	}
+}
+
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();

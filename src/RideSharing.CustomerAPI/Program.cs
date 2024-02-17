@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.Middlewares;
+using RideSharing.Infrastructure;
 
 namespace RideSharing.CustomerAPI;
 
@@ -14,6 +16,15 @@ public class Program
 		builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 
 		var app = builder.Build();
+
+		// Apply migration on program start
+		using (var scope = app.Services.CreateScope())
+		{
+			using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
+			{
+				context.Database.Migrate();
+			}
+		}
 
 		// Configure the HTTP request pipeline.
 		if (app.Environment.IsDevelopment())
