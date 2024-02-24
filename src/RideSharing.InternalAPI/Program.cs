@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.Middlewares;
 using RideSharing.Infrastructure;
 using RideSharing.InternalAPI;
