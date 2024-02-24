@@ -3,8 +3,7 @@
 	public record struct CustomerCancelTripCommandResponseDto(
 		Guid CustomerId,
 		Guid TripId,
-		string Reason,
-		bool IsSuccess = true)
+		string Reason)
 	{
 
 	}
