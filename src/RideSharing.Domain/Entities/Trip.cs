@@ -61,6 +61,20 @@ public class Trip : BaseEntity
 		return modifiedTrip;
 	}
 
+	public static Result<Trip> CancelByDriver(Trip trip)
+	{
+		if (trip.TripStatus >= TripStatus.TripStarted)
+		{
+			return Result.Failure<Trip>("Cannot cancel started trip. Contact customer care at +880***.");
+		}
+
+		// TODO: dont modify arguments, bad practice!
+		var modifiedTrip = trip;
+		modifiedTrip.TripStatus = TripStatus.DriverCanceled;
+
+		return modifiedTrip;
+	}
+
 	private class TripValidator : AbstractValidator<Trip>
 	{
 		public TripValidator()
