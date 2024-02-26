@@ -6,16 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{248A29EB-B997-4B67-9D1F-3CCD5FBB927E}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		.env = .env
-		.env.example = .env.example
 		.gitignore = .gitignore
-		docker-compose-keycloak.dev.yml = docker-compose-keycloak.dev.yml
-		docker-compose-keycloak.prod.yml = docker-compose-keycloak.prod.yml
-		docker-compose-postgres.yml = docker-compose-postgres.yml
-		docker-compose-rabbitmq.yml = docker-compose-rabbitmq.yml
-		docker-compose-redis.yml = docker-compose-redis.yml
-		docker-compose.dev.yml = docker-compose.dev.yml
-		docker-compose.yml = docker-compose.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -23,29 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9CBAEE2E-802
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F7745BB3-CFC6-49CB-A066-53375EE45099}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{3A40E1D3-F043-404E-873F-47EE0895DD87}"
-	ProjectSection(SolutionItems) = preProject
-		keycloak\realm-export.json = keycloak\realm-export.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{E8371E64-8EDE-414F-8B4B-725180C30A82}"
-	ProjectSection(SolutionItems) = preProject
-		nginx\nginx.conf = nginx\nginx.conf
-		nginx\nginx.dev.conf = nginx\nginx.dev.conf
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentations", "Documentations", "{5240773F-24BC-4A31-8E72-AC5DC72EC50C}"
 	ProjectSection(SolutionItems) = preProject
 		Documentations\KEYCLOAK.md = Documentations\KEYCLOAK.md
 		Documentations\POSTGRESQL.md = Documentations\POSTGRESQL.md
 		Documentations\RABBITMQ.md = Documentations\RABBITMQ.md
 		Documentations\REDIS.md = Documentations\REDIS.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{F80900B7-A383-48F8-9B14-F37D0E41132F}"
-	ProjectSection(SolutionItems) = preProject
-		nginx\keycloak\nginx.conf = nginx\keycloak\nginx.conf
-		nginx\keycloak\nginx.dev.conf = nginx\keycloak\nginx.dev.conf
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.Application", "src\RideSharing.Application\RideSharing.Application.csproj", "{C850FC17-297B-4CE1-836F-E6ECB8EF3033}"
@@ -69,6 +43,31 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.InternalAPI", "src\RideSharing.InternalAPI\RideSharing.InternalAPI.csproj", "{D700D7F4-24BE-4410-9207-17A882CEFDBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.AuthenticationAPI", "src\RideSharing.AuthenticationAPI\RideSharing.AuthenticationAPI.csproj", "{B66F290F-DDC2-4268-9DDA-E6B543F25202}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{899A0D46-B32C-426C-9F45-E0904E6DDEE6}"
+	ProjectSection(SolutionItems) = preProject
+		docker\.dockerignore = docker\.dockerignore
+		docker\.env = docker\.env
+		docker\.env.example = docker\.env.example
+		docker\docker-compose-keycloak.dev.yml = docker\docker-compose-keycloak.dev.yml
+		docker\docker-compose-keycloak.prod.yml = docker\docker-compose-keycloak.prod.yml
+		docker\docker-compose-postgres.yml = docker\docker-compose-postgres.yml
+		docker\docker-compose-rabbitmq.yml = docker\docker-compose-rabbitmq.yml
+		docker\docker-compose-redis.yml = docker\docker-compose-redis.yml
+		docker\docker-compose.dev.yml = docker\docker-compose.dev.yml
+		docker\docker-compose.yml = docker\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{9D2BBD17-4817-4D07-9986-D35C2E9B26BC}"
+	ProjectSection(SolutionItems) = preProject
+		docker\keycloak\realm-export.json = docker\keycloak\realm-export.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{98D59914-A7EF-465C-BC6E-C2E1E7BD63BB}"
+	ProjectSection(SolutionItems) = preProject
+		docker\nginx\nginx.conf = docker\nginx\nginx.conf
+		docker\nginx\nginx.dev.conf = docker\nginx\nginx.dev.conf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,10 +124,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3A40E1D3-F043-404E-873F-47EE0895DD87} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
-		{E8371E64-8EDE-414F-8B4B-725180C30A82} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
 		{5240773F-24BC-4A31-8E72-AC5DC72EC50C} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
-		{F80900B7-A383-48F8-9B14-F37D0E41132F} = {E8371E64-8EDE-414F-8B4B-725180C30A82}
 		{C850FC17-297B-4CE1-836F-E6ECB8EF3033} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{8254A509-05DA-4E5C-82C5-238975099563} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{EF9A971C-1669-42B9-8592-FF9D437E87B3} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
@@ -140,6 +136,9 @@ Global
 		{82B891E7-536C-43C7-A252-B5D8B8CF4E53} = {F7745BB3-CFC6-49CB-A066-53375EE45099}
 		{D700D7F4-24BE-4410-9207-17A882CEFDBF} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{B66F290F-DDC2-4268-9DDA-E6B543F25202} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
+		{899A0D46-B32C-426C-9F45-E0904E6DDEE6} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
+		{9D2BBD17-4817-4D07-9986-D35C2E9B26BC} = {899A0D46-B32C-426C-9F45-E0904E6DDEE6}
+		{98D59914-A7EF-465C-BC6E-C2E1E7BD63BB} = {899A0D46-B32C-426C-9F45-E0904E6DDEE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}

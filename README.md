@@ -70,18 +70,30 @@ setx API__Keycloak__Realm "RideSharing"
 
 ### Production Environment
 
-Open Terminal from project root directory and run the following command to run all containers in detached mode:
+Open Terminal from project /docker directory and run the following command to run all containers in detached mode:
 
 ```
-docker compose up -d
+docker compose 
+	-f docker-compose-keycloak.prod.yml 
+	-f docker-compose-postgres.yml 
+	-f docker-compose-rabbitmq.yml 
+	-f docker-compose-redis.yml 
+	docker-compose.dev.yml 
+up -d
 ```
 
 ### Development Environment
 
-Open Terminal from project root directory and run the following command to run all containers in detached mode:
+Open Terminal from project /docker directory and run the following command to run all containers in detached mode:
 
 ```
-docker compose -f docker-compose.dev.yml up -d
+docker compose 
+	-f docker-compose-keycloak.dev.yml 
+	-f docker-compose-postgres.yml 
+	-f docker-compose-rabbitmq.yml 
+	-f docker-compose-redis.yml 
+	docker-compose.dev.yml 
+up -d
 ```
 
 ## Usage
