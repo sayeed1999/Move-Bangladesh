@@ -53,7 +53,7 @@ namespace RideSharing.Application
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(Trip.TripStatus), TripStatus.TripCompleted, System.Data.DbType.Int16);
+			parameters.Add(nameof(Trip.TripStatus), (int)TripStatus.TripCompleted, System.Data.DbType.Int16);
 			parameters.Add(nameof(Trip.DriverId), driverId, System.Data.DbType.Guid);
 
 			using (var connection = _dapperContext.CreateConnection())
