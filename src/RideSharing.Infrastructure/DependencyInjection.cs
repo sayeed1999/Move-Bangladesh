@@ -37,5 +37,5 @@ public static class DependencyInjection
 		=> services.AddScoped<DbContext, ApplicationDbContext>();
 
 	private static IServiceCollection RegisterDapperContext(this IServiceCollection services)
-		=> services.AddSingleton<DapperContext>();
+		=> services.AddScoped<DapperContext>();
 }
