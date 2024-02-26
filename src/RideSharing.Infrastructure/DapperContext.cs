@@ -1,5 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Npgsql;
 using System.Data;
 
 namespace RideSharing.Infrastructure
@@ -16,6 +16,6 @@ namespace RideSharing.Infrastructure
 		}
 
 		public IDbConnection CreateConnection()
-			=> new SqlConnection(_connectionString);
+			=> new NpgsqlConnection(_connectionString);
 	}
 }

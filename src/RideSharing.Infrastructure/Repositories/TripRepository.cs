@@ -25,13 +25,14 @@ namespace RideSharing.Application
 		{
 			var query = new StringBuilder();
 
-			query.Append("SELECT TOP 1 * FROM Trips");
-			query.Append($" WHERE {nameof(Trip.TripStatus)} <> @{nameof(Trip.TripStatus)}");
-			query.Append($" AND {nameof(Trip.CustomerId)} = @{nameof(Trip.CustomerId)}");
+			query.Append("SELECT * FROM \"Trips\"");
+			query.Append($" WHERE \"{nameof(Trip.TripStatus)}\" <> @{nameof(Trip.TripStatus)}");
+			query.Append($" AND \"{nameof(Trip.CustomerId)}\" = @{nameof(Trip.CustomerId)}");
+			query.Append(" LIMIT 1");
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(Trip.TripStatus), TripStatus.TripCompleted, System.Data.DbType.Int16);
+			parameters.Add(nameof(Trip.TripStatus), (int)TripStatus.TripCompleted, System.Data.DbType.Int16);
 			parameters.Add(nameof(Trip.CustomerId), customerId, System.Data.DbType.Guid);
 
 			using (var connection = _dapperContext.CreateConnection())
@@ -45,9 +46,10 @@ namespace RideSharing.Application
 		{
 			var query = new StringBuilder();
 
-			query.Append("SELECT TOP 1 * FROM Trips");
-			query.Append($" WHERE {nameof(Trip.TripStatus)} <> @{nameof(Trip.TripStatus)}");
-			query.Append($" AND {nameof(Trip.DriverId)} = @{nameof(Trip.DriverId)}");
+			query.Append("SELECT * FROM \"Trips\"");
+			query.Append($" WHERE \"{nameof(Trip.TripStatus)}\" <> @{nameof(Trip.TripStatus)}");
+			query.Append($" AND \"{nameof(Trip.DriverId)}\" = @{nameof(Trip.DriverId)}");
+			query.Append(" LIMIT 1");
 
 			var parameters = new DynamicParameters();
 

@@ -25,14 +25,15 @@ namespace RideSharing.Infrastructure.Repositories
 
 			var query = new StringBuilder();
 
-			query.Append($"SELECT TOP 1 FROM TripRequests");
-			query.Append($" WHERE {nameof(TripRequest.Status)} = @{nameof(TripRequest.Status)}");
-			query.Append($" AND {nameof(TripRequest.UpdatedAt)} >= @{nameof(oneMinuteAgo)}");
-			query.Append($" AND {nameof(TripRequest.CustomerId)} = @{nameof(TripRequest.CustomerId)}");
+			query.Append($"SELECT * FROM \"TripRequests\"");
+			query.Append($" WHERE \"{nameof(TripRequest.Status)}\" = @{nameof(TripRequest.Status)}");
+			query.Append($" AND \"{nameof(TripRequest.UpdatedAt)}\" >= @{nameof(oneMinuteAgo)}");
+			query.Append($" AND \"{nameof(TripRequest.CustomerId)}\" = @{nameof(TripRequest.CustomerId)}");
+			query.Append(" LIMIT 1");
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(TripRequest.Status), TripRequestStatus.NoDriverAccepted, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripRequest.Status), (int)TripRequestStatus.NoDriverAccepted, System.Data.DbType.Int16);
 			parameters.Add(nameof(oneMinuteAgo), oneMinuteAgo, System.Data.DbType.DateTime);
 			parameters.Add(nameof(TripRequest.CustomerId), customerId, System.Data.DbType.Guid);
 
