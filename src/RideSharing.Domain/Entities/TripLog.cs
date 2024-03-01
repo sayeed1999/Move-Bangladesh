@@ -5,6 +5,11 @@ namespace RideSharing.Domain.Entities
 {
 	public class TripLog : BaseEntity
 	{
+		public TripLog()
+		{
+
+		}
+
 		public TripLog(Trip trip) : base()
 		{
 			TripId = trip.Id;

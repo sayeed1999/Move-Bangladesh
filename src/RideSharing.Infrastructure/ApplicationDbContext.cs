@@ -21,6 +21,7 @@ public class ApplicationDbContext : DbContext
 	public DbSet<TripRequest> TripRequests { get; set; }
 	public DbSet<TripRequestLog> TripRequestLogs { get; set; }
 	public DbSet<Trip> Trips { get; set; }
+	public DbSet<TripLog> TripLogs { get; set; }
 	#endregion
 
 	// Connection String is initialized from RideSharing.API -> Startup.cs...
