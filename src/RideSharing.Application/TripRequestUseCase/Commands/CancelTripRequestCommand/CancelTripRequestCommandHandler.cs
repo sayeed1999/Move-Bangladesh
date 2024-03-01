@@ -9,16 +9,13 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 		: IRequestHandler<CancelTripRequestCommandDto, Result<CancelTripRequestCommandResponseDto>>
 	{
 		private readonly ITripRequestRepository tripRequestRepository;
-		private readonly ITripRequestLogRepository tripRequestLogRepository;
 		private readonly ICustomerRepository customerRepository;
 
 		public CancelTripRequestCommandHandler(
 			ITripRequestRepository tripRequestRepository,
-			ITripRequestLogRepository tripRequestLogRepository,
 			ICustomerRepository customerRepository)
 		{
 			this.tripRequestRepository = tripRequestRepository;
-			this.tripRequestLogRepository = tripRequestLogRepository;
 			this.customerRepository = customerRepository;
 		}
 
@@ -51,9 +48,9 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 
 			try
 			{
-				res = await tripRequestRepository.UpdateAsync(canceledTripRequest.Value);
+				// Note: log table is inserted from database triggers, not api
 
-				await tripRequestLogRepository.AddAsync(new TripRequestLog(res));
+				res = await tripRequestRepository.UpdateAsync(canceledTripRequest.Value);
 
 				await tripRequestRepository.CommitTransactionAsync(transaction);
 

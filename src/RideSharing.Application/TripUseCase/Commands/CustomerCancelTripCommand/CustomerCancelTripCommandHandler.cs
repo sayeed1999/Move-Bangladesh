@@ -7,7 +7,6 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 {
 	public class CustomerCancelTripCommandHandler(
 		ITripRepository tripRepository,
-		ITripLogRepository tripLogRepository,
 		ICustomerRepository customerRepository)
 		: IRequestHandler<CustomerCancelTripCommandDto, Result<CustomerCancelTripCommandResponseDto>>
 	{
@@ -47,9 +46,9 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 
 			try
 			{
-				res = await tripRepository.UpdateAsync(modifiedTrip);
+				// Note: log table is inserted from database triggers, not api
 
-				await tripLogRepository.AddAsync(new TripLog(res));
+				res = await tripRepository.UpdateAsync(modifiedTrip);
 
 				await tripRepository.CommitTransactionAsync(transaction);
 

@@ -9,18 +9,15 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 		: IRequestHandler<TripRequestCommandDto, Result<TripRequestCommandResponseDto>>
 	{
 		private readonly ITripRequestRepository tripRequestRepository;
-		private readonly ITripRequestLogRepository tripRequestLogRepository;
 		private readonly ITripRepository tripRepository;
 		private readonly ICustomerRepository customerRepository;
 
 		public TripRequestCommandHandler(
 			ITripRequestRepository tripRequestRepository,
-			ITripRequestLogRepository tripRequestLogRepository,
 			ITripRepository tripRepository,
 			ICustomerRepository customerRepository)
 		{
 			this.tripRequestRepository = tripRequestRepository;
-			this.tripRequestLogRepository = tripRequestLogRepository;
 			this.tripRepository = tripRepository;
 			this.customerRepository = customerRepository;
 		}
@@ -71,9 +68,9 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 			var transaction = await tripRequestRepository.BeginTransactionAsync();
 			try
 			{
-				res = await tripRequestRepository.AddAsync(tripRequest.Value);
+				// Note: log table is inserted from database triggers, not api
 
-				await tripRequestLogRepository.AddAsync(new TripRequestLog(res));
+				res = await tripRequestRepository.AddAsync(tripRequest.Value);
 
 				await tripRequestRepository.CommitTransactionAsync(transaction);
 

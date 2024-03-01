@@ -8,9 +8,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestC
 	public class AcceptTripRequestHandler(
 		IDriverRepository driverRepository,
 		ITripRequestRepository tripRequestRepository,
-		ITripRequestLogRepository tripRequestLogRepository,
-		ITripRepository tripRepository,
-		ITripLogRepository tripLogRepository
+		ITripRepository tripRepository
 	)
 		: IRequestHandler<AcceptTripRequestDto, Result<AcceptTripRequestResponseDto>>
 	{
@@ -65,15 +63,13 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestC
 
 			try
 			{
-				// update trip request & insert log
+				// Note: log table is inserted from database triggers, not api
+
+				// update trip request
 				var tripRequestRes = await tripRequestRepository.UpdateAsync(tripRequest.Value);
 
-				await tripRequestLogRepository.AddAsync(new TripRequestLog(tripRequestRes));
-
-				// create trip & insert log
+				// create trip
 				res = await tripRepository.AddAsync(newTrip.Value);
-
-				await tripLogRepository.AddAsync(new TripLog(res));
 
 				// commit
 				await tripRequestRepository.CommitTransactionAsync(transaction);
