@@ -10,14 +10,19 @@ namespace RideSharing.ServiceBus.RabbitMQ
 	{
 		private IConnectionFactory _factory;
 
-		protected readonly string hostName;
-		protected readonly string exchange;
-		protected readonly string routingKey;
-		protected readonly string exchangeType;
+		protected string hostName { get; private set; }
+		protected string exchange { get; private set; }
+		protected string routingKey { get; private set; }
+		protected string exchangeType { get; private set; }
 
 		//TODO:- add topic exchange support
 
-		public RabbitMQ(string exchange, string? routingKey)
+		private RabbitMQ()
+		{
+
+		}
+
+		void IEventBus.Initialize(string exchange, string? routingKey)
 		{
 			// TODO:- take the hostname from appsettings.json
 			hostName = hostName ?? "localhost";
@@ -28,10 +33,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 				routingKey == string.Empty
 				? ExchangeType.Fanout
 				: ExchangeType.Direct;
-		}
 
-		void IEventBus.Initialize()
-		{
 			_factory = new ConnectionFactory() { HostName = hostName };
 
 			using (var connection = _factory.CreateConnection())

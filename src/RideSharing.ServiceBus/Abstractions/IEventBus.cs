@@ -5,7 +5,9 @@
 		/// <summary>
 		/// Use this method to initialize your service bus into your service.
 		/// </summary>
-		void Initialize();
+		/// <param name="exchange"></param>
+		/// <param name="routingKey"></param>
+		void Initialize(string exchange, string? routingKey);
 
 		/// <summary>
 		/// Use this to implement event bus publisher.
