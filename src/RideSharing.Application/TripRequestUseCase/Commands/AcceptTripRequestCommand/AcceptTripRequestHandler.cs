@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
+using RideSharing.Common.MessageQueues.EventBusHandler;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestCommand
@@ -8,7 +9,8 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestC
 	public class AcceptTripRequestHandler(
 		IDriverRepository driverRepository,
 		ITripRequestRepository tripRequestRepository,
-		ITripRepository tripRepository
+		ITripRepository tripRepository,
+		ITripHandlerEventBus messageBus
 	)
 		: IRequestHandler<AcceptTripRequestDto, Result<AcceptTripRequestResponseDto>>
 	{
@@ -77,6 +79,8 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestC
 				// Last Step: return result
 
 				var responseDto = new AcceptTripRequestResponseDto(res.DriverId, res.Id);
+
+				messageBus.PublishAsync(responseDto);
 
 				return Result.Success(responseDto);
 			}

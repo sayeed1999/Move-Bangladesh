@@ -1,13 +1,15 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
+using RideSharing.Common.MessageQueues.EventBusHandler;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 {
 	public class CustomerCancelTripCommandHandler(
 		ITripRepository tripRepository,
-		ICustomerRepository customerRepository)
+		ICustomerRepository customerRepository,
+		ITripHandlerEventBus messageBus)
 		: IRequestHandler<CustomerCancelTripCommandDto, Result<CustomerCancelTripCommandResponseDto>>
 	{
 		public async Task<Result<CustomerCancelTripCommandResponseDto>> Handle(CustomerCancelTripCommandDto request, CancellationToken cancellationToken)
@@ -55,6 +57,8 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 				// Last Step: return result
 
 				var responseDto = new CustomerCancelTripCommandResponseDto(request.CustomerId, request.TripId, request.Reason);
+
+				messageBus.PublishAsync(responseDto);
 
 				return Result.Success(responseDto);
 			}

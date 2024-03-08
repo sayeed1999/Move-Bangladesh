@@ -1,24 +1,17 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
+using RideSharing.Common.MessageQueues.EventBusHandler;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand
 {
-	public class CancelTripRequestCommandHandler
+	public class CancelTripRequestCommandHandler(
+		ITripRequestRepository tripRequestRepository,
+		ICustomerRepository customerRepository,
+		ITripHandlerEventBus messageBus)
 		: IRequestHandler<CancelTripRequestCommandDto, Result<CancelTripRequestCommandResponseDto>>
 	{
-		private readonly ITripRequestRepository tripRequestRepository;
-		private readonly ICustomerRepository customerRepository;
-
-		public CancelTripRequestCommandHandler(
-			ITripRequestRepository tripRequestRepository,
-			ICustomerRepository customerRepository)
-		{
-			this.tripRequestRepository = tripRequestRepository;
-			this.customerRepository = customerRepository;
-		}
-
 		public async Task<Result<CancelTripRequestCommandResponseDto>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
@@ -57,6 +50,8 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 				// Last Step: return result
 
 				var responseDto = new CancelTripRequestCommandResponseDto(true);
+
+				messageBus.PublishAsync(responseDto);
 
 				return Result.Success(responseDto);
 			}

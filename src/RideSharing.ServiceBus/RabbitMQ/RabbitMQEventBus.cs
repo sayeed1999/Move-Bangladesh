@@ -23,7 +23,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 		}
 
 		public Task PublishAsync<T>(T integrationEvent, CancellationToken cancellationToken = default)
-			where T : struct, IIntegrationEvent
+			where T : struct
 		{
 			using (var connection = _factory.CreateConnection())
 			using (var channel = connection.CreateModel())
@@ -50,7 +50,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 		}
 
 		public Task ConsumeAsync<T>(T integrationEvent, Func<T, Task> handleMessage, CancellationToken cancellationToken = default)
-			where T : struct, IIntegrationEvent
+			where T : struct
 		{
 			var queueName = integrationEvent.GetType().Name;
 

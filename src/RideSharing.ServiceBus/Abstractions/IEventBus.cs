@@ -12,7 +12,7 @@
 		public Task PublishAsync<T>(
 			T integrationEvent,
 			CancellationToken cancellationToken = default)
-			where T : struct, IIntegrationEvent;
+			where T : struct;
 
 		/// <summary>
 		/// Use this to implement event bus subscriber.
@@ -26,6 +26,6 @@
 			T integrationEvent,
 			Func<T, Task> handleMessage,
 			CancellationToken cancellationToken = default)
-			where T : struct, IIntegrationEvent;
+			where T : struct;
 	}
 }
