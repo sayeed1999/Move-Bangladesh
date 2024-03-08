@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using RideSharing.Common.MessageQueues.EventBusHandler;
 
 namespace RideSharing.Application;
 
@@ -15,9 +14,6 @@ public static class DependencyInjection
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
 
 		services.AddValidatorsFromAssembly(assembly);
-
-		// register message buses
-		services.AddSingleton<ITripHandlerEventBus, TripHandlerEventBus>();
 
 		return services;
 	}

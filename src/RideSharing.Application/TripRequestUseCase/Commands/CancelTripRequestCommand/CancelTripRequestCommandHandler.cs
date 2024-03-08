@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
-using RideSharing.Common.MessageQueues.EventBusHandler;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand
@@ -9,7 +8,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 	public class CancelTripRequestCommandHandler(
 		ITripRequestRepository tripRequestRepository,
 		ICustomerRepository customerRepository,
-		ITripHandlerEventBus messageBus)
+		ITripEventPublisher messageBus)
 		: IRequestHandler<CancelTripRequestCommandDto, Result<CancelTripRequestCommandResponseDto>>
 	{
 		public async Task<Result<CancelTripRequestCommandResponseDto>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)

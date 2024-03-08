@@ -8,6 +8,11 @@ public static class DependencyInjection
 {
 	public static IServiceCollection RegisterInfrastructureToApplication(this IServiceCollection services)
 		=> services
+			.RegisterDatabaseRepositories()
+			.RegisterEventBuses();
+
+	public static IServiceCollection RegisterDatabaseRepositories(this IServiceCollection services)
+		=> services
 			.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
 			.AddScoped<ICabRepository, CabRepository>()
 			.AddScoped<ICustomerRatingRepository, CustomerRatingRepository>()
@@ -19,4 +24,8 @@ public static class DependencyInjection
 			.AddScoped<ITripRequestLogRepository, TripRequestLogRepository>()
 			.AddScoped<ITripRepository, TripRepository>()
 			.AddScoped<ITripLogRepository, TripLogRepository>();
+
+	public static IServiceCollection RegisterEventBuses(this IServiceCollection services)
+		=> services
+			.AddSingleton<ITripEventPublisher, ITripEventPublisher>();
 }
