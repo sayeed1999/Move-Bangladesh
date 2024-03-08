@@ -1,27 +1,18 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
+using RideSharing.Common.MessageQueues.EventBusHandler;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 {
-	public class TripRequestCommandHandler
+	public class TripRequestCommandHandler(
+		ITripRequestRepository tripRequestRepository,
+		ITripRepository tripRepository,
+		ICustomerRepository customerRepository,
+		ITripHandlerEventBus messageBus)
 		: IRequestHandler<TripRequestCommandDto, Result<TripRequestCommandResponseDto>>
 	{
-		private readonly ITripRequestRepository tripRequestRepository;
-		private readonly ITripRepository tripRepository;
-		private readonly ICustomerRepository customerRepository;
-
-		public TripRequestCommandHandler(
-			ITripRequestRepository tripRequestRepository,
-			ITripRepository tripRepository,
-			ICustomerRepository customerRepository)
-		{
-			this.tripRequestRepository = tripRequestRepository;
-			this.tripRepository = tripRepository;
-			this.customerRepository = customerRepository;
-		}
-
 		public async Task<Result<TripRequestCommandResponseDto>> Handle(TripRequestCommandDto model, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
@@ -76,6 +67,9 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 
 				// Step 5: return response
 				var responseDto = new TripRequestCommandResponseDto(res);
+
+				// Note: this method call is not intentionally awaited!
+				messageBus.PublishAsync(responseDto);
 
 				return Result.Success(responseDto);
 			}

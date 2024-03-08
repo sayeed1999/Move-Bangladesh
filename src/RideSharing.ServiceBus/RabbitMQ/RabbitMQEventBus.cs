@@ -17,63 +17,51 @@ namespace RideSharing.ServiceBus.RabbitMQ
 
 		//TODO:- add topic exchange support
 
-		private RabbitMQEventBus()
+		public RabbitMQEventBus()
 		{
-
+			_factory = new ConnectionFactory() { HostName = hostName ?? "localhost" };
 		}
 
-		void IEventBus.Initialize(string exchange, string? routingKey)
-		{
-			// TODO:- take the hostname from appsettings.json
-			hostName = hostName ?? "localhost";
-			exchange = exchange ?? string.Empty;
-			routingKey = routingKey ?? string.Empty;
-
-			exchangeType =
-				routingKey == string.Empty
-				? ExchangeType.Fanout
-				: ExchangeType.Direct;
-
-			_factory = new ConnectionFactory() { HostName = hostName };
-
-			using (var connection = _factory.CreateConnection())
-			using (var channel = connection.CreateModel())
-			{
-				channel.ExchangeDeclare(exchange, exchangeType);
-			}
-		}
-
-		Task IEventBus.PublishAsync<T>(T integrationEvent, CancellationToken cancellationToken)
+		public Task PublishAsync<T>(T integrationEvent, CancellationToken cancellationToken = default)
+			where T : struct, IIntegrationEvent
 		{
 			using (var connection = _factory.CreateConnection())
 			using (var channel = connection.CreateModel())
 			{
+				var queueName = integrationEvent.GetType().Name;
+
+				channel.QueueDeclare(queue: queueName,
+									 durable: false,
+									 exclusive: false,
+									 autoDelete: false,
+									 arguments: null);
+
 				var message = JsonSerializer.Serialize(integrationEvent);
 				var body = Encoding.UTF8.GetBytes(message);
-				channel.BasicPublish(exchange: exchange,
-									routingKey: routingKey,
+
+				channel.BasicPublish(exchange: string.Empty,
+									routingKey: queueName,
 									basicProperties: null,
 									body: body);
+				Console.WriteLine(" [x] Published {0}", message);
 			}
 
 			return Task.CompletedTask;
 		}
 
-		Task IEventBus.ConsumeAsync<T>(T integrationEvent, Func<T, Task> handleMessage, CancellationToken cancellationToken)
+		public Task ConsumeAsync<T>(T integrationEvent, Func<T, Task> handleMessage, CancellationToken cancellationToken = default)
+			where T : struct, IIntegrationEvent
 		{
+			var queueName = integrationEvent.GetType().Name;
+
 			using (var connection = _factory.CreateConnection())
 			using (var channel = connection.CreateModel())
 			{
-				channel.ExchangeDeclare(exchange: exchange,
-										type: exchangeType,
-										durable: true,
-										autoDelete: false);
-
-				// declare a server-named queue
-				var queueName = channel.QueueDeclare().QueueName;
-				channel.QueueBind(queue: queueName,
-								  exchange: exchange,
-								  routingKey: routingKey);
+				channel.QueueDeclare(queue: queueName,
+									 durable: false,
+									 exclusive: false,
+									 autoDelete: false,
+									 arguments: null);
 
 				var consumer = new EventingBasicConsumer(channel);
 				consumer.Received += async (model, ea) =>
@@ -85,10 +73,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 					var integrationEvent = JsonSerializer.Deserialize<T>(message);
 
 					// perform certain action on the message.
-					if (integrationEvent is not null)
-					{
-						await handleMessage(integrationEvent);
-					}
+					await handleMessage(integrationEvent);
 				};
 
 				channel.BasicConsume(queue: queueName,

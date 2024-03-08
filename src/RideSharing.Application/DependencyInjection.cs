@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using RideSharing.ServiceBus.Abstractions;
-using RideSharing.ServiceBus.RabbitMQ;
+using RideSharing.Common.MessageQueues.EventBusHandler;
 
 namespace RideSharing.Application;
 
@@ -17,7 +16,8 @@ public static class DependencyInjection
 
 		services.AddValidatorsFromAssembly(assembly);
 
-		services.AddScoped<IEventBus, RabbitMQEventBus>();
+		// register message buses
+		services.AddSingleton<ITripHandlerEventBus, TripHandlerEventBus>();
 
 		return services;
 	}
