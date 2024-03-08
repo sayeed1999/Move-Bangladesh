@@ -28,5 +28,5 @@ public static class DependencyInjection
 
 	public static IServiceCollection RegisterEventBuses(this IServiceCollection services)
 		=> services
-			.AddSingleton<ITripEventPublisher, TripEventPublisher>();
+			.AddSingleton<ITripEventMessageBus, TripEventMessageBus>();
 }

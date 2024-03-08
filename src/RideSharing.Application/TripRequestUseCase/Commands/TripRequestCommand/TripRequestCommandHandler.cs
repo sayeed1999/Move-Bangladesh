@@ -9,7 +9,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 		ITripRequestRepository tripRequestRepository,
 		ITripRepository tripRepository,
 		ICustomerRepository customerRepository,
-		ITripEventPublisher messageBus)
+		ITripEventMessageBus messageBus)
 		: IRequestHandler<TripRequestCommandDto, Result<TripRequestCommandResponseDto>>
 	{
 		public async Task<Result<TripRequestCommandResponseDto>> Handle(TripRequestCommandDto model, CancellationToken cancellationToken)
@@ -58,11 +58,11 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 
 				var res = await tripRequestRepository.AddAsync(tripRequest.Value);
 
+				// Note: this method call is not intentionally awaited!
+				messageBus.PublishAsync(tripRequest.Value);
+
 				// Step 5: return response
 				var responseDto = new TripRequestCommandResponseDto(res);
-
-				// Note: this method call is not intentionally awaited!
-				messageBus.PublishAsync(responseDto);
 
 				return Result.Success(responseDto);
 			}

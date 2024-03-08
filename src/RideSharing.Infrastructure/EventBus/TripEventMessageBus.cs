@@ -4,7 +4,7 @@ using RideSharing.ServiceBus.RabbitMQ;
 
 namespace RideSharing.Infrastructure.EventBus
 {
-	public class TripEventPublisher : RabbitMQEventBus, ITripEventPublisher
+	public class TripEventMessageBus : RabbitMQEventBus, ITripEventMessageBus
 	{
 		public override Task PublishAsync<T>(T integrationEvent, string queue = "", CancellationToken cancellationToken = default)
 		{
@@ -12,10 +12,10 @@ namespace RideSharing.Infrastructure.EventBus
 			return base.PublishAsync(integrationEvent, nameof(Trip), cancellationToken);
 		}
 
-		public override Task ConsumeAsync<T>(T integrationEvent, Func<T, Task> handleMessage, string queue = "", CancellationToken cancellationToken = default)
+		public override Task ConsumeAsync<T>(Func<T, Task> handleMessage, string queue = "", CancellationToken cancellationToken = default)
 		{
 			// overriding queue name
-			return base.ConsumeAsync(integrationEvent, handleMessage, nameof(Trip), cancellationToken);
+			return base.ConsumeAsync(handleMessage, nameof(Trip), cancellationToken);
 		}
 	}
 }

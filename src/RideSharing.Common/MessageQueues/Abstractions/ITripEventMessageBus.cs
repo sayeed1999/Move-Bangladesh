@@ -2,7 +2,7 @@
 
 namespace RideSharing.Application.Abstractions
 {
-	public interface ITripEventPublisher : IEventBus
+	public interface ITripEventMessageBus : IEventBus
 	{
 
 	}

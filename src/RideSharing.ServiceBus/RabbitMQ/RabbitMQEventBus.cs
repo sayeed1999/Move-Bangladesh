@@ -26,7 +26,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			T integrationEvent,
 			string queue = "",
 			CancellationToken cancellationToken = default)
-			where T : struct
+			where T : class
 		{
 			using (var connection = _factory.CreateConnection())
 			using (var channel = connection.CreateModel())
@@ -53,13 +53,12 @@ namespace RideSharing.ServiceBus.RabbitMQ
 		}
 
 		public virtual Task ConsumeAsync<T>(
-			T integrationEvent,
 			Func<T, Task> handleMessage,
 			string queue = "",
 			CancellationToken cancellationToken = default)
-			where T : struct
+			where T : class
 		{
-			var queueName = queue ?? integrationEvent.GetType().Name;
+			var queueName = queue ?? typeof(T).Name;
 
 			using (var connection = _factory.CreateConnection())
 			using (var channel = connection.CreateModel())

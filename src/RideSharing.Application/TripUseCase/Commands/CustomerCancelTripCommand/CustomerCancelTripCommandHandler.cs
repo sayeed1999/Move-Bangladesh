@@ -8,7 +8,7 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 	public class CustomerCancelTripCommandHandler(
 		ITripRepository tripRepository,
 		ICustomerRepository customerRepository,
-		ITripEventPublisher messageBus)
+		ITripEventMessageBus messageBus)
 		: IRequestHandler<CustomerCancelTripCommandDto, Result<CustomerCancelTripCommandResponseDto>>
 	{
 		public async Task<Result<CustomerCancelTripCommandResponseDto>> Handle(CustomerCancelTripCommandDto request, CancellationToken cancellationToken)
@@ -46,10 +46,10 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 
 				var res = await tripRepository.UpdateAsync(modifiedTrip);
 
+				messageBus.PublishAsync(modifiedTrip);
+
 				// Last Step: return result
 				var responseDto = new CustomerCancelTripCommandResponseDto(request.CustomerId, request.TripId, request.Reason);
-
-				messageBus.PublishAsync(responseDto);
 
 				return Result.Success(responseDto);
 			}
