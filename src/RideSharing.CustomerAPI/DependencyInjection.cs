@@ -1,5 +1,6 @@
 ﻿using RideSharing.Application;
 using RideSharing.Application.Abstractions;
+using RideSharing.Infrastructure.EventBus;
 using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.CustomerAPI;
@@ -27,5 +28,5 @@ public static class DependencyInjection
 
 	public static IServiceCollection RegisterEventBuses(this IServiceCollection services)
 		=> services
-			.AddSingleton<ITripEventPublisher, ITripEventPublisher>();
+			.AddSingleton<ITripEventPublisher, TripEventPublisher>();
 }
