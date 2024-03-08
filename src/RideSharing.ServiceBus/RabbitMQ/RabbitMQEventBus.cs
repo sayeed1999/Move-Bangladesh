@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace RideSharing.ServiceBus.RabbitMQ
 {
-	public class RabbitMQ : IEventBus
+	public class RabbitMQEventBus : IEventBus
 	{
 		private IConnectionFactory _factory;
 
@@ -17,7 +17,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 
 		//TODO:- add topic exchange support
 
-		private RabbitMQ()
+		private RabbitMQEventBus()
 		{
 
 		}
