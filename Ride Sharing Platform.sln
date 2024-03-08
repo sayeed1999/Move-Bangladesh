@@ -71,7 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{98D59914
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.NotificationService", "src\RideSharing.NotificationService\RideSharing.NotificationService.csproj", "{EAFF1A41-6D58-445A-8F92-DF05899052C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.ServiceBus", "src\RideSharing.ServiceBus\RideSharing.ServiceBus.csproj", "{0C2A46A3-9B19-4531-A675-0A2595B759FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.ServiceBus", "src\RideSharing.ServiceBus\RideSharing.ServiceBus.csproj", "{0088D350-CC57-4F34-9BE5-BF2384314D50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,10 +127,10 @@ Global
 		{EAFF1A41-6D58-445A-8F92-DF05899052C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAFF1A41-6D58-445A-8F92-DF05899052C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAFF1A41-6D58-445A-8F92-DF05899052C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C2A46A3-9B19-4531-A675-0A2595B759FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C2A46A3-9B19-4531-A675-0A2595B759FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C2A46A3-9B19-4531-A675-0A2595B759FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C2A46A3-9B19-4531-A675-0A2595B759FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0088D350-CC57-4F34-9BE5-BF2384314D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0088D350-CC57-4F34-9BE5-BF2384314D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0088D350-CC57-4F34-9BE5-BF2384314D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0088D350-CC57-4F34-9BE5-BF2384314D50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,7 +152,7 @@ Global
 		{9D2BBD17-4817-4D07-9986-D35C2E9B26BC} = {899A0D46-B32C-426C-9F45-E0904E6DDEE6}
 		{98D59914-A7EF-465C-BC6E-C2E1E7BD63BB} = {899A0D46-B32C-426C-9F45-E0904E6DDEE6}
 		{EAFF1A41-6D58-445A-8F92-DF05899052C3} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
-		{0C2A46A3-9B19-4531-A675-0A2595B759FF} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
+		{0088D350-CC57-4F34-9BE5-BF2384314D50} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}
