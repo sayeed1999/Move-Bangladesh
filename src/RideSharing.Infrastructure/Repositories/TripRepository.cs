@@ -37,7 +37,7 @@ namespace RideSharing.Application
 
 			using (var connection = _dapperContext.CreateConnection())
 			{
-				var trip = await connection.QueryFirstOrDefaultAsync(query.ToString(), parameters);
+				var trip = await connection.QueryFirstOrDefaultAsync<Trip>(query.ToString(), parameters);
 				return trip;
 			}
 		}
