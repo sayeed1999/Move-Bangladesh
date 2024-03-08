@@ -52,7 +52,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			return Task.CompletedTask;
 		}
 
-		public virtual Task ConsumeAsync<T>(
+		public virtual async Task ConsumeAsync<T>(
 			Func<T, Task> handleMessage,
 			string queue = "",
 			CancellationToken cancellationToken = default)
@@ -60,34 +60,45 @@ namespace RideSharing.ServiceBus.RabbitMQ
 		{
 			var queueName = queue ?? typeof(T).Name;
 
-			using (var connection = _factory.CreateConnection())
-			using (var channel = connection.CreateModel())
+			while (!cancellationToken.IsCancellationRequested)
 			{
-				channel.QueueDeclare(queue: queueName,
-									 durable: false,
-									 exclusive: false,
-									 autoDelete: false,
-									 arguments: null);
-
-				var consumer = new EventingBasicConsumer(channel);
-				consumer.Received += async (model, ea) =>
+				try
 				{
-					var body = ea.Body.ToArray();
-					var message = Encoding.UTF8.GetString(body);
-					Console.WriteLine(" [x] Received {0}", message);
+					using (var connection = _factory.CreateConnection())
+					using (var channel = connection.CreateModel())
+					{
+						channel.QueueDeclare(queue: queueName,
+											 durable: false,
+											 exclusive: false,
+											 autoDelete: false,
+											 arguments: null);
 
-					var integrationEvent = JsonSerializer.Deserialize<T>(message);
+						var consumer = new EventingBasicConsumer(channel);
+						consumer.Received += async (model, ea) =>
+						{
+							var body = ea.Body.ToArray();
+							var message = Encoding.UTF8.GetString(body);
+							Console.WriteLine(" [x] Received {0}", message);
 
-					// perform certain action on the message.
-					await handleMessage(integrationEvent);
-				};
+							var integrationEvent = JsonSerializer.Deserialize<T>(message);
 
-				channel.BasicConsume(queue: queueName,
-									autoAck: true,
-									consumer: consumer);
+							// perform certain action on the message.
+							await handleMessage(integrationEvent);
+						};
+
+						channel.BasicConsume(queue: queueName,
+											autoAck: true,
+											consumer: consumer);
+					}
+				}
+				catch (Exception ex)
+				{
+
+				}
+
+				// keep the thread alive
+				await Task.Delay(100, cancellationToken);
 			}
-
-			return Task.CompletedTask;
 		}
 	}
 }

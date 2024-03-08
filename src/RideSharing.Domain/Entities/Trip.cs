@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using NetTopologySuite.Geometries;
+using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities;
@@ -73,6 +74,20 @@ public class Trip : BaseEntity
 		modifiedTrip.TripStatus = TripStatus.DriverCanceled;
 
 		return modifiedTrip;
+	}
+
+	public static TripDto GetTripDto(Trip trip)
+	{
+		return new TripDto(
+			trip.Id,
+			trip.TripRequestId,
+			trip.CustomerId,
+			trip.DriverId,
+			nameof(trip.PaymentMethod),
+			nameof(trip.TripStatus),
+			trip.Source.ToText(),
+			trip.Destination.ToText(),
+			nameof(trip.CabType));
 	}
 
 	private class TripValidator : AbstractValidator<Trip>

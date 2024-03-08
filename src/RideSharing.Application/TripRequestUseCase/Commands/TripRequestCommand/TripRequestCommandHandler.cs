@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
+using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
@@ -9,7 +10,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 		ITripRequestRepository tripRequestRepository,
 		ITripRepository tripRepository,
 		ICustomerRepository customerRepository,
-		ITripEventMessageBus messageBus)
+		ITripRequestEventMessageBus messageBus)
 		: IRequestHandler<TripRequestCommandDto, Result<TripRequestCommandResponseDto>>
 	{
 		public async Task<Result<TripRequestCommandResponseDto>> Handle(TripRequestCommandDto model, CancellationToken cancellationToken)
@@ -59,7 +60,8 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 				var res = await tripRequestRepository.AddAsync(tripRequest.Value);
 
 				// Note: this method call is not intentionally awaited!
-				messageBus.PublishAsync(tripRequest.Value);
+				var messageDto = TripRequest.GetTripRequestDto(tripRequest.Value);
+				messageBus.PublishAsync(messageDto);
 
 				// Step 5: return response
 				var responseDto = new TripRequestCommandResponseDto(res);

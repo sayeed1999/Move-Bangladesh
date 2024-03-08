@@ -1,15 +1,16 @@
 ﻿using Microsoft.Extensions.Hosting;
-using RideSharing.Application.Abstractions;
+using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.NotificationService.Notifier;
+using System.Text.Json;
 
 namespace RideSharing.NotificationService.BackgroundJob
 {
-	internal class TripEventConsumer(
-		ITripEventMessageBus messageBus,
+	internal class TripRequestEventConsumer(
+		ITripRequestEventMessageBus messageBus,
 		INotifier notifier) : BackgroundService
 	{
-		Func<TripDto, Task> notificationHandler = async (TripDto entity) =>
+		Func<TripRequestDto, Task> notificationHandler = async (TripRequestDto entity) =>
 		{
 			await Task.Delay(100);
 			var message = $"[x] Received Message: {JsonSerializer.Serialize(entity)}";

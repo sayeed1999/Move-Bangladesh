@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.Middlewares;
 using RideSharing.Infrastructure;
+using System.Text.Json.Serialization;
 
 namespace RideSharing.CustomerAPI;
 
@@ -12,6 +13,14 @@ public class Program
 
 		// Register prefixed only environment variables.
 		builder.Configuration.AddEnvironmentVariables("API__");
+
+		// Override JsonSerializer settings.
+		builder.Services.AddControllers()
+			.AddJsonOptions(options =>
+			{
+				options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+				options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
+			});
 
 		builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 

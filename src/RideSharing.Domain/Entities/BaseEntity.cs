@@ -1,8 +1,6 @@
-﻿using RideSharing.ServiceBus.Abstractions;
+﻿namespace RideSharing.Domain.Entities;
 
-namespace RideSharing.Domain.Entities;
-
-public abstract class BaseEntity : Event
+public abstract class BaseEntity
 {
 	public BaseEntity()
 	{

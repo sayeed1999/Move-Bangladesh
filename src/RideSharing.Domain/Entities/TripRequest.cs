@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using NetTopologySuite.Geometries;
+using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities;
@@ -74,5 +75,19 @@ public class TripRequest : BaseEntity
 			RuleFor(x => x.Source).NotEmpty();
 			RuleFor(x => x.Destination).NotEmpty();
 		}
+	}
+
+	public static TripRequestDto GetTripRequestDto(TripRequest tripRequest)
+	{
+		var dto = new TripRequestDto(
+			tripRequest.Id,
+			tripRequest.CustomerId,
+			tripRequest.Source.ToText(),
+			tripRequest.Destination.ToText(),
+			nameof(tripRequest.CabType),
+			nameof(tripRequest.PaymentMethod),
+			nameof(tripRequest.Status));
+
+		return dto;
 	}
 }

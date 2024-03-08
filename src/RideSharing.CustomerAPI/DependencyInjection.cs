@@ -1,5 +1,6 @@
 ﻿using RideSharing.Application;
 using RideSharing.Application.Abstractions;
+using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Infrastructure.EventBus;
 using RideSharing.Infrastructure.Repositories;
 
@@ -28,5 +29,6 @@ public static class DependencyInjection
 
 	public static IServiceCollection RegisterEventBuses(this IServiceCollection services)
 		=> services
+			.AddSingleton<ITripRequestEventMessageBus, TripRequestEventMessageBus>()
 			.AddSingleton<ITripEventMessageBus, TripEventMessageBus>();
 }

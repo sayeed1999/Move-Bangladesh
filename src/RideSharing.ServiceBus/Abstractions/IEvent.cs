@@ -8,5 +8,8 @@
 	/// <summary>
 	/// Use this for concrete implementations.
 	/// </summary>
-	public abstract class Event() : IEvent;
+	public abstract class Event : IEvent
+	{
+
+	}
 }

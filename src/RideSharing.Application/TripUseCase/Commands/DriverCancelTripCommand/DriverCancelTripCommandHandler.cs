@@ -53,7 +53,7 @@ namespace RideSharing.Application.TripUseCase.Commands.DriverCancelTripCommand
 
 				await tripRepository.CommitTransactionAsync(transaction);
 
-				tripHandlerEventBus.PublishAsync(modifiedTrip);
+				tripHandlerEventBus.PublishAsync(Trip.GetTripDto(modifiedTrip));
 
 				// Last Step: return result
 				var responseDto = new DriverCancelTripCommandResponseDto(request.DriverId, request.TripId, request.Reason);

@@ -46,7 +46,7 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 
 				var res = await tripRepository.UpdateAsync(modifiedTrip);
 
-				messageBus.PublishAsync(modifiedTrip);
+				messageBus.PublishAsync(Trip.GetTripDto(modifiedTrip));
 
 				// Last Step: return result
 				var responseDto = new CustomerCancelTripCommandResponseDto(request.CustomerId, request.TripId, request.Reason);
