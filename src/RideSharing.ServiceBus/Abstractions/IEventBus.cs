@@ -11,6 +11,7 @@
 		/// <returns></returns>
 		public Task PublishAsync<T>(
 			T integrationEvent,
+			string queue = "",
 			CancellationToken cancellationToken = default)
 			where T : struct;
 
@@ -25,6 +26,7 @@
 		public Task ConsumeAsync<T>(
 			T integrationEvent,
 			Func<T, Task> handleMessage,
+			string queue = "",
 			CancellationToken cancellationToken = default)
 			where T : struct;
 	}

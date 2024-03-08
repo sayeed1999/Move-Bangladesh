@@ -22,13 +22,16 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			_factory = new ConnectionFactory() { HostName = hostName ?? "localhost" };
 		}
 
-		public Task PublishAsync<T>(T integrationEvent, CancellationToken cancellationToken = default)
+		public virtual Task PublishAsync<T>(
+			T integrationEvent,
+			string queue = "",
+			CancellationToken cancellationToken = default)
 			where T : struct
 		{
 			using (var connection = _factory.CreateConnection())
 			using (var channel = connection.CreateModel())
 			{
-				var queueName = integrationEvent.GetType().Name;
+				var queueName = queue ?? integrationEvent.GetType().Name;
 
 				channel.QueueDeclare(queue: queueName,
 									 durable: false,
@@ -49,10 +52,14 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			return Task.CompletedTask;
 		}
 
-		public Task ConsumeAsync<T>(T integrationEvent, Func<T, Task> handleMessage, CancellationToken cancellationToken = default)
+		public virtual Task ConsumeAsync<T>(
+			T integrationEvent,
+			Func<T, Task> handleMessage,
+			string queue = "",
+			CancellationToken cancellationToken = default)
 			where T : struct
 		{
-			var queueName = integrationEvent.GetType().Name;
+			var queueName = queue ?? integrationEvent.GetType().Name;
 
 			using (var connection = _factory.CreateConnection())
 			using (var channel = connection.CreateModel())
