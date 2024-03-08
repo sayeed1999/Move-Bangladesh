@@ -41,21 +41,13 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 			var modifiedTrip = modifiedTripResult.Value;
 
 			// Step 4: perform database operations
-
-			var transaction = await tripRepository.BeginTransactionAsync();
-
-			Trip res;
-
 			try
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				res = await tripRepository.UpdateAsync(modifiedTrip);
-
-				await tripRepository.CommitTransactionAsync(transaction);
+				var res = await tripRepository.UpdateAsync(modifiedTrip);
 
 				// Last Step: return result
-
 				var responseDto = new CustomerCancelTripCommandResponseDto(request.CustomerId, request.TripId, request.Reason);
 
 				messageBus.PublishAsync(responseDto);
@@ -64,8 +56,6 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 			}
 			catch (Exception ex)
 			{
-				await tripRepository.RollBackTransactionAsync(transaction);
-
 				return Result.Failure<CustomerCancelTripCommandResponseDto>($"Failed with error: {ex.Message}");
 			}
 		}

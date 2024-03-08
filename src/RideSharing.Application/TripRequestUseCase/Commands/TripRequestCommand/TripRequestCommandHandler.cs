@@ -53,17 +53,11 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 			}
 
 			// Step 5: perform db operations
-
-			TripRequest? res;
-
-			var transaction = await tripRequestRepository.BeginTransactionAsync();
 			try
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				res = await tripRequestRepository.AddAsync(tripRequest.Value);
-
-				await tripRequestRepository.CommitTransactionAsync(transaction);
+				var res = await tripRequestRepository.AddAsync(tripRequest.Value);
 
 				// Step 5: return response
 				var responseDto = new TripRequestCommandResponseDto(res);
@@ -75,8 +69,6 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 			}
 			catch (Exception ex)
 			{
-				await tripRequestRepository.RollBackTransactionAsync(transaction);
-
 				return Result.Failure<TripRequestCommandResponseDto>($"Failed with error: {ex.Message}");
 			}
 		}
