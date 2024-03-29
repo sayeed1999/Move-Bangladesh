@@ -1,5 +1,4 @@
 ﻿using CSharpFunctionalExtensions;
-using FluentValidation;
 using NetTopologySuite.Geometries;
 using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.Domain.Enums;
@@ -8,32 +7,17 @@ namespace RideSharing.Domain.Entities;
 
 public class Trip : BaseEntity
 {
-	public Guid TripRequestId { get; protected set; }
-	public virtual TripRequest TripRequest { get; protected set; }
-	public Guid CustomerId { get; protected set; }
-	public virtual Customer Customer { get; protected set; }
-	public Guid DriverId { get; protected set; }
-	public virtual Driver Driver { get; protected set; }
-	public PaymentMethod PaymentMethod { get; protected set; }
-	public TripStatus TripStatus { get; protected set; }
-	public Point Source { get; protected set; }
-	public Point Destination { get; protected set; }
-	public CabType CabType { get; protected set; }
-
-	public static Result<Trip> Create(TripRequest tripRequest, Guid driverId)
-	{
-		return new Trip()
-		{
-			TripRequestId = tripRequest.Id,
-			CustomerId = tripRequest.CustomerId,
-			DriverId = driverId,
-			PaymentMethod = tripRequest.PaymentMethod,
-			TripStatus = TripStatus.DriverAccepted,
-			Source = tripRequest.Source,
-			Destination = tripRequest.Destination,
-			CabType = tripRequest.CabType,
-		};
-	}
+	public Guid TripRequestId { get; set; }
+	public virtual TripRequest TripRequest { get; set; }
+	public Guid CustomerId { get; set; }
+	public virtual Customer Customer { get; set; }
+	public Guid DriverId { get; set; }
+	public virtual Driver Driver { get; set; }
+	public PaymentMethod PaymentMethod { get; set; }
+	public TripStatus TripStatus { get; set; }
+	public Point Source { get; set; }
+	public Point Destination { get; set; }
+	public CabType CabType { get; set; }
 
 	public static Result<Trip> Modify(Guid id, TripStatus status)
 	{
@@ -88,14 +72,5 @@ public class Trip : BaseEntity
 			trip.Source.ToText(),
 			trip.Destination.ToText(),
 			nameof(trip.CabType));
-	}
-
-	private class TripValidator : AbstractValidator<Trip>
-	{
-		public TripValidator()
-		{
-			RuleFor(x => x.Source).NotEmpty();
-			RuleFor(x => x.Destination).NotEmpty();
-		}
 	}
 }

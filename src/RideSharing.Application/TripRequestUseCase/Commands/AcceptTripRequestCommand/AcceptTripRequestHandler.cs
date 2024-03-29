@@ -3,6 +3,7 @@ using MediatR;
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Domain.Entities;
+using RideSharing.Domain.Factories;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestCommand
 {
@@ -55,7 +56,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestC
 
 			// Step 4: create trip entity
 			var tripRequest = TripRequest.DriverAccepted(tripRequestInDB);
-			var newTrip = Trip.Create(tripRequestInDB, model.DriverId);
+			var newTrip = TripFactory.Create(tripRequestInDB, model.DriverId);
 
 			// Step 5: perform db operations
 

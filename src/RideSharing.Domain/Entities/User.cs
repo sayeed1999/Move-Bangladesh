@@ -10,13 +10,13 @@ public class User
 		IsVerified = false;
 	}
 
-	public Guid Id { get; protected set; }
-	public Guid? AuthUserId { get; protected set; } // if user came from another authentication provider!!
-	public Gender Gender { get; protected set; }
-	public DateTime DOB { get; protected set; }
-	public string Name { get; protected set; }
-	public string Address { get; protected set; }
-	public string Phone { get; protected set; }
-	public string Email { get; protected set; }
-	public bool? IsVerified { get; protected set; }
+	public Guid Id { get; set; }
+	public Guid? AuthUserId { get; set; } // if user came from another authentication provider!!
+	public Gender Gender { get; set; }
+	public DateTime DOB { get; set; }
+	public string Name { get; set; }
+	public string Address { get; set; }
+	public string Phone { get; set; }
+	public string Email { get; set; }
+	public bool? IsVerified { get; set; }
 }

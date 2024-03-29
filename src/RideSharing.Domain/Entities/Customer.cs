@@ -1,38 +1,13 @@
-﻿using CSharpFunctionalExtensions;
-using FluentValidation;
-using RideSharing.Common.ValueObjects;
-
-namespace RideSharing.Domain.Entities;
+﻿namespace RideSharing.Domain.Entities;
 
 public class Customer : Human
 {
-	public Customer() : base() { }
-
-	public Customer(Guid id, Guid userId, string name, Email email, string phone, string location)
-		: base(id, userId, name, email, phone, location)
+	public Customer()
 	{
-
+		DriverRatings = new HashSet<DriverRating>();
+		Trips = new HashSet<Trip>();
 	}
 
-	public virtual HashSet<DriverRating> DriverRatings { get; protected set; } = new();
-	public virtual HashSet<Trip> Trips { get; protected set; } = new();
-
-	public static Result<Customer> Create(Guid id, Guid userId, string name, Email email, string phone, string location)
-	{
-		Customer customer = new(id, userId, name, email, phone, location);
-
-		var validator = new CustomerValidator();
-		var validationResult = validator.Validate(customer);
-
-		if (validationResult.IsValid) return Result.Success(customer);
-		return Result.Failure<Customer>("not valid");
-	}
-
-	private class CustomerValidator : AbstractValidator<Customer>
-	{
-		public CustomerValidator()
-		{
-			RuleFor(customer => customer.Email).EmailAddress();
-		}
-	}
+	public virtual ICollection<DriverRating> DriverRatings { get; private set; }
+	public virtual ICollection<Trip> Trips { get; private set; }
 }

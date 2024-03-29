@@ -20,13 +20,13 @@ namespace RideSharing.Domain.Entities
 			Status = tripRequest.Status;
 		}
 
-		public Guid TripRequestId { get; protected set; }
-		public Guid CustomerId { get; protected set; }
-		public virtual Customer Customer { get; protected set; }
-		public Point Source { get; protected set; }
-		public Point Destination { get; protected set; }
-		public CabType CabType { get; protected set; }
-		public PaymentMethod PaymentMethod { get; protected set; }
-		public TripRequestStatus Status { get; protected set; }
+		public Guid TripRequestId { get; set; }
+		public Guid CustomerId { get; set; }
+		public virtual Customer Customer { get; set; }
+		public Point Source { get; set; }
+		public Point Destination { get; set; }
+		public CabType CabType { get; set; }
+		public PaymentMethod PaymentMethod { get; set; }
+		public TripRequestStatus Status { get; set; }
 	}
 }

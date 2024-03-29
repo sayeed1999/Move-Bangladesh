@@ -2,6 +2,7 @@
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Messages;
 using RideSharing.NotificationService.Notifier;
+using System.Text.Json;
 
 namespace RideSharing.NotificationService.BackgroundJob
 {

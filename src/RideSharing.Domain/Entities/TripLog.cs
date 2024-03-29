@@ -23,18 +23,18 @@ namespace RideSharing.Domain.Entities
 			CabType = trip.CabType;
 		}
 
-		public Guid TripId { get; protected set; }
-		public virtual Trip Trip { get; protected set; }
-		public Guid TripRequestId { get; protected set; }
-		public virtual TripRequest TripRequest { get; protected set; }
-		public Guid CustomerId { get; protected set; }
-		public virtual Customer Customer { get; protected set; }
-		public Guid DriverId { get; protected set; }
-		public virtual Driver Driver { get; protected set; }
-		public PaymentMethod PaymentMethod { get; protected set; }
-		public TripStatus TripStatus { get; protected set; }
-		public Point Source { get; protected set; }
-		public Point Destination { get; protected set; }
-		public CabType CabType { get; protected set; }
+		public Guid TripId { get; set; }
+		public virtual Trip Trip { get; set; }
+		public Guid TripRequestId { get; set; }
+		public virtual TripRequest TripRequest { get; set; }
+		public Guid CustomerId { get; set; }
+		public virtual Customer Customer { get; set; }
+		public Guid DriverId { get; set; }
+		public virtual Driver Driver { get; set; }
+		public PaymentMethod PaymentMethod { get; set; }
+		public TripStatus TripStatus { get; set; }
+		public Point Source { get; set; }
+		public Point Destination { get; set; }
+		public CabType CabType { get; set; }
 	}
 }
