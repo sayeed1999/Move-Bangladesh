@@ -19,58 +19,48 @@ public class Trip : BaseEntity
 	public Point Destination { get; set; }
 	public CabType CabType { get; set; }
 
-	public static Result<Trip> Modify(Guid id, TripStatus status)
+	public Result Modify(TripStatus status)
 	{
-		if (status == null) return Result.Failure<Trip>("Model is invalid");
+		TripStatus = status;
 
-		var x = new Trip()
-		{
-			Id = id,
-			TripStatus = status,
-		};
-
-		return Result.Success(x);
+		return Result.Success();
 	}
 
-	public static Result<Trip> CancelByCustomer(Trip trip)
+	public Result CancelByCustomer()
 	{
-		if (trip.TripStatus >= TripStatus.TripStarted)
+		if (TripStatus >= TripStatus.TripStarted)
 		{
 			return Result.Failure<Trip>("Cannot cancel started trip. Contact customer care at +880***.");
 		}
 
-		// TODO: dont modify arguments, bad practice!
-		var modifiedTrip = trip;
-		modifiedTrip.TripStatus = TripStatus.CustomerCanceled;
+		TripStatus = TripStatus.CustomerCanceled;
 
-		return modifiedTrip;
+		return Result.Success();
 	}
 
-	public static Result<Trip> CancelByDriver(Trip trip)
+	public Result CancelByDriver()
 	{
-		if (trip.TripStatus >= TripStatus.TripStarted)
+		if (TripStatus >= TripStatus.TripStarted)
 		{
 			return Result.Failure<Trip>("Cannot cancel started trip. Contact customer care at +880***.");
 		}
 
-		// TODO: dont modify arguments, bad practice!
-		var modifiedTrip = trip;
-		modifiedTrip.TripStatus = TripStatus.DriverCanceled;
+		TripStatus = TripStatus.DriverCanceled;
 
-		return modifiedTrip;
+		return Result.Success();
 	}
 
-	public static TripDto GetTripDto(Trip trip)
+	public TripDto GetTripDto()
 	{
 		return new TripDto(
-			trip.Id,
-			trip.TripRequestId,
-			trip.CustomerId,
-			trip.DriverId,
-			nameof(trip.PaymentMethod),
-			nameof(trip.TripStatus),
-			trip.Source.ToText(),
-			trip.Destination.ToText(),
-			nameof(trip.CabType));
+			Id,
+			TripRequestId,
+			CustomerId,
+			DriverId,
+			nameof(PaymentMethod),
+			nameof(TripStatus),
+			Source.ToText(),
+			Destination.ToText(),
+			nameof(CabType));
 	}
 }

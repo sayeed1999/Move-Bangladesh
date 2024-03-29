@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
-using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 {
@@ -30,23 +29,21 @@ namespace RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand
 			}
 
 			// Step 3: prepare entity
-			var modifiedTripResult = Trip.CancelByCustomer(activeTrip);
+			var entityResult = activeTrip.CancelByCustomer();
 
-			if (modifiedTripResult.IsFailure)
+			if (entityResult.IsFailure)
 			{
-				return Result.Failure<CustomerCancelTripCommandResponseDto>(modifiedTripResult.Error);
+				return Result.Failure<CustomerCancelTripCommandResponseDto>(entityResult.Error);
 			}
-
-			var modifiedTrip = modifiedTripResult.Value;
 
 			// Step 4: perform database operations
 			try
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				var res = await tripRepository.UpdateAsync(modifiedTrip);
+				var res = await tripRepository.UpdateAsync(activeTrip);
 
-				messageBus.PublishAsync(Trip.GetTripDto(modifiedTrip));
+				messageBus.PublishAsync(activeTrip.GetTripDto());
 
 				// Last Step: return result
 				var responseDto = new CustomerCancelTripCommandResponseDto(request.CustomerId, request.TripId, request.Reason);

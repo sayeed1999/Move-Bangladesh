@@ -55,7 +55,8 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestC
 			}
 
 			// Step 4: create trip entity
-			var tripRequest = TripRequest.DriverAccepted(tripRequestInDB);
+			var entityResult = tripRequestInDB.DriverAccepted();
+
 			var newTrip = TripFactory.Create(tripRequestInDB, model.DriverId);
 
 			// Step 5: perform db operations
@@ -69,7 +70,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestC
 				// Note: log table is inserted from database triggers, not api
 
 				// update trip request
-				var tripRequestRes = await tripRequestRepository.UpdateAsync(tripRequest.Value);
+				var tripRequestRes = await tripRequestRepository.UpdateAsync(tripRequestInDB);
 
 				// create trip
 				res = await tripRepository.AddAsync(newTrip.Value);
@@ -77,7 +78,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.AcceptTripRequestC
 				// commit
 				await tripRequestRepository.CommitTransactionAsync(transaction);
 
-				tripRequestMessageBus.PublishAsync(TripRequest.GetTripRequestDto(tripRequest.Value));
+				tripRequestMessageBus.PublishAsync(tripRequestInDB.GetTripRequestDto());
 
 				// Last Step: return result
 				var responseDto = new AcceptTripRequestResponseDto(res.DriverId, res.Id);

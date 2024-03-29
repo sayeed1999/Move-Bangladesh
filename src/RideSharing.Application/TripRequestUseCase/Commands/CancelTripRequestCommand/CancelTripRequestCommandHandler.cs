@@ -2,7 +2,6 @@
 using MediatR;
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
-using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand
 {
@@ -31,16 +30,16 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 			}
 
 			// Step 3: prepare domain entity
-			Result<TripRequest> canceledTripRequest = TripRequest.Cancel(requestedTrip);
+			Result entityResult = requestedTrip.Cancel();
 
 			// Step 4: perform database operations
 			try
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				var res = await tripRequestRepository.UpdateAsync(canceledTripRequest.Value);
+				var res = await tripRequestRepository.UpdateAsync(requestedTrip);
 
-				messageBus.PublishAsync(TripRequest.GetTripRequestDto(canceledTripRequest.Value));
+				messageBus.PublishAsync(requestedTrip.GetTripRequestDto());
 
 				// Last Step: return result
 				var responseDto = new CancelTripRequestCommandResponseDto(true);

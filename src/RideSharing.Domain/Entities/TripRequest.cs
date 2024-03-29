@@ -16,32 +16,32 @@ public class TripRequest : BaseEntity
 	public TripRequestStatus Status { get; set; }
 
 
-	public static Result<TripRequest> Cancel(TripRequest tripRequest)
+	public Result Cancel()
 	{
-		tripRequest.Status = TripRequestStatus.CustomerCanceledBeforeDriverFound;
-		tripRequest.UpdatedAt = DateTime.UtcNow;
+		Status = TripRequestStatus.CustomerCanceledBeforeDriverFound;
+		UpdatedAt = DateTime.UtcNow;
 
-		return Result.Success(tripRequest);
+		return Result.Success();
 	}
 
-	public static Result<TripRequest> DriverAccepted(TripRequest tripRequest)
+	public Result DriverAccepted()
 	{
-		tripRequest.Status = TripRequestStatus.DriverAccepted;
-		tripRequest.UpdatedAt = DateTime.UtcNow;
+		Status = TripRequestStatus.DriverAccepted;
+		UpdatedAt = DateTime.UtcNow;
 
-		return Result.Success(tripRequest);
+		return Result.Success();
 	}
 
-	public static TripRequestDto GetTripRequestDto(TripRequest tripRequest)
+	public TripRequestDto GetTripRequestDto()
 	{
 		var dto = new TripRequestDto(
-			tripRequest.Id,
-			tripRequest.CustomerId,
-			tripRequest.Source.ToText(),
-			tripRequest.Destination.ToText(),
-			nameof(tripRequest.CabType),
-			nameof(tripRequest.PaymentMethod),
-			nameof(tripRequest.Status));
+			Id,
+			CustomerId,
+			Source.ToText(),
+			Destination.ToText(),
+			nameof(CabType),
+			nameof(PaymentMethod),
+			nameof(Status));
 
 		return dto;
 	}

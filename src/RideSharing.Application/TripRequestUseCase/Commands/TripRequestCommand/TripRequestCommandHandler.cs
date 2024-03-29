@@ -61,7 +61,8 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 				var res = await tripRequestRepository.AddAsync(tripRequest.Value);
 
 				// Note: this method call is not intentionally awaited!
-				var messageDto = TripRequest.GetTripRequestDto(tripRequest.Value);
+				var messageDto = tripRequest.Value.GetTripRequestDto();
+
 				messageBus.PublishAsync(messageDto);
 
 				// Step 5: return response

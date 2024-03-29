@@ -30,14 +30,12 @@ namespace RideSharing.Application.TripUseCase.Commands.DriverCancelTripCommand
 			}
 
 			// Step 3: prepare entity
-			var modifiedTripResult = Trip.CancelByDriver(activeTrip);
+			var entityResult = activeTrip.CancelByDriver();
 
-			if (modifiedTripResult.IsFailure)
+			if (entityResult.IsFailure)
 			{
-				return Result.Failure<DriverCancelTripCommandResponseDto>(modifiedTripResult.Error);
+				return Result.Failure<DriverCancelTripCommandResponseDto>(entityResult.Error);
 			}
-
-			var modifiedTrip = modifiedTripResult.Value;
 
 			// Step 4: perform database operations
 
@@ -49,11 +47,11 @@ namespace RideSharing.Application.TripUseCase.Commands.DriverCancelTripCommand
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				res = await tripRepository.UpdateAsync(modifiedTrip);
+				res = await tripRepository.UpdateAsync(activeTrip);
 
 				await tripRepository.CommitTransactionAsync(transaction);
 
-				tripHandlerEventBus.PublishAsync(Trip.GetTripDto(modifiedTrip));
+				tripHandlerEventBus.PublishAsync(activeTrip.GetTripDto());
 
 				// Last Step: return result
 				var responseDto = new DriverCancelTripCommandResponseDto(request.DriverId, request.TripId, request.Reason);
