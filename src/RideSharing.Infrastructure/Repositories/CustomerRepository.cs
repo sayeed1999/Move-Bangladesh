@@ -5,7 +5,7 @@ using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Application
 {
-	public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
+	public class CustomerRepository : BaseRepository<CustomerEntity>, ICustomerRepository
 	{
 		public CustomerRepository(ApplicationDbContext applicationDbContext, DapperContext dapperContext) : base(applicationDbContext, dapperContext)
 		{

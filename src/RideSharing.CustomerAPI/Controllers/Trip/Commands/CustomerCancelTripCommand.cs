@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.TripUseCase.Commands.CustomerCancelTripCommand;
+using RideSharing.Application.Trip.Commands.CustomerCancelTrip;
 using RideSharing.Common.Entities;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,7 +17,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 		/// <param name="customerId"></param>
 		/// <returns></returns>
 		[HttpPut("{tripId}/cancel-by-customer")]
-		public async Task<ActionResult<Response<CustomerCancelTripCommandResponseDto>>> Cancel([Required] Guid tripId, CustomerCancelTripCommandDto model)
+		public async Task<ActionResult<Response<Guid>>> Cancel([Required] Guid tripId, CustomerCancelTripCommandDto model)
 		{
 			model.CustomerId = new Guid(); // TODO: fetch from HttpContextAccessor
 			model.TripId = tripId;
@@ -25,7 +25,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 			var res = await mediator.Send(model);
 
 			if (res.IsFailure) return BadRequest(res.Error);
-			return Ok($"Ride {res.Value.TripId} has been canceled.");
+			return Ok($"Ride {res.Value} has been canceled.");
 		}
 	}
 }

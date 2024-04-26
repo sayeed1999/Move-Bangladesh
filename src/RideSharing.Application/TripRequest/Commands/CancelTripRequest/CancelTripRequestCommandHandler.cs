@@ -3,22 +3,22 @@ using MediatR;
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
 
-namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand
+namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 {
 	public class CancelTripRequestCommandHandler(
 		ITripRequestRepository tripRequestRepository,
 		ICustomerRepository customerRepository,
 		ITripRequestEventMessageBus messageBus)
-		: IRequestHandler<CancelTripRequestCommandDto, Result<CancelTripRequestCommandResponseDto>>
+		: IRequestHandler<CancelTripRequestCommandDto, Result<Guid>>
 	{
-		public async Task<Result<CancelTripRequestCommandResponseDto>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<Guid>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
 			var customerInDB = await customerRepository.FindByIdAsync(request.CustomerId);
 
 			if (customerInDB == null)
 			{
-				return Result.Failure<CancelTripRequestCommandResponseDto>("Customer is not found.");
+				return Result.Failure<Guid>("Customer is not found.");
 			}
 
 			// Step 2: check trip request exists
@@ -26,7 +26,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 
 			if (requestedTrip == null)
 			{
-				return Result.Failure<CancelTripRequestCommandResponseDto>("Customer has no pending requested trip.");
+				return Result.Failure<Guid>("Customer has no pending requested trip.");
 			}
 
 			// Step 3: prepare domain entity
@@ -42,13 +42,12 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestC
 				messageBus.PublishAsync(requestedTrip.GetTripRequestDto());
 
 				// Last Step: return result
-				var responseDto = new CancelTripRequestCommandResponseDto(true);
 
-				return Result.Success(responseDto);
+				return Result.Success(request.TripRequestId);
 			}
 			catch (Exception ex)
 			{
-				return Result.Failure<CancelTripRequestCommandResponseDto>($"Failed with error: {ex.Message}");
+				return Result.Failure<Guid>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

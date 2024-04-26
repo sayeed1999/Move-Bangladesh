@@ -5,7 +5,7 @@ using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Application
 {
-	public class DriverRepository : BaseRepository<Driver>, IDriverRepository
+	public class DriverRepository : BaseRepository<DriverEntity>, IDriverRepository
 	{
 		public DriverRepository(ApplicationDbContext applicationDbContext, DapperContext dapperContext) : base(applicationDbContext, dapperContext)
 		{

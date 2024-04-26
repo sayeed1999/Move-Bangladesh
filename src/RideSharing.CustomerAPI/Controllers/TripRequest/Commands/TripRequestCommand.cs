@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand;
+using RideSharing.Application.TripRequest.Commands.TripRequest;
 using RideSharing.Common.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
@@ -25,7 +25,7 @@ namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 		/// <returns></returns>
 		[HttpPost]
 		[AllowAnonymous]
-		public async Task<ActionResult<Response<TripRequestCommandResponseDto>>> RequestRide(TripRequestCommandDto model)
+		public async Task<ActionResult<Response<Guid>>> RequestRide(TripRequestCommandDto model)
 		{
 			// TODO: - get current user from HttpContextAccessor & check customerID != currentUserId
 			model.CustomerId = new Guid("00000000-0000-0000-0000-000000000000");

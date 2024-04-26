@@ -2,7 +2,7 @@
 
 namespace RideSharing.Application.Abstractions
 {
-	public interface IPaymentRepository : IBaseRepository<Payment>
+	public interface IPaymentRepository : IBaseRepository<PaymentEntity>
 	{
 	}
 }

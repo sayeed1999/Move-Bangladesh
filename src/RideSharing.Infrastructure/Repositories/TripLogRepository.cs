@@ -3,7 +3,7 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Infrastructure.Repositories
 {
-	public class TripLogRepository : BaseRepository<TripLog>, ITripLogRepository
+	public class TripLogRepository : BaseRepository<TripLogEntity>, ITripLogRepository
 	{
 		public TripLogRepository(
 			ApplicationDbContext applicationDbContext,

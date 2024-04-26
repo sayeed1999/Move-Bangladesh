@@ -17,7 +17,7 @@ namespace RideSharing.Domain.Factories
 		/// <param name="cabType"></param>
 		/// <param name="paymentMethod"></param>
 		/// <returns></returns>
-		public static Result<TripRequest> Create(
+		public static Result<TripRequestEntity> Create(
 		Guid customerId,
 		Tuple<double,
 		double> source,
@@ -25,7 +25,7 @@ namespace RideSharing.Domain.Factories
 		CabType cabType,
 		PaymentMethod paymentMethod)
 		{
-			var x = new TripRequest()
+			var x = new TripRequestEntity()
 			{
 				CustomerId = customerId,
 				Source = new Point(source.Item1, source.Item2),
@@ -41,10 +41,10 @@ namespace RideSharing.Domain.Factories
 			var result = validator.Validate(x);
 
 			if (result.IsValid) return Result.Success(x);
-			return Result.Failure<TripRequest>("Model is invalid");
+			return Result.Failure<TripRequestEntity>("Model is invalid");
 		}
 
-		private class TripRequestValidator : AbstractValidator<TripRequest>
+		private class TripRequestValidator : AbstractValidator<TripRequestEntity>
 		{
 			public TripRequestValidator()
 			{

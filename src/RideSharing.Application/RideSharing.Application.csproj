@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TripRequestUseCase\Queries\" />
-    <Folder Include="TripUseCase\Queries\" />
+    <Folder Include="TripRequest\Queries\" />
+    <Folder Include="Trip\Queries\" />
   </ItemGroup>
 
 </Project>

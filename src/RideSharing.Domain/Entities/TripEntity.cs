@@ -5,14 +5,14 @@ using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities;
 
-public class Trip : BaseEntity
+public class TripEntity : BaseEntity
 {
 	public Guid TripRequestId { get; set; }
-	public virtual TripRequest TripRequest { get; set; }
+	public virtual TripRequestEntity TripRequest { get; set; }
 	public Guid CustomerId { get; set; }
-	public virtual Customer Customer { get; set; }
+	public virtual CustomerEntity Customer { get; set; }
 	public Guid DriverId { get; set; }
-	public virtual Driver Driver { get; set; }
+	public virtual DriverEntity Driver { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
 	public TripStatus TripStatus { get; set; }
 	public Point Source { get; set; }
@@ -30,7 +30,7 @@ public class Trip : BaseEntity
 	{
 		if (TripStatus >= TripStatus.TripStarted)
 		{
-			return Result.Failure<Trip>("Cannot cancel started trip. Contact customer care at +880***.");
+			return Result.Failure<TripEntity>("Cannot cancel started trip. Contact customer care at +880***.");
 		}
 
 		TripStatus = TripStatus.CustomerCanceled;
@@ -42,7 +42,7 @@ public class Trip : BaseEntity
 	{
 		if (TripStatus >= TripStatus.TripStarted)
 		{
-			return Result.Failure<Trip>("Cannot cancel started trip. Contact customer care at +880***.");
+			return Result.Failure<TripEntity>("Cannot cancel started trip. Contact customer care at +880***.");
 		}
 
 		TripStatus = TripStatus.DriverCanceled;

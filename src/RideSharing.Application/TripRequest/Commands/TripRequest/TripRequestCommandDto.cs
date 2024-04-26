@@ -2,7 +2,7 @@
 using MediatR;
 using RideSharing.Domain.Enums;
 
-namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
+namespace RideSharing.Application.TripRequest.Commands.TripRequest
 {
 	public record struct TripRequestCommandDto(
 		Guid CustomerId,
@@ -10,7 +10,7 @@ namespace RideSharing.Application.TripRequestUseCase.Commands.TripRequestCommand
 		Tuple<double, double> Destination,
 		CabType CabType,
 		PaymentMethod PaymentMethod)
-		: IRequest<Result<TripRequestCommandResponseDto>>
+		: IRequest<Result<Guid>>
 	{
 
 	}

@@ -3,13 +3,13 @@ using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities
 {
-	public class TripRequestLog : BaseEntity
+	public class TripRequestLogEntity : BaseEntity
 	{
-		public TripRequestLog()
+		public TripRequestLogEntity()
 		{
 
 		}
-		public TripRequestLog(TripRequest tripRequest)
+		public TripRequestLogEntity(TripRequestEntity tripRequest)
 		{
 			TripRequestId = tripRequest.Id;
 			CustomerId = tripRequest.CustomerId;
@@ -22,7 +22,7 @@ namespace RideSharing.Domain.Entities
 
 		public Guid TripRequestId { get; set; }
 		public Guid CustomerId { get; set; }
-		public virtual Customer Customer { get; set; }
+		public virtual CustomerEntity Customer { get; set; }
 		public Point Source { get; set; }
 		public Point Destination { get; set; }
 		public CabType CabType { get; set; }

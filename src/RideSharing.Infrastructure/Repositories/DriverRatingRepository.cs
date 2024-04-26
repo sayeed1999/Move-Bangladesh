@@ -5,7 +5,7 @@ using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Application
 {
-	public class DriverRatingRepository : BaseRepository<DriverRating>, IDriverRatingRepository
+	public class DriverRatingRepository : BaseRepository<DriverRatingEntity>, IDriverRatingRepository
 	{
 		public DriverRatingRepository(ApplicationDbContext applicationDbContext, DapperContext dapperContext) : base(applicationDbContext, dapperContext)
 		{

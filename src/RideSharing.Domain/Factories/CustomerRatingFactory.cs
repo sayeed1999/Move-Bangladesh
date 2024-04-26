@@ -4,9 +4,9 @@ namespace RideSharing.Domain.Factories
 {
 	public class CustomerRatingFactory
 	{
-		public static CustomerRating Create(Guid id, Guid customerId, Guid driverId, Guid tripId, short ratingValue, string feedback)
+		public static CustomerRatingEntity Create(Guid id, Guid customerId, Guid driverId, Guid tripId, short ratingValue, string feedback)
 		{
-			CustomerRating customerRating = new CustomerRating
+			CustomerRatingEntity customerRating = new CustomerRatingEntity
 			{
 				Id = id,
 				CustomerId = customerId,

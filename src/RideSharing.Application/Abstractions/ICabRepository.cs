@@ -2,7 +2,7 @@
 
 namespace RideSharing.Application.Abstractions
 {
-	public interface ICabRepository : IBaseRepository<Cab>
+	public interface ICabRepository : IBaseRepository<CabEntity>
 	{
 	}
 }

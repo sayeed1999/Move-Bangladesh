@@ -8,9 +8,9 @@ namespace RideSharing.Domain.Factories
 {
 	public class DriverFactory
 	{
-		public static Result<Driver> Create(Guid id, Guid userId, string name, Gender gender, Email email, string phone, string location)
+		public static Result<DriverEntity> Create(Guid id, Guid userId, string name, Gender gender, Email email, string phone, string location)
 		{
-			Driver driver = new Driver
+			DriverEntity driver = new DriverEntity
 			{
 				Id = id,
 				UserId = userId,
@@ -24,10 +24,10 @@ namespace RideSharing.Domain.Factories
 			var validationResult = validator.Validate(driver);
 
 			if (validationResult.IsValid) return Result.Success(driver);
-			return Result.Failure<Driver>("not valid");
+			return Result.Failure<DriverEntity>("not valid");
 		}
 
-		private class DriverValidator : AbstractValidator<Driver>
+		private class DriverValidator : AbstractValidator<DriverEntity>
 		{
 			public DriverValidator()
 			{

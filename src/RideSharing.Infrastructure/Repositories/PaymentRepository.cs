@@ -5,7 +5,7 @@ using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Application
 {
-	public class PaymentRepository : BaseRepository<Payment>, IPaymentRepository
+	public class PaymentRepository : BaseRepository<PaymentEntity>, IPaymentRepository
 	{
 		public PaymentRepository(ApplicationDbContext applicationDbContext, DapperContext dapperContext) : base(applicationDbContext, dapperContext)
 		{

@@ -2,7 +2,7 @@
 
 namespace RideSharing.Application.Abstractions
 {
-	public interface ITripLogRepository : IBaseRepository<TripLog>
+	public interface ITripLogRepository : IBaseRepository<TripLogEntity>
 	{
 
 	}

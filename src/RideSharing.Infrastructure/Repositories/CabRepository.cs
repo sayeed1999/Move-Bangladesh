@@ -5,7 +5,7 @@ using RideSharing.Infrastructure.Repositories;
 
 namespace RideSharing.Application
 {
-	public class CabRepository : BaseRepository<Cab>, ICabRepository
+	public class CabRepository : BaseRepository<CabEntity>, ICabRepository
 	{
 		public CabRepository(ApplicationDbContext applicationDbContext, DapperContext dapperContext) : base(applicationDbContext, dapperContext)
 		{

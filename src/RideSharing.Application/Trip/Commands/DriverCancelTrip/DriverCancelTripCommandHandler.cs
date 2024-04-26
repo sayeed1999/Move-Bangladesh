@@ -1,24 +1,23 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
-using RideSharing.Domain.Entities;
 
-namespace RideSharing.Application.TripUseCase.Commands.DriverCancelTripCommand
+namespace RideSharing.Application.Trip.Commands.DriverCancelTrip
 {
 	public class DriverCancelTripCommandHandler(
 		ITripRepository tripRepository,
 		IDriverRepository driverRepository,
 		ITripEventMessageBus tripHandlerEventBus)
-		: IRequestHandler<DriverCancelTripCommandDto, Result<DriverCancelTripCommandResponseDto>>
+		: IRequestHandler<DriverCancelTripCommandDto, Result<Guid>>
 	{
-		public async Task<Result<DriverCancelTripCommandResponseDto>> Handle(DriverCancelTripCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<Guid>> Handle(DriverCancelTripCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check driver exists
 			var driverInDB = await driverRepository.FindByIdAsync(request.DriverId);
 
 			if (driverInDB == null)
 			{
-				return Result.Failure<DriverCancelTripCommandResponseDto>("Driver is not found.");
+				return Result.Failure<Guid>("Driver is not found.");
 			}
 
 			// Step 2: check trip request exists
@@ -26,7 +25,7 @@ namespace RideSharing.Application.TripUseCase.Commands.DriverCancelTripCommand
 
 			if (activeTrip == null)
 			{
-				return Result.Failure<DriverCancelTripCommandResponseDto>("Driver has no active trip.");
+				return Result.Failure<Guid>("Driver has no active trip.");
 			}
 
 			// Step 3: prepare entity
@@ -34,35 +33,32 @@ namespace RideSharing.Application.TripUseCase.Commands.DriverCancelTripCommand
 
 			if (entityResult.IsFailure)
 			{
-				return Result.Failure<DriverCancelTripCommandResponseDto>(entityResult.Error);
+				return Result.Failure<Guid>(entityResult.Error);
 			}
 
 			// Step 4: perform database operations
 
 			var transaction = await tripRepository.BeginTransactionAsync();
 
-			Trip res;
-
 			try
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				res = await tripRepository.UpdateAsync(activeTrip);
+				await tripRepository.UpdateAsync(activeTrip);
 
 				await tripRepository.CommitTransactionAsync(transaction);
 
 				tripHandlerEventBus.PublishAsync(activeTrip.GetTripDto());
 
 				// Last Step: return result
-				var responseDto = new DriverCancelTripCommandResponseDto(request.DriverId, request.TripId, request.Reason);
 
-				return Result.Success(responseDto);
+				return Result.Success(request.TripId);
 			}
 			catch (Exception ex)
 			{
 				await tripRepository.RollBackTransactionAsync(transaction);
 
-				return Result.Failure<DriverCancelTripCommandResponseDto>($"Failed with error: {ex.Message}");
+				return Result.Failure<Guid>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

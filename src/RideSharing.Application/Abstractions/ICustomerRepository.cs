@@ -2,7 +2,7 @@
 
 namespace RideSharing.Application.Abstractions
 {
-	public interface ICustomerRepository : IBaseRepository<Customer>
+	public interface ICustomerRepository : IBaseRepository<CustomerEntity>
 	{
 	}
 }

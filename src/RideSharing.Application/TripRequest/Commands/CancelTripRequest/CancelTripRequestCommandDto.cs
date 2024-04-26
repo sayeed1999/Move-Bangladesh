@@ -1,12 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 
-namespace RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand
+namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 {
 	public record struct CancelTripRequestCommandDto(
 		Guid CustomerId,
 		Guid TripRequestId)
-		: IRequest<Result<CancelTripRequestCommandResponseDto>>
+		: IRequest<Result<Guid>>
 	{
 
 	}

@@ -4,9 +4,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Infrastructure.EntityConfigurations
 {
-	internal class TripRequestEntityConfigurations : IEntityTypeConfiguration<TripRequest>
+	internal class TripRequestEntityConfigurations : IEntityTypeConfiguration<TripRequestEntity>
 	{
-		public void Configure(EntityTypeBuilder<TripRequest> builder)
+		public void Configure(EntityTypeBuilder<TripRequestEntity> builder)
 		{
 			builder
 				.Property(x => x.Source)

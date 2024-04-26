@@ -5,10 +5,10 @@ using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities;
 
-public class TripRequest : BaseEntity
+public class TripRequestEntity : BaseEntity
 {
 	public Guid CustomerId { get; set; }
-	public virtual Customer Customer { get; set; }
+	public virtual CustomerEntity Customer { get; set; }
 	public Point Source { get; set; }
 	public Point Destination { get; set; }
 	public CabType CabType { get; set; }

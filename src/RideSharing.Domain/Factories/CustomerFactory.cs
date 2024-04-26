@@ -7,9 +7,9 @@ namespace RideSharing.Domain.Factories
 {
 	public class CustomerFactory
 	{
-		public static Result<Customer> Create(Guid id, Guid userId, string name, Email email, string phone, string location)
+		public static Result<CustomerEntity> Create(Guid id, Guid userId, string name, Email email, string phone, string location)
 		{
-			Customer customer = new Customer()
+			CustomerEntity customer = new CustomerEntity()
 			{
 				Id = id,
 				UserId = userId,
@@ -23,10 +23,10 @@ namespace RideSharing.Domain.Factories
 			var validationResult = validator.Validate(customer);
 
 			if (validationResult.IsValid) return Result.Success(customer);
-			return Result.Failure<Customer>("not valid");
+			return Result.Failure<CustomerEntity>("not valid");
 		}
 
-		private class CustomerValidator : AbstractValidator<Customer>
+		private class CustomerValidator : AbstractValidator<CustomerEntity>
 		{
 			public CustomerValidator()
 			{

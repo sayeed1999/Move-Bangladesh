@@ -2,7 +2,7 @@
 
 namespace RideSharing.Application.Abstractions
 {
-	public interface IDriverRepository : IBaseRepository<Driver>
+	public interface IDriverRepository : IBaseRepository<DriverEntity>
 	{
 	}
 }

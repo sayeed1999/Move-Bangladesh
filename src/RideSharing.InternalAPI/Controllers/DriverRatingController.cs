@@ -3,7 +3,7 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.InternalAPI.Controllers
 {
-	public class DriverRatingController : BaseController<DriverRating>
+	public class DriverRatingController : BaseController<DriverRatingEntity>
 	{
 		public DriverRatingController(IDriverRatingRepository repository) : base(repository)
 		{

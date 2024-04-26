@@ -12,16 +12,16 @@ public class ApplicationDbContext : DbContext
 
 	#region dbsets
 	public DbSet<User> Users { get; set; }
-	public DbSet<Customer> Customers { get; set; }
-	public DbSet<CustomerRating> CustomerRatings { get; set; }
-	public DbSet<Driver> Drivers { get; set; }
-	public DbSet<DriverRating> DriverRatings { get; set; }
-	public DbSet<Cab> Cabs { get; set; }
-	public DbSet<Payment> Payments { get; set; }
-	public DbSet<TripRequest> TripRequests { get; set; }
-	public DbSet<TripRequestLog> TripRequestLogs { get; set; }
-	public DbSet<Trip> Trips { get; set; }
-	public DbSet<TripLog> TripLogs { get; set; }
+	public DbSet<CustomerEntity> Customers { get; set; }
+	public DbSet<CustomerRatingEntity> CustomerRatings { get; set; }
+	public DbSet<DriverEntity> Drivers { get; set; }
+	public DbSet<DriverRatingEntity> DriverRatings { get; set; }
+	public DbSet<CabEntity> Cabs { get; set; }
+	public DbSet<PaymentEntity> Payments { get; set; }
+	public DbSet<TripRequestEntity> TripRequests { get; set; }
+	public DbSet<TripRequestLogEntity> TripRequestLogs { get; set; }
+	public DbSet<TripEntity> Trips { get; set; }
+	public DbSet<TripLogEntity> TripLogs { get; set; }
 	#endregion
 
 	// Connection String is initialized from RideSharing.API -> Startup.cs...
@@ -42,9 +42,9 @@ public class ApplicationDbContext : DbContext
 
 		#region Apply Entity Configurations
 
-		new TripRequestEntityConfigurations().Configure(builder.Entity<TripRequest>());
+		new TripRequestEntityConfigurations().Configure(builder.Entity<TripRequestEntity>());
 
-		new TripEntityConfigurations().Configure(builder.Entity<Trip>());
+		new TripEntityConfigurations().Configure(builder.Entity<TripEntity>());
 
 		#endregion
 	}

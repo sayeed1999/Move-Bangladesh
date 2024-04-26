@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.TripRequestUseCase.Commands.CancelTripRequestCommand;
+using RideSharing.Application.TripRequest.Commands.CancelTripRequest;
 using RideSharing.Common.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
@@ -23,7 +23,7 @@ namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 		/// <param name="model"></param>
 		/// <returns></returns>
 		[HttpDelete("{tripRequestId}")]
-		public async Task<ActionResult<Response<CancelTripRequestCommandResponseDto>>> RequestRide(Guid tripRequestId)
+		public async Task<ActionResult<Response<Guid>>> RequestRide(Guid tripRequestId)
 		{
 			var customerId = new Guid(); // TODO:- get customerId from httpContextAccessor!
 
