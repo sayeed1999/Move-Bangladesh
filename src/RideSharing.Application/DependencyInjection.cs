@@ -1,5 +1,6 @@
-﻿using FluentValidation;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using RideSharing.Application.Common.Behaviors;
 
 namespace RideSharing.Application;
 
@@ -13,7 +14,9 @@ public static class DependencyInjection
 
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
 
-		services.AddValidatorsFromAssembly(assembly);
+		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
+
+		services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
 		return services;
 	}
