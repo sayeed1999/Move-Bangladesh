@@ -4,7 +4,7 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Infrastructure.EntityConfigurations
 {
-	internal class TripRequestEntityConfigurations : IEntityTypeConfiguration<TripRequestEntity>
+	internal class TripRequestEntityConfiguration : IEntityTypeConfiguration<TripRequestEntity>
 	{
 		public void Configure(EntityTypeBuilder<TripRequestEntity> builder)
 		{
@@ -15,6 +15,11 @@ namespace RideSharing.Infrastructure.EntityConfigurations
 			builder
 				.Property(x => x.Destination)
 				.HasColumnType("geometry (point)");
+
+			builder
+				.HasMany(x => x.TripRequestLogs)
+				.WithOne(x => x.TripRequest)
+				.HasForeignKey(x => x.TripRequestId);
 		}
 	}
 }
