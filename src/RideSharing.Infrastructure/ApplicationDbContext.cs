@@ -30,6 +30,47 @@ public class ApplicationDbContext : DbContext
 	{
 		base.OnModelCreating(builder);
 
+		// configure foreign keys
+		builder.Entity<CabEntity>()
+			.HasOne(x => x.Driver)
+			.WithMany(x => x.Cabs)
+			.HasForeignKey(x => x.DriverId);
+
+		builder.Entity<CustomerRatingEntity>()
+			.HasOne(x => x.Driver)
+			.WithMany(x => x.CustomerRatings)
+			.HasForeignKey(x => x.DriverId);
+
+		// Note: Customer Rating Entity has also FK on Customer.CustomerId,
+		// ef core giving error on putting that here but auto generated the FK!
+
+		builder.Entity<DriverRatingEntity>()
+			.HasOne(x => x.Customer)
+			.WithMany(x => x.DriverRatings)
+			.HasForeignKey(x => x.CustomerId);
+
+		// Note: Driver Rating Entity has also FK on Driver.DriverId,
+		// ef core giving error on putting that here but auto generated the FK!
+
+		// Note:- we cannot have both TripId on Payments and PaymentId on Trips.
+		// so we have to decide which should be the parent.
+		// we choose TripId as FK on payment table
+		// but we are not taking PaymentId as FK on trip table
+		builder.Entity<TripEntity>()
+			.HasOne(x => x.Payment)
+			.WithOne(x => x.Trip)
+			.HasForeignKey<PaymentEntity>(x => x.TripId);
+
+		builder.Entity<TripLogEntity>()
+			.HasOne(x => x.Trip)
+			.WithMany(x => x.TripLogs)
+			.HasForeignKey(x => x.TripId);
+
+		builder.Entity<TripRequestLogEntity>()
+			.HasOne(x => x.TripRequest)
+			.WithMany(x => x.TripRequestLogs)
+			.HasForeignKey(x => x.TripRequestId);
+
 		// TODO:- if postgres is not being used, this method should not get called. Try Open-Closed principle!
 		// To make sure that the PostGIS extension is installed in your database:
 		builder.HasPostgresExtension("postgis");
