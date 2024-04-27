@@ -14,10 +14,13 @@ public class TripEntity : BaseEntity
 	public Guid DriverId { get; set; }
 	public virtual DriverEntity Driver { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
+	public Guid PaymentId { get; set; }
+	public virtual PaymentEntity Payment { get; set; }
 	public TripStatus TripStatus { get; set; }
 	public Point Source { get; set; }
 	public Point Destination { get; set; }
 	public CabType CabType { get; set; }
+	public virtual ICollection<TripLogEntity> TripLogs { get; set; }
 
 	public Result Modify(TripStatus status)
 	{

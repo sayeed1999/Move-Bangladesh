@@ -8,6 +8,7 @@ public class DriverEntity : Human
 		Trips = new HashSet<TripEntity>();
 	}
 
+	public virtual ICollection<CabEntity> Cabs { get; set; }
 	public virtual ICollection<CustomerRatingEntity> CustomerRatings { get; private set; }
 	public virtual ICollection<TripEntity> Trips { get; private set; }
 }

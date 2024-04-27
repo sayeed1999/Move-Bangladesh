@@ -21,6 +21,7 @@ namespace RideSharing.Domain.Entities
 		}
 
 		public Guid TripRequestId { get; set; }
+		public virtual TripRequestEntity TripRequest { get; set; }
 		public Guid CustomerId { get; set; }
 		public virtual CustomerEntity Customer { get; set; }
 		public Point Source { get; set; }
