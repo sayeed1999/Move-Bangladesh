@@ -1,23 +1,16 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using RideSharing.Application.Abstractions;
 using System.Diagnostics;
 
 namespace RideSharing.Application.Common.Behaviors
 {
-	public class RequestPerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+	public class RequestPerformanceBehaviour<TRequest, TResponse>(
+		ILogger<TRequest> logger,
+		IUserContext userContext)
+		: IPipelineBehavior<TRequest, TResponse>
 	{
-		private readonly Stopwatch _timer;
-		private readonly ILogger<TRequest> _logger;
-		//private readonly ICurrentUserService _currentUserService;
-
-		public RequestPerformanceBehaviour(ILogger<TRequest> logger)
-		//, ICurrentUserService currentUserService)
-		{
-			_timer = new Stopwatch();
-
-			_logger = logger;
-			//_currentUserService = currentUserService;
-		}
+		private readonly Stopwatch _timer = new();
 
 		public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
 		{
@@ -31,10 +24,10 @@ namespace RideSharing.Application.Common.Behaviors
 			{
 				var name = typeof(TRequest).Name;
 
-				_logger.LogWarning("Northwind Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}",
+				logger.LogWarning("Northwind Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}",
 					name,
 					_timer.ElapsedMilliseconds,
-					new Guid(), //_currentUserService.UserId, 
+					userContext.UserId,
 					request);
 			}
 

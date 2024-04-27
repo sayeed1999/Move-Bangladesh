@@ -10,6 +10,7 @@ public static class DependencyInjection
 {
 	public static IServiceCollection RegisterInfrastructureToApplication(this IServiceCollection services)
 		=> services
+			.AddScoped<IUserContext, IUserContext>()
 			.RegisterDatabaseRepositories()
 			.RegisterEventBuses();
 
