@@ -75,6 +75,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.ServiceBus", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Processor", "src\RideSharing.Processor\RideSharing.Processor.csproj", "{543B1677-BBC5-4238-A57C-01103BC95FE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Processor.UnitTests", "tests\RideSharing.Processor.UnitTests\RideSharing.Processor.UnitTests.csproj", "{07712866-CAE3-4D74-B5BB-58F6AC68FEB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{543B1677-BBC5-4238-A57C-01103BC95FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{543B1677-BBC5-4238-A57C-01103BC95FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{543B1677-BBC5-4238-A57C-01103BC95FE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07712866-CAE3-4D74-B5BB-58F6AC68FEB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07712866-CAE3-4D74-B5BB-58F6AC68FEB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07712866-CAE3-4D74-B5BB-58F6AC68FEB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07712866-CAE3-4D74-B5BB-58F6AC68FEB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -160,6 +166,7 @@ Global
 		{EAFF1A41-6D58-445A-8F92-DF05899052C3} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{0088D350-CC57-4F34-9BE5-BF2384314D50} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{543B1677-BBC5-4238-A57C-01103BC95FE1} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
+		{07712866-CAE3-4D74-B5BB-58F6AC68FEB2} = {F7745BB3-CFC6-49CB-A066-53375EE45099}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}
