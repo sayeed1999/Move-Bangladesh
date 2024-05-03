@@ -1,6 +1,6 @@
 ﻿using RideSharing.Domain.Entities;
 
-namespace RideSharing.Processor;
+namespace RideSharing.Processor.TransitionChecker;
 
 public class TripRequestStatusTransitionChecker : ITransitionChecker<TripRequestStatus>
 {

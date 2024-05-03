@@ -1,4 +1,4 @@
-﻿namespace RideSharing.Processor
+﻿namespace RideSharing.Processor.TransitionChecker
 {
 	public interface ITransitionChecker<T>
 	{
