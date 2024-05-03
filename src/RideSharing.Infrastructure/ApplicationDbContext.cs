@@ -51,8 +51,7 @@ public class ApplicationDbContext : DbContext
 
 		new DriverRatingEntityConfiguration().Configure(builder.Entity<DriverRatingEntity>());
 
-		// We have 1-1 reln between Trip & Payment table.
-		// But we made Trip as the Parent, so cannot set the FK from Payment entity config.
+		new PaymentEntityConfiguration().Configure(builder.Entity<PaymentEntity>());
 
 		new TripEntityConfiguration().Configure(builder.Entity<TripEntity>());
 

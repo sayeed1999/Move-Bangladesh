@@ -4,7 +4,7 @@ using System.Security.Claims;
 
 namespace RideSharing.Infrastructure.Repositories
 {
-	internal sealed class UserContext(
+	public sealed class UserContext(
 		IHttpContextAccessor httpContextAccessor) : IUserContext
 	{
 		public bool IsAuthenticated =>
