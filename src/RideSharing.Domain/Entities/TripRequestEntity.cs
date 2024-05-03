@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using NetTopologySuite.Geometries;
 using RideSharing.Common.MessageQueues.Messages;
-using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities;
 
@@ -45,4 +44,15 @@ public class TripRequestEntity : BaseEntity
 
 		return dto;
 	}
+}
+
+// Note: enum value a customer can only go to next stage, not before.
+public enum TripRequestStatus
+{
+	NoDriverAccepted = 1, // finding driver
+	CustomerCanceledBeforeDriverFound = 2, // lock a trip request once it reaches this stage
+	DriverAccepted = 3, // driver may cancel, do not lock
+	CustomerCanceledAfterDriverFound = 4, // lock a trip request once it reaches this stage
+	DriverCanceled = 5, // lock a trip request once it reaches this stage
+	TripStarted = 6, // lock a trip request once it reaches this stage
 }

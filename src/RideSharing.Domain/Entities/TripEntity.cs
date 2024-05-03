@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using NetTopologySuite.Geometries;
 using RideSharing.Common.MessageQueues.Messages;
-using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities;
 
@@ -65,4 +64,13 @@ public class TripEntity : BaseEntity
 			Destination.ToText(),
 			nameof(CabType));
 	}
+}
+
+public enum TripStatus
+{
+	DriverAccepted = 1,
+	CustomerCanceled = 2,
+	DriverCanceled = 3,
+	TripStarted = 4,
+	TripCompleted = 5,
 }
