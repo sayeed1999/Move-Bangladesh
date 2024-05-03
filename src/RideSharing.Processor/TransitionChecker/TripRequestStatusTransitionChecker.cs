@@ -35,12 +35,11 @@ public class TripRequestStatusTransitionChecker : ITransitionChecker<TripRequest
 				new List<TripRequestStatus>() // cannot move from this status!!
 			},
 			{
+				// TODO: on first two driver cancel, it should reset to NoDriverFound, on 3rd cancel it should become locked!
 				TripRequestStatus.DriverCanceled,
-				// Note: driver canceled should act same to same like no driver found
 				new List<TripRequestStatus>()
 				{
-					TripRequestStatus.CustomerCanceledBeforeDriverFound,
-					TripRequestStatus.DriverAccepted,
+					TripRequestStatus.NoDriverAccepted,
 				}
 			},
 			{
