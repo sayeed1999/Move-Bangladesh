@@ -1,7 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
 using RideSharing.Domain.Entities;
-using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Factories
 {

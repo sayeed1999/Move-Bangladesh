@@ -1,5 +1,4 @@
 ﻿using NetTopologySuite.Geometries;
-using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Entities
 {

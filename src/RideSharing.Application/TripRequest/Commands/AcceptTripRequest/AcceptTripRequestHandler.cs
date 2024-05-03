@@ -2,6 +2,7 @@
 using MediatR;
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
+using RideSharing.Domain.Entities;
 using RideSharing.Domain.Factories;
 
 namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
@@ -25,7 +26,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// trip request is not valid if status is other than 'NoDriverAccepted'
-			if (tripRequestInDB.Status != Domain.Enums.TripRequestStatus.NoDriverAccepted)
+			if (tripRequestInDB.Status != TripRequestStatus.NoDriverAccepted)
 			{
 				return Result.Failure<Guid>("Trip Request is invalid.");
 			}

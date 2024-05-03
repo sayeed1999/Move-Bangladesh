@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
-using RideSharing.Domain.Enums;
+using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripRequest.Commands.TripRequest
 {

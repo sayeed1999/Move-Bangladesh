@@ -2,7 +2,6 @@
 using FluentValidation;
 using NetTopologySuite.Geometries;
 using RideSharing.Domain.Entities;
-using RideSharing.Domain.Enums;
 
 namespace RideSharing.Domain.Factories
 {

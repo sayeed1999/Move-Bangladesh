@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
-using RideSharing.Domain.Enums;
 using System.Text;
 
 namespace RideSharing.Infrastructure.Repositories
