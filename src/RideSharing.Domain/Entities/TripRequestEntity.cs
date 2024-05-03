@@ -53,6 +53,7 @@ public enum TripRequestStatus
 	CustomerCanceledBeforeDriverFound = 2, // lock a trip request once it reaches this stage
 	DriverAccepted = 3, // driver may cancel, do not lock
 	CustomerCanceledAfterDriverFound = 4, // lock a trip request once it reaches this stage
-	DriverCanceled = 5, // lock a trip request once it reaches this stage
+	DriverCanceled = 5, // should again find driver like NoDriverAccepted stage upto 3 times!
 	TripStarted = 6, // lock a trip request once it reaches this stage
+	TripRequestRejected = 7 // if no driver was found for this trip
 }
