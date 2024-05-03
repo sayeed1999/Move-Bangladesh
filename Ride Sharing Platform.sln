@@ -69,9 +69,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{98D59914
 		docker\nginx\nginx.dev.conf = docker\nginx\nginx.dev.conf
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.NotificationService", "src\RideSharing.NotificationService\RideSharing.NotificationService.csproj", "{EAFF1A41-6D58-445A-8F92-DF05899052C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.NotificationService", "src\RideSharing.NotificationService\RideSharing.NotificationService.csproj", "{EAFF1A41-6D58-445A-8F92-DF05899052C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.ServiceBus", "src\RideSharing.ServiceBus\RideSharing.ServiceBus.csproj", "{0088D350-CC57-4F34-9BE5-BF2384314D50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.ServiceBus", "src\RideSharing.ServiceBus\RideSharing.ServiceBus.csproj", "{0088D350-CC57-4F34-9BE5-BF2384314D50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Processor", "src\RideSharing.Processor\RideSharing.Processor.csproj", "{543B1677-BBC5-4238-A57C-01103BC95FE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +133,10 @@ Global
 		{0088D350-CC57-4F34-9BE5-BF2384314D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0088D350-CC57-4F34-9BE5-BF2384314D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0088D350-CC57-4F34-9BE5-BF2384314D50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543B1677-BBC5-4238-A57C-01103BC95FE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543B1677-BBC5-4238-A57C-01103BC95FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543B1677-BBC5-4238-A57C-01103BC95FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543B1677-BBC5-4238-A57C-01103BC95FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +159,7 @@ Global
 		{98D59914-A7EF-465C-BC6E-C2E1E7BD63BB} = {899A0D46-B32C-426C-9F45-E0904E6DDEE6}
 		{EAFF1A41-6D58-445A-8F92-DF05899052C3} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{0088D350-CC57-4F34-9BE5-BF2384314D50} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
+		{543B1677-BBC5-4238-A57C-01103BC95FE1} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}
