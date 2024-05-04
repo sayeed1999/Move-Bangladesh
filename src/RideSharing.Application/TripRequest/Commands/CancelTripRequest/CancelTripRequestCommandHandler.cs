@@ -2,13 +2,16 @@
 using MediatR;
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
+using RideSharing.Domain.Entities;
+using RideSharing.Processor.TransitionChecker;
 
 namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 {
 	public class CancelTripRequestCommandHandler(
 		ITripRequestRepository tripRequestRepository,
 		ICustomerRepository customerRepository,
-		ITripRequestEventMessageBus messageBus)
+		ITripRequestEventMessageBus messageBus,
+		ITransitionChecker<TripRequestStatus> transitionChecker)
 		: IRequestHandler<CancelTripRequestCommandDto, Result<Guid>>
 	{
 		public async Task<Result<Guid>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
@@ -30,7 +33,14 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 			}
 
 			// Step 3: prepare domain entity
-			Result entityResult = requestedTrip.Cancel();
+			var transitionValid = transitionChecker.IsTransitionValid(requestedTrip.Status, TripRequestStatus.CustomerCanceledBeforeDriverFound);
+
+			if (!transitionValid)
+			{
+				return Result.Failure<Guid>("Trip Request Status cannot be changed to desired status.");
+			}
+
+			requestedTrip.Modify(TripRequestStatus.CustomerCanceledBeforeDriverFound);
 
 			// Step 4: perform database operations
 			try

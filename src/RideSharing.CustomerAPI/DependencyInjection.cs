@@ -3,6 +3,7 @@ using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Infrastructure.EventBus;
 using RideSharing.Infrastructure.Repositories;
+using RideSharing.Processor;
 
 namespace RideSharing.CustomerAPI;
 
@@ -13,6 +14,7 @@ public static class DependencyInjection
 			.AddScoped<IHttpContextAccessor, HttpContextAccessor>()
 			.AddScoped<IUserContext, UserContext>()
 			.RegisterDatabaseRepositories()
+			.RegisterProcessor()
 			.RegisterEventBuses();
 
 	public static IServiceCollection RegisterDatabaseRepositories(this IServiceCollection services)

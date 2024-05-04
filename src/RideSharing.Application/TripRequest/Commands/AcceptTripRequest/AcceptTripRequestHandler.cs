@@ -4,6 +4,7 @@ using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Domain.Entities;
 using RideSharing.Domain.Factories;
+using RideSharing.Processor.TransitionChecker;
 
 namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 {
@@ -11,7 +12,8 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 		IDriverRepository driverRepository,
 		ITripRequestRepository tripRequestRepository,
 		ITripRepository tripRepository,
-		ITripRequestEventMessageBus tripRequestMessageBus
+		ITripRequestEventMessageBus tripRequestMessageBus,
+		ITransitionChecker<TripRequestStatus> transitionChecker
 	)
 		: IRequestHandler<AcceptTripRequestDto, Result<Guid>>
 	{
@@ -55,7 +57,14 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// Step 4: create trip entity
-			var entityResult = tripRequestInDB.DriverAccepted();
+			var transitionValid = transitionChecker.IsTransitionValid(tripRequestInDB.Status, TripRequestStatus.DriverAccepted);
+
+			if (!transitionValid)
+			{
+				return Result.Failure<Guid>("Trip Request Status cannot be changed to desired status.");
+			}
+
+			tripRequestInDB.Modify(TripRequestStatus.DriverAccepted);
 
 			var newTrip = TripFactory.Create(tripRequestInDB, model.DriverId);
 

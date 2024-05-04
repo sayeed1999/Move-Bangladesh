@@ -27,29 +27,6 @@ public class TripEntity : BaseEntity
 		return Result.Success();
 	}
 
-	public Result CancelByCustomer()
-	{
-		if (TripStatus >= TripStatus.TripStarted)
-		{
-			return Result.Failure<TripEntity>("Cannot cancel started trip. Contact customer care at +880***.");
-		}
-
-		TripStatus = TripStatus.CustomerCanceled;
-
-		return Result.Success();
-	}
-
-	public Result CancelByDriver()
-	{
-		if (TripStatus >= TripStatus.TripStarted)
-		{
-			return Result.Failure<TripEntity>("Cannot cancel started trip. Contact customer care at +880***.");
-		}
-
-		TripStatus = TripStatus.DriverCanceled;
-
-		return Result.Success();
-	}
 
 	public TripDto GetTripDto()
 	{

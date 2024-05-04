@@ -15,18 +15,9 @@ public class TripRequestEntity : BaseEntity
 	public TripRequestStatus Status { get; set; }
 	public virtual ICollection<TripRequestLogEntity> TripRequestLogs { get; set; }
 
-	public Result Cancel()
+	public Result Modify(TripRequestStatus status)
 	{
-		Status = TripRequestStatus.CustomerCanceledBeforeDriverFound;
-		UpdatedAt = DateTime.UtcNow;
-
-		return Result.Success();
-	}
-
-	public Result DriverAccepted()
-	{
-		Status = TripRequestStatus.DriverAccepted;
-		UpdatedAt = DateTime.UtcNow;
+		Status = status;
 
 		return Result.Success();
 	}
