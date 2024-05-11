@@ -45,9 +45,7 @@ public class TripEntity : BaseEntity
 
 public enum TripStatus
 {
-	DriverAccepted = 1,
-	CustomerCanceled = 2,
-	DriverCanceled = 3,
-	TripStarted = 4,
-	TripCompleted = 5,
+	ONGOING = 1,
+	WAITING_FOR_PAYMENT = 2,
+	PAYMENT_COMPLETED = 3,
 }

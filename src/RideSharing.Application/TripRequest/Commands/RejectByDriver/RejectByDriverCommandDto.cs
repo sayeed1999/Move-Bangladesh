@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 
-namespace RideSharing.Application.Trip.Commands.DriverCancelTrip
+namespace RideSharing.Application.TripRequest.Commands.DriverCancelTrip
 {
-	public record struct DriverCancelTripCommandDto(
+	public record struct RejectByDriverCommandDto(
 		Guid DriverId,
 		Guid TripId,
 		string Reason) : IRequest<Result<Guid>>

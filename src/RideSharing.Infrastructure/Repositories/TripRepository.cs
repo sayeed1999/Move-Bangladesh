@@ -17,9 +17,6 @@ namespace RideSharing.Application
 
 		}
 
-		//var unfinishedTrip = await tripRepository.DbSet.FirstOrDefaultAsync(
-		//	x => x.TripStatus != TripStatus.TripCompleted);
-
 		public async Task<TripEntity> GetActiveTripForCustomer(Guid customerId)
 		{
 			var query = new StringBuilder();
@@ -31,7 +28,7 @@ namespace RideSharing.Application
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.TripCompleted, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.PAYMENT_COMPLETED, System.Data.DbType.Int16);
 			parameters.Add(nameof(TripEntity.CustomerId), customerId, System.Data.DbType.Guid);
 
 			using (var connection = _dapperContext.CreateConnection())
@@ -52,7 +49,7 @@ namespace RideSharing.Application
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.TripCompleted, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.PAYMENT_COMPLETED, System.Data.DbType.Int16);
 			parameters.Add(nameof(TripEntity.DriverId), driverId, System.Data.DbType.Guid);
 
 			using (var connection = _dapperContext.CreateConnection())

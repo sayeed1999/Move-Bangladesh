@@ -8,7 +8,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 {
 	[Route("api/external/trips")]
 	[ApiController]
-	public class CustomerCancelTripCommand(IMediator mediator) : ControllerBase
+	public class RejectByCustomerCommand(IMediator mediator) : ControllerBase
 	{
 		/// <summary>
 		/// Use this endpoint to cancel active trip for customer
@@ -16,8 +16,8 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 		/// <param name="tripId"></param>
 		/// <param name="customerId"></param>
 		/// <returns></returns>
-		[HttpPut("{tripId}/cancel-by-customer")]
-		public async Task<ActionResult<Response<Guid>>> Cancel([Required] Guid tripId, CustomerCancelTripCommandDto model)
+		[HttpPut("{tripId}/reject-by-customer")]
+		public async Task<ActionResult<Response<Guid>>> Cancel([Required] Guid tripId, RejectByCustomerCommandDto model)
 		{
 			model.CustomerId = new Guid(); // TODO: fetch from HttpContextAccessor
 			model.TripId = tripId;

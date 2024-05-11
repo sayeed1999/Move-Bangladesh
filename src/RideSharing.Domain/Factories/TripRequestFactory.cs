@@ -31,7 +31,7 @@ namespace RideSharing.Domain.Factories
 				Destination = new Point(destination.Item1, destination.Item2),
 				CabType = cabType,
 				PaymentMethod = paymentMethod,
-				Status = TripRequestStatus.NoDriverAccepted, // This should be the default type if no driver accepts the ride.
+				Status = TripRequestStatus.NO_DRIVER_FOUND, // This should be the default type if no driver accepts the ride.
 				CreatedAt = DateTime.UtcNow,
 				UpdatedAt = DateTime.UtcNow, // considering CreatedAt == UpdatedAt when trip is requested
 			};

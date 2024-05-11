@@ -25,15 +25,21 @@ namespace RideSharing.Infrastructure.Repositories
 			var query = new StringBuilder();
 
 			query.Append($"SELECT * FROM \"TripRequests\"");
-			query.Append($" WHERE \"{nameof(TripRequestEntity.Status)}\" = @{nameof(TripRequestEntity.Status)}");
-			query.Append($" AND \"{nameof(TripRequestEntity.UpdatedAt)}\" >= @{nameof(oneMinuteAgo)}");
+			query.Append($" WHERE (");
+			query.Append($"		(");
+			query.Append($"			\"{nameof(TripRequestEntity.Status)}\" = @{nameof(TripRequestEntity.Status)}");
+			query.Append($"			AND \"{nameof(TripRequestEntity.UpdatedAt)}\" >= @{nameof(oneMinuteAgo)}");
+			query.Append($"		)");
+			query.Append($"		OR \"{nameof(TripRequestEntity.Status)}\" >= @{nameof(TripRequestEntity.Status)}");
+			query.Append($"	)");
 			query.Append($" AND \"{nameof(TripRequestEntity.CustomerId)}\" = @{nameof(TripRequestEntity.CustomerId)}");
 			query.Append(" LIMIT 1");
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.NoDriverAccepted, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.NO_DRIVER_FOUND, System.Data.DbType.Int16);
 			parameters.Add(nameof(oneMinuteAgo), oneMinuteAgo, System.Data.DbType.DateTime);
+			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.TRIP_STARTED, System.Data.DbType.Int16);
 			parameters.Add(nameof(TripRequestEntity.CustomerId), customerId, System.Data.DbType.Guid);
 
 			using (var connection = _dapperContext.CreateConnection())
@@ -43,5 +49,25 @@ namespace RideSharing.Infrastructure.Repositories
 			}
 		}
 
+		public async Task<TripRequestEntity> GetActiveTripRequestForDriver(Guid driverId)
+		{
+			var query = new StringBuilder();
+
+			query.Append($"SELECT * FROM \"TripRequests\"");
+			query.Append($"	WHERE \"{nameof(TripRequestEntity.Status)}\" = @{nameof(TripRequestEntity.Status)}");
+			query.Append($" AND \"{nameof(TripRequestEntity.DriverId)}\" = @{nameof(TripRequestEntity.DriverId)}");
+			query.Append(" LIMIT 1");
+
+			var parameters = new DynamicParameters();
+
+			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.DRIVER_ACCEPTED, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripRequestEntity.DriverId), driverId, System.Data.DbType.Guid);
+
+			using (var connection = _dapperContext.CreateConnection())
+			{
+				var tripRequest = await connection.QueryFirstOrDefaultAsync<TripRequestEntity>(query.ToString(), parameters);
+				return tripRequest;
+			}
+		}
 	}
 }

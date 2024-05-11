@@ -33,14 +33,14 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 			}
 
 			// Step 3: prepare domain entity
-			var transitionValid = transitionChecker.IsTransitionValid(requestedTrip.Status, TripRequestStatus.CustomerCanceledBeforeDriverFound);
+			var transitionValid = transitionChecker.IsTransitionValid(requestedTrip.Status, TripRequestStatus.CUSTOMER_CANCELED);
 
 			if (!transitionValid)
 			{
 				return Result.Failure<Guid>("Trip Request Status cannot be changed to desired status.");
 			}
 
-			requestedTrip.Modify(TripRequestStatus.CustomerCanceledBeforeDriverFound);
+			requestedTrip.Modify(TripRequestStatus.CUSTOMER_CANCELED);
 
 			// Step 4: perform database operations
 			try

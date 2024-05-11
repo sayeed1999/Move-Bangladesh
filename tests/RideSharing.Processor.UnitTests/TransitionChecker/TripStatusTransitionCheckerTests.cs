@@ -13,10 +13,8 @@ namespace RideSharing.Processor.UnitTests.TransitionChecker
 		}
 
 		[Theory]
-		[InlineData(TripStatus.DriverAccepted, TripStatus.CustomerCanceled)]
-		[InlineData(TripStatus.DriverAccepted, TripStatus.DriverCanceled)]
-		[InlineData(TripStatus.DriverAccepted, TripStatus.TripStarted)]
-		[InlineData(TripStatus.TripStarted, TripStatus.TripCompleted)]
+		[InlineData(TripStatus.ONGOING, TripStatus.WAITING_FOR_PAYMENT)]
+		[InlineData(TripStatus.WAITING_FOR_PAYMENT, TripStatus.PAYMENT_COMPLETED)]
 		public void ValidPath_ReturnsTrue(TripStatus fromStatus, TripStatus toStatus)
 		{
 			bool result = _checker.IsTransitionValid(fromStatus, toStatus);
@@ -25,11 +23,9 @@ namespace RideSharing.Processor.UnitTests.TransitionChecker
 		}
 
 		[Theory]
-		[InlineData(TripStatus.DriverAccepted, TripStatus.TripCompleted)]
-		[InlineData(TripStatus.CustomerCanceled, TripStatus.DriverAccepted)]
-		[InlineData(TripStatus.DriverCanceled, TripStatus.DriverAccepted)]
-		[InlineData(TripStatus.TripStarted, TripStatus.DriverAccepted)]
-		[InlineData(TripStatus.TripCompleted, TripStatus.DriverAccepted)]
+		[InlineData(TripStatus.ONGOING, TripStatus.PAYMENT_COMPLETED)]
+		[InlineData(TripStatus.WAITING_FOR_PAYMENT, TripStatus.ONGOING)]
+		[InlineData(TripStatus.PAYMENT_COMPLETED, TripStatus.WAITING_FOR_PAYMENT)]
 		public void InvalidPath_ReturnsFalse(TripStatus fromStatus, TripStatus toStatus)
 		{
 			bool result = _checker.IsTransitionValid(fromStatus, toStatus);

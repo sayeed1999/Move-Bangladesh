@@ -3,7 +3,6 @@ using MediatR;
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Domain.Entities;
-using RideSharing.Domain.Factories;
 using RideSharing.Processor.TransitionChecker;
 
 namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
@@ -28,7 +27,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// trip request is not valid if status is other than 'NoDriverAccepted'
-			if (tripRequestInDB.Status != TripRequestStatus.NoDriverAccepted)
+			if (tripRequestInDB.Status != TripRequestStatus.NO_DRIVER_FOUND)
 			{
 				return Result.Failure<Guid>("Trip Request is invalid.");
 			}
@@ -48,7 +47,15 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 				return Result.Failure<Guid>("Driver is not found.");
 			}
 
-			// Step 3: check driver has ongoing trips
+			// Step 3: check driver has ongoing trip requests
+			var tripRequest = await tripRequestRepository.GetActiveTripRequestForDriver(model.DriverId);
+
+			if (tripRequest != null)
+			{
+				return Result.Failure<Guid>("Driver has an ongoing trip request.");
+			}
+
+			// Step 4: check driver has ongoing trips
 			var trip = await tripRepository.GetActiveTripForDriver(model.DriverId);
 
 			if (trip != null)
@@ -57,20 +64,16 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// Step 4: create trip entity
-			var transitionValid = transitionChecker.IsTransitionValid(tripRequestInDB.Status, TripRequestStatus.DriverAccepted);
+			var transitionValid = transitionChecker.IsTransitionValid(tripRequestInDB.Status, TripRequestStatus.DRIVER_ACCEPTED);
 
 			if (!transitionValid)
 			{
 				return Result.Failure<Guid>("Trip Request Status cannot be changed to desired status.");
 			}
 
-			tripRequestInDB.Modify(TripRequestStatus.DriverAccepted);
-
-			var newTrip = TripFactory.Create(tripRequestInDB, model.DriverId);
+			tripRequestInDB.Modify(TripRequestStatus.DRIVER_ACCEPTED, model.DriverId);
 
 			// Step 5: perform db operations
-
-			var transaction = await tripRequestRepository.BeginTransactionAsync();
 
 			try
 			{
@@ -78,12 +81,6 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 
 				// update trip request
 				var tripRequestRes = await tripRequestRepository.UpdateAsync(tripRequestInDB);
-
-				// create trip
-				await tripRepository.AddAsync(newTrip.Value);
-
-				// commit
-				await tripRequestRepository.CommitTransactionAsync(transaction);
 
 				tripRequestMessageBus.PublishAsync(tripRequestInDB.GetTripRequestDto());
 
@@ -93,8 +90,6 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 			catch (Exception ex)
 			{
-				await tripRequestRepository.RollBackTransactionAsync(transaction);
-
 				return Result.Failure<Guid>($"Failed with error: {ex.Message}");
 			}
 		}

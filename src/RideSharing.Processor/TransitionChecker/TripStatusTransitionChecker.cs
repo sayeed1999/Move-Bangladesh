@@ -11,33 +11,23 @@ public class TripStatusTransitionChecker : ITransitionChecker<TripStatus>
 		_tripMap = new Dictionary<TripStatus, List<TripStatus>>
 		{
 			{
-				TripStatus.DriverAccepted,
+				TripStatus.ONGOING,
 				new List<TripStatus>()
 				{
-					TripStatus.CustomerCanceled,
-					TripStatus.DriverCanceled,
-					TripStatus.TripStarted,
+					TripStatus.WAITING_FOR_PAYMENT,
 				}
 			},
 			{
-				TripStatus.CustomerCanceled,
-				new List<TripStatus>() // cannot move to any status from here!!
-			},
-			{
-				TripStatus.DriverCanceled,
-				new List<TripStatus>() // cannot move to any status from here!!
-			},
-			{
-				TripStatus.TripStarted,
+				TripStatus.WAITING_FOR_PAYMENT,
 				new List<TripStatus>()
 				{
-					TripStatus.TripCompleted,
+					TripStatus.PAYMENT_COMPLETED,
 				}
 			},
 			{
-				TripStatus.TripCompleted,
-				new List<TripStatus>() // cannot move to any status from here!!
-			}
+				TripStatus.PAYMENT_COMPLETED,
+				new List<TripStatus>()
+			},
 		};
 	}
 

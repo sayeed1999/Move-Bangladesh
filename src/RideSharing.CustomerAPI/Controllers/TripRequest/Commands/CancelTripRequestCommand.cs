@@ -22,7 +22,7 @@ namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		[HttpDelete("{tripRequestId}")]
+		[HttpPut("{tripRequestId}/cancel-by-customer")]
 		public async Task<ActionResult<Response<Guid>>> RequestRide(Guid tripRequestId)
 		{
 			var customerId = new Guid(); // TODO:- get customerId from httpContextAccessor!

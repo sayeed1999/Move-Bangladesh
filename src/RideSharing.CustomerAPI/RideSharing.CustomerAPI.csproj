@@ -27,6 +27,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Controllers\TripRequest\Queries\" />
+	  <Folder Include="Controllers\Trip\Commands\" />
 	  <Folder Include="Controllers\Trip\Queries\" />
 	</ItemGroup>
 

@@ -11,43 +11,43 @@ public class TripRequestStatusTransitionChecker : ITransitionChecker<TripRequest
 		_tripRequestMap = new Dictionary<TripRequestStatus, List<TripRequestStatus>>
 		{
 			{
-				TripRequestStatus.NoDriverAccepted,
+				TripRequestStatus.NO_DRIVER_FOUND,
 				new List<TripRequestStatus>()
 				{
-					TripRequestStatus.CustomerCanceledBeforeDriverFound,
-					TripRequestStatus.DriverAccepted,
+					TripRequestStatus.CUSTOMER_CANCELED,
+					TripRequestStatus.DRIVER_ACCEPTED,
 				}
 			},
 			{
-				TripRequestStatus.CustomerCanceledBeforeDriverFound,
+				TripRequestStatus.CUSTOMER_CANCELED,
 				new List<TripRequestStatus>() // cannot move from this status!!
 			},
 			{
-				TripRequestStatus.DriverAccepted,
+				TripRequestStatus.DRIVER_ACCEPTED,
 				new List<TripRequestStatus>()
 				{
-					TripRequestStatus.CustomerCanceledAfterDriverFound,
-					TripRequestStatus.DriverCanceled,
+					TripRequestStatus.CUSTOMER_REJECTED_DRIVER,
+					TripRequestStatus.DRIVER_REJECTED_CUSTOMER,
 				}
 			},
 			{
-				TripRequestStatus.CustomerCanceledAfterDriverFound,
+				TripRequestStatus.CUSTOMER_REJECTED_DRIVER,
 				new List<TripRequestStatus>() // cannot move from this status!!
 			},
 			{
 				// TODO: on first two driver cancel, it should reset to NoDriverFound, on 3rd cancel it should become locked!
-				TripRequestStatus.DriverCanceled,
+				TripRequestStatus.DRIVER_REJECTED_CUSTOMER,
 				new List<TripRequestStatus>()
 				{
-					TripRequestStatus.NoDriverAccepted,
+					TripRequestStatus.NO_DRIVER_FOUND,
 				}
 			},
 			{
-				TripRequestStatus.TripStarted,
+				TripRequestStatus.TRIP_STARTED,
 				new List<TripRequestStatus>() // cannot move from this status!!
 			},
 			{
-				TripRequestStatus.TripRequestRejected,
+				TripRequestStatus.TRIP_REQUEST_REJECTED,
 				new List<TripRequestStatus>() // cannot move from this status!!
 			}
 		};

@@ -14,7 +14,7 @@ namespace RideSharing.Domain.Factories
 				CustomerId = tripRequest.CustomerId,
 				DriverId = driverId,
 				PaymentMethod = tripRequest.PaymentMethod,
-				TripStatus = TripStatus.DriverAccepted,
+				TripStatus = TripStatus.ONGOING,
 				Source = tripRequest.Source,
 				Destination = tripRequest.Destination,
 				CabType = tripRequest.CabType,

@@ -13,11 +13,11 @@ namespace RideSharing.Processor.UnitTests.TransitionChecker
 		}
 
 		[Theory]
-		[InlineData(TripRequestStatus.NoDriverAccepted, TripRequestStatus.CustomerCanceledBeforeDriverFound)]
-		[InlineData(TripRequestStatus.NoDriverAccepted, TripRequestStatus.DriverAccepted)]
-		[InlineData(TripRequestStatus.DriverAccepted, TripRequestStatus.CustomerCanceledAfterDriverFound)]
-		[InlineData(TripRequestStatus.DriverAccepted, TripRequestStatus.DriverCanceled)]
-		[InlineData(TripRequestStatus.DriverCanceled, TripRequestStatus.NoDriverAccepted)]
+		[InlineData(TripRequestStatus.NO_DRIVER_FOUND, TripRequestStatus.CUSTOMER_CANCELED)]
+		[InlineData(TripRequestStatus.NO_DRIVER_FOUND, TripRequestStatus.DRIVER_ACCEPTED)]
+		[InlineData(TripRequestStatus.DRIVER_ACCEPTED, TripRequestStatus.CUSTOMER_REJECTED_DRIVER)]
+		[InlineData(TripRequestStatus.DRIVER_ACCEPTED, TripRequestStatus.DRIVER_REJECTED_CUSTOMER)]
+		[InlineData(TripRequestStatus.DRIVER_REJECTED_CUSTOMER, TripRequestStatus.NO_DRIVER_FOUND)]
 		public void ValidPath_ReturnsTrue(TripRequestStatus fromStatus, TripRequestStatus toStatus)
 		{
 			bool result = _checker.IsTransitionValid(fromStatus, toStatus);
@@ -26,20 +26,20 @@ namespace RideSharing.Processor.UnitTests.TransitionChecker
 		}
 
 		[Theory]
-		[InlineData(TripRequestStatus.NoDriverAccepted, TripRequestStatus.CustomerCanceledAfterDriverFound)]
-		[InlineData(TripRequestStatus.NoDriverAccepted, TripRequestStatus.DriverCanceled)]
-		[InlineData(TripRequestStatus.CustomerCanceledBeforeDriverFound, TripRequestStatus.DriverAccepted)]
-		[InlineData(TripRequestStatus.CustomerCanceledBeforeDriverFound, TripRequestStatus.CustomerCanceledAfterDriverFound)]
-		[InlineData(TripRequestStatus.CustomerCanceledBeforeDriverFound, TripRequestStatus.DriverCanceled)]
-		[InlineData(TripRequestStatus.CustomerCanceledAfterDriverFound, TripRequestStatus.NoDriverAccepted)]
-		[InlineData(TripRequestStatus.CustomerCanceledAfterDriverFound, TripRequestStatus.DriverAccepted)]
-		[InlineData(TripRequestStatus.CustomerCanceledAfterDriverFound, TripRequestStatus.CustomerCanceledBeforeDriverFound)]
-		[InlineData(TripRequestStatus.CustomerCanceledAfterDriverFound, TripRequestStatus.DriverCanceled)]
-		[InlineData(TripRequestStatus.DriverAccepted, TripRequestStatus.NoDriverAccepted)]
-		[InlineData(TripRequestStatus.DriverAccepted, TripRequestStatus.CustomerCanceledBeforeDriverFound)]
-		[InlineData(TripRequestStatus.DriverCanceled, TripRequestStatus.CustomerCanceledBeforeDriverFound)]
-		[InlineData(TripRequestStatus.DriverCanceled, TripRequestStatus.CustomerCanceledAfterDriverFound)]
-		[InlineData(TripRequestStatus.DriverCanceled, TripRequestStatus.DriverAccepted)]
+		[InlineData(TripRequestStatus.NO_DRIVER_FOUND, TripRequestStatus.CUSTOMER_REJECTED_DRIVER)]
+		[InlineData(TripRequestStatus.NO_DRIVER_FOUND, TripRequestStatus.DRIVER_REJECTED_CUSTOMER)]
+		[InlineData(TripRequestStatus.CUSTOMER_CANCELED, TripRequestStatus.DRIVER_ACCEPTED)]
+		[InlineData(TripRequestStatus.CUSTOMER_CANCELED, TripRequestStatus.CUSTOMER_REJECTED_DRIVER)]
+		[InlineData(TripRequestStatus.CUSTOMER_CANCELED, TripRequestStatus.DRIVER_REJECTED_CUSTOMER)]
+		[InlineData(TripRequestStatus.CUSTOMER_REJECTED_DRIVER, TripRequestStatus.NO_DRIVER_FOUND)]
+		[InlineData(TripRequestStatus.CUSTOMER_REJECTED_DRIVER, TripRequestStatus.DRIVER_ACCEPTED)]
+		[InlineData(TripRequestStatus.CUSTOMER_REJECTED_DRIVER, TripRequestStatus.CUSTOMER_CANCELED)]
+		[InlineData(TripRequestStatus.CUSTOMER_REJECTED_DRIVER, TripRequestStatus.DRIVER_REJECTED_CUSTOMER)]
+		[InlineData(TripRequestStatus.DRIVER_ACCEPTED, TripRequestStatus.NO_DRIVER_FOUND)]
+		[InlineData(TripRequestStatus.DRIVER_ACCEPTED, TripRequestStatus.CUSTOMER_CANCELED)]
+		[InlineData(TripRequestStatus.DRIVER_REJECTED_CUSTOMER, TripRequestStatus.CUSTOMER_CANCELED)]
+		[InlineData(TripRequestStatus.DRIVER_REJECTED_CUSTOMER, TripRequestStatus.CUSTOMER_REJECTED_DRIVER)]
+		[InlineData(TripRequestStatus.DRIVER_REJECTED_CUSTOMER, TripRequestStatus.DRIVER_ACCEPTED)]
 		public void InvalidPath_ReturnsFalse(TripRequestStatus fromStatus, TripRequestStatus toStatus)
 		{
 			bool result = _checker.IsTransitionValid(fromStatus, toStatus);

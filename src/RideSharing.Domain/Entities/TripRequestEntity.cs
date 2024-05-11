@@ -8,6 +8,8 @@ public class TripRequestEntity : BaseEntity
 {
 	public Guid CustomerId { get; set; }
 	public virtual CustomerEntity Customer { get; set; }
+	public Guid? DriverId { get; set; }
+	public virtual DriverEntity? Driver { get; set; }
 	public Point Source { get; set; }
 	public Point Destination { get; set; }
 	public CabType CabType { get; set; }
@@ -15,8 +17,13 @@ public class TripRequestEntity : BaseEntity
 	public TripRequestStatus Status { get; set; }
 	public virtual ICollection<TripRequestLogEntity> TripRequestLogs { get; set; }
 
-	public Result Modify(TripRequestStatus status)
+	public Result Modify(TripRequestStatus status, Guid? driverId = null)
 	{
+		if (driverId is not null)
+		{
+			DriverId = driverId;
+		}
+
 		Status = status;
 
 		return Result.Success();
@@ -37,14 +44,13 @@ public class TripRequestEntity : BaseEntity
 	}
 }
 
-// Note: enum value a customer can only go to next stage, not before.
 public enum TripRequestStatus
 {
-	NoDriverAccepted = 1, // finding driver
-	CustomerCanceledBeforeDriverFound = 2, // lock a trip request once it reaches this stage
-	DriverAccepted = 3, // driver may cancel, do not lock
-	CustomerCanceledAfterDriverFound = 4, // lock a trip request once it reaches this stage
-	DriverCanceled = 5, // should again find driver like NoDriverAccepted stage upto 3 times!
-	TripStarted = 6, // lock a trip request once it reaches this stage
-	TripRequestRejected = 7 // if no driver was found for this trip
+	NO_DRIVER_FOUND = 1,
+	CUSTOMER_CANCELED = 2,
+	DRIVER_ACCEPTED = 3,
+	CUSTOMER_REJECTED_DRIVER = 4,
+	DRIVER_REJECTED_CUSTOMER = 5, // TODO: upon 3 driver rejections, take the trip request to trip_request_rejected
+	TRIP_STARTED = 6, // create a trip entity where status reaches this stage
+	TRIP_REQUEST_REJECTED = 7 // TODO: run a scheduler and send all unaccepted trips to this status
 }

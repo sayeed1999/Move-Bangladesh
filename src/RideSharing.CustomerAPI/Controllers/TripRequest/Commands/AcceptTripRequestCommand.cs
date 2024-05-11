@@ -21,7 +21,7 @@ namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 		/// </summary>
 		/// <param name="tripRequestId"></param>
 		/// <returns></returns>
-		[HttpPut("{tripRequestId}")]
+		[HttpPut("{tripRequestId}/accept-trip-request")]
 		public async Task<ActionResult<Response<Guid>>> RequestRide(Guid tripRequestId)
 		{
 			var driverId = new Guid(); // TODO:- get customerId from httpContextAccessor!

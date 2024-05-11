@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="TripRequest\Queries\" />
+    <Folder Include="Trip\Commands\" />
     <Folder Include="Trip\Queries\" />
   </ItemGroup>
 
