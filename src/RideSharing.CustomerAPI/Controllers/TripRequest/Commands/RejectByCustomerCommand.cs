@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.Trip.Commands.CustomerCancelTrip;
+using RideSharing.Application.TripRequest.Commands.RejectByCustomer;
 using RideSharing.Common.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
+namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 {
 	[Route("api/external/trips")]
 	[ApiController]

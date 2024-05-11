@@ -5,7 +5,7 @@ using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Domain.Entities;
 using RideSharing.Processor.TransitionChecker;
 
-namespace RideSharing.Application.TripRequest.Commands.DriverCancelTrip
+namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 {
 	public class RejectByDriverCommandHandler(
 		ITripRequestRepository tripRequestRepository,

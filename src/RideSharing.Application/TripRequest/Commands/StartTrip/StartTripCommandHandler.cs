@@ -6,7 +6,7 @@ using RideSharing.Domain.Entities;
 using RideSharing.Domain.Factories;
 using RideSharing.Processor.TransitionChecker;
 
-namespace RideSharing.Application.Trip.Commands.StartTrip
+namespace RideSharing.Application.TripRequest.Commands.StartTrip
 {
 	public class StartTripCommandHandler(
 		ITripRequestRepository tripRequestRepository,

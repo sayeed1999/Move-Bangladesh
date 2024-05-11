@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 
-namespace RideSharing.Application.Trip.Commands.CustomerCancelTrip
+namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 {
 	public record struct RejectByCustomerCommandDto(
 		Guid CustomerId,

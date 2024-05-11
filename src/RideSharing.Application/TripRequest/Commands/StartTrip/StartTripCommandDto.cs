@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 
-namespace RideSharing.Application.Trip.Commands.StartTrip
+namespace RideSharing.Application.TripRequest.Commands.StartTrip
 {
 	public record struct StartTripCommandDto(
 		Guid DriverId,

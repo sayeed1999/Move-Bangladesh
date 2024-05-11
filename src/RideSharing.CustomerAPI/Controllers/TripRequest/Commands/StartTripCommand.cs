@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.Trip.Commands.StartTrip;
+using RideSharing.Application.TripRequest.Commands.StartTrip;
 using RideSharing.Common.Entities;
 
-namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
+namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 {
 	[Route("api/external/trip-requests")]
 	[ApiController]
