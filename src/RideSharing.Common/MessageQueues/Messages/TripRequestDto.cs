@@ -11,7 +11,8 @@ namespace RideSharing.Common.MessageQueues.Messages
 			string Destination,
 			string CabType,
 			string PaymentMethod,
-			string Status)
+			string Status,
+			Guid? DriverId = null)
 		{
 			this.Id = Id;
 			this.CustomerId = CustomerId;
@@ -20,10 +21,12 @@ namespace RideSharing.Common.MessageQueues.Messages
 			this.CabType = CabType;
 			this.PaymentMethod = PaymentMethod;
 			this.Status = Status;
+			this.DriverId = DriverId;
 		}
 
 		public Guid Id { get; }
 		public Guid CustomerId { get; }
+		public Guid? DriverId { get; }
 		public string Source { get; }
 		public string Destination { get; }
 		public string CabType { get; }

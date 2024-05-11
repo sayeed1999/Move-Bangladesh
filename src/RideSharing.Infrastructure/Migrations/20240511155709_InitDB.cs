@@ -67,35 +67,6 @@ namespace RideSharing.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TripRequests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Source = table.Column<Point>(type: "geometry (point)", nullable: false),
-                    Destination = table.Column<Point>(type: "geometry (point)", nullable: false),
-                    CabType = table.Column<int>(type: "integer", nullable: false),
-                    PaymentMethod = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<int>(type: "integer", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TripRequests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TripRequests_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Cabs",
                 columns: table => new
                 {
@@ -122,12 +93,49 @@ namespace RideSharing.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TripRequests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DriverId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Source = table.Column<Point>(type: "geometry (point)", nullable: false),
+                    Destination = table.Column<Point>(type: "geometry (point)", nullable: false),
+                    CabType = table.Column<int>(type: "integer", nullable: false),
+                    PaymentMethod = table.Column<int>(type: "integer", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TripRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TripRequests_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TripRequests_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TripRequestLogs",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TripRequestId = table.Column<Guid>(type: "uuid", nullable: false),
                     CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    DriverId = table.Column<Guid>(type: "uuid", nullable: true),
                     Source = table.Column<Point>(type: "geometry", nullable: false),
                     Destination = table.Column<Point>(type: "geometry", nullable: false),
                     CabType = table.Column<int>(type: "integer", nullable: false),
@@ -150,6 +158,12 @@ namespace RideSharing.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_TripRequestLogs_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_TripRequestLogs_TripRequests_TripRequestId",
                         column: x => x.TripRequestId,
                         principalTable: "TripRequests",
@@ -166,7 +180,6 @@ namespace RideSharing.Infrastructure.Migrations
                     CustomerId = table.Column<Guid>(type: "uuid", nullable: false),
                     DriverId = table.Column<Guid>(type: "uuid", nullable: false),
                     PaymentMethod = table.Column<int>(type: "integer", nullable: false),
-                    PaymentId = table.Column<Guid>(type: "uuid", nullable: false),
                     TripStatus = table.Column<int>(type: "integer", nullable: false),
                     Source = table.Column<Point>(type: "geometry (point)", nullable: false),
                     Destination = table.Column<Point>(type: "geometry (point)", nullable: false),
@@ -384,8 +397,7 @@ namespace RideSharing.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Payments_TripId",
                 table: "Payments",
-                column: "TripId",
-                unique: true);
+                column: "TripId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TripLogs_CustomerId",
@@ -413,6 +425,11 @@ namespace RideSharing.Infrastructure.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TripRequestLogs_DriverId",
+                table: "TripRequestLogs",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TripRequestLogs_TripRequestId",
                 table: "TripRequestLogs",
                 column: "TripRequestId");
@@ -421,6 +438,11 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "IX_TripRequests_CustomerId",
                 table: "TripRequests",
                 column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TripRequests_DriverId",
+                table: "TripRequests",
+                column: "DriverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trips_CustomerId",
@@ -466,13 +488,13 @@ namespace RideSharing.Infrastructure.Migrations
                 name: "Trips");
 
             migrationBuilder.DropTable(
-                name: "Drivers");
-
-            migrationBuilder.DropTable(
                 name: "TripRequests");
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Drivers");
         }
     }
 }

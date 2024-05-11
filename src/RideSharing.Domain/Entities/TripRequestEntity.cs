@@ -38,7 +38,8 @@ public class TripRequestEntity : BaseEntity
 			Destination.ToText(),
 			nameof(CabType),
 			nameof(PaymentMethod),
-			nameof(Status));
+			nameof(Status),
+			DriverId);
 
 		return dto;
 	}

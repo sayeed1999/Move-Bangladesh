@@ -389,6 +389,9 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("geometry (point)");
 
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("integer");
 
@@ -408,6 +411,8 @@ namespace RideSharing.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DriverId");
 
                     b.ToTable("TripRequests");
                 });
@@ -440,6 +445,9 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("geometry");
 
+                    b.Property<Guid?>("DriverId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("integer");
 
@@ -462,6 +470,8 @@ namespace RideSharing.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DriverId");
 
                     b.HasIndex("TripRequestId");
 
@@ -653,7 +663,14 @@ namespace RideSharing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("RideSharing.Domain.Entities.DriverEntity", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Driver");
                 });
 
             modelBuilder.Entity("RideSharing.Domain.Entities.TripRequestLogEntity", b =>
@@ -664,6 +681,11 @@ namespace RideSharing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("RideSharing.Domain.Entities.DriverEntity", "Driver")
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("RideSharing.Domain.Entities.TripRequestEntity", "TripRequest")
                         .WithMany("TripRequestLogs")
                         .HasForeignKey("TripRequestId")
@@ -671,6 +693,8 @@ namespace RideSharing.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Driver");
 
                     b.Navigation("TripRequest");
                 });
