@@ -7,8 +7,8 @@ CREATE OR REPLACE FUNCTION log_TripRequests()
 	AS
 	$$
 	BEGIN
-		INSERT INTO "TripRequestLogs"("Id", "CustomerId", "Source", "Destination", "CabType", "PaymentMethod", "Status", "TripRequestId", "CreatedAt", "CreatedBy", "UpdatedAt", "UpdatedBy", "DeletedAt", "DeletedBy")
-		VALUES(gen_random_uuid(), NEW."CustomerId", NEW."Source", NEW."Destination", NEW."CabType", NEW."PaymentMethod", NEW."Status", NEW."Id", NEW."CreatedAt", NEW."CreatedBy", NEW."UpdatedAt", NEW."UpdatedBy", NEW."DeletedAt", NEW."DeletedBy");
+		INSERT INTO "TripRequestLogs"("Id", "CustomerId", "DriverId", "Source", "Destination", "CabType", "PaymentMethod", "Status", "TripRequestId", "CreatedAt", "CreatedBy", "UpdatedAt", "UpdatedBy", "DeletedAt", "DeletedBy")
+		VALUES(gen_random_uuid(), NEW."CustomerId", NEW."DriverId", NEW."Source", NEW."Destination", NEW."CabType", NEW."PaymentMethod", NEW."Status", NEW."Id", NEW."CreatedAt", NEW."CreatedBy", NEW."UpdatedAt", NEW."UpdatedBy", NEW."DeletedAt", NEW."DeletedBy");
 	RETURN NEW;
 	END;
 	$$
