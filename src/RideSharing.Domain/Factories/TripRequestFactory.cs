@@ -17,7 +17,7 @@ namespace RideSharing.Domain.Factories
 		/// <param name="paymentMethod"></param>
 		/// <returns></returns>
 		public static Result<TripRequestEntity> Create(
-		Guid customerId,
+		long customerId,
 		Tuple<double,
 		double> source,
 		Tuple<double, double> destination,
@@ -33,7 +33,7 @@ namespace RideSharing.Domain.Factories
 				PaymentMethod = paymentMethod,
 				Status = TripRequestStatus.NO_DRIVER_FOUND, // This should be the default type if no driver accepts the ride.
 				CreatedAt = DateTime.UtcNow,
-				UpdatedAt = DateTime.UtcNow, // considering CreatedAt == UpdatedAt when trip is requested
+				LastUpdatedAt = DateTime.UtcNow, // considering CreatedAt == UpdatedAt when trip is requested
 			};
 
 			var validator = new TripRequestValidator();

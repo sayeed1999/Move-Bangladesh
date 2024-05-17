@@ -17,9 +17,9 @@ namespace RideSharing.DriverAPI.Controllers.TripRequest.Commands
 		/// <param name="driverId"></param>
 		/// <returns></returns>
 		[HttpPut("{tripId}/reject-by-driver")]
-		public async Task<ActionResult<Response<Guid>>> Cancel([Required] Guid tripId, RejectByDriverCommandDto model)
+		public async Task<ActionResult<Response<long>>> Cancel([Required] long tripId, RejectByDriverCommandDto model)
 		{
-			model.DriverId = new Guid(); // TODO: fetch from HttpContextAccessor
+			model.DriverId = new long(); // TODO: fetch from HttpContextAccessor
 			model.TripId = tripId;
 
 			var res = await mediator.Send(model);

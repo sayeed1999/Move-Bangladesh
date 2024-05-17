@@ -9,13 +9,14 @@ namespace RideSharing.Infrastructure.EntityConfigurations
 		public void Configure(EntityTypeBuilder<DriverRatingEntity> builder)
 		{
 			builder
+				.HasOne(x => x.Driver)
+				.WithMany(x => x.DriverRatings)
+				.HasForeignKey(x => x.DriverId);
+
+			builder
 				.HasOne(x => x.Customer)
 				.WithMany(x => x.DriverRatings)
 				.HasForeignKey(x => x.CustomerId);
-
-			// Note: Driver Rating Entity has also FK on Driver.DriverId,
-			// ef core giving error on putting that here but auto generated the FK!
-
 		}
 	}
 }

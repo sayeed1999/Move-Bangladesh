@@ -26,7 +26,7 @@ namespace RideSharing.InternalAPI.Controllers
 
 		// GET api/<BaseController>/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<T>> Get(Guid id)
+		public async Task<ActionResult<T>> Get(long id)
 		{
 			var res = await this.repository.FindByIdAsync(id);
 			return Ok(res);
@@ -44,7 +44,7 @@ namespace RideSharing.InternalAPI.Controllers
 		// TODO: check PUT vs PATCH; which is more close!
 		// PUT api/<BaseController>/5
 		[HttpPut("{id}")]
-		public async Task<ActionResult<T>> Put(Guid id, [FromBody] T value)
+		public async Task<ActionResult<T>> Put(long id, [FromBody] T value)
 		{
 			var res = await this.repository.UpdateByIdAsync(id, value);
 			return Ok(res);
@@ -52,7 +52,7 @@ namespace RideSharing.InternalAPI.Controllers
 
 		// DELETE api/<BaseController>/5
 		[HttpDelete("{id}")]
-		public async Task<ActionResult<T>> Delete(Guid id)
+		public async Task<ActionResult<T>> Delete(long id)
 		{
 			var res = await this.repository.DeleteByIdAsync(id);
 			return Ok(res);

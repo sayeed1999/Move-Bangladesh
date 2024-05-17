@@ -2,7 +2,7 @@
 
 public class PaymentEntity : BaseEntity
 {
-	public Guid TripId { get; set; }
+	public long TripId { get; set; }
 	public virtual TripEntity Trip { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
 	public PaymentStatus PaymentStatus { get; set; }
@@ -19,7 +19,7 @@ public enum PaymentMethod
 
 public enum PaymentStatus
 {
-	Processing,
-	Failed,
-	Success,
+	Processing = 1,
+	Failed = 2,
+	Success = 3,
 }

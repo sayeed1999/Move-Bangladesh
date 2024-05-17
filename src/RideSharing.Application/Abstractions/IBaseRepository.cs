@@ -14,11 +14,11 @@ namespace RideSharing.Application.Abstractions
 		public Task<int> SaveChangesAsync();
 
 		public Task<IEnumerable<T>> FindAllAsync();
-		public Task<T> FindByIdAsync(Guid id);
+		public Task<T> FindByIdAsync(long id);
 		public Task<T> AddAsync(T item);
 		public Task<T> UpdateAsync(T item);
-		public Task<T> UpdateByIdAsync(Guid id, T item);
+		public Task<T> UpdateByIdAsync(long id, T item);
 		public Task<T> DeleteAsync(T item);
-		public Task<T> DeleteByIdAsync(Guid id);
+		public Task<T> DeleteByIdAsync(long id);
 	}
 }

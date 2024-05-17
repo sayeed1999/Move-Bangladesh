@@ -4,8 +4,8 @@ using MediatR;
 namespace RideSharing.Application.TripRequest.Commands.StartTrip
 {
 	public record struct StartTripCommandDto(
-		Guid DriverId,
-		Guid TripRequestId) : IRequest<Result<Guid>>
+		long DriverId,
+		long TripRequestId) : IRequest<Result<long>>
 	{
 
 	}

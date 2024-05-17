@@ -17,7 +17,7 @@ namespace RideSharing.Application
 
 		}
 
-		public async Task<TripEntity> GetActiveTripForCustomer(Guid customerId)
+		public async Task<TripEntity> GetActiveTripForCustomer(long customerId)
 		{
 			var query = new StringBuilder();
 
@@ -29,7 +29,7 @@ namespace RideSharing.Application
 			var parameters = new DynamicParameters();
 
 			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.PAYMENT_COMPLETED, System.Data.DbType.Int16);
-			parameters.Add(nameof(TripEntity.CustomerId), customerId, System.Data.DbType.Guid);
+			parameters.Add(nameof(TripEntity.CustomerId), customerId, System.Data.DbType.Int64);
 
 			using (var connection = _dapperContext.CreateConnection())
 			{
@@ -38,7 +38,7 @@ namespace RideSharing.Application
 			}
 		}
 
-		public async Task<TripEntity> GetActiveTripForDriver(Guid driverId)
+		public async Task<TripEntity> GetActiveTripForDriver(long driverId)
 		{
 			var query = new StringBuilder();
 
@@ -50,7 +50,7 @@ namespace RideSharing.Application
 			var parameters = new DynamicParameters();
 
 			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.PAYMENT_COMPLETED, System.Data.DbType.Int16);
-			parameters.Add(nameof(TripEntity.DriverId), driverId, System.Data.DbType.Guid);
+			parameters.Add(nameof(TripEntity.DriverId), driverId, System.Data.DbType.Int64);
 
 			using (var connection = _dapperContext.CreateConnection())
 			{

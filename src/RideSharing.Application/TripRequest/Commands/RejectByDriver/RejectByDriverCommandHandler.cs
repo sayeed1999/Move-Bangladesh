@@ -12,16 +12,16 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 		IDriverRepository driverRepository,
 		ITripRequestEventMessageBus tripHandlerEventBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker)
-		: IRequestHandler<RejectByDriverCommandDto, Result<Guid>>
+		: IRequestHandler<RejectByDriverCommandDto, Result<long>>
 	{
-		public async Task<Result<Guid>> Handle(RejectByDriverCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<long>> Handle(RejectByDriverCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check driver exists
 			var driverInDB = await driverRepository.FindByIdAsync(request.DriverId);
 
 			if (driverInDB == null)
 			{
-				return Result.Failure<Guid>("Driver is not found.");
+				return Result.Failure<long>("Driver is not found.");
 			}
 
 			// Step 2: check trip request exists
@@ -29,7 +29,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 
 			if (activeTripRequest == null)
 			{
-				return Result.Failure<Guid>("Driver has no active trip.");
+				return Result.Failure<long>("Driver has no active trip.");
 			}
 
 			// Step 3: prepare entity
@@ -37,7 +37,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 
 			if (!transitionValid)
 			{
-				return Result.Failure<Guid>("TripRequest Status cannot be changed to desired status.");
+				return Result.Failure<long>("TripRequest Status cannot be changed to desired status.");
 			}
 
 			activeTripRequest.Modify(TripRequestStatus.DRIVER_REJECTED_CUSTOMER);
@@ -58,7 +58,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 			}
 			catch (Exception ex)
 			{
-				return Result.Failure<Guid>($"Failed with error: {ex.Message}");
+				return Result.Failure<long>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

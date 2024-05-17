@@ -15,7 +15,7 @@ namespace RideSharing.Infrastructure.Repositories
 
 		}
 
-		public async Task<TripRequestEntity> GetActiveTripRequestForCustomer(Guid customerId)
+		public async Task<TripRequestEntity> GetActiveTripRequestForCustomer(long customerId)
 		{
 			// If a trip is requested in less than one minute and it is neither canceled nor started, it is considered an active requested trip.
 			// If a trip request has no activity within one minute, it is considered auto-canceled.
@@ -28,7 +28,7 @@ namespace RideSharing.Infrastructure.Repositories
 			query.Append($" WHERE (");
 			query.Append($"		(");
 			query.Append($"			\"{nameof(TripRequestEntity.Status)}\" = @{nameof(TripRequestEntity.Status)}");
-			query.Append($"			AND \"{nameof(TripRequestEntity.UpdatedAt)}\" >= @{nameof(oneMinuteAgo)}");
+			query.Append($"			AND \"{nameof(TripRequestEntity.LastUpdatedAt)}\" >= @{nameof(oneMinuteAgo)}");
 			query.Append($"		)");
 			query.Append($"		OR \"{nameof(TripRequestEntity.Status)}\" >= @{nameof(TripRequestEntity.Status)}");
 			query.Append($"	)");
@@ -40,7 +40,7 @@ namespace RideSharing.Infrastructure.Repositories
 			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.NO_DRIVER_FOUND, System.Data.DbType.Int16);
 			parameters.Add(nameof(oneMinuteAgo), oneMinuteAgo, System.Data.DbType.DateTime);
 			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.TRIP_STARTED, System.Data.DbType.Int16);
-			parameters.Add(nameof(TripRequestEntity.CustomerId), customerId, System.Data.DbType.Guid);
+			parameters.Add(nameof(TripRequestEntity.CustomerId), customerId, System.Data.DbType.Int64);
 
 			using (var connection = _dapperContext.CreateConnection())
 			{
@@ -49,7 +49,7 @@ namespace RideSharing.Infrastructure.Repositories
 			}
 		}
 
-		public async Task<TripRequestEntity> GetActiveTripRequestForDriver(Guid driverId)
+		public async Task<TripRequestEntity> GetActiveTripRequestForDriver(long driverId)
 		{
 			var query = new StringBuilder();
 
@@ -61,7 +61,7 @@ namespace RideSharing.Infrastructure.Repositories
 			var parameters = new DynamicParameters();
 
 			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.DRIVER_ACCEPTED, System.Data.DbType.Int16);
-			parameters.Add(nameof(TripRequestEntity.DriverId), driverId, System.Data.DbType.Guid);
+			parameters.Add(nameof(TripRequestEntity.DriverId), driverId, System.Data.DbType.Int64);
 
 			using (var connection = _dapperContext.CreateConnection())
 			{

@@ -70,7 +70,7 @@ namespace RideSharing.Infrastructure.Repositories
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns>Returns the entity(T) found or null.</returns>
-		public virtual async Task<T> FindByIdAsync(Guid id) => await _dbSet.FindAsync(id);
+		public virtual async Task<T> FindByIdAsync(long id) => await _dbSet.FindAsync(id);
 
 		public virtual async Task<T> AddAsync(T item)
 		{
@@ -80,11 +80,11 @@ namespace RideSharing.Infrastructure.Repositories
 			return item;
 		}
 
-		public virtual async Task<T> UpdateByIdAsync(Guid id, T item)
+		public virtual async Task<T> UpdateByIdAsync(long id, T item)
 		{
 			Type t = item.GetType();
 			PropertyInfo prop = t.GetProperty("Id");
-			Guid itemId = (Guid)prop.GetValue(item);
+			long itemId = (long)prop.GetValue(item);
 			//long itemId = item.Id;
 
 			if (id != itemId) throw new Exception("Access restricted!");
@@ -106,7 +106,7 @@ namespace RideSharing.Infrastructure.Repositories
 			return item;
 		}
 
-		public virtual async Task<T> DeleteByIdAsync(Guid id)
+		public virtual async Task<T> DeleteByIdAsync(long id)
 		{
 			var itemToBeDeleted = await _dbSet.FindAsync(id);
 

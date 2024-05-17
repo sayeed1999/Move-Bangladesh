@@ -22,9 +22,9 @@ namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 		/// <param name="tripRequestId"></param>
 		/// <returns></returns>
 		[HttpPut("{tripRequestId}/start-trip")]
-		public async Task<ActionResult<Response<Guid>>> RequestRide(Guid tripRequestId)
+		public async Task<ActionResult<Response<long>>> RequestRide(long tripRequestId)
 		{
-			var driverId = new Guid(); // TODO:- get customerId from httpContextAccessor!
+			var driverId = new long(); // TODO:- get customerId from httpContextAccessor!
 
 			var model = new StartTripCommandDto(driverId, tripRequestId);
 

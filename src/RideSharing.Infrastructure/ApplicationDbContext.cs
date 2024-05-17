@@ -11,7 +11,6 @@ public class ApplicationDbContext : DbContext
 	}
 
 	#region dbsets
-	public DbSet<User> Users { get; set; }
 	public DbSet<CustomerEntity> Customers { get; set; }
 	public DbSet<CustomerRatingEntity> CustomerRatings { get; set; }
 	public DbSet<DriverEntity> Drivers { get; set; }
@@ -46,15 +45,12 @@ public class ApplicationDbContext : DbContext
 		// and the dependent one's FK will be auto set by EF Core.
 
 		new CabEntityConfiguration().Configure(builder.Entity<CabEntity>());
-
+		new CustomerEntityConfiguration().Configure(builder.Entity<CustomerEntity>());
+		new DriverEntityConfiguration().Configure(builder.Entity<DriverEntity>());
 		new CustomerRatingEntityConfiguration().Configure(builder.Entity<CustomerRatingEntity>());
-
 		new DriverRatingEntityConfiguration().Configure(builder.Entity<DriverRatingEntity>());
-
 		new PaymentEntityConfiguration().Configure(builder.Entity<PaymentEntity>());
-
 		new TripEntityConfiguration().Configure(builder.Entity<TripEntity>());
-
 		new TripRequestEntityConfiguration().Configure(builder.Entity<TripRequestEntity>());
 
 		#endregion

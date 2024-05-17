@@ -14,16 +14,16 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 		IDriverRepository driverRepository,
 		ITripRequestEventMessageBus tripHandlerEventBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker)
-		: IRequestHandler<StartTripCommandDto, Result<Guid>>
+		: IRequestHandler<StartTripCommandDto, Result<long>>
 	{
-		public async Task<Result<Guid>> Handle(StartTripCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<long>> Handle(StartTripCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check valid trip request exists
 			var tripRequestInDB = await tripRequestRepository.FindByIdAsync(request.TripRequestId);
 
 			if (tripRequestInDB == null)
 			{
-				return Result.Failure<Guid>("Trip Request is not found.");
+				return Result.Failure<long>("Trip Request is not found.");
 			}
 
 			// Step 2: check driver exists
@@ -31,7 +31,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 
 			if (driverInDB == null)
 			{
-				return Result.Failure<Guid>("Driver is not found.");
+				return Result.Failure<long>("Driver is not found.");
 			}
 
 			// Step 3: check driver has ongoing trips
@@ -39,7 +39,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 
 			if (trip != null)
 			{
-				return Result.Failure<Guid>("Driver has an ongoing trip.");
+				return Result.Failure<long>("Driver has an ongoing trip.");
 			}
 
 			// Step 4: prepare entity
@@ -47,7 +47,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 
 			if (!transitionValid)
 			{
-				return Result.Failure<Guid>("TripRequest Status cannot be changed to desired status.");
+				return Result.Failure<long>("TripRequest Status cannot be changed to desired status.");
 			}
 
 			tripRequestInDB.Modify(TripRequestStatus.TRIP_STARTED);
@@ -80,7 +80,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 			{
 				await transaction.RollbackAsync(cancellationToken);
 
-				return Result.Failure<Guid>($"Failed with error: {ex.Message}");
+				return Result.Failure<long>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

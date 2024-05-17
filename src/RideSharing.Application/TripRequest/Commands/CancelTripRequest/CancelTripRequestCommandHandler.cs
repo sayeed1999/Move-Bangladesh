@@ -12,16 +12,16 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 		ICustomerRepository customerRepository,
 		ITripRequestEventMessageBus messageBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker)
-		: IRequestHandler<CancelTripRequestCommandDto, Result<Guid>>
+		: IRequestHandler<CancelTripRequestCommandDto, Result<long>>
 	{
-		public async Task<Result<Guid>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<long>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
 			var customerInDB = await customerRepository.FindByIdAsync(request.CustomerId);
 
 			if (customerInDB == null)
 			{
-				return Result.Failure<Guid>("Customer is not found.");
+				return Result.Failure<long>("Customer is not found.");
 			}
 
 			// Step 2: check trip request exists
@@ -29,7 +29,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 
 			if (requestedTrip == null)
 			{
-				return Result.Failure<Guid>("Customer has no pending requested trip.");
+				return Result.Failure<long>("Customer has no pending requested trip.");
 			}
 
 			// Step 3: prepare domain entity
@@ -37,7 +37,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 
 			if (!transitionValid)
 			{
-				return Result.Failure<Guid>("Trip Request Status cannot be changed to desired status.");
+				return Result.Failure<long>("Trip Request Status cannot be changed to desired status.");
 			}
 
 			requestedTrip.Modify(TripRequestStatus.CUSTOMER_CANCELED);
@@ -57,7 +57,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 			}
 			catch (Exception ex)
 			{
-				return Result.Failure<Guid>($"Failed with error: {ex.Message}");
+				return Result.Failure<long>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

@@ -6,7 +6,7 @@ namespace RideSharing.Domain.Factories
 {
 	public class TripFactory
 	{
-		public static Result<TripEntity> Create(TripRequestEntity tripRequest, Guid driverId)
+		public static Result<TripEntity> Create(TripRequestEntity tripRequest, long driverId)
 		{
 			return new TripEntity()
 			{

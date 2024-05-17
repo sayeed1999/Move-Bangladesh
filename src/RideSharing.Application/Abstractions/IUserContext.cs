@@ -3,6 +3,6 @@
 	public interface IUserContext
 	{
 		bool IsAuthenticated { get; }
-		Guid UserId { get; }
+		long UserId { get; }
 	}
 }

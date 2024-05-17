@@ -4,7 +4,7 @@ namespace RideSharing.Domain.Factories
 {
 	public class CabFactory
 	{
-		public static CabEntity Create(string regNo, Guid driverId, CabType type)
+		public static CabEntity Create(string regNo, long driverId, CabType type)
 		{
 			CabEntity cab = new CabEntity
 			{

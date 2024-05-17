@@ -14,29 +14,29 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 		ITripRequestEventMessageBus tripRequestMessageBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker
 	)
-		: IRequestHandler<AcceptTripRequestDto, Result<Guid>>
+		: IRequestHandler<AcceptTripRequestDto, Result<long>>
 	{
-		public async Task<Result<Guid>> Handle(AcceptTripRequestDto model, CancellationToken cancellationToken)
+		public async Task<Result<long>> Handle(AcceptTripRequestDto model, CancellationToken cancellationToken)
 		{
 			// Step 1: check valid trip request exists
 			var tripRequestInDB = await tripRequestRepository.FindByIdAsync(model.TripRequestId);
 
 			if (tripRequestInDB == null)
 			{
-				return Result.Failure<Guid>("Trip Request is not found.");
+				return Result.Failure<long>("Trip Request is not found.");
 			}
 
 			// trip request is not valid if status is other than 'NoDriverAccepted'
 			if (tripRequestInDB.Status != TripRequestStatus.NO_DRIVER_FOUND)
 			{
-				return Result.Failure<Guid>("Trip Request is invalid.");
+				return Result.Failure<long>("Trip Request is invalid.");
 			}
 
 			// trip request is invalid/expired if trip request is older than 1 minute
 			var oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
-			if (tripRequestInDB.UpdatedAt < oneMinuteAgo)
+			if (tripRequestInDB.LastUpdatedAt < oneMinuteAgo)
 			{
-				return Result.Failure<Guid>("Trip Request is expired.");
+				return Result.Failure<long>("Trip Request is expired.");
 			}
 
 			// Step 2: check driver exists
@@ -44,7 +44,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 
 			if (driverInDB == null)
 			{
-				return Result.Failure<Guid>("Driver is not found.");
+				return Result.Failure<long>("Driver is not found.");
 			}
 
 			// Step 3: check driver has ongoing trip requests
@@ -52,7 +52,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 
 			if (tripRequest != null)
 			{
-				return Result.Failure<Guid>("Driver has an ongoing trip request.");
+				return Result.Failure<long>("Driver has an ongoing trip request.");
 			}
 
 			// Step 4: check driver has ongoing trips
@@ -60,7 +60,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 
 			if (trip != null)
 			{
-				return Result.Failure<Guid>("Driver has an ongoing trip.");
+				return Result.Failure<long>("Driver has an ongoing trip.");
 			}
 
 			// Step 4: create trip entity
@@ -68,7 +68,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 
 			if (!transitionValid)
 			{
-				return Result.Failure<Guid>("Trip Request Status cannot be changed to desired status.");
+				return Result.Failure<long>("Trip Request Status cannot be changed to desired status.");
 			}
 
 			tripRequestInDB.Modify(TripRequestStatus.DRIVER_ACCEPTED, model.DriverId);
@@ -90,7 +90,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 			catch (Exception ex)
 			{
-				return Result.Failure<Guid>($"Failed with error: {ex.Message}");
+				return Result.Failure<long>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

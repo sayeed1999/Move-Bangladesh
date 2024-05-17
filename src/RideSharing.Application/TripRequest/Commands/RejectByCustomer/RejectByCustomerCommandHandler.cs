@@ -12,16 +12,16 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 		ICustomerRepository customerRepository,
 		ITripRequestEventMessageBus messageBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker)
-		: IRequestHandler<RejectByCustomerCommandDto, Result<Guid>>
+		: IRequestHandler<RejectByCustomerCommandDto, Result<long>>
 	{
-		public async Task<Result<Guid>> Handle(RejectByCustomerCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<long>> Handle(RejectByCustomerCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
 			var customerInDB = await customerRepository.FindByIdAsync(request.CustomerId);
 
 			if (customerInDB == null)
 			{
-				return Result.Failure<Guid>("Customer is not found.");
+				return Result.Failure<long>("Customer is not found.");
 			}
 
 			// Step 2: check trip request exists
@@ -29,7 +29,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 
 			if (activeTripRequest == null)
 			{
-				return Result.Failure<Guid>("Customer has no active trip request.");
+				return Result.Failure<long>("Customer has no active trip request.");
 			}
 
 			// Step 3: Check transition valid or not
@@ -37,7 +37,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 
 			if (!transitionValid)
 			{
-				return Result.Failure<Guid>("TripRequest Status cannot be changed to desired status.");
+				return Result.Failure<long>("TripRequest Status cannot be changed to desired status.");
 			}
 
 			// Step 4: prepare entity
@@ -58,7 +58,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 			}
 			catch (Exception ex)
 			{
-				return Result.Failure<Guid>($"Failed with error: {ex.Message}");
+				return Result.Failure<long>($"Failed with error: {ex.Message}");
 			}
 		}
 	}
