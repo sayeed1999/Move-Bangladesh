@@ -28,7 +28,7 @@ namespace RideSharing.Infrastructure.Repositories
 			query.Append($" WHERE (");
 			query.Append($"		(");
 			query.Append($"			\"{nameof(TripRequestEntity.Status)}\" = @{nameof(TripRequestEntity.Status)}");
-			query.Append($"			AND \"{nameof(TripRequestEntity.LastUpdatedAt)}\" >= @{nameof(oneMinuteAgo)}");
+			query.Append($"			AND \"{nameof(TripRequestEntity.LastModifiedAt)}\" >= @{nameof(oneMinuteAgo)}");
 			query.Append($"		)");
 			query.Append($"		OR \"{nameof(TripRequestEntity.Status)}\" >= @{nameof(TripRequestEntity.Status)}");
 			query.Append($"	)");

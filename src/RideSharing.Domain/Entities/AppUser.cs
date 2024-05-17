@@ -2,14 +2,13 @@
 
 namespace RideSharing.Domain.Entities;
 
-public abstract class AppUser
+public abstract class AppUser : BaseEntity
 {
 	public AppUser()
 	{
 		IsVerified = false;
 	}
 
-	public long Id { get; set; }
 	public string Name { get; set; }
 	public string Email { get; set; }
 	public string Phone { get; set; }

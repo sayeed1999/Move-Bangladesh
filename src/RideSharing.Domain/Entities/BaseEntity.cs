@@ -1,14 +1,8 @@
-﻿namespace RideSharing.Domain.Entities;
+﻿using RideSharing.Common.Entities;
 
-public abstract class BaseEntity
+namespace RideSharing.Domain.Entities;
+
+public abstract class BaseEntity : AuditableEntity
 {
-	public BaseEntity()
-	{
-
-	}
-
 	public long Id { get; set; }
-	public DateTime CreatedAt { get; set; }
-	public DateTime? LastUpdatedAt { get; set; }
-	public DateTime? DeletedAt { get; set; }
 }

@@ -34,7 +34,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 
 			// trip request is invalid/expired if trip request is older than 1 minute
 			var oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
-			if (tripRequestInDB.LastUpdatedAt < oneMinuteAgo)
+			if (tripRequestInDB.LastModifiedAt < oneMinuteAgo)
 			{
 				return Result.Failure<long>("Trip Request is expired.");
 			}

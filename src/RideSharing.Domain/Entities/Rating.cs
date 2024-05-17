@@ -1,8 +1,7 @@
 ﻿namespace RideSharing.Domain.Entities;
 
-public abstract class Rating
+public abstract class Rating : BaseEntity
 {
-	public long Id { get; set; }
 	public long CustomerId { get; set; }
 	public virtual CustomerEntity Customer { get; set; }
 	public long DriverId { get; set; }

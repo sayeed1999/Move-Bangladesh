@@ -32,8 +32,6 @@ namespace RideSharing.Domain.Factories
 				CabType = cabType,
 				PaymentMethod = paymentMethod,
 				Status = TripRequestStatus.NO_DRIVER_FOUND, // This should be the default type if no driver accepts the ride.
-				CreatedAt = DateTime.UtcNow,
-				LastUpdatedAt = DateTime.UtcNow, // considering CreatedAt == UpdatedAt when trip is requested
 			};
 
 			var validator = new TripRequestValidator();

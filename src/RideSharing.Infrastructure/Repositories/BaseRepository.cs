@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using RideSharing.Application.Abstractions;
-using System.Reflection;
+using RideSharing.Domain.Entities;
 
 namespace RideSharing.Infrastructure.Repositories
 {
 	// TODO: use primary key type generically
 	public class BaseRepository<T> : IBaseRepository<T>
-		where T : class
+		where T : BaseEntity
 	{
 
 		#region initializations & declarations
@@ -74,7 +74,9 @@ namespace RideSharing.Infrastructure.Repositories
 
 		public virtual async Task<T> AddAsync(T item)
 		{
-			//item.GetType().GetProperty("Id")?.SetValue(item, 0); // setting the PK of the row as 0 when the PK is Id int
+			item.Id = 0; // EF Core auto generates Primary Key fields when Id is zero.
+			item.SetCreatedAt();
+
 			await _dbSet.AddAsync(item);
 			await _dbContext.SaveChangesAsync();
 			return item;
@@ -82,18 +84,14 @@ namespace RideSharing.Infrastructure.Repositories
 
 		public virtual async Task<T> UpdateByIdAsync(long id, T item)
 		{
-			Type t = item.GetType();
-			PropertyInfo prop = t.GetProperty("Id");
-			long itemId = (long)prop.GetValue(item);
-			//long itemId = item.Id;
-
-			if (id != itemId) throw new Exception("Access restricted!");
-
+			if (id != item.Id) throw new Exception("Access restricted!");
 			return await UpdateAsync(item);
 		}
 
 		public virtual async Task<T> UpdateAsync(T item)
 		{
+			item.UpdateLastModifiedAt();
+
 			_dbSet.Update(item);
 			await _dbContext.SaveChangesAsync();
 			return item;
