@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RideSharing.DriverAPI.Controllers.TripRequest.Commands
 {
-	[Route("api/external/trips")]
+	[Route("api/external/trip-requests")]
 	[ApiController]
 	public class RejectByDriverCommand(IMediator mediator) : ControllerBase
 	{
@@ -16,11 +16,11 @@ namespace RideSharing.DriverAPI.Controllers.TripRequest.Commands
 		/// <param name="tripId"></param>
 		/// <param name="driverId"></param>
 		/// <returns></returns>
-		[HttpPut("{tripId}/reject-by-driver")]
-		public async Task<ActionResult<Response<long>>> Cancel([Required] long tripId, RejectByDriverCommandDto model)
+		[HttpPut("{tripRequestId}/reject-by-driver")]
+		public async Task<ActionResult<Response<long>>> Cancel([Required] long tripRequestId, RejectByDriverCommandDto model)
 		{
 			model.DriverId = new long(); // TODO: fetch from HttpContextAccessor
-			model.TripId = tripId;
+			model.TripRequestId = tripRequestId;
 
 			var res = await mediator.Send(model);
 

@@ -32,6 +32,12 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 				return Result.Failure<long>("Customer has no active trip request.");
 			}
 
+			// ** Security check !
+			if (activeTripRequest.Id != request.TripRequestId)
+			{
+				return Result.Failure<long>("Active trip request for customer does not match !!");
+			}
+
 			// Step 3: Check transition valid or not
 			var transitionValid = transitionChecker.IsTransitionValid(activeTripRequest.Status, TripRequestStatus.CUSTOMER_REJECTED_DRIVER);
 
@@ -54,7 +60,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 
 				// Last Step: return result
 
-				return Result.Success(request.TripId);
+				return Result.Success(request.TripRequestId);
 			}
 			catch (Exception ex)
 			{

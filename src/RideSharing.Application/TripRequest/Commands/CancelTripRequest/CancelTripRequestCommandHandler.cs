@@ -32,6 +32,12 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 				return Result.Failure<long>("Customer has no pending requested trip.");
 			}
 
+			// ** Security check !
+			if (requestedTrip.Id != request.TripRequestId)
+			{
+				return Result.Failure<long>("Active trip request for customer does not match !!");
+			}
+
 			// Step 3: prepare domain entity
 			var transitionValid = transitionChecker.IsTransitionValid(requestedTrip.Status, TripRequestStatus.CUSTOMER_CANCELED);
 

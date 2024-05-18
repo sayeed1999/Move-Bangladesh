@@ -32,6 +32,12 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 				return Result.Failure<long>("Driver has no active trip.");
 			}
 
+			// ** Security check !
+			if (activeTripRequest.Id != request.TripRequestId)
+			{
+				return Result.Failure<long>("Active trip request for driver does not match !!");
+			}
+
 			// Step 3: prepare entity
 			var transitionValid = transitionChecker.IsTransitionValid(activeTripRequest.Status, TripRequestStatus.DRIVER_REJECTED_CUSTOMER);
 
@@ -54,7 +60,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 
 				// Last Step: return result
 
-				return Result.Success(request.TripId);
+				return Result.Success(request.TripRequestId);
 			}
 			catch (Exception ex)
 			{

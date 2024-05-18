@@ -42,6 +42,12 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 				return Result.Failure<long>("Driver has an ongoing trip.");
 			}
 
+			// ** Security check !
+			if (tripRequestInDB.Id != request.TripRequestId)
+			{
+				return Result.Failure<long>("Active trip request for driver does not match !!");
+			}
+
 			// Step 4: prepare entity
 			var transitionValid = transitionChecker.IsTransitionValid(tripRequestInDB.Status, TripRequestStatus.TRIP_STARTED);
 
