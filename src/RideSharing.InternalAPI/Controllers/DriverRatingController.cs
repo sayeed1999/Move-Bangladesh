@@ -5,7 +5,7 @@ namespace RideSharing.InternalAPI.Controllers
 {
 	public class DriverRatingController : BaseController<DriverRatingEntity>
 	{
-		public DriverRatingController(IDriverRatingRepository repository) : base(repository)
+		public DriverRatingController(IBaseRepository<DriverRatingEntity> repository) : base(repository)
 		{
 
 		}

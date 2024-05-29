@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using RideSharing.Application.Abstractions;
 
 namespace RideSharing.Infrastructure;
 
@@ -37,5 +38,5 @@ public static class DependencyInjection
 		=> services.AddScoped<DbContext, ApplicationDbContext>();
 
 	private static IServiceCollection RegisterDapperContext(this IServiceCollection services)
-		=> services.AddScoped<DapperContext>();
+		=> services.AddScoped<IDapperContext, DapperContext>();
 }

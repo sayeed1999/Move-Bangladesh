@@ -8,8 +8,7 @@ using RideSharing.Processor.TransitionChecker;
 namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 {
 	public class RejectByDriverCommandHandler(
-		ITripRequestRepository tripRequestRepository,
-		IDriverRepository driverRepository,
+		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripHandlerEventBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker)
 		: IRequestHandler<RejectByDriverCommandDto, Result<long>>
@@ -17,7 +16,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 		public async Task<Result<long>> Handle(RejectByDriverCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check driver exists
-			var driverInDB = await driverRepository.FindByIdAsync(request.DriverId);
+			var driverInDB = await unitOfWork.DriverRepository.FindByIdAsync(request.DriverId);
 
 			if (driverInDB == null)
 			{
@@ -25,7 +24,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 			}
 
 			// Step 2: check trip request exists
-			var activeTripRequest = await tripRequestRepository.GetActiveTripRequestForDriver(request.DriverId);
+			var activeTripRequest = await unitOfWork.GetActiveTripRequestForDriver(request.DriverId);
 
 			if (activeTripRequest == null)
 			{
@@ -54,7 +53,15 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				await tripRequestRepository.UpdateAsync(activeTripRequest);
+				unitOfWork.TripRequestRepository.Update(activeTripRequest);
+
+				// call UoW to save the changes in db.
+				var result = await unitOfWork.SaveChangesAsync();
+
+				if (result.IsFailure)
+				{
+					return Result.Failure<long>(result.Error);
+				}
 
 				tripHandlerEventBus.PublishAsync(activeTripRequest.GetTripRequestDto());
 

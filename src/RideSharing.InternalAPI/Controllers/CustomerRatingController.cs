@@ -5,7 +5,7 @@ namespace RideSharing.InternalAPI.Controllers
 {
 	public class CustomerRatingController : BaseController<CustomerRatingEntity>
 	{
-		public CustomerRatingController(ICustomerRatingRepository repository) : base(repository)
+		public CustomerRatingController(IBaseRepository<CustomerRatingEntity> repository) : base(repository)
 		{
 
 		}

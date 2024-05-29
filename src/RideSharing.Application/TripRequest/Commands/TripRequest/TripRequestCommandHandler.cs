@@ -8,16 +8,14 @@ using RideSharing.Domain.Factories;
 namespace RideSharing.Application.TripRequest.Commands.TripRequest
 {
 	public class TripRequestCommandHandler(
-		ITripRequestRepository tripRequestRepository,
-		ITripRepository tripRepository,
-		ICustomerRepository customerRepository,
+		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus messageBus)
 		: IRequestHandler<TripRequestCommandDto, Result<long>>
 	{
 		public async Task<Result<long>> Handle(TripRequestCommandDto model, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
-			var customerInDB = await customerRepository.FindByIdAsync(model.CustomerId);
+			var customerInDB = await unitOfWork.CustomerRepository.FindByIdAsync(model.CustomerId);
 
 			if (customerInDB == null)
 			{
@@ -25,7 +23,7 @@ namespace RideSharing.Application.TripRequest.Commands.TripRequest
 			}
 
 			// Step 2: check customer has ongoing trip requests
-			var requestedTrip = await tripRequestRepository.GetActiveTripRequestForCustomer(model.CustomerId);
+			var requestedTrip = await unitOfWork.GetActiveTripRequestForCustomer(model.CustomerId);
 
 			if (requestedTrip != null)
 			{
@@ -33,7 +31,7 @@ namespace RideSharing.Application.TripRequest.Commands.TripRequest
 			}
 
 			// Step 3: check customer has ongoing trips
-			var unfinishedTrip = await tripRepository.GetActiveTripForCustomer(model.CustomerId);
+			var unfinishedTrip = await unitOfWork.GetActiveTripForCustomer(model.CustomerId);
 
 			if (unfinishedTrip != null)
 			{
@@ -58,7 +56,15 @@ namespace RideSharing.Application.TripRequest.Commands.TripRequest
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				var res = await tripRequestRepository.AddAsync(tripRequest.Value);
+				await unitOfWork.TripRequestRepository.CreateAsync(tripRequest.Value);
+
+				// call UoW to save the changes in db.
+				var result = await unitOfWork.SaveChangesAsync();
+
+				if (result.IsFailure)
+				{
+					return Result.Failure<long>(result.Error);
+				}
 
 				// Note: this method call is not intentionally awaited!
 				var messageDto = tripRequest.Value.GetTripRequestDto();

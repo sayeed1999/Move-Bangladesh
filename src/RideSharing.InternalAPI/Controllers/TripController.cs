@@ -5,7 +5,7 @@ namespace RideSharing.InternalAPI.Controllers
 {
 	public class TripController : BaseController<TripEntity>
 	{
-		public TripController(ITripRepository repository) : base(repository)
+		public TripController(IBaseRepository<TripEntity> repository) : base(repository)
 		{
 
 		}

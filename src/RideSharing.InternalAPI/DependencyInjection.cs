@@ -1,5 +1,4 @@
-﻿using RideSharing.Application;
-using RideSharing.Application.Abstractions;
+﻿using RideSharing.Application.Abstractions;
 using RideSharing.Common.Constants;
 using RideSharing.Common.Extensions;
 using RideSharing.Common.Filters;
@@ -34,15 +33,6 @@ public static class DependencyInjection
 	public static IServiceCollection RegisterServices(this IServiceCollection services)
 	{
 		return services
-			.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
-			.AddScoped<ICabRepository, CabRepository>()
-			.AddScoped<ICustomerRatingRepository, CustomerRatingRepository>()
-			.AddScoped<ICustomerRepository, CustomerRepository>()
-			.AddScoped<IDriverRatingRepository, DriverRatingRepository>()
-			.AddScoped<IDriverRepository, DriverRepository>()
-			.AddScoped<IPaymentRepository, PaymentRepository>()
-			.AddScoped<ITripRequestRepository, TripRequestRepository>()
-			.AddScoped<ITripRequestLogRepository, TripRequestLogRepository>()
-			.AddScoped<ITripRepository, TripRepository>();
+			.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 	}
 }

@@ -5,7 +5,7 @@ namespace RideSharing.InternalAPI.Controllers
 {
 	public class CabController : BaseController<CabEntity>
 	{
-		public CabController(ICabRepository repository) : base(repository)
+		public CabController(IBaseRepository<CabEntity> repository) : base(repository)
 		{
 
 		}

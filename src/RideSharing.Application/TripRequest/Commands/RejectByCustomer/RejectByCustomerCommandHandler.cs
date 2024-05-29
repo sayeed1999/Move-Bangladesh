@@ -8,8 +8,7 @@ using RideSharing.Processor.TransitionChecker;
 namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 {
 	public class RejectByCustomerCommandHandler(
-		ITripRequestRepository tripRequestRepository,
-		ICustomerRepository customerRepository,
+		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus messageBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker)
 		: IRequestHandler<RejectByCustomerCommandDto, Result<long>>
@@ -17,7 +16,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 		public async Task<Result<long>> Handle(RejectByCustomerCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
-			var customerInDB = await customerRepository.FindByIdAsync(request.CustomerId);
+			var customerInDB = await unitOfWork.CustomerRepository.FindByIdAsync(request.CustomerId);
 
 			if (customerInDB == null)
 			{
@@ -25,7 +24,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 			}
 
 			// Step 2: check trip request exists
-			var activeTripRequest = await tripRequestRepository.GetActiveTripRequestForCustomer(request.CustomerId);
+			var activeTripRequest = await unitOfWork.GetActiveTripRequestForCustomer(request.CustomerId);
 
 			if (activeTripRequest == null)
 			{
@@ -54,7 +53,15 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				var res = await tripRequestRepository.UpdateAsync(activeTripRequest);
+				unitOfWork.TripRequestRepository.Update(activeTripRequest);
+
+				// call UoW to save the changes in db.
+				var result = await unitOfWork.SaveChangesAsync();
+
+				if (result.IsFailure)
+				{
+					return Result.Failure<long>(result.Error);
+				}
 
 				messageBus.PublishAsync(activeTripRequest.GetTripRequestDto());
 

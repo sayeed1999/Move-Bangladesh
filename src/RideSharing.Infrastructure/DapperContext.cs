@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Npgsql;
+using RideSharing.Application.Abstractions;
 using System.Data;
 
 namespace RideSharing.Infrastructure
 {
-	public class DapperContext
+	public class DapperContext : IDapperContext
 	{
 		private readonly IConfiguration configuration;
 		private readonly string _connectionString;

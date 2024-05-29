@@ -8,9 +8,7 @@ using RideSharing.Processor.TransitionChecker;
 namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 {
 	public class AcceptTripRequestHandler(
-		IDriverRepository driverRepository,
-		ITripRequestRepository tripRequestRepository,
-		ITripRepository tripRepository,
+		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripRequestMessageBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker
 	)
@@ -19,7 +17,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 		public async Task<Result<long>> Handle(AcceptTripRequestDto model, CancellationToken cancellationToken)
 		{
 			// Step 1: check valid trip request exists
-			var tripRequestInDB = await tripRequestRepository.FindByIdAsync(model.TripRequestId);
+			var tripRequestInDB = await unitOfWork.TripRequestRepository.FindByIdAsync(model.TripRequestId);
 
 			if (tripRequestInDB == null)
 			{
@@ -40,7 +38,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// Step 2: check driver exists
-			var driverInDB = await driverRepository.FindByIdAsync(model.DriverId);
+			var driverInDB = await unitOfWork.DriverRepository.FindByIdAsync(model.DriverId);
 
 			if (driverInDB == null)
 			{
@@ -48,7 +46,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// Step 3: check driver has ongoing trip requests
-			var tripRequest = await tripRequestRepository.GetActiveTripRequestForDriver(model.DriverId);
+			var tripRequest = await unitOfWork.GetActiveTripRequestForDriver(model.DriverId);
 
 			if (tripRequest != null)
 			{
@@ -56,7 +54,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// Step 4: check driver has ongoing trips
-			var trip = await tripRepository.GetActiveTripForDriver(model.DriverId);
+			var trip = await unitOfWork.GetActiveTripForDriver(model.DriverId);
 
 			if (trip != null)
 			{
@@ -80,7 +78,15 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 				// Note: log table is inserted from database triggers, not api
 
 				// update trip request
-				var tripRequestRes = await tripRequestRepository.UpdateAsync(tripRequestInDB);
+				unitOfWork.TripRequestRepository.Update(tripRequestInDB);
+
+				// call UoW to save the changes in db.
+				var result = await unitOfWork.SaveChangesAsync();
+
+				if (result.IsFailure)
+				{
+					return Result.Failure<long>(result.Error);
+				}
 
 				tripRequestMessageBus.PublishAsync(tripRequestInDB.GetTripRequestDto());
 

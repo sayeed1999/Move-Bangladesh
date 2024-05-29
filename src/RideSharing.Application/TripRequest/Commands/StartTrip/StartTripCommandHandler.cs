@@ -9,9 +9,7 @@ using RideSharing.Processor.TransitionChecker;
 namespace RideSharing.Application.TripRequest.Commands.StartTrip
 {
 	public class StartTripCommandHandler(
-		ITripRequestRepository tripRequestRepository,
-		ITripRepository tripRepository,
-		IDriverRepository driverRepository,
+		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripHandlerEventBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker)
 		: IRequestHandler<StartTripCommandDto, Result<long>>
@@ -19,7 +17,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 		public async Task<Result<long>> Handle(StartTripCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check valid trip request exists
-			var tripRequestInDB = await tripRequestRepository.FindByIdAsync(request.TripRequestId);
+			var tripRequestInDB = await unitOfWork.TripRequestRepository.FindByIdAsync(request.TripRequestId);
 
 			if (tripRequestInDB == null)
 			{
@@ -27,7 +25,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 			}
 
 			// Step 2: check driver exists
-			var driverInDB = await driverRepository.FindByIdAsync(request.DriverId);
+			var driverInDB = await unitOfWork.DriverRepository.FindByIdAsync(request.DriverId);
 
 			if (driverInDB == null)
 			{
@@ -35,7 +33,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 			}
 
 			// Step 3: check driver has ongoing trips
-			var trip = await tripRepository.GetActiveTripForDriver(request.DriverId);
+			var trip = await unitOfWork.GetActiveTripForDriver(request.DriverId);
 
 			if (trip != null)
 			{
@@ -64,17 +62,21 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 
 			// Step 4: perform database operations
 
-			var transaction = await tripRequestRepository.BeginTransactionAsync();
-
 			try
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				await tripRequestRepository.UpdateAsync(tripRequestInDB);
+				unitOfWork.TripRequestRepository.Update(tripRequestInDB);
 
-				await tripRepository.AddAsync(newTripResult.Value);
+				await unitOfWork.TripRepository.CreateAsync(newTripResult.Value);
 
-				await transaction.CommitAsync();
+				// call UoW to save the changes in db.
+				var result = await unitOfWork.SaveChangesAsync();
+
+				if (result.IsFailure)
+				{
+					return Result.Failure<long>(result.Error);
+				}
 
 				tripHandlerEventBus.PublishAsync(tripRequestInDB.GetTripRequestDto());
 
@@ -84,8 +86,6 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 			}
 			catch (Exception ex)
 			{
-				await transaction.RollbackAsync(cancellationToken);
-
 				return Result.Failure<long>($"Failed with error: {ex.Message}");
 			}
 		}

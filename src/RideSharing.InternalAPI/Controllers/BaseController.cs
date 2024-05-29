@@ -17,12 +17,12 @@ namespace RideSharing.InternalAPI.Controllers
 		}
 
 		// GET: api/<BaseController>
-		[HttpGet]
-		public async Task<ActionResult<IEnumerable<T>>> Get()
-		{
-			var res = await this.repository.FindAllAsync();
-			return Ok(res);
-		}
+		//[HttpGet]
+		//public async Task<ActionResult<IEnumerable<T>>> Get()
+		//{
+		//	var res = await this.repository.FindAllAsync();
+		//	return Ok(res);
+		//}
 
 		// GET api/<BaseController>/5
 		[HttpGet("{id}")]
@@ -36,26 +36,27 @@ namespace RideSharing.InternalAPI.Controllers
 		[HttpPost]
 		public async Task<ActionResult<T>> Post([FromBody] T value)
 		{
-			var res = await this.repository.AddAsync(value);
+			await this.repository.CreateAsync(value);
+			var res = await this.repository.SaveChangesAsync();
 			// TODO:- use created at
 			return Ok(res);
 		}
 
 		// TODO: check PUT vs PATCH; which is more close!
 		// PUT api/<BaseController>/5
-		[HttpPut("{id}")]
-		public async Task<ActionResult<T>> Put(long id, [FromBody] T value)
-		{
-			var res = await this.repository.UpdateByIdAsync(id, value);
-			return Ok(res);
-		}
+		//[HttpPut("{id}")]
+		//public async Task<ActionResult<T>> Put(long id, [FromBody] T value)
+		//{
+		//	var res = await this.repository.UpdateByIdAsync(id, value);
+		//	return Ok(res);
+		//}
 
 		// DELETE api/<BaseController>/5
-		[HttpDelete("{id}")]
-		public async Task<ActionResult<T>> Delete(long id)
-		{
-			var res = await this.repository.DeleteByIdAsync(id);
-			return Ok(res);
-		}
+		//[HttpDelete("{id}")]
+		//public async Task<ActionResult<T>> Delete(long id)
+		//{
+		//	var res = await this.repository.DeleteByIdAsync(id);
+		//	return Ok(res);
+		//}
 	}
 }

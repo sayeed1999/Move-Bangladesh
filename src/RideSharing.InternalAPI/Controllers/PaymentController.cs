@@ -5,7 +5,7 @@ namespace RideSharing.InternalAPI.Controllers
 {
 	public class PaymentController : BaseController<PaymentEntity>
 	{
-		public PaymentController(IPaymentRepository repository) : base(repository)
+		public PaymentController(IBaseRepository<PaymentEntity> repository) : base(repository)
 		{
 
 		}

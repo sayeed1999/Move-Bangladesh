@@ -8,8 +8,7 @@ using RideSharing.Processor.TransitionChecker;
 namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 {
 	public class CancelTripRequestCommandHandler(
-		ITripRequestRepository tripRequestRepository,
-		ICustomerRepository customerRepository,
+		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus messageBus,
 		ITransitionChecker<TripRequestStatus> transitionChecker)
 		: IRequestHandler<CancelTripRequestCommandDto, Result<long>>
@@ -17,7 +16,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 		public async Task<Result<long>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
-			var customerInDB = await customerRepository.FindByIdAsync(request.CustomerId);
+			var customerInDB = await unitOfWork.CustomerRepository.FindByIdAsync(request.CustomerId);
 
 			if (customerInDB == null)
 			{
@@ -25,7 +24,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 			}
 
 			// Step 2: check trip request exists
-			var requestedTrip = await tripRequestRepository.GetActiveTripRequestForCustomer(request.CustomerId);
+			var requestedTrip = await unitOfWork.GetActiveTripRequestForCustomer(request.CustomerId);
 
 			if (requestedTrip == null)
 			{
@@ -53,7 +52,15 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 			{
 				// Note: log table is inserted from database triggers, not api
 
-				var res = await tripRequestRepository.UpdateAsync(requestedTrip);
+				unitOfWork.TripRequestRepository.Update(requestedTrip);
+
+				// call UoW to save the changes in db.
+				var result = await unitOfWork.SaveChangesAsync();
+
+				if (result.IsFailure)
+				{
+					return Result.Failure<long>(result.Error);
+				}
 
 				messageBus.PublishAsync(requestedTrip.GetTripRequestDto());
 
