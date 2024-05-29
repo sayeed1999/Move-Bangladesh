@@ -6,19 +6,20 @@ public abstract class AuditableEntity
 	public DateTime? LastModifiedAt { get; private set; }
 	public DateTime? DeletedAt { get; private set; }
 
-	public void SetCreatedAt()
+	public void Created()
 	{
 		CreatedAt = DateTime.UtcNow;
 	}
 
-	public void UpdateLastModifiedAt()
+	public void Modified()
 	{
 		LastModifiedAt = DateTime.UtcNow;
 	}
 
-	public void Delete()
+	public void Deleted()
 	{
-		UpdateLastModifiedAt();
-		DeletedAt = DateTime.UtcNow;
+		Modified();
+
+		DeletedAt = LastModifiedAt;
 	}
 }

@@ -1,24 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 
 namespace RideSharing.Application.Abstractions
 {
 	public interface IBaseRepository<T> where T : class
 	{
-		public DbSet<T> DbSet { get; }
+		#region transactional helpers
+		Task<IDbContextTransaction> BeginTransactionAsync();
+		Task CommitTransactionAsync(IDbContextTransaction transaction);
+		Task RollBackTransactionAsync(IDbContextTransaction transaction);
+		#endregion
 
-		public Task<IDbContextTransaction> BeginTransactionAsync();
-		public Task CommitTransactionAsync(IDbContextTransaction transaction);
-		public Task RollBackTransactionAsync(IDbContextTransaction transaction);
-
-		public Task<int> SaveChangesAsync();
-
-		public Task<IEnumerable<T>> FindAllAsync();
-		public Task<T> FindByIdAsync(long id);
-		public Task<T> AddAsync(T item);
-		public Task<T> UpdateAsync(T item);
-		public Task<T> UpdateByIdAsync(long id, T item);
-		public Task<T> DeleteAsync(T item);
-		public Task<T> DeleteByIdAsync(long id);
+		#region crud helpers
+		Task<T> FindByIdAsync(long id);
+		Task CreateAsync(T item);
+		Task BulkCreateAsync(ICollection<T> items);
+		void Update(T item);
+		void BulkUpdate(ICollection<T> items);
+		void Delete(T item);
+		void BulkDelete(ICollection<T> items);
+		Task<int> SaveChangesAsync();
+		#endregion
 	}
 }

@@ -6,8 +6,7 @@ using RideSharing.Domain.Entities;
 namespace RideSharing.Infrastructure.Repositories
 {
 	// TODO: use primary key type generically
-	public class BaseRepository<T> : IBaseRepository<T>
-		where T : BaseEntity
+	public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 	{
 
 		#region initializations & declarations
@@ -24,11 +23,6 @@ namespace RideSharing.Infrastructure.Repositories
 		}
 
 		#endregion
-
-		public DbSet<T> DbSet
-		{
-			get { return _dbSet; }
-		}
 
 		#region Transactional helpers
 
@@ -50,67 +44,65 @@ namespace RideSharing.Infrastructure.Repositories
 
 		#endregion
 
-		/// <summary>
-		/// Need to be called after certain operations on db: add update delete, otherwise changes will not be saved..
-		/// </summary>
-		/// <returns></returns>
+		public virtual async Task<T> FindByIdAsync(long id)
+		{
+			return await _dbSet.FindAsync(id);
+		}
+
+		public virtual async Task CreateAsync(T item)
+		{
+			item.ResetPrimaryKey();
+			item.Created();
+
+			await _dbSet.AddAsync(item);
+		}
+
+		public virtual async Task BulkCreateAsync(ICollection<T> items)
+		{
+			foreach (var item in items)
+			{
+				item.ResetPrimaryKey();
+				item.Created();
+			}
+
+			await _dbSet.AddRangeAsync(items);
+		}
+
+		public virtual void Update(T item)
+		{
+			item.Modified();
+
+			_dbSet.Update(item);
+		}
+
+		public virtual void BulkUpdate(ICollection<T> items)
+		{
+			foreach (var item in items)
+			{
+				item.Modified();
+			}
+
+			_dbSet.UpdateRange(items);
+		}
+
+		public virtual void Delete(T item)
+		{
+			_dbSet.Remove(item);
+		}
+
+		public virtual void BulkDelete(ICollection<T> items)
+		{
+			foreach (var item in items)
+			{
+				item.Deleted();
+			}
+
+			_dbSet.RemoveRange(items);
+		}
+
 		public virtual async Task<int> SaveChangesAsync()
 		{
 			return await _dbContext.SaveChangesAsync();
-		}
-
-		// TODO: use generic pagination here
-		public virtual async Task<IEnumerable<T>> FindAllAsync()
-		{
-			return await _dbSet.ToListAsync();
-		}
-
-		/// <summary>
-		/// Finds an the entity by primary key.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <returns>Returns the entity(T) found or null.</returns>
-		public virtual async Task<T> FindByIdAsync(long id) => await _dbSet.FindAsync(id);
-
-		public virtual async Task<T> AddAsync(T item)
-		{
-			item.Id = 0; // EF Core auto generates Primary Key fields when Id is zero.
-			item.SetCreatedAt();
-
-			await _dbSet.AddAsync(item);
-			await _dbContext.SaveChangesAsync();
-			return item;
-		}
-
-		public virtual async Task<T> UpdateByIdAsync(long id, T item)
-		{
-			if (id != item.Id) throw new Exception("Access restricted!");
-			return await UpdateAsync(item);
-		}
-
-		public virtual async Task<T> UpdateAsync(T item)
-		{
-			item.UpdateLastModifiedAt();
-
-			_dbSet.Update(item);
-			await _dbContext.SaveChangesAsync();
-			return item;
-		}
-
-		public virtual async Task<T> DeleteAsync(T item)
-		{
-			_dbSet.Remove(item);
-			await _dbContext.SaveChangesAsync();
-			return item;
-		}
-
-		public virtual async Task<T> DeleteByIdAsync(long id)
-		{
-			var itemToBeDeleted = await _dbSet.FindAsync(id);
-
-			if (itemToBeDeleted == null) throw new Exception("Item not found!");
-
-			return await DeleteAsync(itemToBeDeleted);
 		}
 	}
 }
