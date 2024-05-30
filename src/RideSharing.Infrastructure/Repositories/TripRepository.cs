@@ -1,11 +1,21 @@
 ﻿using Dapper;
+using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 using System.Text;
 
-namespace RideSharing.Infrastructure.UnitOfWork
+namespace RideSharing.Infrastructure.Repositories
 {
-	public partial class UnitOfWork
+	public class TripRepository : BaseRepository<TripEntity>, ITripRepository
 	{
+		public TripRepository(
+			ApplicationDbContext dbContext,
+			DapperContext dapperContext)
+			: base(
+				  dbContext,
+				  dapperContext)
+		{
+		}
+
 		public async Task<TripEntity> GetActiveTripForCustomer(long customerId)
 		{
 			var query = new StringBuilder();
@@ -47,6 +57,5 @@ namespace RideSharing.Infrastructure.UnitOfWork
 				return trip;
 			}
 		}
-
 	}
 }

@@ -19,9 +19,9 @@ namespace RideSharing.Infrastructure.UnitOfWork
 			IBaseRepository<DriverEntity> driverRepository,
 			IBaseRepository<PaymentEntity> paymentRepository,
 			IBaseRepository<TripLogEntity> tripLogRepository,
-			IBaseRepository<TripEntity> tripRepository,
+			ITripRepository tripRepository,
 			IBaseRepository<TripRequestLogEntity> tripRequestLogRepository,
-			IBaseRepository<TripRequestEntity> tripRequestRepository,
+			ITripRequestRepository tripRequestRepository,
 			IUserContext userContext
 			)
 		{
@@ -49,9 +49,9 @@ namespace RideSharing.Infrastructure.UnitOfWork
 		public IBaseRepository<DriverEntity> DriverRepository { get; }
 		public IBaseRepository<PaymentEntity> PaymentRepository { get; }
 		public IBaseRepository<TripLogEntity> TripLogRepository { get; }
-		public IBaseRepository<TripEntity> TripRepository { get; }
+		public ITripRepository TripRepository { get; }
 		public IBaseRepository<TripRequestLogEntity> TripRequestLogRepository { get; }
-		public IBaseRepository<TripRequestEntity> TripRequestRepository { get; }
+		public ITripRequestRepository TripRequestRepository { get; }
 		public IUserContext UserContext { get; }
 
 		public async Task<Result<int>> SaveChangesAsync()

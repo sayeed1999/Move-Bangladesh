@@ -24,7 +24,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 			}
 
 			// Step 2: check trip request exists
-			var activeTripRequest = await unitOfWork.GetActiveTripRequestForDriver(request.DriverId);
+			var activeTripRequest = await unitOfWork.TripRequestRepository.GetActiveTripRequestForDriver(request.DriverId);
 
 			if (activeTripRequest == null)
 			{

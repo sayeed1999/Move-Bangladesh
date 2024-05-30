@@ -33,7 +33,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 			}
 
 			// Step 3: check driver has ongoing trips
-			var trip = await unitOfWork.GetActiveTripForDriver(request.DriverId);
+			var trip = await unitOfWork.TripRepository.GetActiveTripForDriver(request.DriverId);
 
 			if (trip != null)
 			{

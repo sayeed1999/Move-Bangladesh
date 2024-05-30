@@ -24,7 +24,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 			}
 
 			// Step 2: check trip request exists
-			var activeTripRequest = await unitOfWork.GetActiveTripRequestForCustomer(request.CustomerId);
+			var activeTripRequest = await unitOfWork.TripRequestRepository.GetActiveTripRequestForCustomer(request.CustomerId);
 
 			if (activeTripRequest == null)
 			{

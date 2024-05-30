@@ -23,7 +23,7 @@ namespace RideSharing.Application.TripRequest.Commands.TripRequest
 			}
 
 			// Step 2: check customer has ongoing trip requests
-			var requestedTrip = await unitOfWork.GetActiveTripRequestForCustomer(model.CustomerId);
+			var requestedTrip = await unitOfWork.TripRequestRepository.GetActiveTripRequestForCustomer(model.CustomerId);
 
 			if (requestedTrip != null)
 			{
@@ -31,7 +31,7 @@ namespace RideSharing.Application.TripRequest.Commands.TripRequest
 			}
 
 			// Step 3: check customer has ongoing trips
-			var unfinishedTrip = await unitOfWork.GetActiveTripForCustomer(model.CustomerId);
+			var unfinishedTrip = await unitOfWork.TripRepository.GetActiveTripForCustomer(model.CustomerId);
 
 			if (unfinishedTrip != null)
 			{

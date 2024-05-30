@@ -46,7 +46,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// Step 3: check driver has ongoing trip requests
-			var tripRequest = await unitOfWork.GetActiveTripRequestForDriver(model.DriverId);
+			var tripRequest = await unitOfWork.TripRequestRepository.GetActiveTripRequestForDriver(model.DriverId);
 
 			if (tripRequest != null)
 			{
@@ -54,7 +54,7 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// Step 4: check driver has ongoing trips
-			var trip = await unitOfWork.GetActiveTripForDriver(model.DriverId);
+			var trip = await unitOfWork.TripRepository.GetActiveTripForDriver(model.DriverId);
 
 			if (trip != null)
 			{

@@ -1,11 +1,21 @@
 ﻿using Dapper;
+using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 using System.Text;
 
-namespace RideSharing.Infrastructure.UnitOfWork
+namespace RideSharing.Infrastructure.Repositories
 {
-	public partial class UnitOfWork
+	public class TripRequestRepository : BaseRepository<TripRequestEntity>, ITripRequestRepository
 	{
+		public TripRequestRepository(
+			ApplicationDbContext dbContext,
+			DapperContext dapperContext)
+			: base(
+				  dbContext,
+				  dapperContext)
+		{
+		}
+
 		public async Task<TripRequestEntity> GetActiveTripRequestForCustomer(long customerId)
 		{
 			// If a trip is requested in less than one minute and it is neither canceled nor started, it is considered an active requested trip.
@@ -60,6 +70,5 @@ namespace RideSharing.Infrastructure.UnitOfWork
 				return tripRequest;
 			}
 		}
-
 	}
 }
