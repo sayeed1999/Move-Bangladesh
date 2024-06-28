@@ -19,7 +19,7 @@
 			T integrationEvent,
 			string queue = "",
 			CancellationToken cancellationToken = default)
-			where T : class;
+			where T : IEvent;
 
 		/// <summary>
 		/// Subscribe a message
@@ -33,7 +33,7 @@
 			Func<T, Task> handleMessage,
 			string queue = "",
 			CancellationToken cancellationToken = default)
-			where T : class;
+			where T : IEvent;
 
 		/// <summary>
 		/// Dispose channel and connection

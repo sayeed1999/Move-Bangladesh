@@ -37,7 +37,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			T integrationEvent,
 			string queue = "",
 			CancellationToken cancellationToken = default)
-			where T : class
+			where T : IEvent
 		{
 			try
 			{
@@ -71,7 +71,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			Func<T, Task> handleMessage,
 			string queue = "",
 			CancellationToken cancellationToken = default)
-			where T : class
+			where T : IEvent
 		{
 			var queueName = queue ?? typeof(T).Name;
 
