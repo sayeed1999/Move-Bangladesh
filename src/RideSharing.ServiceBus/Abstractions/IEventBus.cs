@@ -3,30 +3,41 @@
 	public interface IEventBus
 	{
 		/// <summary>
-		/// Use this to implement event bus publisher.
+		/// Initialize channel and connections
+		/// </summary>
+		void Initialize();
+
+		/// <summary>
+		/// Publish a message
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="integrationEvent"></param>
+		/// <param name="queue"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public Task PublishAsync<T>(
+		Task PublishAsync<T>(
 			T integrationEvent,
 			string queue = "",
 			CancellationToken cancellationToken = default)
 			where T : class;
 
 		/// <summary>
-		/// Use this to implement event bus subscriber.
+		/// Subscribe a message
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		/// <param name="integrationEvent"></param>
-		/// <param name="action"></param>
+		/// <param name="handleMessage"></param>
+		/// <param name="queue"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public Task ConsumeAsync<T>(
+		Task ConsumeAsync<T>(
 			Func<T, Task> handleMessage,
 			string queue = "",
 			CancellationToken cancellationToken = default)
 			where T : class;
+
+		/// <summary>
+		/// Dispose channel and connection
+		/// </summary>
+		void Dispose();
 	}
 }

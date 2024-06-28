@@ -1,6 +1,6 @@
 ﻿namespace RideSharing.NotificationService.Notifier
 {
-	internal interface INotifier
+	public interface INotifier
 	{
 		Task Notify(string message);
 	}
