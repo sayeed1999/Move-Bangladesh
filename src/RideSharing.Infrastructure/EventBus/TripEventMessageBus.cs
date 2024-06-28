@@ -1,10 +1,15 @@
-﻿using RideSharing.Application.Abstractions;
+﻿using Microsoft.Extensions.Logging;
+using RideSharing.Application.Abstractions;
 using RideSharing.ServiceBus.RabbitMQ;
 
 namespace RideSharing.Infrastructure.EventBus
 {
 	public class TripEventMessageBus : RabbitMQEventBus, ITripEventMessageBus
 	{
+		public TripEventMessageBus(ILogger<TripEventMessageBus> logger) : base(logger)
+		{
+		}
+
 		public override Task PublishAsync<TripDto>(TripDto integrationEvent, string queue = "", CancellationToken cancellationToken = default)
 		{
 			// overriding queue name
