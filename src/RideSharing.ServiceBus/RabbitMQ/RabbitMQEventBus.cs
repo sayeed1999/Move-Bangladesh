@@ -13,6 +13,8 @@ namespace RideSharing.ServiceBus.RabbitMQ
 		private IConnection _connection;
 		private IModel _channel;
 
+		private bool _queueDurablility = true; // should the queue survive node restart
+
 		protected string hostName { get; private set; }
 		protected string exchange { get; private set; }
 		protected string routingKey { get; private set; }
@@ -31,6 +33,9 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			var factory = new ConnectionFactory() { HostName = hostName ?? "localhost" };
 			_connection = factory.CreateConnection();
 			_channel = _connection.CreateModel();
+
+			// Enable Fair Dispatch (not send more than one tasks to a queue, rather find an empty queue in round-robin fashion.
+			_channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
 		}
 
 		public virtual Task PublishAsync<T>(
@@ -44,7 +49,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 				var queueName = queue ?? integrationEvent.GetType().Name;
 
 				_channel.QueueDeclare(queue: queueName,
-									 durable: false,
+									 durable: _queueDurablility,
 									 exclusive: false,
 									 autoDelete: false,
 									 arguments: null);
@@ -78,7 +83,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			try
 			{
 				_channel.QueueDeclare(queue: queueName,
-									 durable: false,
+									 durable: _queueDurablility,
 									 exclusive: false,
 									 autoDelete: false,
 									 arguments: null);
@@ -94,10 +99,14 @@ namespace RideSharing.ServiceBus.RabbitMQ
 
 					// perform certain action on the message.
 					await handleMessage(integrationEvent);
+
+					// Manual acknowledgement: tell rabbitmq to empty the item once consumer has finished processing without any failure.
+					_channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
 				};
 
 				_channel.BasicConsume(queue: queueName,
-									autoAck: true,
+									// Tell rabbitmq not to instantly empty the item from queue on received.
+									autoAck: false,
 									consumer: consumer);
 			}
 			catch (Exception ex)
