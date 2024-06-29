@@ -18,17 +18,10 @@ public class RabbitMQEventBusTests
 	}
 
 	[Fact]
-	public void SampleTest_One_ShouldEqual_One()
-	{
-		var x = 1;
-		x.Should().Be(1);
-	}
-
-	[Fact]
 	public async Task PublishMessageToQueue_TwoMessages_ConsumedSuccessfully()
 	{
 		var data = MockEvent1;
-		var queue = "unit_test";
+		var queue = "unit_test_1";
 
 		var calledTimes = 0;
 
@@ -37,15 +30,15 @@ public class RabbitMQEventBusTests
 			calledTimes++;
 		};
 
-		// Setup consumer
-		await _eventBus.ConsumeAsync(handler, queue);
-
 		// Publish two messages
 		await _eventBus.PublishAsync(data, queue);
 		await _eventBus.PublishAsync(data, queue);
 
-		// keep the thread alive for 1s to finish processing all messages
-		Thread.Sleep(1000);
+		// Setup consumer
+		await _eventBus.ConsumeAsync(handler, queue);
+
+		// keep the thread alive for 0.5s to finish processing all messages
+		Thread.Sleep(500);
 
 		calledTimes.Should().Be(2);
 	}
@@ -54,7 +47,7 @@ public class RabbitMQEventBusTests
 	public async Task PublishMessageToQueue_ThreeMessages_ConsumedSuccessfully()
 	{
 		var data = MockEvent1;
-		var queue = "unit_test";
+		var queue = "unit_test_2";
 
 		var calledTimes = 0;
 
@@ -63,16 +56,16 @@ public class RabbitMQEventBusTests
 			calledTimes++;
 		};
 
-		// Setup consumer
-		await _eventBus.ConsumeAsync(handler, queue);
-
 		// Publish three messages
 		await _eventBus.PublishAsync(data, queue);
 		await _eventBus.PublishAsync(data, queue);
 		await _eventBus.PublishAsync(data, queue);
 
-		// keep the thread alive for 2s to finish processing all messages
-		Thread.Sleep(2000);
+		// Setup consumer
+		await _eventBus.ConsumeAsync(handler, queue);
+
+		// keep the thread alive for 0.5s to finish processing all messages
+		Thread.Sleep(500);
 
 		calledTimes.Should().Be(3);
 	}
