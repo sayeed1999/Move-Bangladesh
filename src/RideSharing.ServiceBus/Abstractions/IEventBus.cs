@@ -3,11 +3,6 @@
 	public interface IEventBus
 	{
 		/// <summary>
-		/// Initialize channel and connections
-		/// </summary>
-		private void Initialize();
-
-		/// <summary>
 		/// Publish a message
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
