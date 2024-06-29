@@ -28,7 +28,7 @@ namespace RideSharing.ServiceBus.RabbitMQ
 			Initialize();
 		}
 
-		public void Initialize()
+		private void Initialize()
 		{
 			var factory = new ConnectionFactory() { HostName = hostName ?? "localhost" };
 			_connection = factory.CreateConnection();

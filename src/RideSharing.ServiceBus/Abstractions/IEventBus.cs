@@ -5,7 +5,7 @@
 		/// <summary>
 		/// Initialize channel and connections
 		/// </summary>
-		void Initialize();
+		private void Initialize();
 
 		/// <summary>
 		/// Publish a message
