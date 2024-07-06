@@ -8,9 +8,9 @@ import (
 )
 
 func InitEndpoints(r *gin.Engine) {
-	r.Group("/api/transition-checker")
+	rg := r.Group("/api/transition-checker")
 	{
-		r.POST("/trip-request-status", trip_request.Handler)
-		r.POST("/trip-status", trip.Handler)
+		rg.POST("/trip-request-status", trip_request.Handler)
+		rg.POST("/trip-status", trip.Handler)
 	}
 }
