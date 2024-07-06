@@ -13,7 +13,7 @@ func main() {
 }
 
 func run(r *gin.Engine) {
-	transition_checker.InitTransitionChecker(r)
+	transition_checker.InitEndpoints(r)
 
 	r.Run("localhost:7000")
 }

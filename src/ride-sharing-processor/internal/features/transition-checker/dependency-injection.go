@@ -7,8 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitTransitionChecker(r *gin.Engine) {
-	trip.InitTripEndpoint(r)
-	trip_request.InitTripRequestEndpoint(r)
-
+func InitEndpoints(r *gin.Engine) {
+	r.Group("/api/transition-checker")
+	{
+		r.POST("/trip-request-status", trip_request.Handler)
+		r.POST("/trip-status", trip.Handler)
+	}
 }

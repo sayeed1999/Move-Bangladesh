@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func handler(c *gin.Context) {
+func Handler(c *gin.Context) {
 	checker := TripRequestStatusTransitionCheckerMap()
 
 	var request struct {
@@ -28,8 +28,4 @@ func handler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"valid": valid})
-}
-
-func InitTripRequestEndpoint(r *gin.Engine) {
-	r.POST("/transition-checker/trip-request-status", handler)
 }
