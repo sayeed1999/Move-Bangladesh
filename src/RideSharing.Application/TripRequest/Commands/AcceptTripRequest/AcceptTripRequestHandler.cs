@@ -10,7 +10,8 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 	public class AcceptTripRequestHandler(
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripRequestMessageBus,
-		ITransitionChecker<TripRequestStatus> transitionChecker
+		IRideSharingProcessor rideSharingProcessor
+		// ITransitionChecker<TripRequestStatus> transitionChecker // old way
 	)
 		: IRequestHandler<AcceptTripRequestDto, Result<long>>
 	{
@@ -62,7 +63,8 @@ namespace RideSharing.Application.TripRequest.Commands.AcceptTripRequest
 			}
 
 			// Step 4: create trip entity
-			var transitionValid = transitionChecker.IsTransitionValid(tripRequestInDB.Status, TripRequestStatus.DRIVER_ACCEPTED);
+			bool transitionValid = await rideSharingProcessor.CheckTripRequestTransition(tripRequestInDB.Status, TripRequestStatus.DRIVER_ACCEPTED);
+			// var transitionValid = transitionChecker.IsTransitionValid(tripRequestInDB.Status, TripRequestStatus.DRIVER_ACCEPTED); // old way
 
 			if (!transitionValid)
 			{

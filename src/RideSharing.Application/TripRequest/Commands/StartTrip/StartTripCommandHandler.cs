@@ -11,7 +11,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 	public class StartTripCommandHandler(
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripHandlerEventBus,
-		ITransitionChecker<TripRequestStatus> transitionChecker)
+		IRideSharingProcessor rideSharingProcessor)
 		: IRequestHandler<StartTripCommandDto, Result<long>>
 	{
 		public async Task<Result<long>> Handle(StartTripCommandDto request, CancellationToken cancellationToken)
@@ -47,7 +47,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 			}
 
 			// Step 4: prepare entity
-			var transitionValid = transitionChecker.IsTransitionValid(tripRequestInDB.Status, TripRequestStatus.TRIP_STARTED);
+			var transitionValid = await rideSharingProcessor.CheckTripRequestTransition(tripRequestInDB.Status, TripRequestStatus.TRIP_STARTED);
 
 			if (!transitionValid)
 			{

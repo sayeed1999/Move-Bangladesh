@@ -10,7 +10,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 	public class RejectByDriverCommandHandler(
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripHandlerEventBus,
-		ITransitionChecker<TripRequestStatus> transitionChecker)
+		IRideSharingProcessor rideSharingProcessor)
 		: IRequestHandler<RejectByDriverCommandDto, Result<long>>
 	{
 		public async Task<Result<long>> Handle(RejectByDriverCommandDto request, CancellationToken cancellationToken)
@@ -38,7 +38,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 			}
 
 			// Step 3: prepare entity
-			var transitionValid = transitionChecker.IsTransitionValid(activeTripRequest.Status, TripRequestStatus.DRIVER_REJECTED_CUSTOMER);
+			var transitionValid = await rideSharingProcessor.CheckTripRequestTransition(activeTripRequest.Status, TripRequestStatus.DRIVER_REJECTED_CUSTOMER);
 
 			if (!transitionValid)
 			{
