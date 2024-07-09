@@ -11,7 +11,7 @@ public static class PollyResilienceStrategy
         return HttpPolicyExtensions
             .HandleTransientHttpError() // HttpRequestException, 5XX and 408
             .OrResult(msg => msg.StatusCode == HttpStatusCode.NotFound)
-            .WaitAndRetryAsync(6,
+            .WaitAndRetryAsync(3,
                 retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)/2.0));
     }
 }
