@@ -38,7 +38,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByCustomer
 			}
 
 			// Step 3: Check transition valid or not
-			var transitionValid = await rideSharingProcessor.CheckTripRequestTransition(activeTripRequest.Status, TripRequestStatus.CUSTOMER_REJECTED_DRIVER);
+			var transitionValid = await rideSharingProcessor.IsTripRequestTransitionValid(activeTripRequest.Status, TripRequestStatus.CUSTOMER_REJECTED_DRIVER);
 
 			if (!transitionValid)
 			{

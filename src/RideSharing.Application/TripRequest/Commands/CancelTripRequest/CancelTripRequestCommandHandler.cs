@@ -38,7 +38,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 			}
 
 			// Step 3: prepare domain entity
-			var transitionValid = await rideSharingProcessor.CheckTripRequestTransition(requestedTrip.Status, TripRequestStatus.CUSTOMER_CANCELED);
+			var transitionValid = await rideSharingProcessor.IsTripRequestTransitionValid(requestedTrip.Status, TripRequestStatus.CUSTOMER_CANCELED);
 
 			if (!transitionValid)
 			{

@@ -4,7 +4,7 @@ namespace RideSharing.Application.Abstractions
 {
 	public interface IRideSharingProcessor
 	{
-        Task<bool> CheckTripRequestTransition(TripRequestStatus fromStatus, TripRequestStatus toStatus);
-        Task<bool> CheckTripTransition(TripStatus fromStatus, TripStatus toStatus);        
+        Task<bool> IsTripRequestTransitionValid(TripRequestStatus fromStatus, TripRequestStatus toStatus);
+        Task<bool> IsTripTransitionValid(TripStatus fromStatus, TripStatus toStatus);        
 	}
 }

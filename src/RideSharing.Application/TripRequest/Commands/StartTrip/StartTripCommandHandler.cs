@@ -47,7 +47,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 			}
 
 			// Step 4: prepare entity
-			var transitionValid = await rideSharingProcessor.CheckTripRequestTransition(tripRequestInDB.Status, TripRequestStatus.TRIP_STARTED);
+			var transitionValid = await rideSharingProcessor.IsTripRequestTransitionValid(tripRequestInDB.Status, TripRequestStatus.TRIP_STARTED);
 
 			if (!transitionValid)
 			{
