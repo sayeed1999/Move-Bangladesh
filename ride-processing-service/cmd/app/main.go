@@ -1,7 +1,7 @@
 package main
 
 import (
-	transition_checker "ride-sharing-processor/internal/features/transition-checker"
+	transition_checker "ride-processing-service/internal/features/transition-checker"
 
 	"github.com/gin-gonic/gin"
 )

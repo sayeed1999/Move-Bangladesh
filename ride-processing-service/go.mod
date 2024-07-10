@@ -1,4 +1,4 @@
-module ride-sharing-processor
+module ride-processing-service
 
 go 1.22.5
 
