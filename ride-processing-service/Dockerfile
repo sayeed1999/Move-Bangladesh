@@ -20,20 +20,24 @@ RUN go mod download
 COPY . .
 
 # Layer 4: Builds the Go app from dir `./cmd/app` and name the output binary file as `main`.
-RUN go build -o main ./cmd/app
+RUN CGO_ENABLED=0 GOOS=linux go build -o ride-processing-service ./cmd/app
 
 # Start a new stage `final stage` from scratch with the minimal Alpine Linux image.
 FROM alpine:latest  
 
 # Set the Current Working Directory inside the container to `/root/`.
-WORKDIR /root/
+WORKDIR /app
 
-# Copy the Pre-built binary file from the previous stage (/app/main) to the current dir
-# which is /root/.
-COPY --from=builder /app/main .
+# Copy the Pre-built binary file from the previous stage (/app/main) to the current working dir.
+COPY --from=builder /app/ride-processing-service .
+
+# Installs the necessary CA certificates and timezone data files in the final Docker image.
+# This ensures secure connections over HTTPS and accurate timezone information.
+RUN apk --no-cache add ca-certificates tzdata
 
 # Exposes the port to access.
 EXPOSE 8080
 
-# Command to run the executable when the container starts.
-CMD ["./main"]
+# Sets the binary as the entrypoint command, which means that it will be
+# executable when the container starts.
+ENTRYPOINT ["/app/ride-processing-service"]
