@@ -11,6 +11,11 @@ To manually build the Docker image, run from terminal: -
 `docker build -t ride-processing-service .`
 
 To manually run a container for this image, run for terminal: -
-`docker run -p 7000:8080 ride-processing-service`
+`docker run --rm -it -p 7000:8080 ride-processing-service`
 
 The api will be running on `localhost:7000`.
+
+---
+
+To run through Docker Compose file, run from terminal: -
+`docker-compose up -d`.
