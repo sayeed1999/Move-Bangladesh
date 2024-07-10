@@ -15,5 +15,5 @@ func main() {
 func run(r *gin.Engine) {
 	transition_checker.InitEndpoints(r)
 
-	r.Run("localhost:7000")
+	r.Run("localhost:8080")
 }
