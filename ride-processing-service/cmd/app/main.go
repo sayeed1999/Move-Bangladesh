@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"ride-processing-service/config"
 	transition_checker "ride-processing-service/internal/features/transition-checker"
 
 	"github.com/gin-gonic/gin"
@@ -13,6 +15,10 @@ func main() {
 }
 
 func run(r *gin.Engine) {
+	config := config.LoadConfig()
+	serverHost := config.Server.Host
+	serverPort := config.Server.Port
+
 	transition_checker.InitEndpoints(r)
 
 	// Attempt 1: -
@@ -24,5 +30,7 @@ func run(r *gin.Engine) {
 	// It works...
 
 	// Ref: https://stackoverflow.com/a/71980210
-	r.Run("0.0.0.0:8080")
+
+	addr := fmt.Sprintf("%s:%s", serverHost, serverPort)
+	r.Run(addr)
 }
