@@ -5,8 +5,9 @@ services:
     image: "ride-processing-service"
     container_name: "ride-processing-service"
     build: .
-    env_file:
-      - .env
+    environment:
+      - Server__Host=${RideProcessingService__Server__Host}
+      - Server__Port=${RideProcessingService__Server__Port}
     ports:
       - "7000:8080"
     networks:

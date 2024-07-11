@@ -1,5 +1,12 @@
 Project Deployment Guide
 
+To set the env's properly, run from bash terminal: -
+`export RideProcessingService__Server__Port=8080`
+`export RideProcessingService__Server__Host=0.0.0.0`
+
+[Note: While not running with docker compose, omit the first part 'RideProcessingService__'.
+While running docker compose, docker will omit the prefix 'RideProcessingService__' for you.]
+
 To run the project directly from terminal: -
 Open a terminal from this directory and run `go run ./cmd/app/.`
 
