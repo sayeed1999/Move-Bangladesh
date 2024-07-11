@@ -15,5 +15,14 @@ func main() {
 func run(r *gin.Engine) {
 	transition_checker.InitEndpoints(r)
 
-	r.Run("localhost:8080")
+	// Attempt 1: -
+	// Dockerized the app running on http://localhost:8080.
+	// The endpoints are not accessible by the host OS saying,
+	// 'Connection is refused by the server'.
+	// Attempt 2: -
+	// Dockerized the app running on http://0.0.0.0:8080.
+	// It works...
+
+	// Ref: https://stackoverflow.com/a/71980210
+	r.Run("0.0.0.0:8080")
 }
