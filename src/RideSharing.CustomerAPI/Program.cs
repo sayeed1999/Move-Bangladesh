@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.Middlewares;
 using RideSharing.Infrastructure;
+using RideSharing.PushService.SignalR;
 using System.Text.Json.Serialization;
 
 namespace RideSharing.CustomerAPI;
@@ -53,6 +54,8 @@ public class Program
 		app.MapControllers();
 
 		app.MapGet("/", () => "RideSharing.CustomerAPI is running.");
+
+		app.MapHub<StatusHub>(nameof(StatusHub));
 
 		app.Run();
 	}

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using RideSharing.PushService.Abstraction;
 using RideSharing.PushService.SignalR;
+using Microsoft.AspNetCore.Routing;
 
 namespace RideSharing.PushService;
 
@@ -13,5 +14,7 @@ public static class DependencyInjection
         services.AddSingleton<IStatusHub, StatusHub>();
 
         return services;
-    } 
+    }
+
+    // TODO: - create support for mapping endpoints from here
 }
