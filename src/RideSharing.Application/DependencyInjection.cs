@@ -4,6 +4,7 @@ using RideSharing.Application.Abstractions;
 using RideSharing.Application.Common.Behaviors;
 using RideSharing.Application.Services;
 using static RideSharing.Application.Extensions.PollyResilienceStrategy;
+using static RideSharing.PushService.DependencyInjection;
 
 namespace RideSharing.Application;
 
@@ -13,6 +14,7 @@ public static class DependencyInjection
 	{
 		var assembly = typeof(DependencyInjection).Assembly;
 
+		services.RegisterPushService();
 		services.AddAutoMapper(assembly);
 		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly));
 		services.RegisterPipelineBehaviors();
