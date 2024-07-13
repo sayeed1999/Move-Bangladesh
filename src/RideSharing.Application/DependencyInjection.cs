@@ -31,7 +31,7 @@ public static class DependencyInjection
 
 	public static IServiceCollection RegisterHttpClients(this IServiceCollection services)
 	{
-		services.AddHttpClient<IRideSharingProcessor, RideSharingProcessor>(client => 
+		services.AddHttpClient<IRideProcessingService, RideProcessingService>(client => 
 		{
 			client.BaseAddress = new Uri("http://localhost:7000/api");
 		})

@@ -5,11 +5,11 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.Services;
 
-public class RideSharingProcessor : IRideSharingProcessor
+public class RideProcessingService : IRideProcessingService
 {
 	private readonly HttpClient httpClient;
 
-	public RideSharingProcessor(HttpClient httpClient)
+	public RideProcessingService(HttpClient httpClient)
   {
 		this.httpClient = httpClient;
 	}

@@ -10,7 +10,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 	public class CancelTripRequestCommandHandler(
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus messageBus,
-		IRideSharingProcessor rideSharingProcessor)
+		IRideProcessingService rideProcessingService)
 		: IRequestHandler<CancelTripRequestCommandDto, Result<long>>
 	{
 		public async Task<Result<long>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
@@ -38,7 +38,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 			}
 
 			// Step 3: prepare domain entity
-			var transitionValid = await rideSharingProcessor.IsTripRequestTransitionValid(requestedTrip.Status, TripRequestStatus.CUSTOMER_CANCELED);
+			var transitionValid = await rideProcessingService.IsTripRequestTransitionValid(requestedTrip.Status, TripRequestStatus.CUSTOMER_CANCELED);
 
 			if (!transitionValid)
 			{
