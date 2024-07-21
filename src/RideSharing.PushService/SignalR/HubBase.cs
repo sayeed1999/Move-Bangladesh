@@ -69,6 +69,11 @@ public abstract class HubBase : Hub, IPushService
         }
     }
 
+    public async Task SendMessageToCurrentUser(string message)
+    {
+        await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", message);
+    }
+
     public async Task SendMessageToGroup(string group, string message)
     {
         await Clients.Group(group).SendAsync("ReceiveMessage", message);
