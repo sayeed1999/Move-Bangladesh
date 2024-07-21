@@ -4,6 +4,7 @@ using RideSharing.Infrastructure.EventBus;
 using RideSharing.Infrastructure.Repositories;
 using RideSharing.Infrastructure.UnitOfWork;
 using RideSharing.Processor;
+using RideSharing.Payment;
 
 namespace RideSharing.CustomerAPI;
 
@@ -15,6 +16,7 @@ public static class DependencyInjection
 			.AddScoped<IUserContext, UserContext>()
 			.RegisterDatabaseRepositories()
 			.RegisterProcessor()
+			.RegisterPayment()
 			.RegisterEventBuses();
 
 	public static IServiceCollection RegisterDatabaseRepositories(this IServiceCollection services)

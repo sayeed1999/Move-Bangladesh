@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using RideSharing.PushService.Abstraction;
 using RideSharing.PushService.SignalR;
-using Microsoft.AspNetCore.Routing;
 
 namespace RideSharing.PushService;
 

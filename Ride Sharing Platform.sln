@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.ServiceBus.Func
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.PushService", "src\RideSharing.PushService\RideSharing.PushService.csproj", "{378500C3-BB82-45CB-85A9-9DEBD4CB5957}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Payment", "src\RideSharing.Payment\RideSharing.Payment.csproj", "{9744D8CA-C215-48AE-95D4-241C190D720D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,10 @@ Global
 		{378500C3-BB82-45CB-85A9-9DEBD4CB5957}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{378500C3-BB82-45CB-85A9-9DEBD4CB5957}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{378500C3-BB82-45CB-85A9-9DEBD4CB5957}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9744D8CA-C215-48AE-95D4-241C190D720D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9744D8CA-C215-48AE-95D4-241C190D720D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9744D8CA-C215-48AE-95D4-241C190D720D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9744D8CA-C215-48AE-95D4-241C190D720D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +187,7 @@ Global
 		{07712866-CAE3-4D74-B5BB-58F6AC68FEB2} = {F7745BB3-CFC6-49CB-A066-53375EE45099}
 		{EC71F630-43DE-4AE8-9529-32E8185D24FD} = {F7745BB3-CFC6-49CB-A066-53375EE45099}
 		{378500C3-BB82-45CB-85A9-9DEBD4CB5957} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
+		{9744D8CA-C215-48AE-95D4-241C190D720D} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FCFC5BF-A009-4EAC-9DC4-914A8D3E5243}

@@ -23,6 +23,7 @@
 		<ProjectReference Include="..\RideSharing.Common\RideSharing.Common.csproj" />
 		<ProjectReference Include="..\RideSharing.Application\RideSharing.Application.csproj" />
 		<ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
+		<ProjectReference Include="..\RideSharing.Payment\RideSharing.Payment.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
