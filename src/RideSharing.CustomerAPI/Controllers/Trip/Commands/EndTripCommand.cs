@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.Trip.Commands.EndTrip;
-using RideSharing.Common.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 {
@@ -16,7 +15,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
         /// <param name="tripId"></param>
         /// <returns></returns>
 		[HttpPut("{tripId}/end-trip")]
-		public async Task<ActionResult<Response<long>>> Handle(long tripId)
+		public async Task<ActionResult> Handle(long tripId)
 		{
 			var driverId = new long(); // TODO:- get driverId from httpContextAccessor!
 

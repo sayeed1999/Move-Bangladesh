@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.TripRequest.Commands.RejectByDriver;
-using RideSharing.Common.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace RideSharing.DriverAPI.Controllers.TripRequest.Commands
@@ -17,7 +16,7 @@ namespace RideSharing.DriverAPI.Controllers.TripRequest.Commands
 		/// <param name="driverId"></param>
 		/// <returns></returns>
 		[HttpPut("{tripRequestId}/reject-by-driver")]
-		public async Task<ActionResult<Response<long>>> Cancel([Required] long tripRequestId, RejectByDriverCommandDto model)
+		public async Task<ActionResult> Cancel([Required] long tripRequestId, RejectByDriverCommandDto model)
 		{
 			model.DriverId = new long(); // TODO: fetch from HttpContextAccessor
 			model.TripRequestId = tripRequestId;

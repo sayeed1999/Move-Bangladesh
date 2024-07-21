@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.TripRequest.Commands.TripRequest;
-using RideSharing.Common.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 {
@@ -23,7 +22,7 @@ namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 		/// <param name="model"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<Response<long>>> RequestRide(TripRequestCommandDto model)
+		public async Task<ActionResult> RequestRide(TripRequestCommandDto model)
 		{
 			var res = await _mediator.Send(model);
 

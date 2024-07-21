@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.Trip.Commands.InitiatePayment;
-using RideSharing.Common.Entities;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
@@ -18,7 +17,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
         /// <param name="paymentMethod"></param>
         /// <returns></returns>
 		[HttpPut("{tripId}/initiate-payment/{paymentMethod}")]
-		public async Task<ActionResult<Response<long>>> Handle(
+		public async Task<ActionResult> Handle(
             long tripId, 
             PaymentMethod paymentMethod)
 		{
