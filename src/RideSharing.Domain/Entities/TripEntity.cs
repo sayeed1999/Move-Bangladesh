@@ -46,6 +46,6 @@ public class TripEntity : BaseEntity
 public enum TripStatus
 {
 	ONGOING = 1,
-	WAITING_FOR_PAYMENT = 2,
+	WAITING_FOR_PAYMENT = 2, // this is when driver reached destination
 	PAYMENT_COMPLETED = 3,
 }
