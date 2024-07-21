@@ -85,18 +85,31 @@ namespace RideSharing.Infrastructure.Repositories
 			_dbSet.UpdateRange(items);
 		}
 
-		public virtual void Delete(T item)
+		public virtual void SoftDelete(T item)
 		{
-			_dbSet.Remove(item);
+			item.Deleted();
+
+			_dbSet.Update(item);
 		}
 
-		public virtual void BulkDelete(ICollection<T> items)
+		public virtual void BulkSoftDelete(ICollection<T> items)
 		{
 			foreach (var item in items)
 			{
 				item.Deleted();
 			}
 
+			_dbSet.UpdateRange(items);
+		}
+
+
+		public virtual void HardDelete(T item)
+		{
+			_dbSet.Remove(item);
+		}
+
+		public virtual void BulkHardDelete(ICollection<T> items)
+		{
 			_dbSet.RemoveRange(items);
 		}
 
