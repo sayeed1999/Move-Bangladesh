@@ -16,9 +16,9 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
         /// <param name="tripId"></param>
         /// <returns></returns>
 		[HttpPut("{tripId}/end-trip")]
-		public async Task<ActionResult<Response<long>>> Handler(long tripId)
+		public async Task<ActionResult<Response<long>>> Handle(long tripId)
 		{
-			var driverId = new long(); // TODO:- get customerId from httpContextAccessor!
+			var driverId = new long(); // TODO:- get driverId from httpContextAccessor!
 
 			var model = new EndTripDto(driverId, tripId);
 

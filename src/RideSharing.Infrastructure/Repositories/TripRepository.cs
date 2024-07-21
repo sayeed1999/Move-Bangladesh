@@ -81,5 +81,28 @@ namespace RideSharing.Infrastructure.Repositories
 				return trip;
 			}	
 		}
+
+		public async Task<TripEntity> HasTripWaitingForPayment(long tripId, long customerId)
+		{
+			var query = new StringBuilder();
+
+			query.Append("SELECT * FROM \"Trips\"");
+			query.Append($" WHERE \"{nameof(TripEntity.Id)}\" = @{nameof(TripEntity.Id)}");
+			query.Append($" AND \"{nameof(TripEntity.CustomerId)}\" = @{nameof(TripEntity.CustomerId)}");
+			query.Append($" AND \"{nameof(TripEntity.TripStatus)}\" = @{nameof(TripEntity.TripStatus)}");
+			query.Append(" LIMIT 1");
+
+			var parameters = new DynamicParameters();
+
+			parameters.Add(nameof(TripEntity.Id), tripId, DbType.Int64);
+			parameters.Add(nameof(TripEntity.CustomerId), customerId, DbType.Int64);
+			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.WAITING_FOR_PAYMENT, DbType.Int16);
+
+			using (var connection = _dapperContext.CreateConnection())
+			{
+				var trip = await connection.QueryFirstOrDefaultAsync(query.ToString(), parameters);
+				return trip;
+			}	
+		}
 	}
 }

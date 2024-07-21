@@ -7,5 +7,6 @@ namespace RideSharing.Application.Abstractions
 		Task<TripEntity> GetActiveTripForCustomer(long customerId);
 		Task<TripEntity> GetActiveTripForDriver(long driverId);
 		Task<TripEntity> HasOngoingTrip(long tripId, long driverId);
+		Task<TripEntity> HasTripWaitingForPayment(long tripId, long customerId);
 	}
 }
