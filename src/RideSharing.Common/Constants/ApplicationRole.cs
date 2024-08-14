@@ -2,6 +2,8 @@
 
 public static class ApplicationRole
 {
-    public const string Admin = nameof(Admin);
-    public const string User = nameof(User);
+    public const string Admin = "admin";
+    public const string User = "user";
+    public const string Customer = "customer";
+    public const string Driver = "driver";
 }
