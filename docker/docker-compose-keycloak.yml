@@ -8,6 +8,7 @@ services:
     container_name: nginx_server
     ports:
       - "9990:9990" # points to http port for keycloak (Note:- keycloak disables http on production)
+      # "9991:9991" # use this https port in prodcuction mode
     volumes:
       - ./nginx/keycloak/nginx.dev.conf:/etc/nginx/nginx.conf
     networks:
@@ -36,8 +37,8 @@ services:
       KC_SMTP_SERVER_PORT: 1025
       KC_SMTP_SERVER_USER: ${KC_SMTP_SERVER_USER}
       KC_SMTP_SERVER_PASS: ${KC_SMTP_SERVER_PASS}
-    volumes:
-      - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm.json
+    # volumes:
+    #   - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm.json
     networks:
       - globalnet
     command: ["start-dev", "--auto-build", "--import-realm"]
