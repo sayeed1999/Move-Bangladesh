@@ -9,6 +9,11 @@ Follow this guide to learn how to run Keycloak containers, access Keycloak admin
   - [Generate SSL Certificate](#generate-ssl-certificate)
   - [Set Environment Variables](#set-environment-variables)
 - [Running the Containers](#running-the-containers)
+- [Setting up manually](#setting-up-manually)
+  - [Create a Realm](#create-a-realm)
+  - [Create Clients](#create-clients)
+  - [Define Roles](#define-roles)
+  - [Create User Groups (Optional)](#create-user-groups-optional)
 - [Usage](#usage)
   - [Accessing Keycloak Administrator Console](#accessing-keycloak-administrator-console)
   - [Accessing Local Mail Server](#accessing-local-mail-server)
@@ -81,6 +86,30 @@ Follow the following steps to deploy Keycloak in production mode: -
   ```
   docker-compose -f docker-compose-keycloak.prod.yml up -d
   ```
+
+## Setting up manually
+
+**Note: Skip this step if you are importing realm with all pre configured...**
+
+### Create a Realm: 
+
+A realm in Keycloak represents a security domain. For your app, you can create a new realm, say `ride-sharing`.
+
+### Create Clients: 
+
+Clients in Keycloak represent your applications. You’ll need to create two clients:
+
+- **Web Client (React App)**: Configure a client called `ride-sharing-client` for your React front-end. This will be used for logging in users through OAuth2/OpenID Connect.
+
+- **API Client (ASP.NET Web API)**: Create another client for your backend API called `ride-sharing-api` to handle authentication and authorization.
+
+### Define Roles: 
+
+Create two roles `customer` and `driver` in the Keycloak admin console.
+
+### Create User Groups (Optional): 
+
+If you prefer, you can create groups like Customers and Drivers and assign roles to these groups.
 
 ## Usage
 
