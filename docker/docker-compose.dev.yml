@@ -23,6 +23,16 @@ services:
     restart: unless-stopped
     networks:
       - globalnet
+  
+  # RideSharing Auth API
+  ridesharing-auth-api:
+    build:
+      context: .
+      dockerfile: src/RideSharingService/RideSharing.AuthenticationAPI/Dockerfile
+    container_name: ridesharing-auth-api
+    restart: unless-stopped
+    networks:
+      - globalnet
 
   # RideSharing Customer API
   ridesharing-customer-api:
