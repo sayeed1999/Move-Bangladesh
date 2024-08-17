@@ -11,7 +11,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/RideSharing.AuthenticationAPI/RideSharing.AuthenticationAPI.csproj", "src/RideSharing.AuthenticationAPI/"]
 COPY ["src/RideSharing.Common/RideSharing.Common.csproj", "src/RideSharing.Common/"]
-RUN dotnet restore "./src/RideSharing.AuthenticationAPI/./RideSharing.AuthenticationAPI.csproj"
+RUN dotnet restore "./src/RideSharing.AuthenticationAPI/RideSharing.AuthenticationAPI.csproj"
 COPY . .
 WORKDIR "/src/src/RideSharing.AuthenticationAPI"
 RUN dotnet build "./RideSharing.AuthenticationAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build

@@ -14,7 +14,7 @@ COPY ["src/RideSharing.Common/RideSharing.Common.csproj", "src/RideSharing.Commo
 COPY ["src/RideSharing.Domain/RideSharing.Domain.csproj", "src/RideSharing.Domain/"]
 COPY ["src/RideSharing.Infrastructure/RideSharing.Infrastructure.csproj", "src/RideSharing.Infrastructure/"]
 COPY ["src/RideSharing.Application/RideSharing.Application.csproj", "src/RideSharing.Application/"]
-RUN dotnet restore "./src/RideSharing.CustomerAPI/./RideSharing.CustomerAPI.csproj"
+RUN dotnet restore "./src/RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj"
 COPY . .
 WORKDIR "/src/src/RideSharing.CustomerAPI"
 RUN dotnet build "./RideSharing.CustomerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
