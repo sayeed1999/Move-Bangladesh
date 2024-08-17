@@ -83,7 +83,8 @@ docker compose
   -f docker-compose.postgres.yml
   -f docker-compose.rabbitmq.yml
   -f docker-compose.redis.yml
-  -f docker-compose.dev.yml up -d
+  -f docker-compose.dev.yml
+  -f docker-compose.nginx.yml up -d
 ```
 
 ### Development Environment
