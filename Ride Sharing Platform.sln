@@ -44,7 +44,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.InternalAPI", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.AuthenticationAPI", "src\RideSharing.AuthenticationAPI\RideSharing.AuthenticationAPI.csproj", "{B66F290F-DDC2-4268-9DDA-E6B543F25202}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{899A0D46-B32C-426C-9F45-E0904E6DDEE6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{899A0D46-B32C-426C-9F45-E0904E6DDEE6}"
 	ProjectSection(SolutionItems) = preProject
 		docker\.dockerignore = docker\.dockerignore
 		docker\.env = docker\.env

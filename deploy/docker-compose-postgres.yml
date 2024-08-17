@@ -1,10 +1,8 @@
-version: '3'
-
 services:
   # postgres database service
-  postgres-server:
+  postgres:
     image: 'postgis/postgis'
-    container_name: postgres-server
+    container_name: postgres
     ports:
       - "5432:5432"
     environment:
@@ -16,16 +14,16 @@ services:
     networks:
       - ridesharing-shared-net
   # postgres database admin console
-  pgadmin-server:
+  pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin-server
+    container_name: pgadmin
     ports:
       - 8082:80
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
     depends_on:
-      - postgres-server
+      - postgres
     volumes:
       - ./data/pgadmin/:/var/lib/pgadmin/
     networks:

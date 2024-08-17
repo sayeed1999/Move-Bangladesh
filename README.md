@@ -70,10 +70,16 @@ setx API__Keycloak__Realm "RideSharing"
 
 ### Production Environment
 
+Create an external network to share between different compose files: -
+
+```
+docker network create ridesharing-shared-net
+```
+
 Open Terminal from project /docker directory and run the following command to run all containers in detached mode:
 
 ```
-docker compose -f docker-compose-keycloak.prod.yml -f docker-compose-postgres.yml -f docker-compose-rabbitmq.yml -f docker-compose-redis.yml up -d
+docker compose -f docker-compose-postgres.yml -f docker-compose-rabbitmq.yml -f docker-compose-redis.yml -f docker-compose.dey.yml up -d
 ```
 
 ### Development Environment

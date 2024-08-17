@@ -1,5 +1,3 @@
-version: '3'
-
 # services define individual containers and their configurations
 services:
 
@@ -35,7 +33,7 @@ services:
     restart: unless-stopped
     networks:
       - ridesharing-shared-net
- 
+
   # Mailhog (local mail server)
   mailhog:
     restart: unless-stopped

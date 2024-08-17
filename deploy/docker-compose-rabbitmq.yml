@@ -1,4 +1,3 @@
-version: '3'
 services:
   # message broker service
   rabbitmq-server:
@@ -10,3 +9,7 @@ services:
     volumes:
       - ./data/rabbitmq/log:/var/log/rabbitmq # log files mapped to /ridesharing/rabbitmq/log dir from users' home dir.
       - ./data/rabbitmq/data:/var/lib/rabbitmq # data files mapped to /ridesharing/rabbitmq/data dir from users' home dir.
+
+networks:
+  ridesharing-shared-net:
+    external: true
