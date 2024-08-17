@@ -9,41 +9,22 @@ services:
     ports:
       - "4000:4000" # ride sharing api http port
       - "5000:5000" # ride sharing customer api http port
+      - "6000:6000" # ride sharng auth api http port
     volumes:
       - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
-    networks:
-      - globalnet
-  
-  # RideSharing API
-  ridesharing-api:
-    build:
-      context: .
-      dockerfile: src/RideSharingService/RideSharing.InternalAPI/Dockerfile
-    container_name: ridesharing-api
-    restart: unless-stopped
     networks:
       - globalnet
   
   # RideSharing Auth API
   ridesharing-auth-api:
     build:
-      context: .
-      dockerfile: src/RideSharingService/RideSharing.AuthenticationAPI/Dockerfile
+      context: ../
+      dockerfile: src/RideSharing.AuthenticationAPI/Dockerfile
     container_name: ridesharing-auth-api
     restart: unless-stopped
     networks:
       - globalnet
-
-  # RideSharing Customer API
-  ridesharing-customer-api:
-    build:
-      context: .
-      dockerfile: src/RideSharingService/RideSharing.CustomerAPI/Dockerfile
-    container_name: ridesharing-customer-api
-    restart: unless-stopped
-    networks:
-      - globalnet
-   
+ 
   # Mailhog (local mail server)
   mailhog:
     restart: unless-stopped

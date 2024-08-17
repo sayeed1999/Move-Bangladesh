@@ -9,14 +9,14 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/RideSharingService/RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj", "src/RideSharingService/RideSharing.CustomerAPI/"]
-COPY ["src/Common/RideSharing.Common/RideSharing.Common.csproj", "src/Common/RideSharing.Common/"]
-COPY ["src/RideSharingService/RideSharing.Domain/RideSharing.Domain.csproj", "src/RideSharingService/RideSharing.Domain/"]
-COPY ["src/RideSharingService/RideSharing.Infrastructure/RideSharing.Infrastructure.csproj", "src/RideSharingService/RideSharing.Infrastructure/"]
-COPY ["src/RideSharingService/RideSharing.Application/RideSharing.Application.csproj", "src/RideSharingService/RideSharing.Application/"]
-RUN dotnet restore "./src/RideSharingService/RideSharing.CustomerAPI/./RideSharing.CustomerAPI.csproj"
+COPY ["src/RideSharing.CustomerAPI/RideSharing.CustomerAPI.csproj", "src/RideSharing.CustomerAPI/"]
+COPY ["src/RideSharing.Common/RideSharing.Common.csproj", "src/RideSharing.Common/"]
+COPY ["src/RideSharing.Domain/RideSharing.Domain.csproj", "src/RideSharing.Domain/"]
+COPY ["src/RideSharing.Infrastructure/RideSharing.Infrastructure.csproj", "src/RideSharing.Infrastructure/"]
+COPY ["src/RideSharing.Application/RideSharing.Application.csproj", "src/RideSharing.Application/"]
+RUN dotnet restore "./src/RideSharing.CustomerAPI/./RideSharing.CustomerAPI.csproj"
 COPY . .
-WORKDIR "/src/src/RideSharingService/RideSharing.CustomerAPI"
+WORKDIR "/src/src/RideSharing.CustomerAPI"
 RUN dotnet build "./RideSharing.CustomerAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

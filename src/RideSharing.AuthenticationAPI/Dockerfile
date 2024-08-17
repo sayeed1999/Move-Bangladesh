@@ -9,11 +9,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/RideSharingService/RideSharing.AuthenticationAPI/RideSharing.AuthenticationAPI.csproj", "src/RideSharingService/RideSharing.AuthenticationAPI/"]
-COPY ["src/Common/RideSharing.Common/RideSharing.Common.csproj", "src/Common/RideSharing.Common/"]
-RUN dotnet restore "./src/RideSharingService/RideSharing.AuthenticationAPI/./RideSharing.AuthenticationAPI.csproj"
+COPY ["src/RideSharing.AuthenticationAPI/RideSharing.AuthenticationAPI.csproj", "src/RideSharing.AuthenticationAPI/"]
+COPY ["src/RideSharing.Common/RideSharing.Common.csproj", "src/RideSharing.Common/"]
+RUN dotnet restore "./src/RideSharing.AuthenticationAPI/./RideSharing.AuthenticationAPI.csproj"
 COPY . .
-WORKDIR "/src/src/RideSharingService/RideSharing.AuthenticationAPI"
+WORKDIR "/src/src/RideSharing.AuthenticationAPI"
 RUN dotnet build "./RideSharing.AuthenticationAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
