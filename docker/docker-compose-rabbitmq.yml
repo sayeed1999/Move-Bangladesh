@@ -8,5 +8,5 @@ services:
       - "5672:5672" # Port 5672 is for applications and can only be accessed from the internal network.
       - "15672:15672" # Port 15672 is for the management panel and is open for connections from a different machine.
     volumes:
-      - ~/ridesharing/rabbitmq/log:/var/log/rabbitmq # log files mapped to /ridesharing/rabbitmq/log dir from users' home dir.
-      - ~/ridesharing/rabbitmq/data:/var/lib/rabbitmq # data files mapped to /ridesharing/rabbitmq/data dir from users' home dir.
+      - ./data/rabbitmq/log:/var/log/rabbitmq # log files mapped to /ridesharing/rabbitmq/log dir from users' home dir.
+      - ./data/rabbitmq/data:/var/lib/rabbitmq # data files mapped to /ridesharing/rabbitmq/data dir from users' home dir.

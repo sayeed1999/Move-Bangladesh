@@ -51,7 +51,7 @@ services:
     image: postgres:16
     container_name: keycloak-postgres
     volumes: 
-      - ~/ridesharing/keycloak/backup:/var/lib/postgresql/data # user data will be recovered from this location on container destroy and re-create
+      - ./data/keycloak/backup:/var/lib/postgresql/data # user data will be recovered from this location on container destroy and re-create
     environment:
       POSTGRES_DB: keycloak
       POSTGRES_USER: ${KC_POSTGRES_USER}
