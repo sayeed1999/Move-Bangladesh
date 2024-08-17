@@ -7,9 +7,8 @@ services:
     image: nginx:1.24.0
     container_name: nginx_server
     ports:
-      - "4000:4000" # ride sharing api http port
-      - "5000:5000" # ride sharing customer api http port
-      - "6000:6000" # ride sharng auth api http port
+      - "5000:5000" # ride sharng auth api http port
+      - "6000:6000" # ride sharing customer api http port
     volumes:
       - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
     networks:
@@ -21,6 +20,16 @@ services:
       context: ../
       dockerfile: src/RideSharing.AuthenticationAPI/Dockerfile
     container_name: ridesharing-auth-api
+    restart: unless-stopped
+    networks:
+      - globalnet
+
+  # RideSharing Customer API
+  ridesharing-customer-api:
+    build:
+      context: ../
+      dockerfile: src/RideSharing.CustomerAPI/Dockerfile
+    container_name: ridesharing-customer-api
     restart: unless-stopped
     networks:
       - globalnet
