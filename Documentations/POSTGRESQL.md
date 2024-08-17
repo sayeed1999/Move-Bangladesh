@@ -28,7 +28,7 @@ Follow the following steps to deploy PostgreSQL in your local machine: -
 - Open up a terminal from the project root directory.
 - Run the following command:
   ```
-  docker-compose -f docker-compose-postgres.yml up -d
+  docker-compose -f docker-compose.postgres.yml up -d
   ```
 
 ## Accessing PgAdmin Console
@@ -44,5 +44,5 @@ Follow the following steps to destroy the containers: -
 - Open up a terminal from the project root directory.
 - Run the following command:
   ```
-  docker-compose -f docker-compose-postgres.yml down
+  docker-compose -f docker-compose.postgres.yml down
   ```

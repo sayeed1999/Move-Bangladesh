@@ -16,7 +16,7 @@ Follow the following steps to deploy Redis in your local machine: -
 - Open up a terminal from the project root directory.
 - Run the following command:
   ```
-  docker-compose -f docker-compose-redis.yml up -d
+  docker-compose -f docker-compose.redis.yml up -d
   ```
 
 ## Accessing Redis Management Console
@@ -32,5 +32,5 @@ Follow the following steps to destroy the containers: -
 - Open up a terminal from the project root directory.
 - Run the following command:
   ```
-  docker-compose -f docker-compose-redis.yml down
+  docker-compose -f docker-compose.redis.yml down
   ```

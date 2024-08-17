@@ -16,7 +16,7 @@ Follow the following steps to deploy rabbitmq in your local machine: -
 - Open up a terminal from the project root directory.
 - Run the following command:
   ```
-  docker-compose -f docker-compose-rabbitmq.yml up -d
+  docker-compose -f docker-compose.rabbitmq.yml up -d
   ```
 
 ## Accessing RabbitMQ Management Console
@@ -32,5 +32,5 @@ Follow the following steps to destroy the containers: -
 - Open up a terminal from the project root directory.
 - Run the following command:
   ```
-  docker-compose -f docker-compose-rabbitmq.yml down
+  docker-compose -f docker-compose.rabbitmq.yml down
   ```
