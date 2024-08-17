@@ -46,27 +46,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.AuthenticationA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{899A0D46-B32C-426C-9F45-E0904E6DDEE6}"
 	ProjectSection(SolutionItems) = preProject
-		docker\.dockerignore = docker\.dockerignore
-		docker\.env = docker\.env
-		docker\.env.example = docker\.env.example
-		docker\docker-compose-keycloak.dev.yml = docker\docker-compose-keycloak.dev.yml
-		docker\docker-compose-keycloak.prod.yml = docker\docker-compose-keycloak.prod.yml
-		docker\docker-compose-postgres.yml = docker\docker-compose-postgres.yml
-		docker\docker-compose-rabbitmq.yml = docker\docker-compose-rabbitmq.yml
-		docker\docker-compose-redis.yml = docker\docker-compose-redis.yml
-		docker\docker-compose.dev.yml = docker\docker-compose.dev.yml
-		docker\docker-compose.yml = docker\docker-compose.yml
+		deploy\docker-compose.dev.yml = deploy\docker-compose.dev.yml
+		deploy\docker-compose.nginx.yml = deploy\docker-compose.nginx.yml
+		deploy\docker-compose.postgres.yml = deploy\docker-compose.postgres.yml
+		deploy\docker-compose.rabbitmq.yml = deploy\docker-compose.rabbitmq.yml
+		deploy\docker-compose.redis.yml = deploy\docker-compose.redis.yml
+		deploy\.env = deploy\.env
+		deploy\.env.example = deploy\.env.example
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "keycloak", "keycloak", "{9D2BBD17-4817-4D07-9986-D35C2E9B26BC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{1262C99A-4E25-4BD4-B9F7-081B14D8B55C}"
 	ProjectSection(SolutionItems) = preProject
-		docker\keycloak\realm-export.json = docker\keycloak\realm-export.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{98D59914-A7EF-465C-BC6E-C2E1E7BD63BB}"
-	ProjectSection(SolutionItems) = preProject
-		docker\nginx\nginx.conf = docker\nginx\nginx.conf
-		docker\nginx\nginx.dev.conf = docker\nginx\nginx.dev.conf
+		deploy\nginx\nginx.dev.conf = deploy\nginx\nginx.dev.conf
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideSharing.NotificationService", "src\RideSharing.NotificationService\RideSharing.NotificationService.csproj", "{EAFF1A41-6D58-445A-8F92-DF05899052C3}"
@@ -179,8 +170,7 @@ Global
 		{D700D7F4-24BE-4410-9207-17A882CEFDBF} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{B66F290F-DDC2-4268-9DDA-E6B543F25202} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{899A0D46-B32C-426C-9F45-E0904E6DDEE6} = {248A29EB-B997-4B67-9D1F-3CCD5FBB927E}
-		{9D2BBD17-4817-4D07-9986-D35C2E9B26BC} = {899A0D46-B32C-426C-9F45-E0904E6DDEE6}
-		{98D59914-A7EF-465C-BC6E-C2E1E7BD63BB} = {899A0D46-B32C-426C-9F45-E0904E6DDEE6}
+		{1262C99A-4E25-4BD4-B9F7-081B14D8B55C} = {899A0D46-B32C-426C-9F45-E0904E6DDEE6}
 		{EAFF1A41-6D58-445A-8F92-DF05899052C3} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{0088D350-CC57-4F34-9BE5-BF2384314D50} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
 		{543B1677-BBC5-4238-A57C-01103BC95FE1} = {9CBAEE2E-8027-4AA4-8139-079931D07B3A}
