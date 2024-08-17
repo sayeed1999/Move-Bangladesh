@@ -12,7 +12,7 @@ services:
     volumes:
       - ./nginx/nginx.dev.conf:/etc/nginx/nginx.conf
     networks:
-      - globalnet
+      - ridesharing-shared-net
   
   # RideSharing Auth API
   ridesharing-auth-api:
@@ -22,7 +22,7 @@ services:
     container_name: ridesharing-auth-api
     restart: unless-stopped
     networks:
-      - globalnet
+      - ridesharing-shared-net
 
   # RideSharing Customer API
   ridesharing-customer-api:
@@ -32,7 +32,7 @@ services:
     container_name: ridesharing-customer-api
     restart: unless-stopped
     networks:
-      - globalnet
+      - ridesharing-shared-net
  
   # Mailhog (local mail server)
   mailhog:
@@ -43,11 +43,12 @@ services:
       - "1025:1025" # SMTP port
       - "8025:8025" # Web UI port
     networks:
-      - globalnet
+      - ridesharing-shared-net
 
 # volumes are a physical areas of disk space shared between the host and the containers
 # volumes:
 
 # networks define the communication rules between containers, and between a container and the host
 networks:
-  globalnet: # network for api communications
+  ridesharing-shared-net:
+    external: true

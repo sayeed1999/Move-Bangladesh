@@ -1,20 +1,18 @@
-version: '3'
-
 services:
   # postgres database service
   postgres-server:
     image: 'postgis/postgis'
     container_name: postgres-server
     ports:
-      - 5432:5432
+      - 5433:5432
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PGDATA=/data/postgres
     volumes:
-      - ~/backup/postgres:/data/postgres
+      - ./data/postgres:/data/postgres
     networks:
-      - postgres-network
+      - ridesharing-shared-net
   # postgres database admin console
   pgadmin-server:
     image: dpage/pgadmin4
@@ -27,10 +25,10 @@ services:
     depends_on:
       - postgres-server
     volumes:
-      - ~/backup/pgadmin/:/var/lib/pgadmin/
+      - ./data/pgadmin/:/var/lib/pgadmin/
     networks:
-      - postgres-network
+      - ridesharing-shared-net
 
 networks:
-  postgres-network:
-    driver: bridge
+  ridesharing-shared-net:
+    external: true
