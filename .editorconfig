@@ -1,3 +1,54 @@
+# top-most EditorConfig file
+root = true
+
+# General configuration
 [*]
+charset = utf-8
+indent_style = space
+indent_size = 4
 end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# C# files
+[*.cs]
 indent_style = tab
+tab_width = 4
+end_of_line = lf
+csharp_new_line_before_open_brace = all
+csharp_new_line_between_query_expression_clauses = true
+csharp_indent_case_contents = true
+csharp_indent_labels = no_change
+csharp_space_after_cast = true
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_after_comma = true
+csharp_space_after_dot = false
+csharp_space_after_semicolon_in_for_statement = true
+csharp_space_between_empty_square_brackets = false
+csharp_space_around_binary_operators = before_and_after
+
+# JSON files
+[*.json]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+
+# YAML files
+[*.yml, *.yaml]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false
+end_of_line = lf
+
+# Ignore generated files
+[bin/*]
+indent_style = none
+insert_final_newline = false
+
+[obj/*]
+indent_style = none
+insert_final_newline = false
