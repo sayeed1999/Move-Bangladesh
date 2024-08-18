@@ -3,8 +3,8 @@ services:
   postgres:
     image: 'postgis/postgis'
     container_name: postgres
-    ports:
-      - "5432:5432"
+    # ports:
+    #   - "5432:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
