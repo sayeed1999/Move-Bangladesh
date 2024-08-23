@@ -10,6 +10,7 @@ public static class RegisterOptionsExtension
 	{
 		// Register sub-sections from appsettings.json
 
+		services.Configure<Jwt>(configuration.GetSection(nameof(Jwt)));
 		services.Configure<ConnectionStrings>(configuration.GetSection(nameof(ConnectionStrings)));
 		services.Configure<ClientApplication>(configuration.GetSection(nameof(ClientApplication)));
 		services.Configure<Keycloak>(configuration.GetSection(nameof(Keycloak)));

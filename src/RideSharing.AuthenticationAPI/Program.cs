@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RideSharing.AuthenticationAPI;
 using RideSharing.AuthenticationAPI.Seed;
+using RideSharing.AuthenticationAPI.Services;
+using RideSharing.Common.Configurations;
 using RideSharing.Common.RegisterServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(
 	options => options.UseNpgsql(
 		builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.Configure<Jwt>(builder.Configuration.GetSection(nameof(Jwt)));
+
+builder.Services.AddScoped<TokenService>();
 
 builder.Services
 	.AddIdentityApiEndpoints<IdentityUser>()
