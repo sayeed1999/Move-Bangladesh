@@ -1,6 +1,6 @@
 # services define individual containers and their configurations
 services:
-  
+
   # RideSharing Auth API
   ridesharing-auth-api:
     build:
@@ -14,27 +14,27 @@ services:
       - ridesharing-shared-net
 
   # RideSharing Customer API
-  ridesharing-customer-api:
-    build:
-      context: ../
-      dockerfile: src/RideSharing.CustomerAPI/Dockerfile
-    container_name: ridesharing-customer-api
-    restart: unless-stopped
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    networks:
-      - ridesharing-shared-net
+#   ridesharing-customer-api:
+#     build:
+#       context: ../
+#       dockerfile: src/RideSharing.CustomerAPI/Dockerfile
+#     container_name: ridesharing-customer-api
+#     restart: unless-stopped
+#     environment:
+#       - ASPNETCORE_ENVIRONMENT=Development
+#     networks:
+#       - ridesharing-shared-net
 
   # Mailhog (local mail server)
-  mailhog:
-    restart: unless-stopped
-    image: mailhog/mailhog
-    container_name: mailhog
-    ports:
-      - "1025:1025" # SMTP port
-      - "8025:8025" # Web UI port
-    networks:
-      - ridesharing-shared-net
+#   mailhog:
+#     restart: unless-stopped
+#     image: mailhog/mailhog
+#     container_name: mailhog
+#     ports:
+#       - "1025:1025" # SMTP port
+#       - "8025:8025" # Web UI port
+#     networks:
+#       - ridesharing-shared-net
 
 # volumes are a physical areas of disk space shared between the host and the containers
 # volumes:
