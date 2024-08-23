@@ -6,7 +6,6 @@
 - [Other Docs](#other-docs)
 - [Setting Up the Project](#setting-up-the-project)
   - [Set Environment Variables for Docker Compose](#set-environment-variables-for-docker-compose)
-  - [Set Environment Variables for API development](#set-environment-variables-for-API-development)
 - [Running the Containers](#running-the-containers)
 - [Usage](#usage)
   - [Access APIs](#access-apis)
@@ -37,17 +36,6 @@ Head to other deployment readme files: -
 The `docker-compose.yml` file requires proper environment variables set before execution.
 
 Following the `.env.example` file, create another file `.env` in the same directory, and set proper values. DO NOT expose them!
-
-## Set Environment Variables for API development
-
-<i>Skip this if you are not developing API or writing code and debug.</i>
-
-Open Developer PowerShell from project root directory & run the following commands:
-
-```
-setx API__ConnectionStrings__DatabaseConnectionString "<connection_string_here>"
-setx API__ClientApplication__AllowedOrigins "http://localhost:3000" (if frontend is running on this domain)
-```
 
 ## Running the Containers
 
