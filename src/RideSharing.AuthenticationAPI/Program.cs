@@ -29,6 +29,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+// TODO:- take migration from program start to deployment scripts!
 using (var scope = app.Services.CreateScope())
 {
 	using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())

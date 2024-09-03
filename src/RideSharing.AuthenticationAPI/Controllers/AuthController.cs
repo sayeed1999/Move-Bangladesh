@@ -5,6 +5,8 @@ using RideSharing.AuthenticationAPI.Models;
 using RideSharing.AuthenticationAPI.Services;
 using RideSharing.Common.Constants;
 
+// TODO:- do r&d on how to properly wrap the operations in a transaction
+
 namespace RideSharing.AuthenticationAPI.Controllers
 {
 	[ApiController]
