@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RideSharing.Common.Configurations;
 using RideSharing.Common.Middlewares;
 using RideSharing.Infrastructure;
 using RideSharing.PushService.SignalR;
@@ -23,6 +24,17 @@ public class Program
 				options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
 			});
 
+		builder.Services.AddCors(options =>
+		{
+			var clientAppSettings = builder.Configuration.GetSection(nameof(ClientApplication)).Get<ClientApplication>();
+
+			options.AddPolicy("CorsPolicy",
+				builder => builder
+					.WithOrigins(clientAppSettings.AllowedOrigins)
+					.WithMethods("GET", "POST", "PATCH", "DELETE")
+					.AllowAnyHeader());
+		});
+
 		builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 
 		var app = builder.Build();
@@ -42,6 +54,8 @@ public class Program
 			app.UseSwagger();
 			app.UseSwaggerUI();
 		}
+
+		app.UseCors("CorsPolicy");
 
 		// Custom middlewares.
 		app.UseMiddleware<ExceptionHandlingMiddleware>();

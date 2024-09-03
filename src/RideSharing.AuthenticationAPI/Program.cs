@@ -14,6 +14,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 builder.Services.Configure<Jwt>(builder.Configuration.GetSection(nameof(Jwt)));
 
+builder.Services.AddCors(options =>
+{
+	var clientAppSettings = builder.Configuration.GetSection(nameof(ClientApplication)).Get<ClientApplication>();
+
+	options.AddPolicy("CorsPolicy",
+		builder => builder
+			.WithOrigins(clientAppSettings.AllowedOrigins)
+			.WithMethods("GET", "POST", "PATCH", "DELETE")
+			.AllowAnyHeader());
+});
+
 builder.Services.AddScoped<TokenService>();
 
 builder.Services
@@ -46,6 +57,8 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.MapIdentityApi<IdentityUser>();
 
