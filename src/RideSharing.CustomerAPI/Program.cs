@@ -55,7 +55,11 @@ public class Program
 			app.UseSwaggerUI();
 		}
 
+		// Note: - only allow cors from code, if debugging, otherwise,
+		// when nginx write cors rules, it creates duplicated cors issue!
+#if DEBUG
 		app.UseCors("CorsPolicy");
+#endif
 
 		// Custom middlewares.
 		app.UseMiddleware<ExceptionHandlingMiddleware>();
