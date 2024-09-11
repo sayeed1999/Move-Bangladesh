@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
-using RideSharing.Common.ValueObjects;
+using RideSharing.Domain.ValueObjects;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.Domain.Factories

@@ -1,4 +1,4 @@
-﻿namespace RideSharing.Common.Entities;
+﻿namespace RideSharing.Domain.Common;
 
 public abstract class AuditableEntity
 {

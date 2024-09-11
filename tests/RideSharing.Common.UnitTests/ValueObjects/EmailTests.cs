@@ -1,4 +1,4 @@
-﻿using RideSharing.Common.ValueObjects;
+﻿using RideSharing.Domain.ValueObjects;
 
 namespace RideSharing.Common.UnitTests.ValueObjects;
 

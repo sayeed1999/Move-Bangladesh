@@ -1,4 +1,4 @@
-﻿using RideSharing.Common.Entities;
+﻿using RideSharing.Domain.Common;
 
 namespace RideSharing.Domain.Entities;
 
