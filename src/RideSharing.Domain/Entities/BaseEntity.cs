@@ -4,11 +4,10 @@ namespace RideSharing.Domain.Entities;
 
 public abstract class BaseEntity : AuditableEntity
 {
-	public long Id { get; set; }
+	public string Id { get; set; }
 
-	public void ResetPrimaryKey()
+	public void GeneratePrimaryKey()
 	{
-		// Note: EF Core auto generates Primary Key fields when Id is zero!
-		Id = 0;
+		Id = Guid.NewGuid().ToString();
 	}
 }

@@ -51,7 +51,7 @@ namespace RideSharing.Infrastructure.Repositories
 
 		public virtual async Task CreateAsync(T item)
 		{
-			item.ResetPrimaryKey();
+			item.GeneratePrimaryKey();
 			item.Created();
 
 			await _dbSet.AddAsync(item);
@@ -61,7 +61,7 @@ namespace RideSharing.Infrastructure.Repositories
 		{
 			foreach (var item in items)
 			{
-				item.ResetPrimaryKey();
+				item.GeneratePrimaryKey();
 				item.Created();
 			}
 
