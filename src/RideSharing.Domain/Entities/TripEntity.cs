@@ -7,18 +7,18 @@ namespace RideSharing.Domain.Entities;
 public class TripEntity : BaseEntity
 {
 	public long TripRequestId { get; set; }
-	public virtual TripRequestEntity TripRequest { get; set; }
+	public virtual TripRequestEntity? TripRequest { get; set; }
 	public long CustomerId { get; set; }
-	public virtual CustomerEntity Customer { get; set; }
+	public virtual CustomerEntity? Customer { get; set; }
 	public long DriverId { get; set; }
-	public virtual DriverEntity Driver { get; set; }
+	public virtual DriverEntity? Driver { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
 	public TripStatus TripStatus { get; set; }
-	public Point Source { get; set; }
-	public Point Destination { get; set; }
+	public required Point Source { get; set; }
+	public required Point Destination { get; set; }
 	public CabType CabType { get; set; }
-	public virtual ICollection<PaymentEntity> Payments { get; set; }
-	public virtual ICollection<TripLogEntity> TripLogs { get; set; }
+	public virtual ICollection<PaymentEntity>? Payments { get; private set; }
+	public virtual ICollection<TripLogEntity>? TripLogs { get; private set; }
 
 	public Result Modify(TripStatus status)
 	{

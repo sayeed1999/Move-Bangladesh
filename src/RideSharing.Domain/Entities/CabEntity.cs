@@ -2,9 +2,9 @@
 
 public class CabEntity : BaseEntity
 {
-	public string RegNo { get; set; }
+	public required string RegNo { get; set; }
 	public long DriverId { get; set; }
-	public virtual DriverEntity Driver { get; set; }
+	public virtual DriverEntity? Driver { get; set; }
 	public CabType CabType { get; set; }
 }
 

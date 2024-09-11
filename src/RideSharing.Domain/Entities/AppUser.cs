@@ -4,14 +4,9 @@ namespace RideSharing.Domain.Entities;
 
 public abstract class AppUser : BaseEntity
 {
-	public AppUser()
-	{
-		IsVerified = false;
-	}
-
-	public string Name { get; set; }
-	public string Email { get; set; }
-	public string Phone { get; set; }
+	public required string Name { get; set; }
+	public required string Email { get; set; }
+	public required string Phone { get; set; }
 	public string? Location { get; set; }
 	public Gender? Gender { get; set; }
 	public DateTime? DOB { get; set; }
