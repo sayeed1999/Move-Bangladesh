@@ -16,9 +16,9 @@ namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 		/// <param name="customerId"></param>
 		/// <returns></returns>
 		[HttpPut("{tripRequestId}/reject-by-customer")]
-		public async Task<ActionResult> Cancel([Required] long tripRequestId, RejectByCustomerCommandDto model)
+		public async Task<ActionResult> Cancel([Required] string tripRequestId, RejectByCustomerCommandDto model)
 		{
-			model.CustomerId = new long(); // TODO: fetch from HttpContextAccessor
+			model.CustomerId = string.Empty; // TODO: fetch from HttpContextAccessor
 			model.TripRequestId = tripRequestId;
 
 			var res = await mediator.Send(model);

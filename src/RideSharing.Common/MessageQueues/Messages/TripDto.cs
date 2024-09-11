@@ -3,10 +3,10 @@
 namespace RideSharing.Common.MessageQueues.Messages
 {
 	public class TripDto(
-		long Id,
-		long TripRequestId,
-		long CustomerId,
-		long DriverId,
+		string Id,
+		string TripRequestId,
+		string CustomerId,
+		string DriverId,
 		string PaymentMethod,
 		string TripStatus,
 		string Source,

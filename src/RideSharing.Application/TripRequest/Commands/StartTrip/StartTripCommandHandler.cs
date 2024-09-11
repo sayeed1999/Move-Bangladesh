@@ -12,16 +12,16 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripHandlerEventBus,
 		IRideProcessingService rideProcessingService)
-		: IRequestHandler<StartTripCommandDto, Result<long>>
+		: IRequestHandler<StartTripCommandDto, Result<string>>
 	{
-		public async Task<Result<long>> Handle(StartTripCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(StartTripCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check valid trip request exists
 			var tripRequestInDB = await unitOfWork.TripRequestRepository.FindByIdAsync(request.TripRequestId);
 
 			if (tripRequestInDB == null)
 			{
-				return Result.Failure<long>("Trip Request is not found.");
+				return Result.Failure<string>("Trip Request is not found.");
 			}
 
 			// Step 2: check driver exists
@@ -29,7 +29,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 
 			if (driverInDB == null)
 			{
-				return Result.Failure<long>("Driver is not found.");
+				return Result.Failure<string>("Driver is not found.");
 			}
 
 			// Step 3: check driver has ongoing trips
@@ -37,13 +37,13 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 
 			if (trip != null)
 			{
-				return Result.Failure<long>("Driver has an ongoing trip.");
+				return Result.Failure<string>("Driver has an ongoing trip.");
 			}
 
 			// ** Security check !
 			if (tripRequestInDB.Id != request.TripRequestId)
 			{
-				return Result.Failure<long>("Active trip request for driver does not match !!");
+				return Result.Failure<string>("Active trip request for driver does not match !!");
 			}
 
 			// Step 4: prepare entity
@@ -51,7 +51,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 
 			if (!transitionValid)
 			{
-				return Result.Failure<long>("TripRequest Status cannot be changed to desired status.");
+				return Result.Failure<string>("TripRequest Status cannot be changed to desired status.");
 			}
 
 			tripRequestInDB.Modify(TripRequestStatus.TRIP_STARTED);
@@ -75,7 +75,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 
 				if (result.IsFailure)
 				{
-					return Result.Failure<long>(result.Error);
+					return Result.Failure<string>(result.Error);
 				}
 
 				tripHandlerEventBus.PublishAsync(tripRequestInDB.GetTripRequestDto());
@@ -86,7 +86,7 @@ namespace RideSharing.Application.TripRequest.Commands.StartTrip
 			}
 			catch (Exception ex)
 			{
-				return Result.Failure<long>($"Failed with error: {ex.Message}");
+				return Result.Failure<string>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

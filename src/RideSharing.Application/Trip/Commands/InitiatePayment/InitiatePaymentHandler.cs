@@ -11,17 +11,17 @@ public class InitiatePaymentHandler(
     ITripEventMessageBus tripMessageBus,
     IRideProcessingService rideProcessingService
 )
-    : IRequestHandler<InitiatePaymentDto, Result<long>>
+    : IRequestHandler<InitiatePaymentDto, Result<string>>
 {
-    public async Task<Result<long>> Handle(InitiatePaymentDto model, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(InitiatePaymentDto model, CancellationToken cancellationToken)
     {
         var tripInDB = await unitOfWork.TripRepository.HasTripWaitingForPayment(
-            model.TripId, 
+            model.TripId,
             model.CustomerId);
 
         if (tripInDB == null)
         {
-            return Result.Failure<long>("Ongoing Trip is not found.");
+            return Result.Failure<string>("Ongoing Trip is not found.");
         }
 
         // TODO: - call service for payment processing and return error if payment failed!
@@ -30,7 +30,7 @@ public class InitiatePaymentHandler(
 
         if (!transitionValid)
         {
-            return Result.Failure<long>("Trip Status cannot be changed to desired status.");
+            return Result.Failure<string>("Trip Status cannot be changed to desired status.");
         }
 
         tripInDB.Modify(TripStatus.PAYMENT_COMPLETED);
@@ -43,7 +43,7 @@ public class InitiatePaymentHandler(
 
             if (result.IsFailure)
             {
-                return Result.Failure<long>(result.Error);
+                return Result.Failure<string>(result.Error);
             }
 
             tripMessageBus.PublishAsync(tripInDB.GetTripDto());
@@ -52,7 +52,7 @@ public class InitiatePaymentHandler(
         }
         catch (Exception ex)
         {
-            return Result.Failure<long>($"Failed with error: {ex.Message}");
+            return Result.Failure<string>($"Failed with error: {ex.Message}");
         }
     }
 }

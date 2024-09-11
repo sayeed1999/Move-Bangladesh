@@ -11,7 +11,7 @@ namespace RideSharing.Application.Abstractions
 		#endregion
 
 		#region crud helpers
-		Task<T> FindByIdAsync(long id);
+		Task<T> FindByIdAsync(string id);
 		Task CreateAsync(T item);
 		Task BulkCreateAsync(ICollection<T> items);
 		void Update(T item);

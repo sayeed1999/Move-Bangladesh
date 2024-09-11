@@ -8,7 +8,7 @@ namespace RideSharing.Domain.Factories
 {
 	public class DriverFactory
 	{
-		public static Result<DriverEntity> Create(long id, long userId, string name, Gender gender, Email email, string phone, string location)
+		public static Result<DriverEntity> Create(string id, string userId, string name, Gender gender, Email email, string phone, string location)
 		{
 			DriverEntity driver = new DriverEntity
 			{

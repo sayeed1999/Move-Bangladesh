@@ -19,11 +19,11 @@ namespace RideSharing.Domain.Entities
 			Status = tripRequest.Status;
 		}
 
-		public long TripRequestId { get; set; }
+		public required string TripRequestId { get; set; }
 		public virtual TripRequestEntity TripRequest { get; set; }
-		public long CustomerId { get; set; }
+		public required string CustomerId { get; set; }
 		public virtual CustomerEntity Customer { get; set; }
-		public long? DriverId { get; set; }
+		public string? DriverId { get; set; }
 		public virtual DriverEntity? Driver { get; set; }
 		public Point Source { get; set; }
 		public Point Destination { get; set; }

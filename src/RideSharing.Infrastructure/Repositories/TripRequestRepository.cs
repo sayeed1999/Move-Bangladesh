@@ -16,7 +16,7 @@ namespace RideSharing.Infrastructure.Repositories
 		{
 		}
 
-		public async Task<TripRequestEntity> GetActiveTripRequestForCustomer(long customerId)
+		public async Task<TripRequestEntity> GetActiveTripRequestForCustomer(string customerId)
 		{
 			// If a trip is requested in less than one minute and it is neither canceled nor started, it is considered an active requested trip.
 			// If a trip request has no activity within one minute, it is considered auto-canceled.
@@ -38,9 +38,9 @@ namespace RideSharing.Infrastructure.Repositories
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.NO_DRIVER_FOUND, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripRequestEntity.Status), (int) TripRequestStatus.NO_DRIVER_FOUND, System.Data.DbType.Int16);
 			parameters.Add(nameof(oneMinuteAgo), oneMinuteAgo, System.Data.DbType.DateTime);
-			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.TRIP_STARTED, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripRequestEntity.Status), (int) TripRequestStatus.TRIP_STARTED, System.Data.DbType.Int16);
 			parameters.Add(nameof(TripRequestEntity.CustomerId), customerId, System.Data.DbType.Int64);
 
 			using (var connection = _dapperContext.CreateConnection())
@@ -50,7 +50,7 @@ namespace RideSharing.Infrastructure.Repositories
 			}
 		}
 
-		public async Task<TripRequestEntity> GetActiveTripRequestForDriver(long driverId)
+		public async Task<TripRequestEntity> GetActiveTripRequestForDriver(string driverId)
 		{
 			var query = new StringBuilder();
 
@@ -61,7 +61,7 @@ namespace RideSharing.Infrastructure.Repositories
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(TripRequestEntity.Status), (int)TripRequestStatus.DRIVER_ACCEPTED, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripRequestEntity.Status), (int) TripRequestStatus.DRIVER_ACCEPTED, System.Data.DbType.Int16);
 			parameters.Add(nameof(TripRequestEntity.DriverId), driverId, System.Data.DbType.Int64);
 
 			using (var connection = _dapperContext.CreateConnection())

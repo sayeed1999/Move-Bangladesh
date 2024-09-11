@@ -17,7 +17,7 @@ namespace RideSharing.Infrastructure.Repositories
 		{
 		}
 
-		public async Task<TripEntity> GetActiveTripForCustomer(long customerId)
+		public async Task<TripEntity> GetActiveTripForCustomer(string customerId)
 		{
 			var query = new StringBuilder();
 
@@ -28,7 +28,7 @@ namespace RideSharing.Infrastructure.Repositories
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.PAYMENT_COMPLETED, DbType.Int16);
+			parameters.Add(nameof(TripEntity.TripStatus), (int) TripStatus.PAYMENT_COMPLETED, DbType.Int16);
 			parameters.Add(nameof(TripEntity.CustomerId), customerId, DbType.Int64);
 
 			using (var connection = _dapperContext.CreateConnection())
@@ -38,7 +38,7 @@ namespace RideSharing.Infrastructure.Repositories
 			}
 		}
 
-		public async Task<TripEntity> GetActiveTripForDriver(long driverId)
+		public async Task<TripEntity> GetActiveTripForDriver(string driverId)
 		{
 			var query = new StringBuilder();
 
@@ -49,7 +49,7 @@ namespace RideSharing.Infrastructure.Repositories
 
 			var parameters = new DynamicParameters();
 
-			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.PAYMENT_COMPLETED, System.Data.DbType.Int16);
+			parameters.Add(nameof(TripEntity.TripStatus), (int) TripStatus.PAYMENT_COMPLETED, System.Data.DbType.Int16);
 			parameters.Add(nameof(TripEntity.DriverId), driverId, System.Data.DbType.Int64);
 
 			using (var connection = _dapperContext.CreateConnection())
@@ -59,7 +59,7 @@ namespace RideSharing.Infrastructure.Repositories
 			}
 		}
 
-		public async Task<TripEntity> HasOngoingTrip(long tripId, long driverId)
+		public async Task<TripEntity> HasOngoingTrip(string tripId, string driverId)
 		{
 			var query = new StringBuilder();
 
@@ -73,16 +73,16 @@ namespace RideSharing.Infrastructure.Repositories
 
 			parameters.Add(nameof(TripEntity.Id), tripId, DbType.Int64);
 			parameters.Add(nameof(TripEntity.DriverId), driverId, DbType.Int64);
-			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.ONGOING, DbType.Int16);
+			parameters.Add(nameof(TripEntity.TripStatus), (int) TripStatus.ONGOING, DbType.Int16);
 
 			using (var connection = _dapperContext.CreateConnection())
 			{
 				var trip = await connection.QueryFirstOrDefaultAsync(query.ToString(), parameters);
 				return trip;
-			}	
+			}
 		}
 
-		public async Task<TripEntity> HasTripWaitingForPayment(long tripId, long customerId)
+		public async Task<TripEntity> HasTripWaitingForPayment(string tripId, string customerId)
 		{
 			var query = new StringBuilder();
 
@@ -96,13 +96,13 @@ namespace RideSharing.Infrastructure.Repositories
 
 			parameters.Add(nameof(TripEntity.Id), tripId, DbType.Int64);
 			parameters.Add(nameof(TripEntity.CustomerId), customerId, DbType.Int64);
-			parameters.Add(nameof(TripEntity.TripStatus), (int)TripStatus.WAITING_FOR_PAYMENT, DbType.Int16);
+			parameters.Add(nameof(TripEntity.TripStatus), (int) TripStatus.WAITING_FOR_PAYMENT, DbType.Int16);
 
 			using (var connection = _dapperContext.CreateConnection())
 			{
 				var trip = await connection.QueryFirstOrDefaultAsync(query.ToString(), parameters);
 				return trip;
-			}	
+			}
 		}
 	}
 }

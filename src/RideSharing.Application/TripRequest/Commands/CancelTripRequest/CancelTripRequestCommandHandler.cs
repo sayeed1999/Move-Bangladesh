@@ -11,16 +11,16 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus messageBus,
 		IRideProcessingService rideProcessingService)
-		: IRequestHandler<CancelTripRequestCommandDto, Result<long>>
+		: IRequestHandler<CancelTripRequestCommandDto, Result<string>>
 	{
-		public async Task<Result<long>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
 			var customerInDB = await unitOfWork.CustomerRepository.FindByIdAsync(request.CustomerId);
 
 			if (customerInDB == null)
 			{
-				return Result.Failure<long>("Customer is not found.");
+				return Result.Failure<string>("Customer is not found.");
 			}
 
 			// Step 2: check trip request exists
@@ -28,13 +28,13 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 
 			if (requestedTrip == null)
 			{
-				return Result.Failure<long>("Customer has no pending requested trip.");
+				return Result.Failure<string>("Customer has no pending requested trip.");
 			}
 
 			// ** Security check !
 			if (requestedTrip.Id != request.TripRequestId)
 			{
-				return Result.Failure<long>("Active trip request for customer does not match !!");
+				return Result.Failure<string>("Active trip request for customer does not match !!");
 			}
 
 			// Step 3: prepare domain entity
@@ -42,7 +42,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 
 			if (!transitionValid)
 			{
-				return Result.Failure<long>("Trip Request Status cannot be changed to desired status.");
+				return Result.Failure<string>("Trip Request Status cannot be changed to desired status.");
 			}
 
 			requestedTrip.Modify(TripRequestStatus.CUSTOMER_CANCELED);
@@ -59,7 +59,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 
 				if (result.IsFailure)
 				{
-					return Result.Failure<long>(result.Error);
+					return Result.Failure<string>(result.Error);
 				}
 
 				messageBus.PublishAsync(requestedTrip.GetTripRequestDto());
@@ -70,7 +70,7 @@ namespace RideSharing.Application.TripRequest.Commands.CancelTripRequest
 			}
 			catch (Exception ex)
 			{
-				return Result.Failure<long>($"Failed with error: {ex.Message}");
+				return Result.Failure<string>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

@@ -22,9 +22,9 @@ namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 		/// <param name="model"></param>
 		/// <returns></returns>
 		[HttpPut("{tripRequestId}/cancel-by-customer")]
-		public async Task<ActionResult> RequestRide(long tripRequestId)
+		public async Task<ActionResult> RequestRide(string tripRequestId)
 		{
-			var customerId = new long(); // TODO:- get customerId from httpContextAccessor!
+			var customerId = string.Empty; // TODO:- get customerId from httpContextAccessor!
 
 			var model = new CancelTripRequestCommandDto(customerId, tripRequestId);
 

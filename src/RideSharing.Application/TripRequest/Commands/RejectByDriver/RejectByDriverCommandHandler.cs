@@ -11,16 +11,16 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripHandlerEventBus,
 		IRideProcessingService rideProcessingService)
-		: IRequestHandler<RejectByDriverCommandDto, Result<long>>
+		: IRequestHandler<RejectByDriverCommandDto, Result<string>>
 	{
-		public async Task<Result<long>> Handle(RejectByDriverCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(RejectByDriverCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check driver exists
 			var driverInDB = await unitOfWork.DriverRepository.FindByIdAsync(request.DriverId);
 
 			if (driverInDB == null)
 			{
-				return Result.Failure<long>("Driver is not found.");
+				return Result.Failure<string>("Driver is not found.");
 			}
 
 			// Step 2: check trip request exists
@@ -28,13 +28,13 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 
 			if (activeTripRequest == null)
 			{
-				return Result.Failure<long>("Driver has no active trip.");
+				return Result.Failure<string>("Driver has no active trip.");
 			}
 
 			// ** Security check !
 			if (activeTripRequest.Id != request.TripRequestId)
 			{
-				return Result.Failure<long>("Active trip request for driver does not match !!");
+				return Result.Failure<string>("Active trip request for driver does not match !!");
 			}
 
 			// Step 3: prepare entity
@@ -42,7 +42,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 
 			if (!transitionValid)
 			{
-				return Result.Failure<long>("TripRequest Status cannot be changed to desired status.");
+				return Result.Failure<string>("TripRequest Status cannot be changed to desired status.");
 			}
 
 			activeTripRequest.Modify(TripRequestStatus.DRIVER_REJECTED_CUSTOMER);
@@ -60,7 +60,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 
 				if (result.IsFailure)
 				{
-					return Result.Failure<long>(result.Error);
+					return Result.Failure<string>(result.Error);
 				}
 
 				tripHandlerEventBus.PublishAsync(activeTripRequest.GetTripRequestDto());
@@ -71,7 +71,7 @@ namespace RideSharing.Application.TripRequest.Commands.RejectByDriver
 			}
 			catch (Exception ex)
 			{
-				return Result.Failure<long>($"Failed with error: {ex.Message}");
+				return Result.Failure<string>($"Failed with error: {ex.Message}");
 			}
 		}
 	}

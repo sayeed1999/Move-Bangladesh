@@ -44,7 +44,7 @@ namespace RideSharing.Infrastructure.Repositories
 
 		#endregion
 
-		public virtual async Task<T> FindByIdAsync(long id)
+		public virtual async Task<T> FindByIdAsync(string id)
 		{
 			return await _dbSet.FindAsync(id);
 		}

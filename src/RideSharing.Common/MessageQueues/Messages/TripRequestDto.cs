@@ -5,14 +5,14 @@ namespace RideSharing.Common.MessageQueues.Messages
 	public class TripRequestDto : Event
 	{
 		public TripRequestDto(
-			long Id,
-			long CustomerId,
+			string Id,
+			string CustomerId,
 			string Source,
 			string Destination,
 			string CabType,
 			string PaymentMethod,
 			string Status,
-			long? DriverId = null)
+			string? DriverId = null)
 		{
 			this.Id = Id;
 			this.CustomerId = CustomerId;
@@ -24,9 +24,9 @@ namespace RideSharing.Common.MessageQueues.Messages
 			this.DriverId = DriverId;
 		}
 
-		public long Id { get; }
-		public long CustomerId { get; }
-		public long? DriverId { get; }
+		public string Id { get; }
+		public string CustomerId { get; }
+		public string? DriverId { get; }
 		public string Source { get; }
 		public string Destination { get; }
 		public string CabType { get; }

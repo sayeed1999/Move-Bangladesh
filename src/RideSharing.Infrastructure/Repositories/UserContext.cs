@@ -11,20 +11,20 @@ namespace RideSharing.Infrastructure.Repositories
 			httpContextAccessor.HttpContext?.User.Identity?.IsAuthenticated
 			?? throw new Exception("User context is missing!");
 
-		public long UserId =>
+		public string UserId =>
 			httpContextAccessor.HttpContext?.User.GetUserId()
 			?? throw new Exception("User context is missing!");
 	}
 
 	internal static class ClaimsPrincipalExtensions
 	{
-		public static long GetUserId(this ClaimsPrincipal? principal)
+		public static string GetUserId(this ClaimsPrincipal? principal)
 		{
 			string? userId = principal?.FindFirstValue(ClaimTypes.NameIdentifier);
 
-			return long.TryParse(userId, out long parsedUserId) ?
-				parsedUserId :
-				throw new ApplicationException("User id is unavailable");
+			return string.IsNullOrWhiteSpace(userId)
+				? userId
+				: throw new ApplicationException("User id is unavailable");
 		}
 	}
 }

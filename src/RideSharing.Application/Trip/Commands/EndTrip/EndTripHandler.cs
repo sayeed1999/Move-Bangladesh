@@ -10,24 +10,24 @@ public class EndTripHandler(
     ITripEventMessageBus tripMessageBus,
     IRideProcessingService rideProcessingService
 )
-    : IRequestHandler<EndTripDto, Result<long>>
+    : IRequestHandler<EndTripDto, Result<string>>
 {
-    public async Task<Result<long>> Handle(EndTripDto model, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(EndTripDto model, CancellationToken cancellationToken)
     {
         var tripInDB = await unitOfWork.TripRepository.HasOngoingTrip(
-            model.TripId, 
+            model.TripId,
             model.DriverId);
 
         if (tripInDB == null)
         {
-            return Result.Failure<long>("Ongoing Trip is not found.");
+            return Result.Failure<string>("Ongoing Trip is not found.");
         }
 
         bool transitionValid = await rideProcessingService.IsTripTransitionValid(tripInDB.TripStatus, TripStatus.WAITING_FOR_PAYMENT);
 
         if (!transitionValid)
         {
-            return Result.Failure<long>("Trip Status cannot be changed to desired status.");
+            return Result.Failure<string>("Trip Status cannot be changed to desired status.");
         }
 
         tripInDB.Modify(TripStatus.WAITING_FOR_PAYMENT);
@@ -40,7 +40,7 @@ public class EndTripHandler(
 
             if (result.IsFailure)
             {
-                return Result.Failure<long>(result.Error);
+                return Result.Failure<string>(result.Error);
             }
 
             tripMessageBus.PublishAsync(tripInDB.GetTripDto());
@@ -49,7 +49,7 @@ public class EndTripHandler(
         }
         catch (Exception ex)
         {
-            return Result.Failure<long>($"Failed with error: {ex.Message}");
+            return Result.Failure<string>($"Failed with error: {ex.Message}");
         }
     }
 }

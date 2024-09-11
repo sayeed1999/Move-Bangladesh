@@ -6,9 +6,9 @@ namespace RideSharing.Domain.Entities;
 
 public class TripRequestEntity : BaseEntity
 {
-	public long CustomerId { get; set; }
+	public required string CustomerId { get; set; }
 	public virtual CustomerEntity? Customer { get; set; }
-	public long? DriverId { get; set; }
+	public string? DriverId { get; set; }
 	public virtual DriverEntity? Driver { get; set; }
 	public required Point Source { get; set; }
 	public required Point Destination { get; set; }
@@ -17,7 +17,7 @@ public class TripRequestEntity : BaseEntity
 	public TripRequestStatus Status { get; set; }
 	public virtual ICollection<TripRequestLogEntity>? TripRequestLogs { get; private set; }
 
-	public Result Modify(TripRequestStatus status, long? driverId = null)
+	public Result Modify(TripRequestStatus status, string? driverId = null)
 	{
 		if (driverId is not null)
 		{

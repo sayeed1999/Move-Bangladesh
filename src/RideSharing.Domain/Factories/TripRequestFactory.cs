@@ -17,7 +17,7 @@ namespace RideSharing.Domain.Factories
 		/// <param name="paymentMethod"></param>
 		/// <returns></returns>
 		public static Result<TripRequestEntity> Create(
-		long customerId,
+		string customerId,
 		Tuple<double,
 		double> source,
 		Tuple<double, double> destination,

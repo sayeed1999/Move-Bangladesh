@@ -3,7 +3,7 @@
 public class CabEntity : BaseEntity
 {
 	public required string RegNo { get; set; }
-	public long DriverId { get; set; }
+	public required string DriverId { get; set; }
 	public virtual DriverEntity? Driver { get; set; }
 	public CabType CabType { get; set; }
 }

@@ -22,13 +22,13 @@ namespace RideSharing.Domain.Entities
 			CabType = trip.CabType;
 		}
 
-		public long TripId { get; set; }
+		public string TripId { get; set; }
 		public virtual TripEntity Trip { get; set; }
-		public long TripRequestId { get; set; }
+		public string TripRequestId { get; set; }
 		public virtual TripRequestEntity TripRequest { get; set; }
-		public long CustomerId { get; set; }
+		public string CustomerId { get; set; }
 		public virtual CustomerEntity Customer { get; set; }
-		public long DriverId { get; set; }
+		public string DriverId { get; set; }
 		public virtual DriverEntity Driver { get; set; }
 		public PaymentMethod PaymentMethod { get; set; }
 		public TripStatus TripStatus { get; set; }

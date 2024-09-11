@@ -4,7 +4,7 @@ namespace RideSharing.Domain.Factories
 {
 	public class PaymentFactory
 	{
-		public static PaymentEntity Create(long Id, long TripId, PaymentMethod Method, PaymentStatus Status, long Amount)
+		public static PaymentEntity Create(string Id, string TripId, PaymentMethod Method, PaymentStatus Status, int Amount)
 		{
 			PaymentEntity payment = new()
 			{

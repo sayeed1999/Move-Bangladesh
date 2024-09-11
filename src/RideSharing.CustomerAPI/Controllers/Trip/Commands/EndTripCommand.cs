@@ -7,17 +7,17 @@ namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
 	[Route("api/external/trips")]
 	[ApiController]
 	public class EndTripCommand(
-        IMediator mediator) : ControllerBase
+		IMediator mediator) : ControllerBase
 	{
-        /// <summary>
-        /// Call this endpoint from driver's end when destination has been reached.
-        /// </summary>
-        /// <param name="tripId"></param>
-        /// <returns></returns>
+		/// <summary>
+		/// Call this endpoint from driver's end when destination has been reached.
+		/// </summary>
+		/// <param name="tripId"></param>
+		/// <returns></returns>
 		[HttpPut("{tripId}/end-trip")]
-		public async Task<ActionResult> Handle(long tripId)
+		public async Task<ActionResult> Handle(string tripId)
 		{
-			var driverId = new long(); // TODO:- get driverId from httpContextAccessor!
+			var driverId = string.Empty; // TODO:- get driverId from httpContextAccessor!
 
 			var model = new EndTripDto(driverId, tripId);
 

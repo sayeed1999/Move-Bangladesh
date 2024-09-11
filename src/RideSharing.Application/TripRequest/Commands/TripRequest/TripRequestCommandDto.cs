@@ -5,12 +5,12 @@ using RideSharing.Domain.Entities;
 namespace RideSharing.Application.TripRequest.Commands.TripRequest
 {
 	public record struct TripRequestCommandDto(
-		long CustomerId,
+		string CustomerId,
 		Tuple<double, double> Source,
 		Tuple<double, double> Destination,
 		CabType CabType,
 		PaymentMethod PaymentMethod)
-		: IRequest<Result<long>>
+		: IRequest<Result<string>>
 	{
 
 	}
