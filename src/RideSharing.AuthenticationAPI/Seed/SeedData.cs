@@ -6,22 +6,23 @@ namespace RideSharing.AuthenticationAPI.Seed;
 
 public class SeedData
 {
-    public static async Task Initialize(IServiceProvider serviceProvider)
-    {
-        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+	public static async Task Initialize(IServiceProvider serviceProvider)
+	{
+		var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-        var roles = new[] 
-        { 
-            ApplicationRole.Driver,
-            ApplicationRole.Customer,
-        };
+		var roles = new[]
+		{
+			ApplicationRole.Admin,
+			ApplicationRole.Driver,
+			ApplicationRole.Customer,
+		};
 
-        foreach (var role in roles)
-        {
-            if (!await roleManager.RoleExistsAsync(role))
-            {
-                await roleManager.CreateAsync(new IdentityRole(role));
-            }
-        }
-    }
+		foreach (var role in roles)
+		{
+			if (!await roleManager.RoleExistsAsync(role))
+			{
+				await roleManager.CreateAsync(new IdentityRole(role));
+			}
+		}
+	}
 }
