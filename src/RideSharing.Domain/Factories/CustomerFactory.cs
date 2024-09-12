@@ -7,14 +7,14 @@ namespace RideSharing.Domain.Factories
 {
 	public class CustomerFactory
 	{
-		public static Result<CustomerEntity> Create(string id, string userId, string name, Email email, string phone, string location)
+		public static Result<CustomerEntity> Create(string id, string userId, string name, Email email, string phoneNumber, string location)
 		{
 			CustomerEntity customer = new CustomerEntity()
 			{
 				Id = id,
 				Name = name,
 				Email = email.Value,
-				Phone = phone,
+				PhoneNumber = phoneNumber,
 				Location = location,
 			};
 

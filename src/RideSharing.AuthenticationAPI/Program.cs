@@ -5,6 +5,7 @@ using RideSharing.AuthenticationAPI.Seed;
 using RideSharing.AuthenticationAPI.Services;
 using RideSharing.Common.Configurations;
 using RideSharing.Common.RegisterServices;
+using RideSharing.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<TokenService>();
 
 builder.Services
-	.AddIdentityApiEndpoints<IdentityUser>()
+	.AddIdentityApiEndpoints<User>()
 	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -64,7 +65,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("CorsPolicy");
 #endif
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<User>();
 
 app.MapGet("/", () => "RideSharing.AuthenticationAPI is running!");
 

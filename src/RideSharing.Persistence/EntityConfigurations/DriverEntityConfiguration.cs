@@ -28,7 +28,7 @@ namespace RideSharing.Persistence.EntityConfigurations
 				.HasMaxLength(30);
 
 			builder
-				.Property(x => x.Phone)
+				.Property(x => x.PhoneNumber)
 				.IsRequired()
 				.HasMaxLength(30);
 
@@ -40,7 +40,7 @@ namespace RideSharing.Persistence.EntityConfigurations
 				.IsUnique();
 
 			builder
-				.HasIndex(x => x.Phone)
+				.HasIndex(x => x.PhoneNumber)
 				.IsUnique();
 		}
 	}

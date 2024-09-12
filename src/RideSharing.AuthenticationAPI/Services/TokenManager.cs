@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RideSharing.AuthenticationAPI.Models;
 using RideSharing.Common.Configurations;
+using RideSharing.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,9 +12,9 @@ namespace RideSharing.AuthenticationAPI.Services;
 
 public class TokenService(
 	IOptions<Jwt> jwtOptions,
-	UserManager<IdentityUser> userManager)
+	UserManager<User> userManager)
 {
-	public async Task<TokenResponse> GenerateJwtTokenAsync(IdentityUser user)
+	public async Task<TokenResponse> GenerateJwtTokenAsync(User user)
 	{
 		var claims = new[]
 		{

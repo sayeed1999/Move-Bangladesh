@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RideSharing.AuthenticationAPI.Models;
 using RideSharing.AuthenticationAPI.Services;
 using RideSharing.Common.Constants;
+using RideSharing.Domain.Entities;
 
 // TODO:- do r&d on how to properly wrap the operations in a transaction
 
@@ -11,8 +12,8 @@ namespace RideSharing.AuthenticationAPI.Controllers
 {
 	[ApiController]
 	public class AuthController(
-		SignInManager<IdentityUser> signInManager,
-		UserManager<IdentityUser> userManager,
+		SignInManager<User> signInManager,
+		UserManager<User> userManager,
 		RoleManager<IdentityRole> roleManager,
 		TokenService tokenService
 	) : ControllerBase
@@ -26,11 +27,12 @@ namespace RideSharing.AuthenticationAPI.Controllers
 				return BadRequest(ModelState);
 			}
 
-			var user = new IdentityUser
+			var user = new User
 			{
+				Name = model.Name,
 				UserName = model.Email,
 				Email = model.Email,
-				PhoneNumber = model.Phone,
+				PhoneNumber = model.PhoneNumber,
 			};
 			var result = await userManager.CreateAsync(user, model.Password);
 
