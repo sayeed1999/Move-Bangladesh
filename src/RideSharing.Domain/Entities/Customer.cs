@@ -1,6 +1,6 @@
 ﻿namespace RideSharing.Domain.Entities;
 
-public class Customer : User
+public class Customer : AppUser
 {
 	public Customer()
 	{
@@ -9,6 +9,8 @@ public class Customer : User
 		Trips = new HashSet<Trip>();
 	}
 
+	public string UserId { get; set; }
+	public virtual User? User { get; set; }
 	public string? HomeAddress { get; set; }
 	public string? WorkAddress { get; set; }
 	public virtual ICollection<CustomerRating> CustomerRatings { get; private set; }

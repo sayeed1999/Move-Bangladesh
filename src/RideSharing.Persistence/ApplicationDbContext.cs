@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RideSharing.Domain.Entities;
 using RideSharing.Persistence.EntityConfigurations;
 
 namespace RideSharing.Persistence;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<User>
 {
 	private readonly IConfiguration configuration;
 
@@ -41,7 +42,7 @@ public class ApplicationDbContext : DbContext
 
 		// TODO:- if postgres is not being used, this method should not get called. Try Open-Closed principle!
 		// To make sure that the PostGIS extension is installed in your database:
-		builder.HasPostgresExtension("postgis");
+		// builder.HasPostgresExtension("postgis");
 
 		// restrict all cascade delete
 		foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
