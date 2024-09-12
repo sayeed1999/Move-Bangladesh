@@ -10,13 +10,13 @@ namespace RideSharing.CustomerAPI;
 
 public static class DependencyInjection
 {
-	public static IServiceCollection RegisterInfrastructureToApplication(this IServiceCollection services)
+	public static IServiceCollection RegisterPersistenceToApplication(this IServiceCollection services)
 		=> services
 			.AddScoped<IHttpContextAccessor, HttpContextAccessor>()
 			.AddScoped<IUserContext, UserContext>()
 			.RegisterDatabaseRepositories()
 			.RegisterProcessor()
-			.RegisterPayment()
+			// .RegisterPayment()
 			.RegisterEventBuses();
 
 	public static IServiceCollection RegisterDatabaseRepositories(this IServiceCollection services)

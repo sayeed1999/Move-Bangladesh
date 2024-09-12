@@ -24,8 +24,8 @@ public static class Startup
 			.RegisterSwagger(nameof(CustomerAPI))
 			.ConfigureAuthorizationServices(configuration, environment)
 			.RegisterApplicationLayer()
-			.RegisterInfrastructureLayer(configuration)
-			.RegisterInfrastructureToApplication();
+			.RegisterPersistenceLayer(configuration)
+			.RegisterPersistenceToApplication();
 
 		return services;
 	}

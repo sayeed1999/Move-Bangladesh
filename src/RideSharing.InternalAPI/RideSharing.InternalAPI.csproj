@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RideSharing.Common\RideSharing.Common.csproj" />
-    <ProjectReference Include="..\RideSharing.Infrastructure\RideSharing.Infrastructure.csproj" />
+    <ProjectReference Include="..\RideSharing.Persistence\RideSharing.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

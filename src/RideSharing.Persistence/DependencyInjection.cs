@@ -14,11 +14,11 @@ public static class DependencyInjection
 	/// <param name="services"></param>
 	/// <param name="configuration"></param>
 	/// <returns></returns>
-	public static IServiceCollection RegisterInfrastructureLayer(this IServiceCollection services, IConfiguration configuration)
+	public static IServiceCollection RegisterPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
 		=> services
 			.RegisterPosgreSQL(configuration)
-			.RegisterDbContext()
-			.RegisterDapperContext();
+			.RegisterDbContext();
+	// .RegisterDapperContext();
 
 	private static IServiceCollection RegisterPosgreSQL(this IServiceCollection services, IConfiguration configuration)
 	{

@@ -3,7 +3,7 @@ using RideSharing.Common.Constants;
 using RideSharing.Common.Extensions;
 using RideSharing.Common.Filters;
 using RideSharing.Common.RegisterServices;
-using RideSharing.Infrastructure;
+using RideSharing.Persistence;
 using RideSharing.Persistence.Repositories;
 using RideSharing.Persistence.UnitOfWork;
 
@@ -25,7 +25,7 @@ public static class DependencyInjection
 			.ConfigureApiBehavior()
 			.RegisterSwagger(nameof(InternalAPI))
 			.ConfigureAuthorizationServices(configuration, environment)
-			.RegisterInfrastructureLayer(configuration)
+			.RegisterPersistenceLayer(configuration)
 			.RegisterServices();
 
 		return services;
