@@ -1,81 +1,41 @@
-using Microsoft.EntityFrameworkCore;
-using RideSharing.Common.Configurations;
-using RideSharing.Common.Middlewares;
+using Microsoft.AspNetCore;
 using RideSharing.Persistence;
-using RideSharing.PushService.SignalR;
-using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace RideSharing.CustomerAPI;
 
 public class Program
 {
-	public static void Main(string[] args)
+	public static async Task Main(string[] args)
 	{
 		var builder = WebApplication.CreateBuilder(args);
 
-		// Register prefixed only environment variables.
-		builder.Configuration.AddEnvironmentVariables("API__");
-
-		// Override JsonSerializer settings.
-		builder.Services.AddControllers()
-			.AddJsonOptions(options =>
-			{
-				options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-				options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
-			});
-
-		builder.Services.AddCors(options =>
-		{
-			var clientAppSettings = builder.Configuration.GetSection(nameof(ClientApplication)).Get<ClientApplication>();
-
-			ArgumentNullException.ThrowIfNull(clientAppSettings, nameof(clientAppSettings));
-
-			options.AddPolicy("CorsPolicy",
-				builder => builder
-					.WithOrigins(clientAppSettings.AllowedOrigins)
-					.WithMethods("GET", "POST", "PATCH", "DELETE")
-					.AllowAnyHeader());
-		});
+		builder.Configuration.AddEnvironmentVariables("API__") // Register prefixed only environment variables
+			.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+			.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+			.AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true);
 
 		builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 
 		var app = builder.Build();
 
-		// Apply migration on program start
 		using (var scope = app.Services.CreateScope())
 		{
-			using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
+			var services = scope.ServiceProvider;
+
+			try
 			{
-				context?.Database.Migrate();
+				var identityContext = services.GetRequiredService<ApplicationDbContext>();
+				identityContext.Database.Migrate();
+			}
+			catch (Exception ex)
+			{
+				var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+				logger.LogError(ex, "An error occurred while migrating or initializing the database.");
 			}
 		}
 
-		// Configure the HTTP request pipeline.
-		if (app.Environment.IsDevelopment())
-		{
-			app.UseSwagger();
-			app.UseSwaggerUI();
-		}
-
-		// Note: - only allow cors from code, if debugging, otherwise,
-		// when nginx write cors rules, it creates duplicated cors issue!
-#if DEBUG
-		app.UseCors("CorsPolicy");
-#endif
-
-		// Custom middlewares.
-		app.UseMiddleware<ExceptionHandlingMiddleware>();
-		app.UseMiddleware<CustomExceptionHandlingMiddleware>();
-
-		app.UseHttpsRedirection();
-		app.UseAuthentication();
-		app.UseAuthorization();
-
-		app.MapControllers();
-
-		app.MapGet("/", () => "RideSharing.CustomerAPI is running.");
-
-		app.MapHub<StatusHub>(nameof(StatusHub));
+		app.Configure(builder.Environment);
 
 		app.Run();
 	}
