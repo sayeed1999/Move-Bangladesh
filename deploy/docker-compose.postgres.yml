@@ -1,7 +1,7 @@
 services:
   # postgres database service
   postgres:
-    image: 'postgis/postgis'
+    image: 'postgres:16'
     container_name: postgres
     ports:
       - "5432:5432" # should be hidden in prod environment
