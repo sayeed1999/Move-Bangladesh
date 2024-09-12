@@ -27,14 +27,21 @@ namespace RideSharing.Persistence.EntityConfigurations
 				.IsRequired()
 				.HasMaxLength(30);
 
+			builder
+				.Property(x => x.SourceX)
+				.IsRequired();
 
 			builder
-				.Property(x => x.Source)
-				.HasColumnType("geometry (point)");
+				.Property(x => x.SourceY)
+				.IsRequired();
 
 			builder
-				.Property(x => x.Destination)
-				.HasColumnType("geometry (point)");
+				.Property(x => x.DestinationX)
+				.IsRequired();
+
+			builder
+				.Property(x => x.DestinationY)
+				.IsRequired();
 
 			builder
 				.HasMany(x => x.TripLogs)

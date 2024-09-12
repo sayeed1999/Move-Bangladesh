@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using RideSharing.Application.Abstractions;
 
 namespace RideSharing.Persistence;
 
@@ -21,14 +20,8 @@ public static class DependencyInjection
 
 	private static IServiceCollection RegisterPosgreSQL(this IServiceCollection services, IConfiguration configuration)
 	{
-		// Call UseNetTopologySuite() when building your data source:
-		var dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString("DefaultConnection"));
-		dataSourceBuilder.UseNetTopologySuite();
-		var dataSource = dataSourceBuilder.Build();
-
-		// Then, when configuring EF Core with UseNpgsql(), call UseNetTopologySuite() there as well:
 		services.AddDbContext<ApplicationDbContext>(options =>
-			options.UseNpgsql(dataSource, o => o.UseNetTopologySuite()));
+			options.UseNpgsql(configuration.GetConnectionString("DefaultConnecton")));
 
 		return services;
 	}

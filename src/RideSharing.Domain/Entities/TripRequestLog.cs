@@ -1,4 +1,4 @@
-﻿using NetTopologySuite.Geometries;
+﻿using System.Drawing;
 
 namespace RideSharing.Domain.Entities
 {
@@ -10,10 +10,9 @@ namespace RideSharing.Domain.Entities
 		}
 		public TripRequestLog(TripRequest tripRequest)
 		{
+			// TODO:- do with some mapper. not manual code
 			TripRequestId = tripRequest.Id;
 			CustomerId = tripRequest.CustomerId;
-			Source = tripRequest.Source;
-			Destination = tripRequest.Destination;
 			CabType = tripRequest.CabType;
 			PaymentMethod = tripRequest.PaymentMethod;
 			Status = tripRequest.Status;

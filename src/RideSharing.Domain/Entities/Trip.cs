@@ -1,21 +1,37 @@
-﻿using CSharpFunctionalExtensions;
-using NetTopologySuite.Geometries;
+﻿using System.Data.Common;
+using CSharpFunctionalExtensions;
 using RideSharing.Common.MessageQueues.Messages;
 
 namespace RideSharing.Domain.Entities;
 
 public class Trip : BaseEntity
 {
-	public required string TripRequestId { get; set; }
+	public Trip(TripRequest tripRequest, string driverId)
+	{
+		TripRequestId = tripRequest.Id;
+		CustomerId = tripRequest.CustomerId;
+		DriverId = driverId;
+		PaymentMethod = tripRequest.PaymentMethod;
+		TripStatus = TripStatus.ONGOING;
+		SourceX = tripRequest.SourceX;
+		SourceY = tripRequest.SourceY;
+		DestinationX = tripRequest.DestinationX;
+		DestinationY = tripRequest.DestinationY;
+		CabType = tripRequest.CabType;
+	}
+
+	public string TripRequestId { get; set; }
 	public virtual TripRequest? TripRequest { get; set; }
-	public required string CustomerId { get; set; }
+	public string CustomerId { get; set; }
 	public virtual Customer? Customer { get; set; }
-	public required string DriverId { get; set; }
+	public string DriverId { get; set; }
 	public virtual Driver? Driver { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
 	public TripStatus TripStatus { get; set; }
-	public required Point Source { get; set; }
-	public required Point Destination { get; set; }
+	public float SourceX { get; set; }
+	public float SourceY { get; set; }
+	public float DestinationX { get; set; }
+	public float DestinationY { get; set; }
 	public CabType CabType { get; set; }
 	public virtual ICollection<Payment>? Payments { get; private set; }
 	public virtual ICollection<TripLog>? TripLogs { get; private set; }
@@ -37,8 +53,8 @@ public class Trip : BaseEntity
 			DriverId,
 			nameof(PaymentMethod),
 			nameof(TripStatus),
-			Source.ToText(),
-			Destination.ToText(),
+			"",
+			"",
 			nameof(CabType));
 	}
 }

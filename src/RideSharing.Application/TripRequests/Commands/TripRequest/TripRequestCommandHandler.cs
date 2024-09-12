@@ -3,7 +3,6 @@ using MediatR;
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Domain.Entities;
-using RideSharing.Domain.Factories;
 
 namespace RideSharing.Application.TripRequests.Commands.TripRequests
 {
@@ -39,12 +38,16 @@ namespace RideSharing.Application.TripRequests.Commands.TripRequests
 			}
 
 			// Step 4: create trip request entity
-			Result<TripRequest> tripRequest = TripRequestFactory.Create(
-				model.CustomerId,
-				model.Source,
-				model.Destination,
-				model.CabType,
-				model.PaymentMethod);
+			Result<TripRequest> tripRequest = new TripRequest
+			{
+				CustomerId = model.CustomerId,
+				SourceX = model.Source.Item1,
+				SourceY = model.Source.Item2,
+				DestinationX = model.Destination.Item1,
+				DestinationY = model.Destination.Item2,
+				CabType = model.CabType,
+				PaymentMethod = model.PaymentMethod,
+			};
 
 			if (tripRequest.IsFailure)
 			{

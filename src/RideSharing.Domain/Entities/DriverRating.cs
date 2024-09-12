@@ -2,8 +2,4 @@
 
 public class DriverRating : Rating
 {
-	public DriverRating()
-	{
-
-	}
 }

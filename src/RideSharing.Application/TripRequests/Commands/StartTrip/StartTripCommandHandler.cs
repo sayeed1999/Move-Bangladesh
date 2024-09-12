@@ -3,8 +3,6 @@ using MediatR;
 using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Domain.Entities;
-using RideSharing.Domain.Factories;
-using RideSharing.Processor.TransitionChecker;
 
 namespace RideSharing.Application.TripRequests.Commands.StartTrip
 {
@@ -58,7 +56,7 @@ namespace RideSharing.Application.TripRequests.Commands.StartTrip
 
 			// Step 5: create trip entity
 
-			var newTripResult = TripFactory.Create(tripRequestInDB, request.DriverId);
+			var newTripResult = new Trip(tripRequestInDB, request.DriverId);
 
 			// Step 4: perform database operations
 
@@ -68,7 +66,7 @@ namespace RideSharing.Application.TripRequests.Commands.StartTrip
 
 				unitOfWork.TripRequestRepository.Update(tripRequestInDB);
 
-				await unitOfWork.TripRepository.CreateAsync(newTripResult.Value);
+				await unitOfWork.TripRepository.CreateAsync(newTripResult);
 
 				// call UoW to save the changes in db.
 				var result = await unitOfWork.SaveChangesAsync();
@@ -82,7 +80,7 @@ namespace RideSharing.Application.TripRequests.Commands.StartTrip
 
 				// Last Step: return result
 
-				return Result.Success(newTripResult.Value.Id);
+				return Result.Success(newTripResult.Id);
 			}
 			catch (Exception ex)
 			{

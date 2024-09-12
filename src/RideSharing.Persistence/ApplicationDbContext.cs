@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RideSharing.Domain.Entities;
 using RideSharing.Persistence.EntityConfigurations;
 
@@ -6,8 +7,13 @@ namespace RideSharing.Persistence;
 
 public class ApplicationDbContext : DbContext
 {
-	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+	private readonly IConfiguration configuration;
+
+	public ApplicationDbContext(
+		DbContextOptions<ApplicationDbContext> options,
+		IConfiguration configuration) : base(options)
 	{
+		this.configuration = configuration;
 	}
 
 	#region dbsets
@@ -27,6 +33,14 @@ public class ApplicationDbContext : DbContext
 	// {
 	// 	optionsBuilder.UseSqlServer(_connectionString);
 	// }
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+		if (!optionsBuilder.IsConfigured)
+		{
+			optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection")); // Or whatever DB provider you're using
+		}
+	}
 
 	protected override void OnModelCreating(ModelBuilder builder)
 	{

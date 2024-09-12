@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RideSharing.Common\RideSharing.Common.csproj" />
     <ProjectReference Include="..\RideSharing.Domain\RideSharing.Domain.csproj" />
+    <ProjectReference Include="..\RideSharing.Persistence\RideSharing.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

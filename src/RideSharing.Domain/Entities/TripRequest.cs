@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using NetTopologySuite.Geometries;
 using RideSharing.Common.MessageQueues.Messages;
+using System.Drawing;
 
 namespace RideSharing.Domain.Entities;
 
@@ -10,8 +10,10 @@ public class TripRequest : BaseEntity
 	public virtual Customer? Customer { get; set; }
 	public string? DriverId { get; set; }
 	public virtual Driver? Driver { get; set; }
-	public required Point Source { get; set; }
-	public required Point Destination { get; set; }
+	public float SourceX { get; set; }
+	public float SourceY { get; set; }
+	public float DestinationX { get; set; }
+	public float DestinationY { get; set; }
 	public CabType CabType { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
 	public TripRequestStatus Status { get; set; }
@@ -34,8 +36,8 @@ public class TripRequest : BaseEntity
 		var dto = new TripRequestDto(
 			Id,
 			CustomerId,
-			Source.ToText(),
-			Destination.ToText(),
+			"",
+			"",
 			nameof(CabType),
 			nameof(PaymentMethod),
 			nameof(Status),
