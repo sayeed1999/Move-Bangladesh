@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace RideSharing.Payment;
+namespace RideSharing.PaymentService;
 
 public static class DependencyInjection
 {

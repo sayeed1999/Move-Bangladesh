@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.Trips.Commands.EndTrip;
 
-namespace RideSharing.CustomerAPI.Controllers.Trip.Commands
+namespace RideSharing.CustomerAPI.Controllers.Trips.Commands
 {
 	[Route("api/external/trips")]
 	[ApiController]

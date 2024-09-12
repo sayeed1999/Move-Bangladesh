@@ -1,4 +1,4 @@
-﻿namespace RideSharing.Payment;
+﻿namespace RideSharing.PaymentService;
 
 public interface IPaymentFactory
 {

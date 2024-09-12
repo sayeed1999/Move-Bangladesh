@@ -3,7 +3,7 @@ using RideSharing.Application.Abstractions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RideSharing.InternalAPI.Controllers
+namespace RideSharing.CustomerAPI.Controllers
 {
 	[Route("api/internal/v1/[controller]")]
 	[ApiController]

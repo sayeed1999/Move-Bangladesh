@@ -4,7 +4,7 @@ using RideSharing.Infrastructure.EventBus;
 using RideSharing.Persistence.Repositories;
 using RideSharing.Persistence.UnitOfWork;
 using RideSharing.Processor;
-using RideSharing.Payment;
+using RideSharing.PaymentService;
 
 namespace RideSharing.CustomerAPI;
 

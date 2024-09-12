@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.TripRequests.Commands.TripRequests;
 
-namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
+namespace RideSharing.CustomerAPI.Controllers.TripRequests.Commands
 {
 	[Route("api/external/trip-requests")]
 	[ApiController]

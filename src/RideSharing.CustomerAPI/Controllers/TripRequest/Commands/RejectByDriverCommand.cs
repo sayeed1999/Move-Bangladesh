@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.TripRequests.Commands.RejectByDriver;
 using System.ComponentModel.DataAnnotations;
 
-namespace RideSharing.DriverAPI.Controllers.TripRequest.Commands
+namespace RideSharing.DriverAPI.Controllers.TripRequests.Commands
 {
 	[Route("api/external/trip-requests")]
 	[ApiController]
