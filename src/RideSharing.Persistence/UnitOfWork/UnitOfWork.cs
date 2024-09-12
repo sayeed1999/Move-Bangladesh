@@ -16,9 +16,7 @@ namespace RideSharing.Persistence.UnitOfWork
 			IBaseRepository<DriverRating> driverRatingRepository,
 			IBaseRepository<Driver> driverRepository,
 			IBaseRepository<Payment> paymentRepository,
-			IBaseRepository<TripLog> tripLogRepository,
 			ITripRepository tripRepository,
-			IBaseRepository<TripRequestLog> tripRequestLogRepository,
 			ITripRequestRepository tripRequestRepository,
 			IUserContext userContext
 			)
@@ -32,9 +30,7 @@ namespace RideSharing.Persistence.UnitOfWork
 			DriverRatingRepository = driverRatingRepository;
 			DriverRepository = driverRepository;
 			PaymentRepository = paymentRepository;
-			TripLogRepository = tripLogRepository;
 			TripRepository = tripRepository;
-			TripRequestLogRepository = tripRequestLogRepository;
 			TripRequestRepository = tripRequestRepository;
 
 			UserContext = userContext;
@@ -46,9 +42,7 @@ namespace RideSharing.Persistence.UnitOfWork
 		public IBaseRepository<DriverRating> DriverRatingRepository { get; }
 		public IBaseRepository<Driver> DriverRepository { get; }
 		public IBaseRepository<Payment> PaymentRepository { get; }
-		public IBaseRepository<TripLog> TripLogRepository { get; }
 		public ITripRepository TripRepository { get; }
-		public IBaseRepository<TripRequestLog> TripRequestLogRepository { get; }
 		public ITripRequestRepository TripRequestRepository { get; }
 		public IUserContext UserContext { get; }
 

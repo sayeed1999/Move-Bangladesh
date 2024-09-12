@@ -1,11 +1,14 @@
-﻿using System.Data.Common;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using RideSharing.Common.MessageQueues.Messages;
 
 namespace RideSharing.Domain.Entities;
 
 public class Trip : BaseEntity
 {
+	public Trip()
+	{
+	}
+
 	public Trip(TripRequest tripRequest, string driverId)
 	{
 		TripRequestId = tripRequest.Id;
@@ -20,11 +23,11 @@ public class Trip : BaseEntity
 		CabType = tripRequest.CabType;
 	}
 
-	public string TripRequestId { get; set; }
+	public string TripRequestId { get; set; } = string.Empty;
 	public virtual TripRequest? TripRequest { get; set; }
-	public string CustomerId { get; set; }
+	public string CustomerId { get; set; } = string.Empty;
 	public virtual Customer? Customer { get; set; }
-	public string DriverId { get; set; }
+	public string DriverId { get; set; } = string.Empty;
 	public virtual Driver? Driver { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
 	public TripStatus TripStatus { get; set; }
@@ -34,8 +37,6 @@ public class Trip : BaseEntity
 	public float DestinationY { get; set; }
 	public CabType CabType { get; set; }
 	public virtual ICollection<Payment>? Payments { get; private set; }
-	public virtual ICollection<TripLog>? TripLogs { get; private set; }
-
 	public Result Modify(TripStatus status)
 	{
 		TripStatus = status;

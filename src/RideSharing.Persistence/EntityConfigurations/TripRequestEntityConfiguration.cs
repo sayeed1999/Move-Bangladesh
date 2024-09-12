@@ -38,10 +38,10 @@ namespace RideSharing.Persistence.EntityConfigurations
 				.Property(x => x.DestinationY)
 				.IsRequired();
 
-			builder
-				.HasMany(x => x.TripRequestLogs)
-				.WithOne(x => x.TripRequest)
-				.HasForeignKey(x => x.TripRequestId);
+			// builder
+			// 	.HasMany(x => x.TripRequestLogs)
+			// 	.WithOne(x => x.TripRequest)
+			// 	.HasForeignKey(x => x.TripRequestId);
 		}
 	}
 }

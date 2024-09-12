@@ -17,7 +17,6 @@ public class TripRequest : BaseEntity
 	public CabType CabType { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
 	public TripRequestStatus Status { get; set; }
-	public virtual ICollection<TripRequestLog>? TripRequestLogs { get; private set; }
 
 	public Result Modify(TripRequestStatus status, string? driverId = null)
 	{

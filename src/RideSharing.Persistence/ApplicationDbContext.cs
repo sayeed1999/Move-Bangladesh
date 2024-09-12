@@ -24,15 +24,8 @@ public class ApplicationDbContext : DbContext
 	public DbSet<Cab> Cabs { get; set; }
 	public DbSet<Payment> Payments { get; set; }
 	public DbSet<TripRequest> TripRequests { get; set; }
-	public DbSet<TripRequestLog> TripRequestLogs { get; set; }
 	public DbSet<Trip> Trips { get; set; }
-	public DbSet<TripLog> TripLogs { get; set; }
 	#endregion
-
-	// protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	// {
-	// 	optionsBuilder.UseSqlServer(_connectionString);
-	// }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{

@@ -13,9 +13,7 @@ namespace RideSharing.Application.Abstractions
 		IBaseRepository<DriverRating> DriverRatingRepository { get; }
 		IBaseRepository<Driver> DriverRepository { get; }
 		IBaseRepository<Payment> PaymentRepository { get; }
-		IBaseRepository<TripLog> TripLogRepository { get; }
 		ITripRepository TripRepository { get; } // inherited repository
-		IBaseRepository<TripRequestLog> TripRequestLogRepository { get; }
 		ITripRequestRepository TripRequestRepository { get; } // inherited repository
 		IUserContext UserContext { get; }
 

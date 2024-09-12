@@ -4,7 +4,7 @@ namespace RideSharing.Domain.Entities;
 
 public abstract class BaseEntity : AuditableEntity
 {
-	public string Id { get; set; } = String.Empty;
+	public string Id { get; set; } = string.Empty;
 
 	public void GeneratePrimaryKey()
 	{

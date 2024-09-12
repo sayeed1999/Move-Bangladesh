@@ -2,8 +2,12 @@
 
 public class Cab : BaseEntity
 {
-	public required string RegNo { get; set; }
-	public required string DriverId { get; set; }
+	public Cab()
+	{
+	}
+
+	public string RegNo { get; set; } = string.Empty;
+	public string DriverId { get; set; } = string.Empty;
 	public virtual Driver? Driver { get; set; }
 	public CabType CabType { get; set; }
 }

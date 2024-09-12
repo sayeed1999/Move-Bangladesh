@@ -2,7 +2,7 @@
 
 public class Payment : BaseEntity
 {
-	public required string TripId { get; set; }
+	public string TripId { get; set; } = string.Empty;
 	public virtual Trip? Trip { get; set; }
 	public PaymentMethod PaymentMethod { get; set; }
 	public PaymentStatus PaymentStatus { get; set; }

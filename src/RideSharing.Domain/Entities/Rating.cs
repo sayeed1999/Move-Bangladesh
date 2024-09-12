@@ -2,11 +2,11 @@
 
 public abstract class Rating : BaseEntity
 {
-	public required string CustomerId { get; set; }
+	public string CustomerId { get; set; } = string.Empty;
 	public virtual Customer? Customer { get; set; }
-	public required string DriverId { get; set; }
+	public string DriverId { get; set; } = string.Empty;
 	public virtual Driver? Driver { get; set; }
-	public required string TripId { get; set; }
+	public string TripId { get; set; } = string.Empty;
 	public virtual Trip? Trip { get; set; }
 	public short RatingValue { get; set; }
 	public string? Feedback { get; set; }
