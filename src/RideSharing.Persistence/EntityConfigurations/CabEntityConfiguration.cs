@@ -4,9 +4,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Persistence.EntityConfigurations
 {
-	internal class CabEntityConfiguration : IEntityTypeConfiguration<CabEntity>
+	internal class CabConfiguration : IEntityTypeConfiguration<Cab>
 	{
-		public void Configure(EntityTypeBuilder<CabEntity> builder)
+		public void Configure(EntityTypeBuilder<Cab> builder)
 		{
 			builder
 				.HasKey(x => x.Id);

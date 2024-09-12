@@ -10,15 +10,15 @@ namespace RideSharing.Persistence.UnitOfWork
 
 		public UnitOfWork(
 			ApplicationDbContext efcoreContext,
-			IBaseRepository<CabEntity> cabRepository,
-			IBaseRepository<CustomerRatingEntity> customerRatingRepository,
-			IBaseRepository<CustomerEntity> customerRepository,
-			IBaseRepository<DriverRatingEntity> driverRatingRepository,
-			IBaseRepository<DriverEntity> driverRepository,
-			IBaseRepository<PaymentEntity> paymentRepository,
-			IBaseRepository<TripLogEntity> tripLogRepository,
+			IBaseRepository<Cab> cabRepository,
+			IBaseRepository<CustomerRating> customerRatingRepository,
+			IBaseRepository<Customer> customerRepository,
+			IBaseRepository<DriverRating> driverRatingRepository,
+			IBaseRepository<Driver> driverRepository,
+			IBaseRepository<Payment> paymentRepository,
+			IBaseRepository<TripLog> tripLogRepository,
 			ITripRepository tripRepository,
-			IBaseRepository<TripRequestLogEntity> tripRequestLogRepository,
+			IBaseRepository<TripRequestLog> tripRequestLogRepository,
 			ITripRequestRepository tripRequestRepository,
 			IUserContext userContext
 			)
@@ -40,15 +40,15 @@ namespace RideSharing.Persistence.UnitOfWork
 			UserContext = userContext;
 		}
 
-		public IBaseRepository<CabEntity> CabRepository { get; }
-		public IBaseRepository<CustomerRatingEntity> CustomerRatingRepository { get; }
-		public IBaseRepository<CustomerEntity> CustomerRepository { get; }
-		public IBaseRepository<DriverRatingEntity> DriverRatingRepository { get; }
-		public IBaseRepository<DriverEntity> DriverRepository { get; }
-		public IBaseRepository<PaymentEntity> PaymentRepository { get; }
-		public IBaseRepository<TripLogEntity> TripLogRepository { get; }
+		public IBaseRepository<Cab> CabRepository { get; }
+		public IBaseRepository<CustomerRating> CustomerRatingRepository { get; }
+		public IBaseRepository<Customer> CustomerRepository { get; }
+		public IBaseRepository<DriverRating> DriverRatingRepository { get; }
+		public IBaseRepository<Driver> DriverRepository { get; }
+		public IBaseRepository<Payment> PaymentRepository { get; }
+		public IBaseRepository<TripLog> TripLogRepository { get; }
 		public ITripRepository TripRepository { get; }
-		public IBaseRepository<TripRequestLogEntity> TripRequestLogRepository { get; }
+		public IBaseRepository<TripRequestLog> TripRequestLogRepository { get; }
 		public ITripRequestRepository TripRequestRepository { get; }
 		public IUserContext UserContext { get; }
 

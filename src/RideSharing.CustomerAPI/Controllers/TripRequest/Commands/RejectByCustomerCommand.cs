@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.TripRequest.Commands.RejectByCustomer;
+using RideSharing.Application.TripRequests.Commands.RejectByCustomer;
 using System.ComponentModel.DataAnnotations;
 
 namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands

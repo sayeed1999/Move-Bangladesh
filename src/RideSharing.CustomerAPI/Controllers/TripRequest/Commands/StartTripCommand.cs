@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.TripRequest.Commands.StartTrip;
+using RideSharing.Application.TripRequests.Commands.StartTrip;
 
 namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 {

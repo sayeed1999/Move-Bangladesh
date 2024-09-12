@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.TripRequest.Commands.RejectByDriver;
+using RideSharing.Application.TripRequests.Commands.RejectByDriver;
 using System.ComponentModel.DataAnnotations;
 
 namespace RideSharing.DriverAPI.Controllers.TripRequest.Commands

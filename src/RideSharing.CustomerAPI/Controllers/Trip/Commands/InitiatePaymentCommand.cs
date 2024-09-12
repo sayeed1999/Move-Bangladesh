@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.Trip.Commands.InitiatePayment;
+using RideSharing.Application.Trips.Commands.InitiatePayment;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers.Trip.Commands

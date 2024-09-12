@@ -2,9 +2,9 @@
 
 namespace RideSharing.Application.Abstractions
 {
-	public interface ITripRequestRepository : IBaseRepository<TripRequestEntity>
+	public interface ITripRequestRepository : IBaseRepository<TripRequest>
 	{
-		public Task<TripRequestEntity> GetActiveTripRequestForCustomer(string customerId);
-		public Task<TripRequestEntity> GetActiveTripRequestForDriver(string driverId);
+		public Task<TripRequest> GetActiveTripRequestForCustomer(string customerId);
+		public Task<TripRequest> GetActiveTripRequestForDriver(string driverId);
 	}
 }

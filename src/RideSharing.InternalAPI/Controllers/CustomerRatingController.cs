@@ -3,9 +3,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.InternalAPI.Controllers
 {
-	public class CustomerRatingController : BaseController<CustomerRatingEntity>
+	public class CustomerRatingController : BaseController<CustomerRating>
 	{
-		public CustomerRatingController(IBaseRepository<CustomerRatingEntity> repository) : base(repository)
+		public CustomerRatingController(IBaseRepository<CustomerRating> repository) : base(repository)
 		{
 
 		}

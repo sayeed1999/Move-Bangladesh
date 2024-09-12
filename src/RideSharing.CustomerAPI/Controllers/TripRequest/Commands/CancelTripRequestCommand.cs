@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RideSharing.Application.TripRequest.Commands.CancelTripRequest;
+using RideSharing.Application.TripRequests.Commands.CancelTripRequest;
 
 namespace RideSharing.CustomerAPI.Controllers.TripRequest.Commands
 {

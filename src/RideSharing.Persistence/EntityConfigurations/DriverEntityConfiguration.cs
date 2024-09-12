@@ -4,9 +4,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Persistence.EntityConfigurations
 {
-	internal class DriverEntityConfiguration : IEntityTypeConfiguration<DriverEntity>
+	internal class DriverConfiguration : IEntityTypeConfiguration<Driver>
 	{
-		public void Configure(EntityTypeBuilder<DriverEntity> builder)
+		public void Configure(EntityTypeBuilder<Driver> builder)
 		{
 			builder
 				.HasKey(x => x.Id);

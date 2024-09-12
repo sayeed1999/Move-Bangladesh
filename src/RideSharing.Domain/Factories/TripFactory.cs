@@ -6,9 +6,9 @@ namespace RideSharing.Domain.Factories
 {
 	public class TripFactory
 	{
-		public static Result<TripEntity> Create(TripRequestEntity tripRequest, string driverId)
+		public static Result<Trip> Create(TripRequest tripRequest, string driverId)
 		{
-			return new TripEntity()
+			return new Trip()
 			{
 				TripRequestId = tripRequest.Id,
 				CustomerId = tripRequest.CustomerId,
@@ -21,7 +21,7 @@ namespace RideSharing.Domain.Factories
 			};
 		}
 
-		private class TripValidator : AbstractValidator<TripEntity>
+		private class TripValidator : AbstractValidator<Trip>
 		{
 			public TripValidator()
 			{

@@ -3,9 +3,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.InternalAPI.Controllers
 {
-	public class PaymentController : BaseController<PaymentEntity>
+	public class PaymentController : BaseController<Payment>
 	{
-		public PaymentController(IBaseRepository<PaymentEntity> repository) : base(repository)
+		public PaymentController(IBaseRepository<Payment> repository) : base(repository)
 		{
 
 		}

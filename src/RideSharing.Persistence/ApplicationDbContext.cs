@@ -11,19 +11,22 @@ public class ApplicationDbContext : DbContext
 	}
 
 	#region dbsets
-	public DbSet<CustomerEntity> Customers { get; set; }
-	public DbSet<CustomerRatingEntity> CustomerRatings { get; set; }
-	public DbSet<DriverEntity> Drivers { get; set; }
-	public DbSet<DriverRatingEntity> DriverRatings { get; set; }
-	public DbSet<CabEntity> Cabs { get; set; }
-	public DbSet<PaymentEntity> Payments { get; set; }
-	public DbSet<TripRequestEntity> TripRequests { get; set; }
-	public DbSet<TripRequestLogEntity> TripRequestLogs { get; set; }
-	public DbSet<TripEntity> Trips { get; set; }
-	public DbSet<TripLogEntity> TripLogs { get; set; }
+	public DbSet<Customer> Customers { get; set; }
+	public DbSet<CustomerRating> CustomerRatings { get; set; }
+	public DbSet<Driver> Drivers { get; set; }
+	public DbSet<DriverRating> DriverRatings { get; set; }
+	public DbSet<Cab> Cabs { get; set; }
+	public DbSet<Payment> Payments { get; set; }
+	public DbSet<TripRequest> TripRequests { get; set; }
+	public DbSet<TripRequestLog> TripRequestLogs { get; set; }
+	public DbSet<Trip> Trips { get; set; }
+	public DbSet<TripLog> TripLogs { get; set; }
 	#endregion
 
-	// Connection String is initialized from RideSharing.API -> Startup.cs...
+	// protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	// {
+	// 	optionsBuilder.UseSqlServer(_connectionString);
+	// }
 
 	protected override void OnModelCreating(ModelBuilder builder)
 	{
@@ -44,14 +47,14 @@ public class ApplicationDbContext : DbContext
 		// Note:- In a 1-1 reln, we have to decide which should be the parent.
 		// and the dependent one's FK will be auto set by EF Core.
 
-		new CabEntityConfiguration().Configure(builder.Entity<CabEntity>());
-		new CustomerEntityConfiguration().Configure(builder.Entity<CustomerEntity>());
-		new DriverEntityConfiguration().Configure(builder.Entity<DriverEntity>());
-		new CustomerRatingEntityConfiguration().Configure(builder.Entity<CustomerRatingEntity>());
-		new DriverRatingEntityConfiguration().Configure(builder.Entity<DriverRatingEntity>());
-		new PaymentEntityConfiguration().Configure(builder.Entity<PaymentEntity>());
-		new TripEntityConfiguration().Configure(builder.Entity<TripEntity>());
-		new TripRequestEntityConfiguration().Configure(builder.Entity<TripRequestEntity>());
+		new CabConfiguration().Configure(builder.Entity<Cab>());
+		new CustomerConfiguration().Configure(builder.Entity<Customer>());
+		new DriverConfiguration().Configure(builder.Entity<Driver>());
+		new CustomerRatingConfiguration().Configure(builder.Entity<CustomerRating>());
+		new DriverRatingConfiguration().Configure(builder.Entity<DriverRating>());
+		new PaymentConfiguration().Configure(builder.Entity<Payment>());
+		new TripConfiguration().Configure(builder.Entity<Trip>());
+		new TripRequestConfiguration().Configure(builder.Entity<TripRequest>());
 
 		#endregion
 	}

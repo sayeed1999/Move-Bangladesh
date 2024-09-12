@@ -4,9 +4,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Persistence.EntityConfigurations
 {
-	internal class PaymentEntityConfiguration : IEntityTypeConfiguration<PaymentEntity>
+	internal class PaymentConfiguration : IEntityTypeConfiguration<Payment>
 	{
-		public void Configure(EntityTypeBuilder<PaymentEntity> builder)
+		public void Configure(EntityTypeBuilder<Payment> builder)
 		{
 			builder
 				.HasKey(x => x.Id);

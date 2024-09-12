@@ -4,9 +4,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Persistence.EntityConfigurations
 {
-	internal class CustomerRatingEntityConfiguration : IEntityTypeConfiguration<CustomerRatingEntity>
+	internal class CustomerRatingConfiguration : IEntityTypeConfiguration<CustomerRating>
 	{
-		public void Configure(EntityTypeBuilder<CustomerRatingEntity> builder)
+		public void Configure(EntityTypeBuilder<CustomerRating> builder)
 		{
 			builder
 				.HasKey(x => x.Id);

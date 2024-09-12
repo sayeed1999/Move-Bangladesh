@@ -3,9 +3,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.InternalAPI.Controllers
 {
-	public class TripController : BaseController<TripEntity>
+	public class TripController : BaseController<Trip>
 	{
-		public TripController(IBaseRepository<TripEntity> repository) : base(repository)
+		public TripController(IBaseRepository<Trip> repository) : base(repository)
 		{
 
 		}

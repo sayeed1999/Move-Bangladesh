@@ -4,9 +4,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Persistence.EntityConfigurations
 {
-	internal class TripRequestEntityConfiguration : IEntityTypeConfiguration<TripRequestEntity>
+	internal class TripRequestConfiguration : IEntityTypeConfiguration<TripRequest>
 	{
-		public void Configure(EntityTypeBuilder<TripRequestEntity> builder)
+		public void Configure(EntityTypeBuilder<TripRequest> builder)
 		{
 			builder
 				.HasKey(x => x.Id);

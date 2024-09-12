@@ -3,9 +3,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.InternalAPI.Controllers
 {
-	public class DriverRatingController : BaseController<DriverRatingEntity>
+	public class DriverRatingController : BaseController<DriverRating>
 	{
-		public DriverRatingController(IBaseRepository<DriverRatingEntity> repository) : base(repository)
+		public DriverRatingController(IBaseRepository<DriverRating> repository) : base(repository)
 		{
 
 		}
