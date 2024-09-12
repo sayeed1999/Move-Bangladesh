@@ -1,7 +1,7 @@
 using CSharpFunctionalExtensions;
 using MediatR;
 using RideSharing.Application.Abstractions;
-using RideSharing.Application.Trips.Commands.InitiatePaymentService;
+using RideSharing.Application.Trips.Commands.InitiatePayment;
 using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.Trips.Commands.EndTrip;
