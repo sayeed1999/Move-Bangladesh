@@ -21,7 +21,7 @@ public static class DependencyInjection
 	private static IServiceCollection RegisterPosgreSQL(this IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddDbContext<ApplicationDbContext>(options =>
-			options.UseNpgsql(configuration.GetConnectionString("DefaultConnecton")));
+			options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 		return services;
 	}
