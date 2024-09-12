@@ -47,7 +47,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
 		// restrict all cascade delete
 		foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
 		{
-			relationship.DeleteBehavior = DeleteBehavior.Restrict;
+			relationship.DeleteBehavior = DeleteBehavior.Cascade; // default behavior
 		}
 
 		#region Apply Entity Configurations
