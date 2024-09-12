@@ -4,7 +4,7 @@ namespace RideSharing.PaymentService;
 
 public static class DependencyInjection
 {
-	public static IServiceCollection RegisterPayment(this IServiceCollection services)
+	public static IServiceCollection RegisterPaymentService(this IServiceCollection services)
 	{
 		services.AddScoped<IPaymentFactory, PaymentFactory>();
 		services.AddScoped<ICashOnDeliveryService, CashOnDeliveryService>();

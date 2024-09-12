@@ -16,8 +16,8 @@ public static class DependencyInjection
 			.AddHttpContextAccessor()
 			.AddScoped<IUserContext, UserContext>()
 			.RegisterDatabaseRepositories()
-			.RegisterProcessor()
-			// .RegisterPayment()
+			.RegisterRideSharingProcessor()
+			.RegisterPaymentService()
 			.RegisterEventBuses();
 
 	public static IServiceCollection RegisterDatabaseRepositories(this IServiceCollection services)

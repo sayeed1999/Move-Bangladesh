@@ -70,7 +70,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.ServiceBus.Func
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.PushService", "src\RideSharing.PushService\RideSharing.PushService.csproj", "{378500C3-BB82-45CB-85A9-9DEBD4CB5957}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Payment", "src\RideSharing.Payment\RideSharing.Payments.csproj", "{9744D8CA-C215-48AE-95D4-241C190D720D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.PaymentService", "src\RideSharing.Payment\RideSharing.PaymentService.csproj", "{9744D8CA-C215-48AE-95D4-241C190D720D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RideSharing.Persistence", "src\RideSharing.Persistence\RideSharing.Persistence.csproj", "{FC1BBE83-C448-4398-A59F-F7DD1AF25773}"
 EndProject

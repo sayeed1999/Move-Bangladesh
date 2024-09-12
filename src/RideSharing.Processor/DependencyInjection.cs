@@ -6,7 +6,7 @@ namespace RideSharing.Processor;
 
 public static class DependencyInjection
 {
-	public static IServiceCollection RegisterProcessor(this IServiceCollection services)
+	public static IServiceCollection RegisterRideSharingProcessor(this IServiceCollection services)
 		=> services
 			.AddScoped<ITransitionChecker<TripStatus>, TripStatusTransitionChecker>()
 			.AddScoped<ITransitionChecker<TripRequestStatus>, TripRequestStatusTransitionChecker>();
