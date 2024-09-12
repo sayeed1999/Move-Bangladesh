@@ -1,4 +1,5 @@
-﻿using RideSharing.Application;
+﻿using RideSharing.Infrastructure;
+using RideSharing.Application;
 using RideSharing.Common.Constants;
 using RideSharing.Common.Extensions;
 using RideSharing.Common.Filters;
@@ -23,8 +24,9 @@ public static class Startup
 			.ConfigureApiBehavior()
 			.RegisterSwagger(nameof(CustomerAPI))
 			.ConfigureAuthorizationServices(configuration, environment)
-			.RegisterApplicationLayer()
 			.RegisterPersistenceLayer(configuration)
+			.RegisterInfrastructureLayer()
+			.RegisterApplicationLayer()
 			.RegisterPersistenceToApplication();
 
 		return services;

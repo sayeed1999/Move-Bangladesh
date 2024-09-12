@@ -18,7 +18,6 @@ public static class DependencyInjection
 		=> services
 			.RegisterPosgreSQL(configuration)
 			.RegisterDbContext();
-	// .RegisterDapperContext();
 
 	private static IServiceCollection RegisterPosgreSQL(this IServiceCollection services, IConfiguration configuration)
 	{
@@ -36,7 +35,4 @@ public static class DependencyInjection
 
 	private static IServiceCollection RegisterDbContext(this IServiceCollection services)
 		=> services.AddScoped<DbContext, ApplicationDbContext>();
-
-	private static IServiceCollection RegisterDapperContext(this IServiceCollection services)
-		=> services.AddScoped<IDapperContext, DapperContext>();
 }

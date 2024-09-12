@@ -7,11 +7,9 @@ namespace RideSharing.Persistence.UnitOfWork
 	public partial class UnitOfWork : IUnitOfWork
 	{
 		private ApplicationDbContext _efcoreContext { get; init; }
-		// private IDapperContext _dapperContext { get; init; }
 
 		public UnitOfWork(
 			ApplicationDbContext efcoreContext,
-			// IDapperContext dapperContext,
 			IBaseRepository<CabEntity> cabRepository,
 			IBaseRepository<CustomerRatingEntity> customerRatingRepository,
 			IBaseRepository<CustomerEntity> customerRepository,

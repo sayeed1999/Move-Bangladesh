@@ -28,6 +28,8 @@ public class Program
 		{
 			var clientAppSettings = builder.Configuration.GetSection(nameof(ClientApplication)).Get<ClientApplication>();
 
+			ArgumentNullException.ThrowIfNull(clientAppSettings, nameof(clientAppSettings));
+
 			options.AddPolicy("CorsPolicy",
 				builder => builder
 					.WithOrigins(clientAppSettings.AllowedOrigins)
@@ -44,7 +46,7 @@ public class Program
 		{
 			using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
 			{
-				context.Database.Migrate();
+				context?.Database.Migrate();
 			}
 		}
 

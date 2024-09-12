@@ -12,7 +12,8 @@ public static class DependencyInjection
 {
 	public static IServiceCollection RegisterPersistenceToApplication(this IServiceCollection services)
 		=> services
-			.AddScoped<IHttpContextAccessor, HttpContextAccessor>()
+			.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+			.AddHttpContextAccessor()
 			.AddScoped<IUserContext, UserContext>()
 			.RegisterDatabaseRepositories()
 			.RegisterProcessor()

@@ -12,13 +12,11 @@ namespace RideSharing.Persistence.Repositories
 		#region initializations & declarations
 
 		protected readonly ApplicationDbContext _dbContext;
-		protected readonly DapperContext _dapperContext;
 		protected DbSet<T> _dbSet;
 
-		public BaseRepository(ApplicationDbContext dbContext, DapperContext dapperContext)
+		public BaseRepository(ApplicationDbContext dbContext)
 		{
 			_dbContext = dbContext;
-			_dapperContext = dapperContext;
 			_dbSet = dbContext.Set<T>();
 		}
 
@@ -44,9 +42,11 @@ namespace RideSharing.Persistence.Repositories
 
 		#endregion
 
-		public virtual async Task<T> FindByIdAsync(string id)
+		public virtual async Task<T?> FindByIdAsync(string id)
 		{
-			return await _dbSet.FindAsync(id);
+			var entity = await _dbSet.FindAsync(id);
+
+			return entity;
 		}
 
 		public virtual async Task CreateAsync(T item)
