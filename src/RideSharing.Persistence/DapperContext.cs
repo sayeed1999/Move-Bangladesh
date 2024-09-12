@@ -3,7 +3,7 @@ using Npgsql;
 using RideSharing.Application.Abstractions;
 using System.Data;
 
-namespace RideSharing.Infrastructure
+namespace RideSharing.Persistence
 {
 	public class DapperContext : IDapperContext
 	{

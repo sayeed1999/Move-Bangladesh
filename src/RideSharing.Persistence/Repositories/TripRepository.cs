@@ -4,7 +4,7 @@ using RideSharing.Domain.Entities;
 using System.Data;
 using System.Text;
 
-namespace RideSharing.Infrastructure.Repositories
+namespace RideSharing.Persistence.Repositories
 {
 	public class TripRepository : BaseRepository<TripEntity>, ITripRepository
 	{

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RideSharing.Domain.Entities;
 
-namespace RideSharing.Infrastructure.EntityConfigurations
+namespace RideSharing.Persistence.EntityConfigurations
 {
 	internal class CabEntityConfiguration : IEntityTypeConfiguration<CabEntity>
 	{

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RideSharing.Common.Configurations;
 using RideSharing.Common.Middlewares;
-using RideSharing.Infrastructure;
+using RideSharing.Persistence;
 using RideSharing.PushService.SignalR;
 using System.Text.Json.Serialization;
 

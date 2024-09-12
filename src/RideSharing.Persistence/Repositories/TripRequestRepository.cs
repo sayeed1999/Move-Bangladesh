@@ -3,7 +3,7 @@ using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 using System.Text;
 
-namespace RideSharing.Infrastructure.Repositories
+namespace RideSharing.Persistence.Repositories
 {
 	public class TripRequestRepository : BaseRepository<TripRequestEntity>, ITripRequestRepository
 	{

@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RideSharing.Domain.Entities;
 
-namespace RideSharing.Infrastructure.EntityConfigurations
+namespace RideSharing.Persistence.EntityConfigurations
 {
-	internal class CustomerEntityConfiguration : IEntityTypeConfiguration<CustomerEntity>
+	internal class DriverEntityConfiguration : IEntityTypeConfiguration<DriverEntity>
 	{
-		public void Configure(EntityTypeBuilder<CustomerEntity> builder)
+		public void Configure(EntityTypeBuilder<DriverEntity> builder)
 		{
 			builder
 				.HasIndex(x => x.Email)

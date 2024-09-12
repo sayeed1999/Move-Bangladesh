@@ -1,8 +1,8 @@
 ﻿using RideSharing.Application.Abstractions;
 using RideSharing.Common.MessageQueues.Abstractions;
 using RideSharing.Infrastructure.EventBus;
-using RideSharing.Infrastructure.Repositories;
-using RideSharing.Infrastructure.UnitOfWork;
+using RideSharing.Persistence.Repositories;
+using RideSharing.Persistence.UnitOfWork;
 using RideSharing.Processor;
 using RideSharing.Payment;
 

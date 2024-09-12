@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RideSharing.Domain.Entities;
-using RideSharing.Infrastructure.EntityConfigurations;
+using RideSharing.Persistence.EntityConfigurations;
 
-namespace RideSharing.Infrastructure;
+namespace RideSharing.Persistence;
 
 public class ApplicationDbContext : DbContext
 {

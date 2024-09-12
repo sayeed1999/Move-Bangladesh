@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using RideSharing.Application.Abstractions;
 
-namespace RideSharing.Infrastructure;
+namespace RideSharing.Persistence;
 
 public static class DependencyInjection
 {

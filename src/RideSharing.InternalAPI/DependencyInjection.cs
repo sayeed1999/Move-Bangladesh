@@ -4,8 +4,8 @@ using RideSharing.Common.Extensions;
 using RideSharing.Common.Filters;
 using RideSharing.Common.RegisterServices;
 using RideSharing.Infrastructure;
-using RideSharing.Infrastructure.Repositories;
-using RideSharing.Infrastructure.UnitOfWork;
+using RideSharing.Persistence.Repositories;
+using RideSharing.Persistence.UnitOfWork;
 
 namespace RideSharing.InternalAPI;
 

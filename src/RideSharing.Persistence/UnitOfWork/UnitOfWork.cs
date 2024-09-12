@@ -2,7 +2,7 @@
 using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 
-namespace RideSharing.Infrastructure.UnitOfWork
+namespace RideSharing.Persistence.UnitOfWork
 {
 	public partial class UnitOfWork : IUnitOfWork
 	{

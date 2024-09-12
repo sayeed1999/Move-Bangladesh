@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 
-namespace RideSharing.Infrastructure.Repositories
+namespace RideSharing.Persistence.Repositories
 {
 	// TODO: use primary key type generically
 	public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity

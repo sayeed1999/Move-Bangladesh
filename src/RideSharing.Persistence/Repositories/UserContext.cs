@@ -2,7 +2,7 @@
 using RideSharing.Application.Abstractions;
 using System.Security.Claims;
 
-namespace RideSharing.Infrastructure.Repositories
+namespace RideSharing.Persistence.Repositories
 {
 	public sealed class UserContext(
 		IHttpContextAccessor httpContextAccessor) : IUserContext
