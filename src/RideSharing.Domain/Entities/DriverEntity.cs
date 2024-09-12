@@ -1,6 +1,6 @@
 ﻿namespace RideSharing.Domain.Entities;
 
-public class DriverEntity : AppUser
+public class DriverEntity : User
 {
 	public DriverEntity()
 	{

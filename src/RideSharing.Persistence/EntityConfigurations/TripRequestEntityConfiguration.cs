@@ -9,6 +9,21 @@ namespace RideSharing.Persistence.EntityConfigurations
 		public void Configure(EntityTypeBuilder<TripRequestEntity> builder)
 		{
 			builder
+				.HasKey(x => x.Id);
+
+			builder
+				.Property(x => x.Id)
+				.IsRequired()
+				.HasMaxLength(30)
+				.ValueGeneratedNever();
+
+			builder
+				.Property(x => x.CustomerId)
+				.IsRequired()
+				.HasMaxLength(30);
+
+
+			builder
 				.Property(x => x.Source)
 				.HasColumnType("geometry (point)");
 

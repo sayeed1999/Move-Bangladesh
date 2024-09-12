@@ -1,6 +1,6 @@
 ﻿namespace RideSharing.Domain.Entities;
 
-public class CustomerEntity : AppUser
+public class CustomerEntity : User
 {
 	public CustomerEntity()
 	{

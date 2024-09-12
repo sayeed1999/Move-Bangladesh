@@ -9,6 +9,33 @@ namespace RideSharing.Persistence.EntityConfigurations
 		public void Configure(EntityTypeBuilder<DriverEntity> builder)
 		{
 			builder
+				.HasKey(x => x.Id);
+
+			builder
+				.Property(x => x.Id)
+				.IsRequired()
+				.HasMaxLength(30)
+				.ValueGeneratedNever();
+
+			builder
+				.Property(x => x.Name)
+				.IsRequired()
+				.HasMaxLength(30);
+
+			builder
+				.Property(x => x.Email)
+				.IsRequired()
+				.HasMaxLength(30);
+
+			builder
+				.Property(x => x.Phone)
+				.IsRequired()
+				.HasMaxLength(30);
+
+
+			// create indexes
+
+			builder
 				.HasIndex(x => x.Email)
 				.IsUnique();
 
