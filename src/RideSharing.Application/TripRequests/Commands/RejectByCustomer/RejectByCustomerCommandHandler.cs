@@ -11,9 +11,9 @@ namespace RideSharing.Application.TripRequests.Commands.RejectByCustomer
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus messageBus,
 		IRideProcessingService rideProcessingService)
-		: IRequestHandler<RejectByCustomerCommandDto, Result<string>>
+		: IRequestHandler<RejectByCustomerCommand, Result<string>>
 	{
-		public async Task<Result<string>> Handle(RejectByCustomerCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(RejectByCustomerCommand request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
 			var customerInDB = await unitOfWork.CustomerRepository.FindByIdAsync(request.CustomerId);
@@ -61,8 +61,6 @@ namespace RideSharing.Application.TripRequests.Commands.RejectByCustomer
 				}
 
 				messageBus.PublishAsync(activeTripRequest.GetTripRequestDto());
-
-				// Last Step: return result
 
 				return Result.Success(request.TripRequestId);
 			}

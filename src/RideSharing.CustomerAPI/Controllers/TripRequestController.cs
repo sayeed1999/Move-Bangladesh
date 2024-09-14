@@ -77,7 +77,7 @@ namespace RideSharing.CustomerAPI.Controllers
 		/// <param name="customerId"></param>
 		/// <returns></returns>
 		[HttpPut("{tripRequestId}/reject-by-customer")]
-		public async Task<ActionResult> RejectByCustomer([Required] string tripRequestId, RejectByCustomerCommandDto model)
+		public async Task<ActionResult> RejectByCustomer([Required] string tripRequestId, RejectByCustomerCommand model)
 		{
 			model.CustomerId = string.Empty; // TODO: fetch from HttpContextAccessor
 			model.TripRequestId = tripRequestId;
@@ -95,7 +95,7 @@ namespace RideSharing.CustomerAPI.Controllers
 		/// <param name="driverId"></param>
 		/// <returns></returns>
 		[HttpPut("{tripRequestId}/reject-by-driver")]
-		public async Task<ActionResult> RejectByDriver([Required] string tripRequestId, RejectByDriverCommandDto model)
+		public async Task<ActionResult> RejectByDriver([Required] string tripRequestId, RejectByDriverCommand model)
 		{
 			model.DriverId = string.Empty; // TODO: fetch from HttpContextAccessor
 			model.TripRequestId = tripRequestId;

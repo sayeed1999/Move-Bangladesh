@@ -11,9 +11,9 @@ namespace RideSharing.Application.TripRequests.Commands.RejectByDriver
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripHandlerEventBus,
 		IRideProcessingService rideProcessingService)
-		: IRequestHandler<RejectByDriverCommandDto, Result<string>>
+		: IRequestHandler<RejectByDriverCommand, Result<string>>
 	{
-		public async Task<Result<string>> Handle(RejectByDriverCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(RejectByDriverCommand request, CancellationToken cancellationToken)
 		{
 			// Step 1: check driver exists
 			var driverInDB = await unitOfWork.DriverRepository.FindByIdAsync(request.DriverId);
@@ -51,11 +51,8 @@ namespace RideSharing.Application.TripRequests.Commands.RejectByDriver
 
 			try
 			{
-				// Note: log table is inserted from database triggers, not api
-
 				unitOfWork.TripRequestRepository.Update(activeTripRequest);
 
-				// call UoW to save the changes in db.
 				var result = await unitOfWork.SaveChangesAsync();
 
 				if (result.IsFailure)
@@ -64,8 +61,6 @@ namespace RideSharing.Application.TripRequests.Commands.RejectByDriver
 				}
 
 				tripHandlerEventBus.PublishAsync(activeTripRequest.GetTripRequestDto());
-
-				// Last Step: return result
 
 				return Result.Success(request.TripRequestId);
 			}
