@@ -10,9 +10,9 @@ public class EndTripHandler(
 	ITripEventMessageBus tripMessageBus,
 	IRideProcessingService rideProcessingService
 )
-	: IRequestHandler<EndTripDto, Result<string>>
+	: IRequestHandler<EndTripCommand, Result<string>>
 {
-	public async Task<Result<string>> Handle(EndTripDto model, CancellationToken cancellationToken)
+	public async Task<Result<string>> Handle(EndTripCommand model, CancellationToken cancellationToken)
 	{
 		var tripInDB = await unitOfWork.TripRepository.HasOngoingTrip(
 			model.TripId,

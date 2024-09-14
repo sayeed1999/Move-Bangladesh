@@ -11,9 +11,9 @@ public class InitiatePaymentHandler(
     ITripEventMessageBus tripMessageBus,
     IRideProcessingService rideProcessingService
 )
-    : IRequestHandler<InitiatePaymentDto, Result<string>>
+    : IRequestHandler<InitiatePaymentCommand, Result<string>>
 {
-    public async Task<Result<string>> Handle(InitiatePaymentDto model, CancellationToken cancellationToken)
+    public async Task<Result<string>> Handle(InitiatePaymentCommand model, CancellationToken cancellationToken)
     {
         var tripInDB = await unitOfWork.TripRepository.HasTripWaitingForPayment(
             model.TripId,

@@ -10,9 +10,9 @@ namespace RideSharing.Application.TripRequests.Commands.StartTrip
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripHandlerEventBus,
 		IRideProcessingService rideProcessingService)
-		: IRequestHandler<StartTripCommandDto, Result<string>>
+		: IRequestHandler<StartTripCommand, Result<string>>
 	{
-		public async Task<Result<string>> Handle(StartTripCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(StartTripCommand request, CancellationToken cancellationToken)
 		{
 			// Step 1: check valid trip request exists
 			var tripRequestInDB = await unitOfWork.TripRequestRepository.FindByIdAsync(request.TripRequestId);

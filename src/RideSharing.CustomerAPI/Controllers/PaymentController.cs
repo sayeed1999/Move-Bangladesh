@@ -20,7 +20,7 @@ namespace RideSharing.CustomerAPI.Controllers
 		{
 			var customerId = string.Empty; // TODO:- get customerId from httpContextAccessor!
 
-			var model = new InitiatePaymentDto(customerId, tripId, paymentMethod);
+			var model = new InitiatePaymentCommand(customerId, tripId, paymentMethod);
 
 			var res = await Mediator.Send(model);
 
