@@ -53,7 +53,7 @@ public static class Startup
 			.RegisterApplicationLayer()
 			.RegisterPersistenceToApplication();
 
-		services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ApplicationDbContext>());
+		services.AddFluentValidationAutoValidation();
 
 		services.AddHttpContextAccessor();
 
