@@ -3,7 +3,7 @@ using MediatR;
 
 namespace RideSharing.Application.TripRequests.Commands.AcceptTripRequest
 {
-	public record struct AcceptTripRequestDto(
+	public record struct AcceptTripRequestCommand(
 		string DriverId,
 		string TripRequestId) : IRequest<Result<string>>
 	{

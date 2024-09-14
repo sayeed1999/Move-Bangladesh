@@ -10,12 +10,10 @@ namespace RideSharing.Application.TripRequests.Commands.AcceptTripRequest
 	public class AcceptTripRequestHandler(
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus tripRequestMessageBus,
-		IRideProcessingService rideProcessingService
-	// ITransitionChecker<TripRequestStatus> transitionChecker // old way
-	)
-		: IRequestHandler<AcceptTripRequestDto, Result<string>>
+		IRideProcessingService rideProcessingService)
+		: IRequestHandler<AcceptTripRequestCommand, Result<string>>
 	{
-		public async Task<Result<string>> Handle(AcceptTripRequestDto model, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(AcceptTripRequestCommand model, CancellationToken cancellationToken)
 		{
 			// Step 1: check valid trip request exists
 			var tripRequestInDB = await unitOfWork.TripRequestRepository.FindByIdAsync(model.TripRequestId);
@@ -64,7 +62,6 @@ namespace RideSharing.Application.TripRequests.Commands.AcceptTripRequest
 
 			// Step 4: create trip entity
 			bool transitionValid = await rideProcessingService.IsTripRequestTransitionValid(tripRequestInDB.Status, TripRequestStatus.DRIVER_ACCEPTED);
-			// var transitionValid = transitionChecker.IsTransitionValid(tripRequestInDB.Status, TripRequestStatus.DRIVER_ACCEPTED); // old way
 
 			if (!transitionValid)
 			{
@@ -75,7 +72,6 @@ namespace RideSharing.Application.TripRequests.Commands.AcceptTripRequest
 			tripRequestInDB.DriverId = model.DriverId;
 
 			// Step 5: perform db operations
-
 			try
 			{
 				unitOfWork.TripRequestRepository.Update(tripRequestInDB);
@@ -88,8 +84,6 @@ namespace RideSharing.Application.TripRequests.Commands.AcceptTripRequest
 				}
 
 				tripRequestMessageBus.PublishAsync(tripRequestInDB.GetTripRequestDto());
-
-				// Last Step: return result
 
 				return Result.Success(model.TripRequestId);
 			}

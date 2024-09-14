@@ -37,7 +37,7 @@ namespace RideSharing.CustomerAPI.Controllers
 		{
 			var driverId = string.Empty; // TODO:- get customerId from httpContextAccessor!
 
-			var model = new AcceptTripRequestDto(driverId, tripRequestId);
+			var model = new AcceptTripRequestCommand(driverId, tripRequestId);
 
 			var res = await Mediator.Send(model);
 
