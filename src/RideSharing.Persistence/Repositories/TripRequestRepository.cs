@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RideSharing.Application.Abstractions;
 using RideSharing.Domain.Entities;
 using System.Text;
@@ -7,70 +9,64 @@ namespace RideSharing.Persistence.Repositories
 {
 	public class TripRequestRepository : BaseRepository<TripRequest>, ITripRequestRepository
 	{
+		private readonly ILogger<TripRequestRepository> logger;
+
 		public TripRequestRepository(
-			ApplicationDbContext dbContext)
-			: base(
-				  dbContext)
+			ApplicationDbContext dbContext,
+			ILogger<TripRequestRepository> logger) : base(dbContext)
 		{
+			this.logger = logger;
 		}
 
-		public async Task<TripRequest> GetActiveTripRequestForCustomer(string customerId)
+		public async Task<TripRequest?> GetActiveTripRequestForCustomer(string customerId)
 		{
-			// If a trip is requested in less than one minute and it is neither canceled nor started, it is considered an active requested trip.
-			// If a trip request has no activity within one minute, it is considered auto-canceled.
+			// Conditions for active trip_request request: -
+			// 1. driver is found, but trip_request not started yet!
+			// 2. driver is not found yet, but trip_request request is last updated is less than one minute ago!
 
-			throw new NotImplementedException();
+			try
+			{
+				DateTime oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
 
-			// DateTime oneMinuteAgo = DateTime.UtcNow.AddMinutes(-1);
+				// Method syntax
+				// var tripRequest = await _dbSet.SingleOrDefaultAsync(
+				// 	x => x.CustomerId == customerId
+				// 	&& ((x.Status > TripRequestStatus.NO_DRIVER_FOUND && x.Status < TripRequestStatus.TRIP_STARTED)
+				// 	|| (x.Status == TripRequestStatus.NO_DRIVER_FOUND && x.LastModifiedAt < oneMinuteAgo)));
 
-			// var query = new StringBuilder();
+				// Query syntax
+				var tripRequest = await (from trip_request in _dbSet
+										 where trip_request.CustomerId == customerId
+										 && ((trip_request.Status > TripRequestStatus.NO_DRIVER_FOUND && trip_request.Status < TripRequestStatus.TRIP_STARTED)
+										 || (trip_request.Status == TripRequestStatus.NO_DRIVER_FOUND && trip_request.LastModifiedAt < oneMinuteAgo))
+										 select trip_request).SingleOrDefaultAsync();
 
-			// query.Append($"SELECT * FROM \"TripRequests\"");
-			// query.Append($" WHERE (");
-			// query.Append($"		(");
-			// query.Append($"			\"{nameof(TripRequest.Status)}\" = @{nameof(TripRequest.Status)}");
-			// query.Append($"			AND \"{nameof(TripRequest.LastModifiedAt)}\" >= @{nameof(oneMinuteAgo)}");
-			// query.Append($"		)");
-			// query.Append($"		OR \"{nameof(TripRequest.Status)}\" >= @{nameof(TripRequest.Status)}");
-			// query.Append($"	)");
-			// query.Append($" AND \"{nameof(TripRequest.CustomerId)}\" = @{nameof(TripRequest.CustomerId)}");
-			// query.Append(" LIMIT 1");
-
-			// var parameters = new DynamicParameters();
-
-			// parameters.Add(nameof(TripRequest.Status), (int) TripRequestStatus.NO_DRIVER_FOUND, System.Data.DbType.Int16);
-			// parameters.Add(nameof(oneMinuteAgo), oneMinuteAgo, System.Data.DbType.DateTime);
-			// parameters.Add(nameof(TripRequest.Status), (int) TripRequestStatus.TRIP_STARTED, System.Data.DbType.Int16);
-			// parameters.Add(nameof(TripRequest.CustomerId), customerId, System.Data.DbType.Int64);
-
-			// using (var connection = _dapperContext.CreateConnection())
-			// {
-			// 	var tripRequest = await connection.QueryFirstOrDefaultAsync<TripRequest>(query.ToString(), parameters);
-			// 	return tripRequest;
-			// }
+				return tripRequest;
+			}
+			catch (Exception ex)
+			{
+				logger.LogError($"{nameof(GetActiveTripRequestForCustomer)} threw an exception: {ex}");
+				throw;
+			}
 		}
 
-		public async Task<TripRequest> GetActiveTripRequestForDriver(string driverId)
+		public async Task<TripRequest?> GetActiveTripRequestForDriver(string driverId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var tripRequest = await (from trip_request in _dbSet
+										 where trip_request.DriverId == driverId
+										 && trip_request.Status > TripRequestStatus.NO_DRIVER_FOUND
+										 && trip_request.Status < TripRequestStatus.TRIP_STARTED
+										 select trip_request).SingleOrDefaultAsync();
 
-			// var query = new StringBuilder();
-
-			// query.Append($"SELECT * FROM \"TripRequests\"");
-			// query.Append($"	WHERE \"{nameof(TripRequest.Status)}\" = @{nameof(TripRequest.Status)}");
-			// query.Append($" AND \"{nameof(TripRequest.DriverId)}\" = @{nameof(TripRequest.DriverId)}");
-			// query.Append(" LIMIT 1");
-
-			// var parameters = new DynamicParameters();
-
-			// parameters.Add(nameof(TripRequest.Status), (int) TripRequestStatus.DRIVER_ACCEPTED, System.Data.DbType.Int16);
-			// parameters.Add(nameof(TripRequest.DriverId), driverId, System.Data.DbType.Int64);
-
-			// using (var connection = _dapperContext.CreateConnection())
-			// {
-			// 	var tripRequest = await connection.QueryFirstOrDefaultAsync<TripRequest>(query.ToString(), parameters);
-			// 	return tripRequest;
-			// }
+				return tripRequest;
+			}
+			catch (Exception ex)
+			{
+				logger.LogError($"{nameof(GetActiveTripRequestForDriver)} threw an exception: {ex}");
+				throw;
+			}
 		}
 	}
 }
