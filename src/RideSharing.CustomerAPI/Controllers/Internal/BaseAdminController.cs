@@ -7,11 +7,11 @@ namespace RideSharing.CustomerAPI.Controllers
 {
 	[Route("api/internal/v1/[controller]")]
 	[ApiController]
-	public abstract class BaseController<T> : ControllerBase where T : class
+	public abstract class BaseAdminController<T> : ControllerBase where T : class
 	{
 		protected readonly IBaseRepository<T> repository;
 
-		public BaseController(IBaseRepository<T> repository) : base()
+		public BaseAdminController(IBaseRepository<T> repository) : base()
 		{
 			this.repository = repository;
 		}

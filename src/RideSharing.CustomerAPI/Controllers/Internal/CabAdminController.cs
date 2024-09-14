@@ -3,9 +3,9 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers
 {
-	public class DriverController : BaseController<Driver>
+	public class CabAdminController : BaseAdminController<Cab>
 	{
-		public DriverController(IBaseRepository<Driver> repository) : base(repository)
+		public CabAdminController(IBaseRepository<Cab> repository) : base(repository)
 		{
 
 		}
