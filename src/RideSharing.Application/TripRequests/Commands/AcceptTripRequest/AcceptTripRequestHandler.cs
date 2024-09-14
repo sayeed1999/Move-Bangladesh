@@ -71,18 +71,15 @@ namespace RideSharing.Application.TripRequests.Commands.AcceptTripRequest
 				return Result.Failure<string>("Trip Request Status cannot be changed to desired status.");
 			}
 
-			tripRequestInDB.Modify(TripRequestStatus.DRIVER_ACCEPTED, model.DriverId);
+			tripRequestInDB.Status = TripRequestStatus.DRIVER_ACCEPTED;
+			tripRequestInDB.DriverId = model.DriverId;
 
 			// Step 5: perform db operations
 
 			try
 			{
-				// Note: log table is inserted from database triggers, not api
-
-				// update trip request
 				unitOfWork.TripRequestRepository.Update(tripRequestInDB);
 
-				// call UoW to save the changes in db.
 				var result = await unitOfWork.SaveChangesAsync();
 
 				if (result.IsFailure)

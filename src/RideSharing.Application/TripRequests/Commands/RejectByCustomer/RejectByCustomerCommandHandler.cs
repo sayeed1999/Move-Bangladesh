@@ -46,16 +46,13 @@ namespace RideSharing.Application.TripRequests.Commands.RejectByCustomer
 			}
 
 			// Step 4: prepare entity
-			activeTripRequest.Modify(TripRequestStatus.CUSTOMER_REJECTED_DRIVER);
+			activeTripRequest.Status = TripRequestStatus.CUSTOMER_REJECTED_DRIVER;
 
 			// Step 5: perform database operations
 			try
 			{
-				// Note: log table is inserted from database triggers, not api
-
 				unitOfWork.TripRequestRepository.Update(activeTripRequest);
 
-				// call UoW to save the changes in db.
 				var result = await unitOfWork.SaveChangesAsync();
 
 				if (result.IsFailure)

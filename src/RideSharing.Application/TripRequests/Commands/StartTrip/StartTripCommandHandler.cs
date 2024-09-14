@@ -52,7 +52,7 @@ namespace RideSharing.Application.TripRequests.Commands.StartTrip
 				return Result.Failure<string>("TripRequest Status cannot be changed to desired status.");
 			}
 
-			tripRequestInDB.Modify(TripRequestStatus.TRIP_STARTED);
+			tripRequestInDB.Status = TripRequestStatus.TRIP_STARTED;
 
 			// Step 5: create trip entity
 

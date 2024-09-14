@@ -57,7 +57,11 @@ namespace RideSharing.CustomerAPI.Controllers
 		{
 			var customerId = string.Empty; // TODO:- get customerId from httpContextAccessor!
 
-			var model = new CancelRequestTripCommandDto(customerId, tripRequestId);
+			var model = new CancelTripRequestCommand
+			{
+				CustomerId = customerId,
+				TripRequestId = tripRequestId,
+			};
 
 			var res = await Mediator.Send(model);
 

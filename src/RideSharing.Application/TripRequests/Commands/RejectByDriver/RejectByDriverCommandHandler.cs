@@ -45,7 +45,7 @@ namespace RideSharing.Application.TripRequests.Commands.RejectByDriver
 				return Result.Failure<string>("TripRequest Status cannot be changed to desired status.");
 			}
 
-			activeTripRequest.Modify(TripRequestStatus.DRIVER_REJECTED_CUSTOMER);
+			activeTripRequest.Status = TripRequestStatus.DRIVER_REJECTED_CUSTOMER;
 
 			// Step 4: perform database operations
 

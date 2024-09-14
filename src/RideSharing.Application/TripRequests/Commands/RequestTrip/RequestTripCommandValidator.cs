@@ -7,6 +7,6 @@ public class RequestTripCommandValidator : AbstractValidator<RequestTripCommand>
 {
 	public RequestTripCommandValidator()
 	{
-		RuleFor(x => x.CustomerId).MaximumLength(30);
+		RuleFor(x => x.CustomerId).MaximumLength(30).NotEmpty();
 	}
 }

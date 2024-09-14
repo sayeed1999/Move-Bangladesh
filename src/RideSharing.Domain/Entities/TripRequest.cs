@@ -18,18 +18,6 @@ public class TripRequest : BaseEntity
 	public PaymentMethod PaymentMethod { get; set; }
 	public TripRequestStatus Status { get; set; }
 
-	public Result Modify(TripRequestStatus status, string? driverId = null)
-	{
-		if (driverId is not null)
-		{
-			DriverId = driverId;
-		}
-
-		Status = status;
-
-		return Result.Success();
-	}
-
 	public TripRequestDto GetTripRequestDto()
 	{
 		var dto = new TripRequestDto(
