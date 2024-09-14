@@ -4,7 +4,7 @@ using RideSharing.Application.Trips.Commands.EndTrip;
 
 namespace RideSharing.CustomerAPI.Controllers
 {
-	[Route("api/trips")]
+	[Route("api/v1/trips")]
 	public class TripController : BaseController
 	{
 		/// <summary>

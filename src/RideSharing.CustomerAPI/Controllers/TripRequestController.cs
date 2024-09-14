@@ -8,7 +8,7 @@ using RideSharing.Application.TripRequests.Commands.TripRequests;
 
 namespace RideSharing.CustomerAPI.Controllers
 {
-	[Route("api/trip-requests")]
+	[Route("api/v1/trip-requests")]
 	public class TripRequestController : BaseController
 	{
 		/// <summary>

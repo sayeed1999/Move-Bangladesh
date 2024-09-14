@@ -5,7 +5,7 @@ using RideSharing.Application.Abstractions;
 
 namespace RideSharing.CustomerAPI.Controllers
 {
-	[Route("api/internal/v1/[controller]")]
+	[Route("api/v1/[controller]")]
 	[ApiController]
 	public abstract class BaseAdminController<T> : ControllerBase where T : class
 	{

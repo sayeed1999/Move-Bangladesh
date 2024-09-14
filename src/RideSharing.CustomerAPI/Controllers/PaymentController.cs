@@ -4,7 +4,7 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.CustomerAPI.Controllers
 {
-	[Route("api/trips")]
+	[Route("api/v1/payments")]
 	public class PaymentController : BaseController
 	{
 		/// <summary>
