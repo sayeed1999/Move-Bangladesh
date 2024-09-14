@@ -1,14 +1,11 @@
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RideSharing.Application.Trips.Commands.InitiatePayment;
 using RideSharing.Domain.Entities;
 
-namespace RideSharing.CustomerAPI.Controllers.Trips.Commands
+namespace RideSharing.CustomerAPI.Controllers
 {
-	[Route("api/external/trips")]
-	[ApiController]
-	public class InitiatePaymentCommand(
-		IMediator mediator) : ControllerBase
+	[Route("api/trips")]
+	public class PaymentController : BaseController
 	{
 		/// <summary>
 		/// Call this endpoint from customer's end to initiate a payment.
@@ -25,7 +22,7 @@ namespace RideSharing.CustomerAPI.Controllers.Trips.Commands
 
 			var model = new InitiatePaymentDto(customerId, tripId, paymentMethod);
 
-			var res = await mediator.Send(model);
+			var res = await Mediator.Send(model);
 
 			if (res.IsFailure) return BadRequest(res.Error);
 
