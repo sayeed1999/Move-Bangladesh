@@ -6,7 +6,6 @@ namespace RideSharing.Application.Abstractions
 	{
 		Task<Trip?> GetActiveTripForCustomer(string customerId);
 		Task<Trip?> GetActiveTripForDriver(string driverId);
-		Task<Trip> HasOngoingTrip(string tripId, string driverId);
-		Task<Trip> HasTripWaitingForPayment(string tripId, string customerId);
+		Task<Trip?> GetTripForCustomerWithPendingPayment(string tripId, string customerId);
 	}
 }

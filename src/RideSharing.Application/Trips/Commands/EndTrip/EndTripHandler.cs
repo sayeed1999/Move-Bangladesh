@@ -14,13 +14,17 @@ public class EndTripHandler(
 {
 	public async Task<Result<string>> Handle(EndTripCommand model, CancellationToken cancellationToken)
 	{
-		var tripInDB = await unitOfWork.TripRepository.HasOngoingTrip(
-			model.TripId,
+		var tripInDB = await unitOfWork.TripRepository.GetActiveTripForDriver(
 			model.DriverId);
 
 		if (tripInDB == null)
 		{
 			return Result.Failure<string>("Ongoing Trip is not found.");
+		}
+
+		if (model.TripId != tripInDB.Id)
+		{
+			return Result.Failure<string>("TripId doesn't match.");
 		}
 
 		bool transitionValid = await rideProcessingService.IsTripTransitionValid(tripInDB.TripStatus, TripStatus.WAITING_FOR_PAYMENT);
