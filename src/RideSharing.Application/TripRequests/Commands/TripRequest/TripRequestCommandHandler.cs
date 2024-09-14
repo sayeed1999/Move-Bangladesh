@@ -38,7 +38,7 @@ namespace RideSharing.Application.TripRequests.Commands.TripRequests
 			}
 
 			// Step 4: create trip request entity
-			Result<TripRequest> tripRequest = new TripRequest
+			var tripRequest = new TripRequest
 			{
 				CustomerId = model.CustomerId,
 				SourceX = model.Source.Item1,
@@ -49,19 +49,13 @@ namespace RideSharing.Application.TripRequests.Commands.TripRequests
 				PaymentMethod = model.PaymentMethod,
 			};
 
-			if (tripRequest.IsFailure)
-			{
-				return Result.Failure<string>("Please provide valid data.");
-			}
+			// TODO: create fluent validator for the entity!!
 
 			// Step 5: perform db operations
 			try
 			{
-				// Note: log table is inserted from database triggers, not api
+				await unitOfWork.TripRequestRepository.CreateAsync(tripRequest);
 
-				await unitOfWork.TripRequestRepository.CreateAsync(tripRequest.Value);
-
-				// call UoW to save the changes in db.
 				var result = await unitOfWork.SaveChangesAsync();
 
 				if (result.IsFailure)
@@ -69,14 +63,12 @@ namespace RideSharing.Application.TripRequests.Commands.TripRequests
 					return Result.Failure<string>(result.Error);
 				}
 
-				// Note: this method call is not intentionally awaited!
-				var messageDto = tripRequest.Value.GetTripRequestDto();
+				var messageDto = tripRequest.GetTripRequestDto();
 
+				// Note: intentionally not awaited
 				messageBus.PublishAsync(messageDto);
 
-				// Step 5: return response
-
-				return Result.Success(tripRequest.Value.Id);
+				return Result.Success(tripRequest.Id);
 			}
 			catch (Exception ex)
 			{

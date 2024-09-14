@@ -23,10 +23,4 @@
     <ProjectReference Include="..\RideSharing.PushService\RideSharing.PushService.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TripRequest\Queries\" />
-    <Folder Include="Trip\Commands\" />
-    <Folder Include="Trip\Queries\" />
-  </ItemGroup>
-
 </Project>

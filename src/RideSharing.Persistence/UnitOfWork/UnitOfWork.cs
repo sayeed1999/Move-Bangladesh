@@ -6,10 +6,10 @@ namespace RideSharing.Persistence.UnitOfWork
 {
 	public partial class UnitOfWork : IUnitOfWork
 	{
-		private ApplicationDbContext _efcoreContext { get; init; }
+		private ApplicationDbContext dbContext { get; init; }
 
 		public UnitOfWork(
-			ApplicationDbContext efcoreContext,
+			ApplicationDbContext dbContext,
 			IBaseRepository<Cab> cabRepository,
 			IBaseRepository<CustomerRating> customerRatingRepository,
 			IBaseRepository<Customer> customerRepository,
@@ -21,8 +21,7 @@ namespace RideSharing.Persistence.UnitOfWork
 			IUserContext userContext
 			)
 		{
-			_efcoreContext = efcoreContext;
-			// _dapperContext = dapperContext;
+			this.dbContext = dbContext;
 
 			CabRepository = cabRepository;
 			CustomerRatingRepository = customerRatingRepository;
@@ -50,7 +49,7 @@ namespace RideSharing.Persistence.UnitOfWork
 		{
 			try
 			{
-				return await _efcoreContext.SaveChangesAsync();
+				return await dbContext.SaveChangesAsync();
 			}
 			catch (Exception ex)
 			{
