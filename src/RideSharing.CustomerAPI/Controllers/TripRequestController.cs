@@ -18,7 +18,7 @@ namespace RideSharing.CustomerAPI.Controllers
 		/// <param name="model"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult> RequestTrip(TripRequestCommandDto model)
+		public async Task<ActionResult> RequestTrip(RequestTripCommand model)
 		{
 			var res = await Mediator.Send(model);
 
@@ -57,7 +57,7 @@ namespace RideSharing.CustomerAPI.Controllers
 		{
 			var customerId = string.Empty; // TODO:- get customerId from httpContextAccessor!
 
-			var model = new CancelTripRequestCommandDto(customerId, tripRequestId);
+			var model = new CancelRequestTripCommandDto(customerId, tripRequestId);
 
 			var res = await Mediator.Send(model);
 

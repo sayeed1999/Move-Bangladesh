@@ -7,13 +7,13 @@ using RideSharing.Processor.TransitionChecker;
 
 namespace RideSharing.Application.TripRequests.Commands.CancelTripRequest
 {
-	public class CancelTripRequestCommandHandler(
+	public class CancelRequestTripCommandHandler(
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus messageBus,
 		IRideProcessingService rideProcessingService)
-		: IRequestHandler<CancelTripRequestCommandDto, Result<string>>
+		: IRequestHandler<CancelRequestTripCommandDto, Result<string>>
 	{
-		public async Task<Result<string>> Handle(CancelTripRequestCommandDto request, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(CancelRequestTripCommandDto request, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
 			var customerInDB = await unitOfWork.CustomerRepository.FindByIdAsync(request.CustomerId);

@@ -6,12 +6,12 @@ using RideSharing.Domain.Entities;
 
 namespace RideSharing.Application.TripRequests.Commands.TripRequests
 {
-	public class TripRequestCommandHandler(
+	public class RequestTripCommandHandler(
 		IUnitOfWork unitOfWork,
 		ITripRequestEventMessageBus messageBus)
-		: IRequestHandler<TripRequestCommandDto, Result<string>>
+		: IRequestHandler<RequestTripCommand, Result<string>>
 	{
-		public async Task<Result<string>> Handle(TripRequestCommandDto model, CancellationToken cancellationToken)
+		public async Task<Result<string>> Handle(RequestTripCommand model, CancellationToken cancellationToken)
 		{
 			// Step 1: check customer exists
 			var customerInDB = await unitOfWork.CustomerRepository.FindByIdAsync(model.CustomerId);
