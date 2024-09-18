@@ -1,11 +1,11 @@
 # services define individual containers and their configurations
 services:
 
-  # RideSharing Auth API
+  # MoveBangladesh Auth API
   ridesharing-auth-api:
     build:
       context: ../
-      dockerfile: src/RideSharing.AuthenticationAPI/Dockerfile
+      dockerfile: src/MoveBangladesh.AuthenticationAPI/Dockerfile
     container_name: ridesharing-auth-api
     restart: unless-stopped
     environment:
@@ -13,11 +13,11 @@ services:
     networks:
       - ridesharing-shared-net
 
-  # RideSharing Customer API
+  # MoveBangladesh Customer API
   ridesharing-customer-api:
     build:
       context: ../
-      dockerfile: src/RideSharing.CustomerAPI/Dockerfile
+      dockerfile: src/MoveBangladesh.CustomerAPI/Dockerfile
     container_name: ridesharing-customer-api
     restart: unless-stopped
     environment:
