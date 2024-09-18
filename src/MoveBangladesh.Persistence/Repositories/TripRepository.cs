@@ -31,9 +31,15 @@ namespace MoveBangladesh.Persistence.Repositories
 
 				return entity;
 			}
+			// Step 1: Catch the Exception: Use a 'try-catch' block to handle the exception.
 			catch (Exception ex)
 			{
+				// Step 2: Log the Exception: Ensure all relevant details (like the
+				// exception message and stack trace) are captured for troubleshooting.
 				logger.LogError($"{nameof(GetActiveTripForCustomer)} threw an exception: {ex}");
+
+				// Step 3: Re-Throw: Re-throw the exception without losing the original
+				// stack trace to allow higher-level handling.
 				throw;
 			}
 		}
