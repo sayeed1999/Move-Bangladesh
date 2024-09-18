@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RideSharing.ServiceBus\RideSharing.ServiceBus.csproj" />
+    <ProjectReference Include="../RideSharing.ServiceBus/MoveBangladesh.ServiceBus.csproj" />
   </ItemGroup>
 
 </Project>

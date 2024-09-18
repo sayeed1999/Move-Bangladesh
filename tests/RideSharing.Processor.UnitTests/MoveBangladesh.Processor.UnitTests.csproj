@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\RideSharing.Processor\RideSharing.Processor.csproj" />
+    <ProjectReference Include="../../src/RideSharing.Processor/MoveBangladesh.Processor.csproj" />
   </ItemGroup>
 
 </Project>

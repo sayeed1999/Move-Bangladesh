@@ -17,10 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RideSharing.Domain\RideSharing.Domain.csproj" />
-    <ProjectReference Include="..\RideSharing.Processor\RideSharing.Processor.csproj" />
-    <ProjectReference Include="..\RideSharing.ServiceBus\RideSharing.ServiceBus.csproj" />
-    <ProjectReference Include="..\RideSharing.PushService\RideSharing.PushService.csproj" />
+    <ProjectReference Include="../RideSharing.Domain/MoveBangladesh.Domain.csproj" />
+    <ProjectReference Include="../RideSharing.Processor/MoveBangladesh.Processor.csproj" />
+    <ProjectReference Include="../RideSharing.PushService/MoveBangladesh.PushService.csproj" />
+    <ProjectReference Include="../RideSharing.ServiceBus/MoveBangladesh.ServiceBus.csproj" />
   </ItemGroup>
 
 </Project>

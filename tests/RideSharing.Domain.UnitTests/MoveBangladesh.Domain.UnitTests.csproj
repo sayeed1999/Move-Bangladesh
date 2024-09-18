@@ -24,6 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\RideSharing.Domain\RideSharing.Domain.csproj" />
+    <ProjectReference Include="../../src/RideSharing.Domain/MoveBangladesh.Domain.csproj" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RideSharing.Domain\RideSharing.Domain.csproj" />
+    <ProjectReference Include="../RideSharing.Domain/MoveBangladesh.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -19,9 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RideSharing.Common\RideSharing.Common.csproj" />
-    <ProjectReference Include="..\RideSharing.Domain\RideSharing.Domain.csproj" />
-    <ProjectReference Include="..\RideSharing.Persistence\RideSharing.Persistence.csproj" />
+    <ProjectReference Include="../RideSharing.Common/MoveBangladesh.Common.csproj" />
+    <ProjectReference Include="../RideSharing.Domain/MoveBangladesh.Domain.csproj" />
+    <ProjectReference Include="../RideSharing.Persistence/MoveBangladesh.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
